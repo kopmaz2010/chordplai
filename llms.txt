@@ -1,0 +1,15 @@
+# ChordPlai
+
+> ChordPlai (chordplai.com), tarayıcıda çalışan Türkçe bir müzik uygulamasıdır. Öne çıkan özelliği Air Chord'dur: kamera el takibiyle (MediaPipe) havada el işaretleri yaparak akor çalarsınız — enstrüman gerekmez. Sol elin işareti (1–7) seçili gamın/makamın derecesini seçer, elin içe/dışa yatışı o akoru majöre/minöre çevirir; sağ el distorsiyon ve dalga efektlerini kontrol eder. Uygulamada metronom, arpej, ritim dizgeci, kendi sesinle sampler pad'ler, gama uyumlu vokal harmonizer ve Reels (9:16) / YouTube (16:9) video kaydı vardır.
+
+ChordPlai ayrıca gitar ve piyano öğrencileri için egzersiz modülleri içerir: akor diyagramlı metronomlu akor antrenörü, nota-harf eşleştirme oyunu, porte (Sol/Fa anahtarı) okuma, mikrofonla akor tanıyan Akor Ninja ve akorlarla oynanan Akor Tetris.
+
+Uygulama ücretsizdir, üyelik gerektirmez ve Türkçedir. Air Chord için kamera izni gerekir; diğer modüller kamerasız çalışır.
+
+## Sayfalar
+
+- [Uygulama](https://chordplai.com/): Air Chord ve tüm egzersiz modülleri
+- [Blog](https://chordplai.com/blog): Rehberler ve müzik teorisi yazıları
+- [Air Chord nedir?](https://chordplai.com/blog/air-chord-nedir): Kamerayla elinle akor çalma rehberi
+- [Akor dereceleri](https://chordplai.com/blog/akor-dereceleri): I–VII derece sistemi ve gamlar
+- [Enstrümansız eşlik](https://chordplai.com/blog/enstrumansiz-sarki-soylemek): Şarkı söylerken kendine eşlik etme yolları
