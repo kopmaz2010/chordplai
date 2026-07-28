@@ -33,6 +33,18 @@
 </script>
 <!-- CP monogram favicon (C krem + P amber + işaret noktası) -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%2314110b'/%3E%3Cpath d='M74 30 A28 28 0 1 0 74 90' fill='none' stroke='%23efe6d2' stroke-width='11' stroke-linecap='round'/%3E%3Cg stroke='%23f5c264' stroke-width='11' stroke-linecap='round' fill='none'%3E%3Cline x1='74' y1='26' x2='74' y2='98'/%3E%3Cpath d='M74 30 h10 a17 17 0 0 1 0 34 h-10'/%3E%3C/g%3E%3Ccircle cx='46' cy='60' r='6' fill='%23ffd98a'/%3E%3C/svg%3E">
+<!-- 👤 Üyelik (Supabase + Google). Kurulum: SETUP-UYELIK.md
+     Sayfanın geri kalanı bu değerlere baktığı için EN ÜSTTE tanımlanmalı. -->
+<script>
+window.CP_SUPA = {
+  url:  "https://cnpfhcjxxtboylvvqbfz.supabase.co",
+  // anon/publishable anahtar — tarayıcıya gitmesi normaldir, güvenlik RLS politikalarındadır.
+  // (service_role / secret anahtarı ASLA buraya yazma!)
+  anon: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNucGZoY2p4eHRib3lsdnZxYmZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyNTYyNTUsImV4cCI6MjEwMDgzMjI1NX0.OHDc19BS8Oactn-ds_gnhkVxHkB9ZJ50GsW_ucNZzpo",
+  // Google Identity Services: popup'ta Supabase adresi yerine "ChordPlai" görünür
+  googleClientId: "10389383184-eapugljg152g6qq7eb9o6fs7mkibnncl.apps.googleusercontent.com",
+};
+</script>
 <style>
   :root {
     --bg:        #14110b;
@@ -721,6 +733,15 @@
   }
   .gate-card input:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(245,194,100,.15); }
   .gate-hint { font-size: .78rem; color: var(--red); min-height: 1em; }
+  /* Google-only giriş */
+  .gate-lead { margin-top: 4px; }
+  .gate-gbox { display: flex; justify-content: center; min-height: 44px; }
+  .gate-gbox:empty { min-height: 0; }
+  .gate-gload { font-size: .74rem; color: var(--muted-dim); letter-spacing: .06em; }
+  .gate-gload[hidden] { display: none; }
+  #gateFallback { display: flex; flex-direction: column; gap: 12px; }
+  #gateFallback[hidden] { display: none; }
+  .gate-legal { font-size: .68rem !important; color: var(--muted-dim) !important; margin-top: -2px; }
 
   /* akor ninja */
   #view-ninja { display: flex; flex-direction: column; gap: clamp(14px, 2.4vw, 22px); }
@@ -1482,17 +1503,28 @@
     <svg class="gate-mark" viewBox="0 0 120 120" aria-hidden="true"><path d="M74 30 A28 28 0 1 0 74 90" fill="none" stroke="#efe6d2" stroke-width="11" stroke-linecap="round"/><g stroke="#f5c264" stroke-width="11" stroke-linecap="round" fill="none"><line x1="74" y1="26" x2="74" y2="98"/><path d="M74 30 h10 a17 17 0 0 1 0 34 h-10"/></g><circle cx="46" cy="60" r="6" fill="#ffd98a"/></svg>
     <h2 lang="en">CHORD<span class="brand-ai">PLAI</span></h2>
     <p class="gate-tag">Akor Antrenörü · çal, oyna, öğren</p>
+    <p class="gate-lead">Devam etmek için Google hesabınla giriş yap — ilerlemen ve sıralaman kayıtlı kalsın.</p>
+
+    <!-- Google Identity Services burada kendi butonunu çizer (popup'ta "ChordPlai" görünür) -->
+    <div class="gate-gbox" id="gateGoogleBox"></div>
+    <div class="gate-gload" id="gateGoogleLoading">Google girişi yükleniyor…</div>
+    <!-- GIS yüklenemezse klasik yönlendirmeli giriş -->
     <button id="gateGoogle" class="gate-google" hidden><svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Google ile giriş yap</button>
-    <div class="gate-or" id="gateOr" hidden>ya da sadece takma adla devam et</div>
-    <p>Sıralamada yarışmak için bir takma ad gir. Üyelik yok — sadece isim yeterli.</p>
-    <input id="gateName" type="text" maxlength="16" placeholder="Takma adın · ör. Lina" autocomplete="off" spellcheck="false">
+
     <div class="gate-instr-lbl">Hangi enstrümanı çalıyorsun?</div>
     <div class="seg gate-instr" id="gateInstr">
       <button class="chip" data-instr="gitar" aria-pressed="true">🎸 Gitar</button>
       <button class="chip" data-instr="piyano">🎹 Piyano</button>
     </div>
-    <button id="gateGo" class="go">Başla 🎸</button>
+
+    <!-- yedek: Google servislerine ulaşılamazsa site kilitlenmesin -->
+    <div id="gateFallback" hidden>
+      <div class="gate-or">Google'a ulaşılamıyor — takma adla devam et</div>
+      <input id="gateName" type="text" maxlength="16" placeholder="Takma adın · ör. Lina" autocomplete="off" spellcheck="false">
+      <button id="gateGo" class="go">Başla 🎸</button>
+    </div>
     <div class="gate-hint" id="gateHint"></div>
+    <p class="gate-legal">Giriş yaparak yalnızca adını, e-postanı ve profil fotoğrafını paylaşırsın.</p>
   </div>
 </div>
 
@@ -2379,8 +2411,23 @@
   let PLAYER = "";
   try { PLAYER = localStorage.getItem("akorPlayer") || ""; } catch (_) {}
   const gate = { el: $("gate"), name: $("gateName"), go: $("gateGo"), hint: $("gateHint") };
-  function openGate() { gate.el.hidden = false; gate.name.value = PLAYER; setTimeout(() => gate.name.focus(), 40); }
+  const gateFb = document.getElementById("gateFallback");
+  function openGate() {
+    gate.el.hidden = false; gate.name.value = PLAYER;
+    // takma ad alanı yalnız yedek moddayken var — o zaman odaklan
+    if (gateFb && !gateFb.hidden) setTimeout(() => gate.name.focus(), 40);
+  }
   function closeGate() { gate.el.hidden = true; gate.hint.textContent = ""; }
+  window.__gateOpen = openGate;
+  window.__gateClose = closeGate;
+  // Google servisleri gelmezse site kilitlenmesin: 6 sn sonra takma ad yedeğini aç
+  setTimeout(() => {
+    if (!window.__cpAuthReady && gateFb) {
+      gateFb.hidden = false;
+      const gl = document.getElementById("gateGoogleLoading"); if (gl) gl.hidden = true;
+      if (!gate.el.hidden) gate.name.focus();
+    }
+  }, 6000);
   function saveName() {
     const v = gate.name.value.trim().replace(/\s+/g, " ").slice(0, 16);
     if (!v) { gate.hint.textContent = "Bir takma ad yaz 🙂"; return; }
@@ -2611,7 +2658,17 @@
   renderOptions(false);
   updatePlayer();
   refreshBoard();
-  if (!PLAYER) openGate();
+  // Üyelik açıkken kapı Google girişi ister. Girişli kullanıcıda kapının bir an
+  // görünüp kaybolmaması için oturumu localStorage'dan senkron yokla; jeton
+  // geçersizse üyelik modülü zaten showUser(null) ile kapıyı geri açar.
+  if (window.CP_SUPA && window.CP_SUPA.anon) {
+    let hasSession = false;
+    try {
+      const ref = (String(window.CP_SUPA.url).match(/\/\/([^.]+)\./) || [])[1];
+      hasSession = !!(ref && localStorage.getItem("sb-" + ref + "-auth-token"));
+    } catch (_) {}
+    if (!hasSession) openGate();
+  } else if (!PLAYER) openGate();
 })();
 </script>
 
@@ -4920,10 +4977,12 @@
     if (seen) start(); else openOnb();
   }
   window.__airAutoStart = autoStart;
-  // dönen ziyaretçi (isim kapısı yok): sayfa açılır açılmaz kamera iznine git
+  // dönen ziyaretçi: sayfa açılır açılmaz kamera iznine git.
+  // Giriş kapısı açıkken ASLA başlatma — kamera izni girişten önce sorulmasın.
   (() => {
     let hasName = false; try { hasName = !!localStorage.getItem("akorPlayer"); } catch (_) {}
-    if (hasName && !ui.view.hidden) setTimeout(autoStart, 350);
+    const gateEl = document.getElementById("gate");
+    if (hasName && !ui.view.hidden && (!gateEl || gateEl.hidden)) setTimeout(autoStart, 350);
   })();
   // jestsiz otomatik açılışta AudioContext askıda kalabilir — ilk etkileşimde uyandır
   const resumeAudio = () => { if (A.ctx && A.ctx.state === "suspended") A.ctx.resume(); };
@@ -5095,15 +5154,6 @@
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 
-<!-- 👤 Üyelik (Supabase + Google). Kurulum: SETUP-UYELIK.md — url/anon doldurulunca kendiliğinden aktifleşir. -->
-<script>
-window.CP_SUPA = {
-  url:  "https://cnpfhcjxxtboylvvqbfz.supabase.co",
-  // anon/publishable anahtar — tarayıcıya gitmesi normaldir, güvenlik RLS politikalarındadır.
-  // (service_role / secret anahtarı ASLA buraya yazma!)
-  anon: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNucGZoY2p4eHRib3lsdnZxYmZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyNTYyNTUsImV4cCI6MjEwMDgzMjI1NX0.OHDc19BS8Oactn-ds_gnhkVxHkB9ZJ50GsW_ucNZzpo",
-};
-</script>
 <script type="module">
 (async () => {
   const cfg = window.CP_SUPA || {};
@@ -5114,32 +5164,79 @@ window.CP_SUPA = {
   const supa = createClient(cfg.url, cfg.anon);
   const $ = id => document.getElementById(id);
   const ui = {
-    gGoogle: $("gateGoogle"), gOr: $("gateOr"),
+    gBox: $("gateGoogleBox"), gLoad: $("gateGoogleLoading"), gGoogle: $("gateGoogle"),
     chip: $("profChip"), avatar: $("profAvatar"), name: $("profName"),
     pop: $("profPop"), popAvatar: $("profPopAvatar"), popName: $("profPopName"),
     popMail: $("profPopMail"), popStats: $("profPopStats"), signOut: $("profSignOut"),
     footWrap: $("footMembers"), footCount: $("footMemberCount"),
+    hint: $("gateHint"),
   };
-  ui.gGoogle.hidden = false; ui.gOr.hidden = false;
-  ui.gGoogle.addEventListener("click", async () => {
-    const hint = document.getElementById("gateHint");
+
+  // --- klasik yol: Supabase'e yönlendirmeli OAuth (popup engellenirse yedek) ---
+  async function redirectSignIn() {
     try {
       const { error } = await supa.auth.signInWithOAuth({
         provider: "google", options: { redirectTo: location.origin },
       });
       if (error) throw error;
-    } catch (err) {
-      // en sık sebep: Supabase → Authentication → Providers → Google henüz açılmamış
-      if (hint) hint.textContent = "Google girişi şu an kapalı — takma adınla devam edebilirsin.";
+    } catch (_) {
+      ui.hint.textContent = "Google girişi şu an kullanılamıyor, birazdan tekrar dene.";
     }
-  });
+  }
+  ui.gGoogle.addEventListener("click", redirectSignIn);
+
+  // --- tercih edilen yol: Google Identity Services (popup'ta "ChordPlai" yazar) ---
+  function loadGis() {
+    return new Promise((res, rej) => {
+      if (window.google?.accounts?.id) return res();
+      const s = document.createElement("script");
+      s.src = "https://accounts.google.com/gsi/client";
+      s.async = true; s.defer = true;
+      s.onload = res; s.onerror = () => rej(new Error("gsi yüklenemedi"));
+      document.head.appendChild(s);
+    });
+  }
+  async function initGis() {
+    if (!cfg.googleClientId) throw new Error("client id yok");
+    await loadGis();
+    google.accounts.id.initialize({
+      client_id: cfg.googleClientId,
+      ux_mode: "popup",
+      auto_select: false,
+      callback: async (resp) => {
+        ui.hint.textContent = "";
+        const { error } = await supa.auth.signInWithIdToken({
+          provider: "google", token: resp.credential,
+        });
+        // kimlik jetonu reddedilirse (ör. Authorized Client ID tanımlı değil) klasik yola düş
+        if (error) redirectSignIn();
+      },
+    });
+    google.accounts.id.renderButton(ui.gBox, {
+      type: "standard", theme: "outline", size: "large",
+      text: "signin_with", shape: "pill", locale: "tr", width: 300,
+    });
+  }
+  try {
+    await initGis();
+  } catch (_) {
+    ui.gGoogle.hidden = false;          // GIS gelmedi → klasik buton
+  } finally {
+    ui.gLoad.hidden = true;
+    window.__cpAuthReady = true;        // takma ad yedeği açılmasın
+  }
   function localStats() {
     let n = 0; try { n = (JSON.parse(localStorage.getItem("akorLB") || "[]")).length; } catch (_) {}
     return n ? `🎮 Bu cihazda ${n} oyun kaydı` : "Henüz oyun kaydı yok — hadi çal! 🎸";
   }
   async function showUser(session) {
     const u = session?.user;
-    if (!u) { ui.chip.hidden = true; ui.pop.hidden = true; return; }
+    if (!u) {
+      // oturum yok → kapı açık kalsın, profil gizli
+      ui.chip.hidden = true; ui.pop.hidden = true;
+      if (window.__gateOpen) window.__gateOpen();
+      return;
+    }
     const meta = u.user_metadata || {};
     const name = meta.name || meta.full_name || (u.email || "").split("@")[0];
     const pic = meta.avatar_url || meta.picture || "";
@@ -5150,13 +5247,13 @@ window.CP_SUPA = {
     ui.popMail.textContent = u.email || "";
     if (pic) ui.popAvatar.src = pic;
     ui.popStats.textContent = localStats();
-    // takma ad boşsa Google adını kullan (gate'i atla)
-    try {
-      if (!localStorage.getItem("akorPlayer")) {
-        localStorage.setItem("akorPlayer", name.split(" ")[0].slice(0, 16));
-        const g = document.getElementById("gate"); if (g) g.hidden = true;
-      }
-    } catch (_) {}
+    // oyuncu adı Google adından gelir (takma ad sorulmuyor)
+    try { localStorage.setItem("akorPlayer", name.split(" ")[0].slice(0, 16)); } catch (_) {}
+    // kapıyı kapat ve Air Chord'u başlat (giriş tıklaması = ses/kamera için geçerli jest)
+    const gateEl = document.getElementById("gate");
+    const wasOpen = gateEl && !gateEl.hidden;
+    if (window.__gateClose) window.__gateClose();
+    if (wasOpen && window.__airAutoStart) setTimeout(window.__airAutoStart, 250);
     // profili kaydet/tazele (RLS: sadece kendi satırı)
     try {
       await supa.from("profiles").upsert({
@@ -5168,7 +5265,13 @@ window.CP_SUPA = {
   document.addEventListener("pointerdown", e => {
     if (!ui.pop.hidden && !ui.pop.contains(e.target) && !ui.chip.contains(e.target)) ui.pop.hidden = true;
   });
-  ui.signOut.addEventListener("click", async () => { await supa.auth.signOut(); ui.pop.hidden = true; });
+  ui.signOut.addEventListener("click", async () => {
+    await supa.auth.signOut();
+    ui.pop.hidden = true;
+    try { localStorage.removeItem("akorPlayer"); } catch (_) {}
+    if (window.__airStop) window.__airStop();     // kamera kapansın
+    if (window.__gateOpen) window.__gateOpen();
+  });
   supa.auth.onAuthStateChange((_ev, session) => showUser(session));
   const { data } = await supa.auth.getSession();
   showUser(data.session);
