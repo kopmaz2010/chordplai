@@ -5099,8 +5099,9 @@
 <script>
 window.CP_SUPA = {
   url:  "https://cnpfhcjxxtboylvvqbfz.supabase.co",
-  anon: "",   // ← Supabase → Settings → API Keys → "anon public" / "publishable" anahtarı
-              //    (service_role / secret anahtarı ASLA buraya yazma — tarayıcıya gider!)
+  // anon/publishable anahtar — tarayıcıya gitmesi normaldir, güvenlik RLS politikalarındadır.
+  // (service_role / secret anahtarı ASLA buraya yazma!)
+  anon: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNucGZoY2p4eHRib3lsdnZxYmZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyNTYyNTUsImV4cCI6MjEwMDgzMjI1NX0.OHDc19BS8Oactn-ds_gnhkVxHkB9ZJ50GsW_ucNZzpo",
 };
 </script>
 <script type="module">
@@ -5120,8 +5121,17 @@ window.CP_SUPA = {
     footWrap: $("footMembers"), footCount: $("footMemberCount"),
   };
   ui.gGoogle.hidden = false; ui.gOr.hidden = false;
-  ui.gGoogle.addEventListener("click", () => {
-    supa.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin } });
+  ui.gGoogle.addEventListener("click", async () => {
+    const hint = document.getElementById("gateHint");
+    try {
+      const { error } = await supa.auth.signInWithOAuth({
+        provider: "google", options: { redirectTo: location.origin },
+      });
+      if (error) throw error;
+    } catch (err) {
+      // en sık sebep: Supabase → Authentication → Providers → Google henüz açılmamış
+      if (hint) hint.textContent = "Google girişi şu an kapalı — takma adınla devam edebilirsin.";
+    }
   });
   function localStats() {
     let n = 0; try { n = (JSON.parse(localStorage.getItem("akorLB") || "[]")).length; } catch (_) {}

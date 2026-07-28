@@ -1,74 +1,78 @@
-# ChordPlai Üyelik Kurulumu (Google ile Giriş)
+# ChordPlai Üyelik Kurulumu — Kalan 2 Adım
 
-Kod tarafı **hazır** — site, aşağıdaki iki değer doldurulunca üyeliği kendiliğinden açar:
+Proje: **chordplai** · `cnpfhcjxxtboylvvqbfz` · bölge: Seul
 
-```js
-// index.html'in en altında:
-window.CP_SUPA = {
-  url:  "",   // ← Supabase Project URL
-  anon: "",   // ← Supabase anon/publishable key
-};
-```
+| Durum | Adım |
+|---|---|
+| ✅ | Supabase projesi açıldı |
+| ✅ | Anon key siteye yazıldı, bağlantı çalışıyor (canlıda doğrulandı) |
+| ✅ | Google giriş butonu + profil kartı + üye sayacı kodu canlıda |
+| ⬜ | **1. Veritabanı şeması** — aşağıda |
+| ⬜ | **2. Google ile giriş** — aşağıda |
 
-Doldurulmadığı sürece üyelik UI'ları gizli kalır, site bugünkü gibi çalışır.
+---
 
-## 1. Supabase'te yer aç (tek engel bu!)
+## 1️⃣ Veritabanı şeması (2 dakika)
 
-Hesabın (kopmaz2010) **2 aktif ücretsiz proje limitine** takılı. Admin olduğun
-diğer organizasyondaki projelerden birini **Pause** et (Dashboard → o proje →
-Settings → General → Pause project) ya da sil. Sonra:
+Bu adım olmadan giriş yapılsa bile profil kaydedilmez ve üye sayacı görünmez.
 
-- https://supabase.com/dashboard → **New project** → isim: `chordplai`,
-  bölge: `eu-central-1 (Frankfurt)` (Türkiye'ye en yakın).
-- (İstersen bunun yerine mevcut "kopmaz2010's Project"i **Restore** da edebilirsin.)
+1. Şunu aç: **https://supabase.com/dashboard/project/cnpfhcjxxtboylvvqbfz/sql/new**
+2. Bu repodaki **`supabase/schema.sql`** dosyasının tamamını kopyala, editöre yapıştır.
+3. Sağ alttaki **Run**'a bas. "Success" yazmalı.
 
-## 2. Anahtarları al
+Kurulanlar: `profiles` tablosu (RLS'li), yeni kayıt olunca profili otomatik oluşturan
+tetikleyici, footer'daki üye sayacını besleyen `user_count` fonksiyonu ve ileride
+cihazlar-arası liderlik tablosu için `scores` tablosu.
 
-Proje açılınca: **Settings → API**
-- `Project URL` → `CP_SUPA.url`
-- `anon public` key → `CP_SUPA.anon`
+> 🔒 **RLS neden önemli:** anon anahtarı tarayıcıya gider (tasarımı böyle, normaldir).
+> Verini koruyan şey bu SQL'deki RLS politikalarıdır — herkes isim/avatar okuyabilir,
+> ama kimse başkasının satırını değiştiremez. Bu yüzden bu adımı atlama.
 
-Bu iki değeri `index.html` en altındaki `CP_SUPA`'ya yapıştır, deploy et.
-(anon key tarayıcıya konması **normaldir**; güvenlik RLS politikalarında.)
+---
 
-## 3. Veritabanı şemasını kur
+## 2️⃣ Google ile giriş (10 dakika)
 
-Dashboard → **SQL Editor** → bu repodaki `supabase/schema.sql` dosyasının
-içeriğini yapıştır → **Run**. (Profiller, otomatik profil tetikleyicisi,
-üye sayacı ve gelecekteki liderlik tablosu kurulur.)
+Şu an kapalı — butona basınca "Google girişi şu an kapalı" uyarısı çıkar.
 
-## 4. Google ile girişi aç
+**a) Google tarafı** — https://console.cloud.google.com
 
-1. https://console.cloud.google.com → proje oluştur (`chordplai`).
-2. **APIs & Services → OAuth consent screen** → External → uygulama adı
-   "ChordPlai", destek e-postası seç → kaydet.
-3. **Credentials → Create credentials → OAuth client ID** → Web application:
-   - Authorized JavaScript origins: `https://chordplai.com`
-   - Authorized redirect URIs: `https://<PROJE-REF>.supabase.co/auth/v1/callback`
-     (Supabase → Authentication → Providers → Google sayfası bu URI'yi aynen gösterir, oradan kopyala)
-4. Çıkan **Client ID** ve **Client Secret**'ı Supabase → **Authentication →
-   Providers → Google**'a yapıştır, **Enable** et.
-5. Supabase → **Authentication → URL Configuration** → Site URL:
-   `https://chordplai.com`
+1. Yeni proje oluştur: `chordplai`
+2. **APIs & Services → OAuth consent screen** → **External** → uygulama adı "ChordPlai",
+   destek e-postası ve geliştirici e-postası: `kopmaz2015@gmail.com` → Save
+3. **Credentials → Create credentials → OAuth client ID → Web application**:
+   - **Authorized JavaScript origins:**
+     ```
+     https://chordplai.com
+     ```
+   - **Authorized redirect URIs:**
+     ```
+     https://cnpfhcjxxtboylvvqbfz.supabase.co/auth/v1/callback
+     ```
+4. Çıkan **Client ID** ve **Client Secret**'ı kopyala.
 
-## 5. Deploy
+**b) Supabase tarafı**
 
-```bash
-cd ~/akor-antrenoru && npx vercel deploy --prod --yes
-```
+1. **https://supabase.com/dashboard/project/cnpfhcjxxtboylvvqbfz/auth/providers**
+   → **Google** → Client ID + Secret yapıştır → **Enable** → Save
+2. **https://supabase.com/dashboard/project/cnpfhcjxxtboylvvqbfz/auth/url-configuration**
+   → **Site URL:** `https://chordplai.com`
 
-## Sonuç — neler açılır?
+Bitince https://chordplai.com'da giriş kapısındaki beyaz butondan Google'la girilir;
+sağ üstte avatarın çıkar, footer'da "👥 N üye" görünür.
 
-- Giriş kapısında beyaz **"Google ile giriş yap"** butonu (takma adla devam da kalır).
-- Sağ üstte **profil çipi**: Google avatarı + isim; tıklayınca profil kartı
-  (e-posta, bu cihazdaki oyun sayısı, çıkış).
-- Footer'da **"👥 N üye"** sayacı — kaç kullanıcın olduğunu herkes görür;
-  detaylar Supabase Dashboard → Authentication → Users'da.
-- `scores` tablosu hazır: istediğinde cihazlar-arası liderlik tablosunu bağlarız.
+---
 
-## Kaç kişi siteyi ziyaret ediyor? (üyelikten bağımsız)
+## 📊 Ziyaretçi sayısı (üyelikten bağımsız, 1 tık)
 
-Vercel Web Analytics kodu siteye eklendi ama Vercel tarafında bir kez elle
-açman gerekiyor: https://vercel.com/kopmaz2010s-projects/akor-antrenoru →
-**Analytics** sekmesi → **Enable**. Açtığın andan itibaren ziyaretçi/sayfa
-görüntüleme sayıları o sekmede birikir (Hobby planda ücretsiz).
+Vercel Web Analytics kodu sitede kurulu ama panelden açılması gerekiyor:
+**https://vercel.com/kopmaz2010s-projects/akor-antrenoru** → **Analytics** → **Enable**.
+Açtığın andan itibaren günlük ziyaretçi ve sayfa görüntüleme sayıları orada birikir
+(Hobby planda ücretsiz).
+
+---
+
+## Kaç üyem var, nereden bakarım?
+
+- **Sitede:** ana sayfa footer'ında "👥 N üye" (1. adımdan sonra görünür)
+- **Detaylı:** https://supabase.com/dashboard/project/cnpfhcjxxtboylvvqbfz/auth/users
+  — kim, hangi e-posta, ne zaman katıldı, en son ne zaman girdi
