@@ -1,0 +1,337 @@
+{
+  "lang": "fr",
+  "locale": "fr_FR",
+  "name": "Français",
+  "ui": {
+    "blogTitle": "Blog ChordPlai",
+    "blogLead": "Air Chord, degrés d'accords, gammes et guides pratiques — pour les débutants comme pour les professeurs.",
+    "blogDesc": "Le blog ChordPlai : jouer des accords avec des signes de la main devant la caméra, faire de la musique sans instrument, comprendre les degrés d'accords et progresser au quotidien.",
+    "tagline": "Coach d'accords · jouez, amusez-vous, apprenez",
+    "backToBlog": "← Blog",
+    "blogCrumb": "Blog",
+    "cta": "🖐️ Ouvrir ChordPlai — jouez avec vos mains",
+    "ctaPost": "🖐️ Essayez Air Chord maintenant — gratuitement",
+    "footer": "jouez des accords avec vos mains devant la caméra, et chantez par-dessus.",
+    "next": "Article suivant",
+    "readMore": "Lire la suite",
+    "langLabel": "Langue"
+  },
+  "posts": [
+    {
+      "id": "air-chord",
+      "slug": "qu-est-ce-que-air-chord",
+      "date": "2026-07-29",
+      "title": "Qu'est-ce qu'Air Chord ? Jouez des accords avec vos mains devant la caméra",
+      "desc": "Air Chord vous permet de jouer des accords dans les airs grâce à votre webcam et au suivi des mains : le signe de la main gauche choisit le degré de la gamme, l'inclinaison du poignet rend l'accord majeur ou mineur. Sans installation, dans le navigateur, gratuitement.",
+      "excerpt": "Jouer des accords sans instrument, avec une simple webcam et quelques signes de la main, c'est possible. Le système de signes d'Air Chord, l'inclinaison majeur/mineur et la main des effets, expliqués dans ce guide.",
+      "body": [
+        {"p": "Jusqu'ici, pour accompagner une chanson, vous aviez deux options : apprendre à jouer d'un instrument, ou lancer une bande sonore toute faite. <b>Air Chord</b> ouvre une troisième voie : vous montrez votre main à la webcam, le signe que vous formez devient un accord, et vous chantez par-dessus. Aucune installation, aucune application à télécharger — tout se passe dans le navigateur."},
+        {"h2": "Comment ça marche ?"},
+        {"p": "Air Chord s'appuie sur un modèle de suivi des mains qui repère en temps réel les 21 points articulaires de votre main. L'image de votre caméra ne quitte jamais votre appareil : tout le traitement a lieu à l'intérieur du navigateur. Le système attribue ensuite un rôle distinct à chacune de vos deux mains."},
+        {"h2": "Main gauche : l'accord lui-même"},
+        {"p": "Le signe que vous formez avec la main gauche choisit le <i>degré</i> de la gamme sélectionnée :"},
+        {"ul": [
+          "☝️ index tendu = 1er degré (en La mineur, <b>Am</b>)",
+          "✌️ deux doigts = 2e degré (<b>B°</b>)",
+          "Trois doigts, quatre doigts et main ouverte = degrés 3, 4 et 5",
+          "🤘 = 6e degré · 🤟 = 7e degré"
+        ]},
+        {"p": "Tant que le signe reste en l'air, le son se prolonge — comme un pad de synthé. Si vous <b>inclinez la main vers l'intérieur</b>, l'accord devient majeur ; <b>vers l'extérieur</b>, il devient mineur ; main droite, c'est l'accord naturel de la gamme qui sonne. ✊ Le poing ferme le son."},
+        {"box": "💡 Si le système des degrés ne vous dit rien encore, jetez un œil à notre guide des degrés d'accords : vous y comprendrez pourquoi les signes d'Air Chord sont numérotés de 1 à 7.", "link": "akor-dereceleri"},
+        {"h2": "Main droite : les effets"},
+        {"p": "La main droite ne touche jamais à l'accord : elle ne fait que sculpter le caractère du son. Plus vous l'<b>inclinez vers la gauche, plus la distorsion</b> monte ; <b>en la tournant vers la droite</b>, la forme d'onde s'éclaircit ; à la verticale, le son redevient net. La main gauche décide donc de « ce qui est joué », la main droite de « comment on l'entend »."},
+        {"h2": "Choix de la tonalité, de la gamme et du maqam"},
+        {"p": "Le panneau du bas vous laisse choisir la tonalité et la gamme : majeur, mineur et échelles de maqam sont pris en charge. Quand la gamme change, les signes de la main restent identiques ; seule la correspondance des degrés évolue. L'accompagnement appris en La mineur se transpose donc en Mi mineur en un seul clic."},
+        {"h2": "Rythme, arpège et pads à votre propre voix"},
+        {"ul": [
+          "<b>Métronome + arpège :</b> choisissez le BPM et laissez les accords défiler en croches (4/4 et 6/8).",
+          "<b>Séquenceur rythmique :</b> écrivez vous-même votre motif kick–snare–hihat en cliquant sur les cases.",
+          "<b>Pads sampler :</b> enregistrez votre propre voix ou importez un fichier, puis jouez-le comme un pad.",
+          "<b>Harmoniseur vocal :</b> pendant que vous chantez, des chœurs à la tierce et à la quinte, accordés à la gamme, s'ajoutent à l'enregistrement."
+        ]},
+        {"h2": "Filmez votre vidéo"},
+        {"p": "Air Chord enregistre en vertical (9:16) pour les Reels et en horizontal (16:9) pour YouTube. Le cadre inclut le tracé du squelette de la main, l'accord en cours, le motif rythmique et le filigrane ChordPlai — votre vidéo est prête à être partagée telle quelle."},
+        {"h2": "Pour qui ?"},
+        {"p": "Pour tous ceux qui aiment chanter sans jouer d'un instrument. Les professeurs de musique s'en servent aussi en cours pour illustrer la notion de degré, et les créateurs de contenu pour tourner des vidéos de performance qui accrochent l'œil."}
+      ]
+    },
+    {
+      "id": "degrees",
+      "slug": "comprendre-les-degres-d-accords",
+      "date": "2026-07-29",
+      "title": "Les degrés d'accords : apprenez le système I–VII une fois, jouez dans toutes les tonalités",
+      "desc": "Les degrés d'accords vous permettent de penser les chansons indépendamment de la tonalité. Les accords diatoniques, les enchaînements I–IV–V et des pistes de travail, illustrés en La mineur.",
+      "excerpt": "Pourquoi Am est-il le « premier » et G le « septième » ? Le système des degrés libère les chansons de leur tonalité. Accords diatoniques et conseils pratiques, expliqués en La mineur.",
+      "body": [
+        {"p": "Si vous mémorisez les accords d'une chanson sous la forme « Am, F, C, G », vous ne la connaissez que dans cette tonalité. Si vous la pensez comme « i–VI–III–VII », vous la connaissez <b>dans toutes les tonalités</b>. C'est exactement le rôle du système des degrés : il nomme les accords non par leur nom, mais par leur <i>fonction</i> à l'intérieur de la gamme."},
+        {"h2": "Qu'est-ce qu'un degré ?"},
+        {"p": "Sur chaque note d'une gamme, on construit un accord en n'utilisant que les notes de cette même gamme. Le degré de l'accord correspond au rang de la note sur laquelle il est bâti. Les chiffres romains en majuscules (I, IV, V) désignent un accord majeur, les minuscules (i, iv, v) un accord mineur, et le symbole ° un accord diminué."},
+        {"h2": "L'exemple de La mineur"},
+        {"table": {"head": ["Degré", "Accord", "Type"], "rows": [["i", "Am", "mineur"], ["ii°", "B°", "diminué"], ["III", "C", "majeur"], ["iv", "Dm", "mineur"], ["v", "Em", "mineur"], ["VI", "F", "majeur"], ["VII", "G", "majeur"]]}},
+        {"p": "Ces sept accords forment les <b>accords diatoniques</b> de la gamme : ils n'utilisent que les notes de la gamme de La mineur, et sonnent donc bien ensemble quel que soit l'ordre dans lequel vous les enchaînez."},
+        {"box": "🖐️ Dans le mode Air Chord de ChordPlai, ce tableau se retrouve directement sur vos doigts : ☝️ = i, ✌️ = ii°, trois doigts = III… Vous montrez le signe à la caméra et le degré correspondant sonne. C'est la façon la plus rapide d'apprendre les degrés à l'oreille.", "link": "air-chord"},
+        {"h2": "Pourquoi ça marche ?"},
+        {"ol": [
+          "<b>La transposition devient gratuite :</b> pour jouer « i–VI–III–VII » en Mi mineur, il suffit de changer de gamme : Em–C–G–D. La grille, elle, ne bouge pas.",
+          "<b>Les chansons se ressemblent :</b> une grande partie de la musique populaire repose sur quelques enchaînements de degrés (I–V–vi–IV étant le plus célèbre). Une fois la grille reconnue, vous décryptez une nouvelle chanson dès la première écoute.",
+          "<b>L'improvisation devient plus simple :</b> les degrés vous disent quel accord donne la sensation de « rentrer à la maison » (i) et lesquels créent la tension (V, VII)."
+        ]},
+        {"h2": "Des exercices pour habituer votre oreille aux degrés"},
+        {"ul": [
+          "Choisissez une gamme et jouez la suite i → iv → v → i en boucle, en nommant la sensation que produit chaque accord.",
+          "Prenez les accords d'une chanson que vous aimez, puis notez le degré de chacun d'eux.",
+          "Jouez la même grille dans deux tonalités différentes et vérifiez que vous entendez bien la même histoire."
+        ]},
+        {"p": "Ces trois exercices se pratiquent tous dans ChordPlai : Air Chord joue par degrés, le module d'entraînement aux accords affiche les diagrammes, et <i>Accord Ninja</i> reconnaît au micro l'accord que vous jouez sur votre véritable instrument."}
+      ]
+    },
+    {
+      "id": "no-instrument",
+      "slug": "chanter-sans-instrument",
+      "date": "2026-07-29",
+      "title": "Chanter sans instrument : 3 façons de s'accompagner soi-même",
+      "desc": "Vous ne jouez pas de guitare ? Vous pouvez quand même chanter : bandes d'accompagnement, applications d'accords et accords joués dans les airs devant la caméra. Avantages, limites et conseils pratiques pour chacune des trois méthodes.",
+      "excerpt": "Pas de guitare, ou pas encore le niveau ? N'attendez pas pour chanter. Backing tracks, logique de loop station et accords joués devant la caméra : comparons les trois.",
+      "body": [
+        {"p": "« J'apprends d'abord la guitare, je chanterai ensuite » : cette phrase se solde le plus souvent par le fait de ne jamais commencer à chanter. Or on progresse en chantant beaucoup — et pour cela, il suffit d'avoir un accompagnement sous la main."},
+        {"h2": "1) Les bandes toutes faites (backing track / karaoké)"},
+        {"ul": [
+          "<b>L'avantage :</b> aucun apprentissage requis, et une qualité de production élevée.",
+          "<b>L'inconvénient :</b> vous êtes prisonnier de la tonalité et du tempo. Si la chanson est trop haute pour votre voix, vous souffrez. Et vous ne pouvez accompagner que des chansons qui existent déjà."
+        ]},
+        {"h2": "2) Les applications qui jouent les accords à l'écran"},
+        {"ul": [
+          "<b>L'avantage :</b> la tonalité et le tempo vous appartiennent ; vous construisez vos propres grilles.",
+          "<b>L'inconvénient :</b> les yeux restent rivés à l'écran et les doigts sur de petits boutons. Regarder son téléphone en pleine performance abîme autant la posture que la vidéo."
+        ]},
+        {"h2": "3) Jouer des accords dans les airs devant la caméra (Air Chord)"},
+        {"p": "Troisième voie, la plus récente : montrer sa main à la caméra de l'ordinateur et <b>jouer des accords par signes</b>. Le signe de la main gauche (1–7) déclenche le degré de la gamme choisie, l'inclinaison de la main rend l'accord majeur ou mineur, et la main droite pilote les effets.", "link": "air-chord"},
+        {"ul": [
+          "<b>L'avantage :</b> les mains en l'air, la posture libre, le regard vers la caméra — la performance paraît naturelle. Tonalité et tempo sont entièrement à vous, et l'enregistrement Reels/YouTube est intégré à l'application.",
+          "<b>L'inconvénient :</b> il faut un appareil doté d'une caméra, et quelques minutes pour prendre les signes en main."
+        ]},
+        {"h2": "Laquelle choisir ?"},
+        {"table": {"head": ["", "Backing track", "Accords tactiles", "Air Chord"], "rows": [["Seuil d'apprentissage", "Aucun", "Faible", "Faible"], ["Contrôle tonalité/tempo", "Non", "Oui", "Oui"], ["Essayer ses propres chansons", "Non", "Oui", "Oui"], ["Rendu en vidéo", "Moyen", "Faible", "Excellent"], ["Apprentissage de la théorie", "Aucun", "Léger", "Système de degrés"]]}},
+        {"box": "🎤 Notre conseil : le backing track pour s'échauffer, Air Chord pour composer et pour les vidéos. Les deux ne s'excluent pas — l'essentiel, c'est de chanter tous les jours."},
+        {"h2": "Une routine de démarrage en 5 minutes"},
+        {"ol": [
+          "Ouvrez ChordPlai et autorisez l'accès à la caméra.",
+          "Choisissez une gamme confortable pour votre voix (en cas de doute, La mineur).",
+          "Alternez entre les signes ☝️ (i) et 🖐️ (v) ; calez votre respiration sur les changements d'accord.",
+          "Construisez une boucle de quatre degrés (par exemple i–VI–III–VII) et fredonnez une mélodie par-dessus.",
+          "Appuyez sur le bouton d'enregistrement et tournez une vidéo d'essai — rien ne montre mieux vos progrès."
+        ]}
+      ]
+    },
+    {
+      "id": "play-without-musician",
+      "slug": "jouer-une-chanson-sans-etre-musicien",
+      "date": "2026-07-29",
+      "title": "Jouer une chanson sans être musicien : votre première chanson sans lire une note",
+      "desc": "Peut-on jouer une chanson sans savoir jouer d'un instrument ? Oui. Sans lire de partition, sans corne aux doigts : jouez vos accords à la main et terminez votre première chanson dès aujourd'hui.",
+      "excerpt": "Je ne lis pas la musique, je ne joue d'aucun instrument, il est trop tard pour moi… Ces trois obstacles n'en sont plus. Voici la recette de la première chanson que vous pouvez jouer aujourd'hui.",
+      "body": [
+        {"p": "La plupart des gens qui veulent faire de la musique se heurtent au même mur : apprendre un instrument prend des mois. Le bout des doigts fait mal, les changements d'accords ne passent pas, et le solfège est une langue à part entière. Beaucoup abandonnent précisément là — non par manque de talent, mais parce que <b>la distance entre l'outil et le désir</b> est trop longue."},
+        {"p": "Il existe une façon de raccourcir cette distance : supprimer l'outil intermédiaire. Montrer sa main à la caméra et jouer l'accord directement."},
+        {"h2": "De quoi a-t-on vraiment besoin pour jouer une chanson ?"},
+        {"p": "Pour accompagner une chanson, ce qu'il vous faut n'est pas technique : ce sont trois décisions simples."},
+        {"ol": [
+          "<b>Quelle tonalité ?</b> Celle qui est confortable pour votre voix. En cas de doute, commencez par La mineur ou Do majeur.",
+          "<b>Quels accords ?</b> La plupart des chansons populaires tournent sur quatre accords. En connaître quatre, c'est en débloquer des centaines.",
+          "<b>Quand changer ?</b> En général tous les quatre temps. Le métronome compte à votre place."
+        ]},
+        {"p": "Remarquez ce qui ne figure pas dans cette liste : pas de « lire la musique », pas de « technique digitale », pas de « 10 000 heures »."},
+        {"h2": "Le secret des quatre accords"},
+        {"p": "Une part étonnamment large de la musique populaire occidentale tourne autour de la même grille de quatre accords. Écrite en degrés, elle ressemble à ceci : <b>I – V – vi – IV</b>. Dans l'univers de La mineur, cela donne : <b>Am – F – C – G</b>."},
+        {"p": "Si vous savez enchaîner ces quatre accords, vous pouvez chanter des dizaines de titres connus par-dessus. Et comme vous avez appris la grille en degrés, si elle est trop aiguë pour votre voix, il suffit de changer de tonalité : les mêmes gestes de la main continuent de fonctionner."},
+        {"box": "🎯 Pourquoi penser la grille en degrés ? Parce que les noms d'accords changent selon la tonalité, mais les degrés, jamais. Notre guide des degrés d'accords vous explique tout en détail.", "link": "degrees"},
+        {"h2": "Jouer avec la main : une première chanson en 10 minutes"},
+        {"p": "Dans le mode <b>Air Chord</b> de ChordPlai, votre nombre de doigts choisit le degré de l'accord. Tout ce que vous avez à retenir tient en quelques signes :"},
+        {"ul": [
+          "☝️ <b>Un doigt</b> — 1er degré : la « maison » de la chanson, l'accord apaisant",
+          "🖐️ <b>Main ouverte</b> — 5e degré : la tension, l'accord qui veut rentrer à la maison",
+          "🤘 <b>Cornes</b> — 6e degré : une couleur mélancolique et émouvante",
+          "4️⃣ <b>Quatre doigts</b> — 4e degré : l'ouverture, la sensation d'élan",
+          "✊ <b>Poing</b> — silence"
+        ]},
+        {"p": "Apprendre ces cinq gestes prend dix minutes et vous servira toute une vie. À la guitare, plaquer proprement les mêmes quatre accords demande des semaines."},
+        {"h2": "La recette de votre première séance"},
+        {"ol": [
+          "Ouvrez le site, autorisez la caméra et choisissez la gamme de <b>La mineur</b>.",
+          "Réglez le métronome sur 70 BPM — un tempo calme, sur lequel on peut chanter.",
+          "Tournez sur cette suite en changeant tous les quatre temps : ☝️ → 🤘 → 4️⃣ → 🖐️",
+          "Écoutez simplement pendant deux tours. Au troisième, commencez à fredonner sur « la la ».",
+          "Une fois la mélodie en place, essayez les paroles d'une chanson que vous connaissez — la plupart tomberont juste."
+        ]},
+        {"h2": "« Mais est-ce vraiment de la musique ? »"},
+        {"p": "Cette question, ce sont surtout ceux qui n'ont pas encore commencé qui la posent. La vraie musique, c'est la capacité à transmettre une émotion à quelqu'un qui écoute ; l'outil employé vient après. Le piano aussi est une machine, la guitare électrique également. La caméra et le suivi des mains ne sont qu'un nouvel outil ajouté à la liste."},
+        {"p": "Mieux encore : en jouant par degrés, vous apprenez sans y penser de la vraie théorie musicale. Si un jour vous décidez de passer à la guitare, votre oreille sera déjà prête."},
+        {"h2": "Que faire aujourd'hui ?"},
+        {"p": "Accordez-vous cinq minutes. Allumez la caméra, essayez les quatre signes, fredonnez quelque chose par-dessus et enregistrez. Demain, en vous réécoutant, vous serez surpris — parce que vous aurez, pour la première fois, conjugué au passé la phrase « un jour, je ferai de la musique »."}
+      ]
+    },
+    {
+      "id": "hand-signs",
+      "slug": "jouer-des-accords-avec-les-mains",
+      "date": "2026-07-29",
+      "title": "Jouer des accords avec des signes de la main : vos doigts, votre nouvel instrument",
+      "desc": "Comment le suivi des mains permet-il de jouer des accords dans les airs ? Du nombre de doigts à l'accord, l'inclinaison majeur/mineur et les astuces pour réussir les signes à tous les coups.",
+      "excerpt": "La caméra suit les 21 articulations de votre main et votre nombre de doigts devient un degré d'accord. La technologie en coulisses et les astuces pour des signes sans faute.",
+      "body": [
+        {"p": "Faire de la musique en agitant les mains dans les airs n'a rien d'une idée neuve. Dans les années 1920, Léon Theremin a construit un instrument qui lisait le champ électrique autour de deux antennes : le <b>thérémine</b>. Vous promeniez vos mains dans le vide et le son naissait sans que vous touchiez quoi que ce soit. Le problème, c'est que le thérémine était d'une difficulté redoutable : la hauteur était continue, et le moindre tremblement faussait la note."},
+        {"p": "Aujourd'hui, nous avons ce qui manquait au thérémine : <b>un ordinateur capable de comprendre votre main</b>. Le suivi des mains transforme un espace continu et glissant en signes discrets et fiables."},
+        {"h2": "Que voit la caméra dans votre main ?"},
+        {"p": "Air Chord détecte les <b>21 points articulaires</b> de votre main trente fois par seconde : le poignet, les articulations de la paume et les trois phalanges de chaque doigt. Ces points forment un squelette, dont le système tire trois informations :"},
+        {"ul": [
+          "<b>Le nombre de doigts levés</b> — détermine le degré de l'accord (de 1 à 7)",
+          "<b>L'angle d'inclinaison de la main</b> — bascule l'accord en majeur ou en mineur",
+          "<b>La rotation de la paume</b> — modifie le caractère du son (les effets)"
+        ]},
+        {"p": "Un détail qui compte : l'image ne quitte jamais votre appareil. Le modèle de reconnaissance tourne à l'intérieur du navigateur et le flux de la caméra n'est envoyé à aucun serveur."},
+        {"h2": "Du nombre de doigts jusqu'à l'accord"},
+        {"p": "Le système n'interprète pas le nombre de doigts comme une note, mais comme un <b>degré de la gamme</b>. Cette nuance change tout : deux doigts jouent <i>B°</i> en La mineur et <i>Dm</i> en Do majeur. Vos gestes restent donc constants pendant que la musique s'adapte à la tonalité choisie."},
+        {"box": "🎼 C'est pour cela qu'Air Chord n'est pas un jouet mais un véritable outil musical : ce que vous apprenez n'est pas « appuie sur cette touche », mais « joue l'accord qui remplit cette fonction ». Nous détaillons la logique des degrés dans notre article dédié.", "link": "degrees"},
+        {"h2": "Majeur et mineur : tout est dans l'angle du poignet"},
+        {"p": "Vous voudrez parfois entendre le même degré tantôt mélancolique, tantôt lumineux. Inutile d'apprendre un signe supplémentaire : il suffit d'incliner le poignet. <b>Vers l'intérieur</b>, l'accord devient majeur ; <b>vers l'extérieur</b>, il devient mineur ; main droite, c'est l'accord naturel de la gamme qui sonne."},
+        {"p": "La beauté de ce choix de conception, c'est que le geste épouse l'émotion : une petite rotation de la même main change la couleur de la musique, comme un guitariste qui attaque le même accord avec plus ou moins de douceur."},
+        {"h2": "6 astuces pour des signes impeccables"},
+        {"ol": [
+          "<b>Soignez la lumière :</b> une source forte derrière votre main (une fenêtre) complique la reconnaissance. Placez la lumière face à vous.",
+          "<b>La distance :</b> tenez la main à hauteur de poitrine, à 40–70 cm de la caméra.",
+          "<b>Écartez les doigts :</b> pour les signes à deux et trois doigts, évitez que les doigts se collent.",
+          "<b>Paume vers la caméra :</b> montrez l'intérieur de la main, pas la tranche.",
+          "<b>Des transitions nettes :</b> en changeant de degré, repassez un instant par une position neutre avant de former franchement le nouveau signe.",
+          "<b>Un fond sobre :</b> évitez les mains qui bougent derrière vous et les surfaces à motifs."
+        ]},
+        {"h2": "Pourquoi c'est mieux que de toucher un écran ?"},
+        {"p": "On peut bien sûr appuyer sur des touches d'accords sur un téléphone — mais le regard reste verrouillé sur l'écran. En jouant dans les airs, vous gardez la tête haute, les mains visibles et le regard vers la caméra. Quand vous chantez, cette différence s'entend et se voit : la respiration est plus libre, la posture plus naturelle, et l'image bien plus marquante."},
+        {"h2": "Comme apprendre un nouvel instrument — mais en accéléré"},
+        {"p": "Chaque instrument a sa courbe d'apprentissage. Celle d'Air Chord se mesure en minutes : cinq signes et un mouvement du poignet. En revanche, l'espace d'expression n'a rien de superficiel — degré, qualité, octave, distorsion, arpège et couches rythmiques vous occuperont des heures."},
+        {"p": "Levez les mains et essayez. Au pire, vous aurez perdu cinq minutes ; au mieux, la distance entre la musique et vous aura complètement disparu."}
+      ]
+    },
+    {
+      "id": "features-tour",
+      "slug": "toutes-les-fonctionnalites-de-chordplai",
+      "date": "2026-07-29",
+      "title": "Toutes les fonctionnalités de ChordPlai : de la main qui joue à l'harmoniseur vocal",
+      "desc": "Air Chord, 4 timbres de synthé, métronome et arpège, séquenceur rythmique, pads sampler, harmoniseur vocal, enregistrement vidéo et exercices instrumentaux — que trouve-t-on dans ChordPlai ?",
+      "excerpt": "Derrière un site qui semble se résumer à une caméra et un navigateur se cache un véritable studio. Le tour complet des fonctionnalités, d'Air Chord à l'harmoniseur vocal.",
+      "body": [
+        {"p": "Vu de l'extérieur, ChordPlai paraît simple : vous montrez votre main à la caméra, un accord sonne. Mais en soulevant le capot, on découvre un environnement musical étonnamment complet. Le voici en entier."},
+        {"h2": "🖐️ Air Chord — l'attraction principale"},
+        {"p": "Le signe de votre main gauche joue le degré de la gamme sélectionnée (1–7), l'inclinaison du poignet rend cet accord majeur ou mineur, et la main droite pilote les effets. Le son se prolonge tant que le signe reste en l'air, et se coupe dès que vous fermez le poing.", "link": "air-chord"},
+        {"h2": "🎛️ Quatre timbres de synthé"},
+        {"ul": [
+          "<b>🎹 Clavier électronique</b> — un timbre moderne et souple, dont la forme d'onde se mélange à mesure que vous tournez la paume droite",
+          "<b>🎼 Grand Piano</b> — une enveloppe de piano naturelle qui s'éteint après l'attaque ; magnifique en arpèges",
+          "<b>🌊 Analog</b> — un pad chaud et moelleux, généré à partir d'un véritable échantillon d'onde analogique",
+          "<b>🕹️ Retro</b> — une onde en dents de scie légèrement sale et nostalgique"
+        ]},
+        {"h2": "🥁 Métronome, arpège et mesure"},
+        {"p": "Vous réglez le BPM entre 40 et 160. Métronome activé, vos accords cessent d'être un pad tenu et se mettent à défiler en <b>arpège</b> — les notes de l'accord sonnent une à une, dans l'ordre. Les mesures 4/4 et 6/8 sont prises en charge, et l'arpège suit la mesure choisie."},
+        {"h2": "🎚️ Dessinez votre propre rythme"},
+        {"p": "Le séquenceur rythmique est une simple grille de cases : sur les lignes kick, snare et hihat, vous cliquez celles que vous voulez, et le motif tourne en boucle. Aucune connaissance du solfège n'est requise — vous voyez avec les yeux, vous validez avec les oreilles."},
+        {"h2": "🎤 Pads sampler — un instrument fait de votre voix"},
+        {"p": "Vous pouvez charger vos propres sons sur quatre pads, ou les enregistrer directement au micro. Un « hey ! », un claquement de mains, un coup sur la table… Vous les déclenchez en cliquant sur le pad ou en appuyant sur les touches 1 à 4. Chaque son importé ouvre sa propre ligne dans le séquenceur rythmique : vous pouvez donc l'inscrire dans le groove et le laisser jouer tout seul."},
+        {"box": "💡 C'est cette fonction qui fait passer ChordPlai du jouet à accords au véritable carnet d'esquisses : accords + rythme + vos propres sons = une maquette d'idée complète."},
+        {"h2": "🎙️ Harmoniseur vocal — un chœur pour votre voix"},
+        {"p": "Quand vous chantez, votre voix ne reste pas brute. Le signal qui entre dans l'enregistrement est filtré, compressé, agrémenté de réverbération et, si vous le souhaitez, démultiplié par des <b>harmonies à la tierce et à la quinte accordées à la gamme choisie</b>. Vous chantez donc seul, mais vous entendez un chœur à l'écoute. Quatre modes sont disponibles : Naturel, Hall, +Tierce et Chœur (3+5)."},
+        {"h2": "🎬 Enregistrement vidéo Reels et YouTube"},
+        {"p": "L'application enregistre votre performance sous forme de vidéo directement partageable. Deux formats sont proposés, vertical (9:16) et horizontal (16:9) ; le cadre affiche le tracé du suivi des mains, le nom de l'accord en cours, le motif rythmique et le filigrane ChordPlai. À la fin de l'enregistrement, on vous demande si vous souhaitez télécharger le fichier."},
+        {"h2": "🎸 Exercices instrumentaux — la seconde catégorie"},
+        {"p": "Une section distincte est réservée à ceux qui jouent réellement d'un instrument :"},
+        {"ul": [
+          "<b>Accords :</b> entraînement aux accords avec métronome, diagramme de guitare et clavier de piano",
+          "<b>Jeu des notes :</b> un jeu de rapidité où vous dites les noms de notes à voix haute",
+          "<b>Portée :</b> un exercice de lecture de notes en clé de sol et en clé de fa",
+          "<b>Accord Ninja :</b> un jeu qui reconnaît au micro l'accord joué sur votre vraie guitare",
+          "<b>Accord Tetris :</b> un Tetris dont la manette, ce sont les accords — vous faites pivoter les blocs en jouant le bon accord"
+        ]},
+        {"h2": "Tout dans le navigateur, gratuitement"},
+        {"p": "Aucune installation, aucun paiement. En vous connectant avec votre compte Google, votre progression est sauvegardée. Air Chord nécessite l'autorisation de la caméra ; les modules d'exercices fonctionnent aussi sans elle."}
+      ]
+    },
+    {
+      "id": "reels",
+      "slug": "filmer-un-clip-musical-sans-instrument",
+      "date": "2026-07-29",
+      "title": "Filmer un clip musical sans instrument : guide pratique pour les Reels",
+      "desc": "Comment tourner des vidéos musicales qui accrochent sans jouer d'un instrument ? Cadrage, lumière, choix des accords et la recette d'une vidéo de performance qui retient le spectateur en 15 secondes.",
+      "excerpt": "Jouer des accords avec la main ne parle pas qu'aux oreilles : ça se regarde aussi. La recette, étape par étape, d'une vidéo musicale marquante pour les Reels et les Shorts.",
+      "body": [
+        {"p": "La plupart de ceux qui veulent produire du contenu musical sur les réseaux sociaux butent au même endroit : chanter seul face caméra reste visuellement statique, et jouer d'un instrument, vous ne savez pas faire. Jouer des accords à la main comble exactement ce vide — c'est une performance <b>qui s'entend et qui se voit</b>."},
+        {"h2": "Pourquoi les gestes de la main fonctionnent si bien en vidéo ?"},
+        {"p": "Dans la première seconde, le spectateur scanne une vidéo en se demandant « qu'est-ce qui se passe ici ? ». Des mains qui bougent dans les airs et des sons qui changent en synchronisation déclenchent cette question instantanément. La curiosité est le carburant le plus puissant de la durée de visionnage — et la durée de visionnage est la seule chose que les algorithmes récompensent."},
+        {"h2": "Cadrage : vertical ou horizontal ?"},
+        {"ul": [
+          "<b>Reels / TikTok / Shorts :</b> vertical 9:16. Dans ce mode, ChordPlai centre la caméra et ajoute des bandeaux de marque en haut et en bas — les mains et le visage restent visibles en même temps.",
+          "<b>YouTube :</b> horizontal 16:9. Un cadre plus large, où les éléments d'interface se lisent plus confortablement."
+        ]},
+        {"p": "Pendant l'enregistrement, le nom de l'accord joué, le motif rythmique et le tracé du squelette de la main sont aussi incrustés dans la vidéo. Ces couches donnent au spectateur le sentiment qu'« il y a un vrai système là-dedans »."},
+        {"h2": "Lumière et arrière-plan"},
+        {"ol": [
+          "Placez la source de lumière principale <b>devant votre visage</b> ; s'il y a une fenêtre derrière vous, fermez le rideau.",
+          "Gardez un fond sobre — un mur uni reste l'idéal. Un arrière-plan animé perturbe autant le suivi des mains que l'attention du spectateur.",
+          "Cherchez du contraste entre le dos de votre main et le fond : devant un mur foncé, la main se lit très bien."
+        ]},
+        {"h2": "La structure qui retient le spectateur en 15 secondes"},
+        {"ol": [
+          "<b>0–2 s :</b> le son doit déjà tourner au moment où vous levez la main. Une ouverture silencieuse fait fuir.",
+          "<b>2–5 s :</b> faites un changement de degré — que le spectateur comprenne que le son dépend de votre main.",
+          "<b>5–10 s :</b> commencez à chanter. À ce moment-là, la curiosité cède la place à la musique.",
+          "<b>10–15 s :</b> inclinez le poignet pour basculer l'accord en majeur ou en mineur — un petit effet final, mais redoutablement efficace."
+        ]},
+        {"h2": "Choix des accords : quelle grille sonne le mieux ?"},
+        {"p": "Dans une vidéo courte, les enchaînements complexes se perdent. Choisissez une boucle de quatre accords et jouez-la deux fois. Une grille qui a fait ses preuves en La mineur : <b>☝️ → 🤘 → 4️⃣ → 🖐️</b>. Elle sonne mélancolique et familière, et presque n'importe quelle mélodie s'y pose.", "link": "play-without-musician"},
+        {"h2": "La voix : inaudible en direct, superbe à l'enregistrement"},
+        {"p": "Dans ChordPlai, votre voix ne sort pas des haut-parleurs en direct (cela évite le larsen), mais elle <b>entre traitée dans l'enregistrement</b> : EQ, compresseur, réverbération et harmonies accordées à la gamme s'y ajoutent. En réécoutant la prise, vous trouverez donc votre voix bien plus pleine que prévu."},
+        {"box": "🎧 Astuce : une fois l'enregistrement terminé, cliquez sur « Télécharger » et écoutez la vidéo au casque. Tourner la même performance deux fois en changeant de mode d'harmoniseur vous montrera très vite quelle couleur vous va le mieux."},
+        {"h2": "Au moment de publier"},
+        {"ul": [
+          "Expliquez en une phrase, dans le premier commentaire, ce que vous faites — les gens vont demander « comment c'est possible ? ».",
+          "Que la toute première image de la vidéo soit celle où votre main est en l'air : la miniature doit créer la curiosité.",
+          "Déclinez la même grille en série dans différentes gammes — répéter un format qui marche reste le chemin de croissance le plus rapide."
+        ]},
+        {"h2": "Liste du matériel"},
+        {"p": "Un ordinateur portable avec caméra. C'est tout. Ni micro, ni interface, ni instrument, ni kit d'éclairage — et si vous voulez un meilleur son, le micro d'un casque suffit."}
+      ]
+    },
+    {
+      "id": "studio",
+      "slug": "creer-son-beat-dans-le-navigateur",
+      "date": "2026-07-29",
+      "title": "Rythme, arpège et votre propre voix : un petit studio dans le navigateur",
+      "desc": "Métronome, accords arpégés, motif kick-snare dessiné par vos soins et sons enregistrés par vous-même — comment monter la structure d'un morceau depuis zéro dans ChordPlai ?",
+      "excerpt": "Jouer des accords n'est qu'un début. Séquenceur rythmique, arpèges et pads sampler : la marche à suivre pour bâtir la structure d'un morceau depuis zéro dans ChordPlai.",
+      "body": [
+        {"p": "Quand une idée vous vient, quel est le moyen le plus rapide de la capturer ? Le plus souvent, la fredonner dans le dictaphone du téléphone. Le problème, c'est que ce fredonnement ne veut plus rien dire le lendemain : ni tonalité, ni tempo, ni accords."},
+        {"p": "La section groove de ChordPlai comble exactement ce manque : vous saisissez l'idée <b>avec ses accords, son tempo et son rythme</b>. Construisons-la pas à pas."},
+        {"h2": "Étape 1 — fixez la tonalité et le tempo"},
+        {"p": "Commencez par choisir la gamme : mineur pour quelque chose de mélancolique, majeur pour quelque chose de lumineux. Réglez ensuite le BPM : autour de 70, c'est calme et propice au chant ; entre 100 et 120, c'est énergique ; en dessous de 60, c'est lourd et atmosphérique."},
+        {"p": "C'est également ici que vous choisissez la mesure : le <b>4/4</b> est le standard de la pop et du rock, tandis que le <b>6/8</b> apporte un balancement proche de la valse. Jouer les mêmes accords en 6/8 change complètement le caractère du morceau — ça vaut le détour."},
+        {"h2": "Étape 2 — activez l'arpège"},
+        {"p": "Dès que vous lancez le métronome, vos accords cessent d'être un pad tenu et se mettent à défiler en <b>arpège</b> : les notes de l'accord sonnent une à une, calées sur le tempo. Ce seul changement suffit à transformer un accord statique tenu à la main en quelque chose qui ressemble immédiatement à un « morceau »."},
+        {"p": "L'arpège fonctionne avec les timbres Clavier électronique et Grand Piano. Si vous choisissez Analog ou Retro, l'accord reste un pad tenu — un choix assumé, pensé pour les morceaux atmosphériques."},
+        {"h2": "Étape 3 — dessinez le rythme vous-même"},
+        {"p": "Le séquenceur rythmique est une grille : les lignes sont le kick, la snare et le hihat, les colonnes les pas de la mesure. Vous écrivez le motif en cliquant sur les cases. Un point de départ classique :"},
+        {"ul": [
+          "<b>Kick :</b> pas 1 et 9 (autrement dit le début et le milieu de chaque mesure)",
+          "<b>Snare :</b> pas 5 et 13 (deuxième et quatrième temps)",
+          "<b>Hihat :</b> toutes les cases, une sur deux — une texture continue"
+        ]},
+        {"p": "Ces trois lignes forment le squelette de presque toute la musique populaire. Déplacez les cases pour trouver vos propres variations : votre oreille vous dira aussitôt laquelle « avance »."},
+        {"h2": "Étape 4 — ajoutez vos propres sons"},
+        {"p": "Vous pouvez placer le son de votre choix sur les quatre pads sampler : un « hey ! » enregistré au micro, un coup sur la table, un cliquetis de clés, ou n'importe quel fichier audio de votre ordinateur. Chaque son importé ouvre <b>sa propre ligne</b> dans le séquenceur rythmique."},
+        {"box": "🎤 L'astuce préférée de tous : enregistrer un court « ha ! » avec votre propre voix et le poser à côté de la snare, sur le deuxième temps. Le morceau prend d'un coup une signature qui n'appartient qu'à vous."},
+        {"h2": "Étape 5 — chantez par-dessus et enregistrez"},
+        {"p": "La structure est prête : accords, arpège, rythme et vos propres sons tournent en boucle. Il ne vous reste qu'à fredonner par-dessus en changeant les accords de la main gauche. Dès que le résultat vous plaît, lancez l'enregistrement — votre voix passe par l'harmoniseur et arrive déjà mixée dans la vidéo."},
+        {"h2": "Trois esquisses à essayer"},
+        {"table": {"head": ["Ambiance", "Gamme", "BPM", "Mesure", "Timbre"], "rows": [["Mélancolique / introspectif", "La mineur", "68", "4/4", "Grand Piano"], ["Nostalgique / rétro", "Do majeur", "96", "4/4", "Retro"], ["Atmosphérique / cinématique", "Mi mineur", "56", "6/8", "Analog"]]}},
+        {"h2": "Et ensuite, où emmener l'idée ?"},
+        {"p": "Voyez ChordPlai comme un carnet d'esquisses : il capte l'idée à toute vitesse, la transforme en vidéo et vous permet de la partager. Si l'idée tient la route, vous pourrez développer la même grille d'accords dans un logiciel de studio — mais le plus souvent, tout ce dont vous aviez besoin, c'était de l'enregistrer avant qu'elle ne s'évapore."},
+        {"p": "Et surtout : rien de tout cela n'exige de lire la musique, de jouer d'un instrument ou de dépenser le moindre centime."}
+      ]
+    }
+  ]
+}

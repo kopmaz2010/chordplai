@@ -1,0 +1,337 @@
+{
+  "lang": "de",
+  "locale": "de_DE",
+  "name": "Deutsch",
+  "ui": {
+    "blogTitle": "ChordPlai Blog",
+    "blogLead": "Air Chord, Akkordstufen, Tonleitern und Praxis-Guides — für Einsteiger und Musiklehrer gleichermaßen.",
+    "blogDesc": "Der ChordPlai Blog: Akkorde per Handzeichen vor der Kamera spielen, Musik machen ohne Instrument, Akkordstufen verstehen und praktische Übungs-Guides.",
+    "tagline": "Akkord-Trainer · spielen, entdecken, lernen",
+    "backToBlog": "← Blog",
+    "blogCrumb": "Blog",
+    "cta": "🖐️ ChordPlai öffnen — spiel mit deiner Hand",
+    "ctaPost": "🖐️ Air Chord jetzt ausprobieren — kostenlos",
+    "footer": "Akkorde mit der Hand vor der Kamera spielen und dazu singen.",
+    "next": "Nächster Beitrag",
+    "readMore": "Weiterlesen",
+    "langLabel": "Sprache"
+  },
+  "posts": [
+    {
+      "id": "air-chord",
+      "slug": "was-ist-air-chord",
+      "date": "2026-07-29",
+      "title": "Was ist Air Chord? Akkorde spielen — nur mit deiner Hand vor der Kamera",
+      "desc": "Mit Air Chord spielst du Akkorde in der Luft: Webcam und Handtracking genügen. Das Handzeichen der linken Hand wählt die Stufe der Tonleiter, die Neigung des Handgelenks macht daraus Dur oder Moll. Ohne Installation, direkt im Browser, kostenlos.",
+      "excerpt": "Akkorde spielen ganz ohne Instrument — nur mit Webcam und Handzeichen. Hier erfährst du alles über das Zeichensystem von Air Chord, die Dur/Moll-Neigung und die Effekthand.",
+      "body": [
+        {"p": "Wer zu einem Song eine Begleitung wollte, hatte bisher zwei Möglichkeiten: entweder ein Instrument lernen oder einen fertigen Playback-Track starten. <b>Air Chord</b> öffnet einen dritten Weg: Du zeigst deiner Webcam die Hand, dein Handzeichen wird zu einem Akkord — und du singst darüber. Keine Installation, kein Download — alles läuft im Browser."},
+        {"h2": "Wie funktioniert das?"},
+        {"p": "Air Chord nutzt ein Handtracking-Modell, das die 21 Gelenkpunkte deiner Hand in Echtzeit verfolgt. Dein Kamerabild verlässt dabei nie dein Gerät; die Verarbeitung passiert komplett im Browser. Deine beiden Hände bekommen zwei ganz unterschiedliche Rollen."},
+        {"h2": "Linke Hand: der Akkord selbst"},
+        {"p": "Das Zeichen deiner linken Hand wählt die <i>Stufe</i> der eingestellten Tonleiter:"},
+        {"ul": [
+          "☝️ Zeigefinger = 1. Stufe (in a-Moll <b>Am</b>)",
+          "✌️ zwei Finger = 2. Stufe (<b>B°</b>)",
+          "Drei Finger, vier Finger und offene Hand = 3., 4. und 5. Stufe",
+          "🤘 = 6. Stufe · 🤟 = 7. Stufe"
+        ]},
+        {"p": "Solange das Zeichen in der Luft steht, klingt der Ton weiter — wie ein Synth-Pad. Neigst du die Hand <b>nach innen</b>, wird der Akkord zu Dur, neigst du sie <b>nach außen</b>, wird er zu Moll; hältst du sie gerade, erklingt der Akkord der Tonleiter selbst. ✊ Eine Faust macht Stille."},
+        {"box": "💡 Du kennst das Stufensystem noch nicht? Wirf einen Blick in unseren Guide zu Akkordstufen — dort erklären wir, warum die Handzeichen von Air Chord von 1 bis 7 durchnummeriert sind.", "link": "akor-dereceleri"},
+        {"h2": "Rechte Hand: die Effekte"},
+        {"p": "Die rechte Hand rührt den Akkord nicht an; sie formt nur seinen Charakter. Je weiter du sie <b>nach links neigst, desto mehr Verzerrung</b>, je weiter du sie <b>nach rechts drehst</b>, desto strahlender die Wellenform — gerade gehalten klingt alles clean. So bestimmt die linke Hand, <i>was</i> gespielt wird, und die rechte, <i>wie</i> es klingt."},
+        {"h2": "Tonart, Tonleiter und Maqam"},
+        {"p": "Im unteren Bedienfeld wählst du Tonart und Tonleiter: Dur, Moll und Maqam-Skalen werden unterstützt. Wechselst du die Tonleiter, bleiben die Handzeichen exakt gleich — nur ihre Bedeutung verschiebt sich. Deshalb wandert eine Begleitung, die du in a-Moll gelernt hast, mit einem Klick nach e-Moll."},
+        {"h2": "Rhythmus, Arpeggio und Pads mit deiner eigenen Stimme"},
+        {"ul": [
+          "<b>Metronom + Arpeggio:</b> BPM einstellen und die Akkorde in Achteln laufen lassen (4/4 und 6/8).",
+          "<b>Drum-Sequencer:</b> Schreib dein Kick-Snare-Hihat-Pattern selbst, einfach per Klick auf die Kästchen.",
+          "<b>Sampler-Pads:</b> Nimm deine eigene Stimme auf oder lade eine Datei hoch und spiel sie als Pad.",
+          "<b>Vokal-Harmonizer:</b> Während du singst, kommen zur Aufnahme tonleitergenaue Terz- und Quintstimmen dazu."
+        ]},
+        {"h2": "Nimm dein Video auf"},
+        {"p": "Air Chord nimmt hochkant für Reels (9:16) und quer für YouTube (16:9) auf. Im Bild sind die Handskelett-Grafiken, der klingende Akkord, das Drum-Pattern und das ChordPlai-Wasserzeichen enthalten — dein Video ist also sofort teilbar."},
+        {"h2": "Für wen ist das gemacht?"},
+        {"p": "Für alle, die gerne singen, aber kein Instrument spielen. Musiklehrerinnen und -lehrer nutzen es außerdem, um Akkordstufen im Unterricht anschaulich zu machen, und Content Creator drehen damit Performance-Videos, die im Feed hängen bleiben."}
+      ]
+    },
+    {
+      "id": "degrees",
+      "slug": "akkordstufen-einmal-lernen-ueberall-spielen",
+      "date": "2026-07-29",
+      "title": "Akkordstufen: Lerne das System I–VII einmal und spiel in jeder Tonart",
+      "desc": "Mit Akkordstufen denkst du Songs unabhängig von der Tonart. Am Beispiel a-Moll: diatonische Akkorde, I–IV–V-Muster und Übungen, mit denen dir Stufen in Fleisch und Blut übergehen.",
+      "excerpt": "Warum ist Am die „Eins\" und G die „Sieben\"? Das Stufensystem befreit Songs von der Tonart. Diatonische Akkorde und Praxistipps am Beispiel a-Moll.",
+      "body": [
+        {"p": "Wenn du dir die Akkorde eines Songs als „Am, F, C, G\" merkst, kennst du ihn nur in dieser einen Tonart. Denkst du ihn als „i–VI–III–VII\", kennst du ihn <b>in jeder Tonart</b>. Genau das leistet das Stufensystem: Es benennt Akkorde nicht nach ihrem Namen, sondern nach ihrer <i>Funktion</i> innerhalb der Tonleiter."},
+        {"h2": "Was ist eine Stufe?"},
+        {"p": "Über jedem Ton einer Tonleiter lässt sich ein Akkord bauen — ausschließlich aus den Tönen ebendieser Tonleiter. Auf welchem Ton der Akkord steht, das ist seine Stufe. Großbuchstaben (I, IV, V) stehen für Dur-Akkorde, Kleinbuchstaben (i, iv, v) für Moll-Akkorde, das Zeichen ° für einen verminderten Akkord."},
+        {"h2": "Beispiel a-Moll"},
+        {"table": {"head": ["Stufe", "Akkord", "Typ"], "rows": [["i", "Am", "Moll"], ["ii°", "B°", "vermindert"], ["III", "C", "Dur"], ["iv", "Dm", "Moll"], ["v", "Em", "Moll"], ["VI", "F", "Dur"], ["VII", "G", "Dur"]]}},
+        {"p": "Diese sieben Akkorde nennt man die <b>diatonischen Akkorde</b> der Tonleiter: Sie verwenden ausschließlich Töne aus a-Moll — deshalb klingen sie in jeder beliebigen Reihenfolge stimmig zusammen."},
+        {"box": "🖐️ Im Air-Chord-Modus von ChordPlai landet diese Tabelle direkt auf deinen Fingern: ☝️ = i, ✌️ = ii°, drei Finger = III … Du zeigst der Kamera das Zeichen, die passende Stufe erklingt. Schneller lernt man Stufen mit dem Ohr nicht.", "link": "air-chord"},
+        {"h2": "Warum funktioniert das so gut?"},
+        {"ol": [
+          "<b>Transponieren kostet nichts:</b> Um „i–VI–III–VII\" nach e-Moll zu holen, wechselst du nur die Tonleiter: Em–C–G–D. Das Muster bleibt identisch.",
+          "<b>Songs ähneln sich:</b> Ein großer Teil der Popmusik besteht aus einer Handvoll Stufenmuster (I–V–vi–IV ist das berühmteste). Wer die Muster erkennt, durchschaut einen neuen Song schon beim ersten Hören.",
+          "<b>Improvisieren wird leichter:</b> An der Stufe erkennst du sofort, welcher Akkord „nach Hause\" führt (i) und welcher Spannung aufbaut (V, VII)."
+        ]},
+        {"h2": "So gewöhnst du dein Ohr an Stufen"},
+        {"ul": [
+          "Wähl eine Tonleiter und spiel i → iv → v → i in der Schleife; benenne dabei laut, was jeder Akkord auslöst.",
+          "Such dir die Akkorde eines Lieblingssongs und schreib zu jedem Akkord seine Stufe.",
+          "Spiel dasselbe Muster in zwei verschiedenen Tonarten und hör nach, ob es dieselbe Geschichte erzählt."
+        ]},
+        {"p": "Alle drei Übungen lassen sich in ChordPlai umsetzen: Air Chord spielt in Stufen, das Akkord-Übungsmodul zeigt die Diagramme, und <i>Akkord-Ninja</i> erkennt über das Mikrofon, welchen Akkord du auf deinem echten Instrument greifst."}
+      ]
+    },
+    {
+      "id": "no-instrument",
+      "slug": "singen-ohne-instrument-begleiten",
+      "date": "2026-07-29",
+      "title": "Singen ohne Instrument: 3 Wege, dich selbst zu begleiten",
+      "desc": "Auch ohne Gitarre kannst du singen: Backing Tracks, Akkord-Apps und Akkorde in der Luft per Kamera. Vor- und Nachteile der drei Methoden — plus konkrete Praxistipps.",
+      "excerpt": "Keine Gitarre? Oder noch keine Griffe drauf? Schieb das Singen trotzdem nicht auf. Backing Track, Loop-Prinzip und Akkorde per Kamera im direkten Vergleich.",
+      "body": [
+        {"p": "„Erst lerne ich Gitarre, dann singe ich\" — dieser Satz führt bei den meisten Menschen dazu, dass sie mit dem Singen nie anfangen. Dabei wird man vor allem durch viel Singen besser, und dafür braucht es nur eines: eine Begleitung in Reichweite."},
+        {"h2": "1) Fertiges Playback (Backing Track / Karaoke)"},
+        {"ul": [
+          "<b>Vorteil:</b> Null Lernaufwand, dazu eine hochwertige Produktion.",
+          "<b>Nachteil:</b> Du bist Tonart und Tempo ausgeliefert. Liegt der Song zu hoch für deine Stimme, wird es anstrengend. Und du kannst nur zu Songs singen, die es schon gibt."
+        ]},
+        {"h2": "2) Apps, in denen du Akkorde auf dem Display spielst"},
+        {"ul": [
+          "<b>Vorteil:</b> Tonart und Tempo hast du selbst in der Hand, eigene Muster inklusive.",
+          "<b>Nachteil:</b> Dein Blick klebt am Display, deine Finger an winzigen Schaltflächen. Beim Auftritt aufs Handy zu starren ruiniert Haltung und Video gleichermaßen."
+        ]},
+        {"h2": "3) Akkorde in der Luft spielen (Air Chord)"},
+        {"p": "Der dritte und neueste Weg: Du zeigst der Kamera deines Rechners die Hand und <b>spielst Akkorde per Handzeichen</b>. Das Zeichen der linken Hand (1–7) spielt die Stufe der gewählten Tonleiter, durch Neigen wird daraus Dur oder Moll; die rechte Hand steuert die Effekte.", "link": "air-chord"},
+        {"ul": [
+          "<b>Vorteil:</b> Hände in der Luft, freie Haltung, Blick in die Kamera — die Performance wirkt natürlich. Tonart und Tempo gehören ganz dir, und die Aufnahme für Reels/YouTube steckt schon in der App.",
+          "<b>Nachteil:</b> Du brauchst ein Gerät mit Kamera, und an die Handzeichen gewöhnst du dich in ein paar Minuten."
+        ]},
+        {"h2": "Was passt zu dir?"},
+        {"table": {"head": ["", "Backing Track", "Touch-Akkorde", "Air Chord"], "rows": [["Einstiegshürde", "Keine", "Niedrig", "Niedrig"], ["Kontrolle über Tonart/Tempo", "Keine", "Ja", "Ja"], ["Eigene Songs ausprobieren", "Nein", "Ja", "Ja"], ["Video-Performance", "Mittel", "Schwach", "Stark"], ["Theorie nebenbei lernen", "Nein", "Wenig", "Stufensystem"]]}},
+        {"box": "🎤 Unsere Empfehlung: Backing Track zum Warmsingen, Air Chord für eigene Ideen und Videoinhalte. Das eine schließt das andere nicht aus — wichtig ist nur, jeden Tag zu singen."},
+        {"h2": "Deine 5-Minuten-Startroutine"},
+        {"ol": [
+          "Öffne ChordPlai und erlaube den Kamerazugriff.",
+          "Wähl eine Tonleiter, die deiner Stimme angenehm liegt (im Zweifel a-Moll).",
+          "Wechsle zwischen ☝️ (i) und 🖐️ (v) hin und her und setz deine Atmung auf die Akkordwechsel.",
+          "Bau eine Schleife aus vier Stufen (z. B. i–VI–III–VII) und summ eine Melodie darüber.",
+          "Drück auf Aufnahme und dreh ein Testvideo — nichts zeigt deinen Fortschritt besser."
+        ]}
+      ]
+    },
+    {
+      "id": "play-without-musician",
+      "slug": "musik-machen-ohne-noten-lesen",
+      "date": "2026-07-29",
+      "title": "Musik machen ohne Musiker zu sein: dein erster Song ohne Noten",
+      "desc": "Kann man Songs spielen, ohne ein Instrument zu beherrschen? Ja. Ohne Noten lesen, ohne Hornhaut an den Fingerkuppen — spiel Akkorde mit der Hand und bring deinen ersten Song noch heute zu Ende.",
+      "excerpt": "Ich kann keine Noten, ich spiele kein Instrument, ich bin zu spät dran … Nichts davon hält dich heute noch auf. Das Rezept für den ersten Song, den du heute spielen kannst.",
+      "body": [
+        {"p": "Die meisten Menschen, die Musik machen wollen, stoßen an dieselbe Wand: Ein Instrument zu lernen dauert Monate. Die Fingerkuppen brennen, die Akkordwechsel klemmen, Noten lesen ist eine eigene Sprache. Genau hier hören die meisten auf — nicht aus mangelndem Talent, sondern weil <b>der Weg zwischen Werkzeug und Wunsch</b> viel zu lang ist."},
+        {"p": "Es gibt einen Weg, diese Strecke abzukürzen: das Werkzeug dazwischen einfach weglassen. Hand in die Kamera halten und den Akkord direkt spielen."},
+        {"h2": "Was braucht man wirklich, um einen Song zu spielen?"},
+        {"p": "Für eine Songbegleitung brauchst du keine Technik, sondern drei einfache Entscheidungen:"},
+        {"ol": [
+          "<b>Welche Tonart?</b> Eine, die deiner Stimme angenehm liegt. Wenn du unsicher bist, fang mit a-Moll oder C-Dur an.",
+          "<b>Welche Akkorde?</b> Die meisten Popsongs drehen sich um vier Akkorde. Diese vier zu kennen öffnet dir Hunderte Songs.",
+          "<b>Wann wird gewechselt?</b> Meist alle vier Schläge. Das Metronom zählt das für dich mit."
+        ]},
+        {"p": "Fällt dir etwas auf? Auf dieser Liste steht kein „Noten lesen\", keine „Fingertechnik\" und keine „10.000 Stunden\"."},
+        {"h2": "Das Geheimnis der vier Akkorde"},
+        {"p": "Ein erstaunlich großer Teil der westlichen Popmusik dreht sich um dasselbe Vier-Akkord-Muster. In der Sprache der Stufen sieht es so aus: <b>I – V – vi – IV</b>. Übertragen in die Welt von a-Moll heißt das: <b>Am – F – C – G</b>."},
+        {"p": "Wenn du diese vier nacheinander spielen kannst, singst du dutzende vertraute Songs darüber. Und weil du das Muster als Stufenfolge gelernt hast, wechselst du einfach die Tonart, falls es dir zu hoch wird — mit exakt denselben Handbewegungen."},
+        {"box": "🎯 Warum ist es so wichtig, in Stufen zu denken? Weil Akkordnamen sich mit der Tonart ändern, Stufen aber nicht. Die ausführliche Erklärung findest du in unserem Guide zu Akkordstufen.", "link": "degrees"},
+        {"h2": "Mit der Hand spielen: der erste Song in 10 Minuten"},
+        {"p": "Im <b>Air Chord</b>-Modus von ChordPlai bestimmt die Zahl deiner Finger die Stufe des Akkords. Mehr als ein paar Handzeichen musst du dir nicht merken:"},
+        {"ul": [
+          "☝️ <b>Ein Finger</b> — 1. Stufe: das „Zuhause\" des Songs, der Akkord, der beruhigt",
+          "🖐️ <b>Offene Hand</b> — 5. Stufe: Spannung, der Akkord, der nach Hause will",
+          "🤘 <b>Pommesgabel</b> — 6. Stufe: melancholische, gefühlvolle Farbe",
+          "4️⃣ <b>Vier Finger</b> — 4. Stufe: Weite, das Gefühl von Aufbruch",
+          "✊ <b>Faust</b> — Stille"
+        ]},
+        {"p": "Diese fünf Bewegungen lernst du in zehn Minuten und beherrschst sie ein Leben lang. Auf der Gitarre brauchst du Wochen, bis dieselben vier Akkorde sauber klingen."},
+        {"h2": "Das Rezept für deine erste Session"},
+        {"ol": [
+          "Seite öffnen, Kamerazugriff erlauben, als Tonleiter <b>a-Moll</b> wählen.",
+          "Stell das Metronom auf 70 BPM — ruhig genug, um dazu zu singen.",
+          "Spiel diese Folge und wechsle alle vier Schläge: ☝️ → 🤘 → 4️⃣ → 🖐️",
+          "Hör zwei Runden lang nur zu. Ab der dritten Runde fängst du an, „la la\" zu summen.",
+          "Sobald die Melodie sitzt, probier den Text eines Songs, den du kennst — meistens passt er."
+        ]},
+        {"h2": "„Aber ist das denn echte Musik?\""},
+        {"p": "Diese Frage stellen vor allem die, die noch nicht angefangen haben. Echte Musik heißt, bei jemandem ein Gefühl auszulösen; mit welchem Werkzeug du das tust, ist zweitrangig. Ein Klavier ist auch eine Maschine, eine E-Gitarre ebenso. Kamera und Handtracking sind einfach ein neues Werkzeug auf dieser Liste."},
+        {"p": "Mehr noch: Wenn du in Stufen spielst, lernst du nebenbei echte Musiktheorie. Solltest du eines Tages zur Gitarre wechseln, ist dein Ohr längst vorbereitet."},
+        {"h2": "Was du heute tun solltest"},
+        {"p": "Nimm dir fünf Minuten. Kamera an, die vier Zeichen ausprobieren, etwas dazu summen und aufnehmen. Wenn du es dir morgen anhörst, wirst du staunen — denn zum ersten Mal hast du den Satz „irgendwann mache ich mal Musik\" in die Vergangenheitsform gesetzt."}
+      ]
+    },
+    {
+      "id": "hand-signs",
+      "slug": "akkorde-mit-handzeichen-spielen",
+      "date": "2026-07-29",
+      "title": "Akkorde mit Handzeichen spielen: deine Finger sind das neue Instrument",
+      "desc": "Wie kann man mit Handtracking Akkorde in der Luft spielen? Der Weg von der Fingerzahl zum Akkord, die Dur/Moll-Neigung und die Tricks für perfekt erkannte Handzeichen.",
+      "excerpt": "Die Kamera verfolgt 21 Gelenke deiner Hand, deine Fingerzahl wird zur Akkordstufe. Die Technik dahinter — und die Tricks für Handzeichen, die immer sitzen.",
+      "body": [
+        {"p": "Musik durch Handbewegungen in der Luft ist keine neue Idee. In den 1920ern baute Leon Theremin ein Instrument, das die elektrischen Felder um zwei Antennen ausliest: das <b>Theremin</b>. Du bewegst die Hände durch die Luft und erzeugst Klang, ohne irgendetwas zu berühren. Das Problem: Das Theremin war gnadenlos schwer — die Tonhöhe war stufenlos, und das kleinste Zittern brachte alles ins Wanken."},
+        {"p": "Heute haben wir das, woran das Theremin scheiterte: <b>einen Computer, der deine Hand versteht</b>. Handtracking verwandelt den fließenden, rutschigen Raum in klare, verlässliche Zeichen."},
+        {"h2": "Was sieht die Kamera an deiner Hand?"},
+        {"p": "Air Chord erfasst dreißigmal pro Sekunde die <b>21 Gelenkpunkte</b> deiner Hand: Handgelenk, die Gelenke der Handfläche und die drei Glieder jedes Fingers. Diese Punkte bilden ein Skelett, aus dem das System drei Dinge abliest:"},
+        {"ul": [
+          "<b>Wie viele Finger offen sind</b> — das bestimmt die Stufe des Akkords (von 1 bis 7)",
+          "<b>Der Neigungswinkel der Hand</b> — macht aus dem Akkord Dur oder Moll",
+          "<b>Die Drehung der Handfläche</b> — verändert den Klangcharakter (die Effekte)"
+        ]},
+        {"p": "Ein wichtiges Detail: Das Bild verlässt dein Gerät nie. Das Erkennungsmodell läuft im Browser, der Kamerastream wird an keinen Server gesendet."},
+        {"h2": "Von der Fingerzahl zum Akkord"},
+        {"p": "Das System interpretiert die Fingerzahl nicht als festen Ton, sondern als <b>Stufe der Tonleiter</b>. Dieser Unterschied verändert alles: Zwei Finger spielen in a-Moll ein <i>B°</i> und in C-Dur ein <i>Dm</i>. Deine Handbewegungen bleiben also gleich, während die Musik sich der gewählten Tonart anpasst."},
+        {"box": "🎼 Genau deshalb ist Air Chord kein Spielzeug, sondern ein echtes Musikwerkzeug: Du lernst nicht „drück diese Taste\", sondern „spiel den Akkord mit dieser Funktion\". Die Logik der Stufen erklären wir ausführlich in unserem Beitrag zu Akkordstufen.", "link": "degrees"},
+        {"h2": "Dur und Moll: der Winkel deines Handgelenks"},
+        {"p": "Manchmal willst du dieselbe Stufe mal traurig, mal fröhlich hören. Dafür brauchst du kein neues Zeichen — du neigst einfach das Handgelenk. <b>Nach innen</b> geneigt wird der Akkord zu Dur, <b>nach außen</b> zu Moll; hältst du die Hand gerade, erklingt der Akkord der Tonleiter selbst."},
+        {"p": "Das Schöne an diesem Prinzip: Die Bewegung entspricht dem Gefühl. Eine kleine Drehung derselben Hand verändert die Farbe der Musik — so wie eine Gitarristin denselben Akkord hart oder weich anschlägt."},
+        {"h2": "6 Tricks für Handzeichen, die immer sitzen"},
+        {"ol": [
+          "<b>Achte aufs Licht:</b> Starkes Gegenlicht hinter deiner Hand (ein Fenster) erschwert die Erkennung. Das Licht sollte auf dein Gesicht fallen.",
+          "<b>Abstand:</b> Halt die Hand auf Brusthöhe, 40–70 cm von der Kamera entfernt.",
+          "<b>Finger spreizen:</b> Bei Zwei- und Drei-Finger-Zeichen sollten die Finger nicht aneinanderkleben.",
+          "<b>Handfläche zur Kamera:</b> Zeig die Innenseite der Hand, nicht die Kante.",
+          "<b>Sauber wechseln:</b> Geh beim Stufenwechsel kurz in eine neutrale Haltung und form dann das neue Zeichen klar aus.",
+          "<b>Ruhiger Hintergrund:</b> Hinter dir sollten keine anderen Hände in Bewegung und keine gemusterten Flächen sein."
+        ]},
+        {"h2": "Warum ist das besser, als aufs Display zu tippen?"},
+        {"p": "Natürlich kannst du Akkorde auch auf dem Handy antippen — aber dein Blick klebt dann am Bildschirm. In der Luft bleibt dein Kopf oben, deine Hände sind sichtbar, dein Blick in der Kamera. Beim Singen wirkt sich das doppelt aus, auf Stimme und Video: Der Atem fließt freier, die Haltung ist natürlicher, das Bild deutlich eindrucksvoller."},
+        {"h2": "Wie ein neues Instrument — nur schneller"},
+        {"p": "Jedes Instrument hat seine Lernkurve. Die von Air Chord misst man in Minuten: fünf Handzeichen und eine Bewegung des Handgelenks. Der Ausdrucksspielraum ist trotzdem alles andere als flach — mit Stufen, Akkordqualität, Oktaven, Verzerrung, Arpeggien und Rhythmusebenen kannst du stundenlang in die Tiefe gehen."},
+        {"p": "Heb die Hände und probier es aus. Im schlimmsten Fall verlierst du fünf Minuten; im besten Fall verschwindet der Abstand zwischen dir und der Musik vollständig."}
+      ]
+    },
+    {
+      "id": "features-tour",
+      "slug": "alle-chordplai-funktionen-im-ueberblick",
+      "date": "2026-07-29",
+      "title": "Alle Funktionen von ChordPlai: vom Spiel mit der Hand bis zum Vokal-Harmonizer",
+      "desc": "Air Chord, 4 Synth-Klänge, Metronom und Arpeggiator, Drum-Sequencer, Sampler-Pads, Vokal-Harmonizer, Videoaufnahme und Instrumentalübungen — was steckt alles in ChordPlai?",
+      "excerpt": "Was aussieht wie eine Kamera und ein Browserfenster, ist in Wahrheit ein komplettes Musikstudio. Die Tour durch alle Funktionen, von Air Chord bis Vokal-Harmonizer.",
+      "body": [
+        {"p": "Von außen wirkt ChordPlai schlicht: Hand vor die Kamera, Akkord erklingt. Hebt man aber den Deckel, findet man darunter eine erstaunlich vollständige Musikumgebung. Hier ist alles im Überblick."},
+        {"h2": "🖐️ Air Chord — die Hauptsache"},
+        {"p": "Das Zeichen deiner linken Hand spielt die Stufe der gewählten Tonleiter (1–7), das Neigen des Handgelenks macht daraus Dur oder Moll, die rechte Hand steuert die Effekte. Solange das Zeichen in der Luft steht, klingt der Ton weiter; die Faust macht Stille.", "link": "air-chord"},
+        {"h2": "🎛️ Vier Synth-Klänge"},
+        {"ul": [
+          "<b>🎹 Elektronisches Keyboard</b> — ein flexibler, moderner Klang, dessen Wellenform sich mit der Drehung deiner rechten Handfläche verändert",
+          "<b>🎼 Grand Piano</b> — natürliche Klavierhüllkurve, die nach dem Anschlag ausklingt; klingt in Arpeggien besonders schön",
+          "<b>🌊 Analog</b> — ein warmes, weiches Pad, erzeugt aus dem Sample einer echten Analogwelle",
+          "<b>🕹️ Retro</b> — leicht schmutzige, nostalgische Sägezahnwelle"
+        ]},
+        {"h2": "🥁 Metronom, Arpeggio und Taktart"},
+        {"p": "Das Tempo stellst du zwischen 40 und 160 BPM ein. Mit eingeschaltetem Metronom werden deine Akkorde vom liegenden Pad zum <b>Arpeggio</b> — die Töne des Akkords erklingen einzeln, nacheinander. Unterstützt werden 4/4 und 6/8; das Arpeggio richtet sich nach der gewählten Taktart."},
+        {"h2": "🎚️ Zeichne deinen eigenen Rhythmus"},
+        {"p": "Der Drum-Sequencer ist ein simples Kästchenraster: In den Zeilen für Kick, Snare und Hihat klickst du die Felder an, die klingen sollen, und das Pattern läuft in der Schleife. Notenkenntnisse brauchst du dafür nicht — du siehst es mit den Augen und bestätigst es mit den Ohren."},
+        {"h2": "🎤 Sampler-Pads — ein Instrument aus deiner eigenen Stimme"},
+        {"p": "Auf vier Pads legst du eigene Sounds, entweder als Datei oder direkt über das Mikrofon aufgenommen. Ein „Hey!\", ein Klatschen, ein Klopfen auf den Tisch … Abgespielt wird per Klick auf das Pad oder über die Tasten 1-4. Jeder hochgeladene Sound bekommt im Drum-Sequencer seine eigene Zeile — du kannst ihn also fest in den Groove schreiben und automatisch abspielen lassen."},
+        {"box": "💡 Diese Funktion macht aus ChordPlai mehr als ein Akkord-Spielzeug: ein echtes Skizzenwerkzeug. Akkord + Rhythmus + deine eigenen Sounds = eine fertige Ideenskizze."},
+        {"h2": "🎙️ Vokal-Harmonizer — ein Chor für deine Stimme"},
+        {"p": "Beim Singen bleibt deine Stimme nicht roh. Was in die Aufnahme geht, wird gefiltert, komprimiert, mit Reverb versehen und auf Wunsch um <b>tonleitergenaue Terz- und Quintstimmen</b> verdoppelt. Du singst also allein und hörst in der Aufnahme einen Chor. Es gibt vier Modi: Natürlich, Hall, +Terz und Chor (3+5)."},
+        {"h2": "🎬 Videoaufnahme für Reels und YouTube"},
+        {"p": "Die App nimmt deine Performance direkt als teilbares Video auf. Es gibt Hochformat (9:16) und Querformat (16:9); im Bild erscheinen die Handtracking-Grafiken, der Name des klingenden Akkords, das Drum-Pattern und das ChordPlai-Wasserzeichen. Nach der Aufnahme wirst du gefragt, ob du das Video herunterladen möchtest."},
+        {"h2": "🎸 Instrumentalübungen — der zweite Bereich"},
+        {"p": "Für alle, die tatsächlich ein Instrument spielen, gibt es einen eigenen Bereich:"},
+        {"ul": [
+          "<b>Akkorde:</b> Akkordübungen mit Metronom, samt Gitarrendiagramm und Klaviatur",
+          "<b>Notenspiel:</b> Ein Schnelligkeitsspiel, bei dem du die Notennamen laut aussprichst",
+          "<b>Notensystem:</b> Notenlesen im Violinschlüssel und im Bassschlüssel üben",
+          "<b>Akkord-Ninja:</b> Ein Spiel, das über das Mikrofon erkennt, welchen Akkord du auf deiner echten Gitarre greifst",
+          "<b>Akkord-Tetris:</b> Tetris, gesteuert per Akkord — du drehst die Blöcke, indem du den richtigen Akkord spielst"
+        ]},
+        {"h2": "Alles im Browser, alles kostenlos"},
+        {"p": "Keine Installation, keine Bezahlung. Meldest du dich mit deinem Google-Konto an, bleibt dein Fortschritt gespeichert. Für Air Chord brauchst du Kamerazugriff; die Übungsmodule laufen auch ohne Kamera."}
+      ]
+    },
+    {
+      "id": "reels",
+      "slug": "musikvideos-ohne-instrument-drehen",
+      "date": "2026-07-29",
+      "title": "Musikvideos ohne Instrument drehen: der Praxis-Guide für Reels",
+      "desc": "Wie drehst du Musikvideos, die auffallen, ganz ohne Instrument? Bildausschnitt, Licht, Akkordwahl und das Rezept für ein Performance-Video, das 15 Sekunden lang fesselt.",
+      "excerpt": "Akkorde mit der Hand zu spielen klingt nicht nur gut, es sieht auch gut aus. Schritt für Schritt zum sehenswerten Musikvideo für Reels und Shorts.",
+      "body": [
+        {"p": "Wer Musikinhalte für Social Media produzieren will, hängt meist an derselben Stelle fest: Nur vor der Kamera zu singen wirkt visuell statisch — und ein Instrument spielst du eben nicht. Akkorde per Handbewegung füllen genau diese Lücke: eine Performance, die man <b>hört und sieht</b>."},
+        {"h2": "Warum funktionieren Handbewegungen im Video so gut?"},
+        {"p": "In der ersten Sekunde scannt jeder Zuschauer ein Video mit der Frage: „Was passiert hier?\" Hände, die sich durch die Luft bewegen, und Klänge, die sich synchron dazu verändern, lösen diese Frage sofort aus. Neugier ist der stärkste Treibstoff für Wiedergabezeit — und Wiedergabezeit ist das Einzige, was Algorithmen belohnen."},
+        {"h2": "Bildformat: hochkant oder quer?"},
+        {"ul": [
+          "<b>Reels / TikTok / Shorts:</b> Hochformat 9:16. ChordPlai zentriert die Kamera in diesem Modus und setzt oben und unten Markenbalken — Hände und Gesicht sind gleichzeitig im Bild.",
+          "<b>YouTube:</b> Querformat 16:9. Weiterer Bildausschnitt, die Bedienelemente lassen sich entspannter lesen."
+        ]},
+        {"p": "Während der Aufnahme werden auch der Name des klingenden Akkords, das Drum-Pattern und die Handskelett-Grafiken ins Video eingebrannt. Diese Ebenen vermitteln den Zuschauern das Gefühl: Hier steckt ein echtes System dahinter."},
+        {"h2": "Licht und Hintergrund"},
+        {"ol": [
+          "Die Hauptlichtquelle sollte <b>vor deinem Gesicht</b> stehen; hast du ein Fenster im Rücken, zieh den Vorhang zu.",
+          "Halt den Hintergrund schlicht — eine glatte Wand ist ideal. Bewegte Hintergründe stören das Handtracking und die Aufmerksamkeit gleichermaßen.",
+          "Sorg für Kontrast zwischen Handrücken und Hintergrund; vor einer dunklen Wand liest sich die Hand hervorragend."
+        ]},
+        {"h2": "Der Aufbau, der 15 Sekunden lang fesselt"},
+        {"ol": [
+          "<b>0–2 Sek.:</b> Der Sound läuft schon, und du hebst die Hand. Ein stummer Anfang vertreibt die Zuschauer.",
+          "<b>2–5 Sek.:</b> Mach einen Stufenwechsel — so merkt das Publikum, dass der Klang an deiner Hand hängt.",
+          "<b>5–10 Sek.:</b> Fang an zu singen. Ab hier weicht die Neugier der Musik.",
+          "<b>10–15 Sek.:</b> Neig das Handgelenk und dreh den Akkord nach Dur oder Moll — ein kleiner, aber wirkungsvoller Schlusstrick."
+        ]},
+        {"h2": "Akkordwahl: Welches Muster klingt gut?"},
+        {"p": "In kurzen Videos gehen komplexe Verläufe unter. Wähl eine Schleife aus vier Akkorden und spiel sie zweimal durch. Ein bewährtes Muster in a-Moll: <b>☝️ → 🤘 → 4️⃣ → 🖐️</b>. Es klingt melancholisch und vertraut, und fast jede Melodie passt darauf.", "link": "play-without-musician"},
+        {"h2": "Gesang: live nicht hörbar, in der Aufnahme umso schöner"},
+        {"p": "In ChordPlai hörst du deine Stimme nicht live über die Lautsprecher (das verhindert Rückkopplungen) — <b>in die Aufnahme geht sie aber fertig bearbeitet ein</b>: mit EQ, Kompressor, Reverb und tonleitergenauen Harmonien. Wenn du dir die Aufnahme ansiehst, wird deine Stimme also deutlich voller klingen, als du erwartest."},
+        {"box": "🎧 Tipp: Klick nach der Aufnahme auf „Herunterladen\" und hör dir das Video mit Kopfhörern an. Dieselbe Performance zweimal mit unterschiedlichem Harmonizer-Modus aufzunehmen zeigt dir schnell, welche Farbe dir am besten steht."},
+        {"h2": "Beim Veröffentlichen"},
+        {"ul": [
+          "Erklär im ersten Kommentar in einem Satz, was du da machst — die Leute werden fragen: „Wie geht das?\"",
+          "Das erste Bild des Videos sollte deine Hand in der Luft zeigen; das Cover muss neugierig machen.",
+          "Produzier dasselbe Muster als Serie in verschiedenen Tonleitern — ein funktionierendes Format zu wiederholen ist der schnellste Weg zu Reichweite."
+        ]},
+        {"h2": "Die Ausrüstungsliste"},
+        {"p": "Ein Laptop mit Kamera. Das war's. Kein Mikrofon, kein Interface, kein Instrument, kein Lichtset — willst du besseren Ton, reicht ein Headset-Mikrofon."}
+      ]
+    },
+    {
+      "id": "studio",
+      "slug": "bau-deinen-eigenen-beat",
+      "date": "2026-07-29",
+      "title": "Rhythmus, Arpeggio und deine eigene Stimme: ein kleines Studio im Browser",
+      "desc": "Metronom, arpeggierte Akkorde, ein selbst gezeichnetes Kick-Snare-Pattern und eigene Aufnahmen — so baust du in ChordPlai das Gerüst eines Tracks von Grund auf.",
+      "excerpt": "Akkorde spielen ist erst der Anfang. Schritt für Schritt zum Track-Gerüst in ChordPlai — mit Drum-Sequencer, Arpeggien und Sampler-Pads.",
+      "body": [
+        {"p": "Wie hältst du eine Idee am schnellsten fest, wenn sie dir einfällt? Meistens, indem du sie ins Handy summst. Das Problem: Am nächsten Tag sagt dieses Gesumme nichts mehr aus — weder die Tonart ist erkennbar noch das Tempo, geschweige denn die Akkorde."},
+        {"p": "Genau diese Lücke füllt der Groove-Bereich von ChordPlai: Du fängst die Idee <b>mit ihren Akkorden, ihrem Tempo und ihrem Rhythmus</b> ein. Bauen wir sie Schritt für Schritt auf."},
+        {"h2": "Schritt 1 — Tonart und Tempo festlegen"},
+        {"p": "Wähl zuerst die Tonleiter. Willst du etwas Melancholisches, nimm Moll, soll es strahlen, nimm Dur. Dann bestimmst du das Tempo: um die 70 BPM ist ruhig und gut besingbar, 100–120 sind energiegeladen, unter 60 wird es schwer und atmosphärisch."},
+        {"p": "Auch die Taktart wählst du hier: <b>4/4</b> ist der Standard in Pop und Rock, <b>6/8</b> gibt ein wiegendes, walzerartiges Gefühl. Dieselben Akkorde in 6/8 zu spielen verändert den Charakter des Stücks komplett — einen Versuch wert."},
+        {"h2": "Schritt 2 — Arpeggio einschalten"},
+        {"p": "Sobald du das Metronom startest, hören deine Akkorde auf, ein liegendes Pad zu sein, und laufen als <b>Arpeggio</b>: Die Töne des Akkords erklingen einzeln, fest ans Tempo gekoppelt. Diese eine Änderung lässt einen statisch gehaltenen Akkord sofort wie ein Stück klingen."},
+        {"p": "Das Arpeggio funktioniert mit den Klängen Elektronisches Keyboard und Grand Piano. Wählst du Analog oder Retro, bleibt der Akkord ein liegendes Pad — eine bewusste Entscheidung für atmosphärische Stücke."},
+        {"h2": "Schritt 3 — den Rhythmus selbst zeichnen"},
+        {"p": "Der Drum-Sequencer ist ein Raster: Die Zeilen sind Kick, Snare und Hihat, die Spalten die Schritte des Takts. Du klickst die Kästchen an und schreibst das Pattern selbst. Ein klassischer Anfang:"},
+        {"ul": [
+          "<b>Kick:</b> Schritt 1 und 9 (also Anfang und Mitte jedes Takts)",
+          "<b>Snare:</b> Schritt 5 und 13 (zweiter und vierter Schlag)",
+          "<b>Hihat:</b> jeder zweite Schritt — ein durchlaufender Teppich"
+        ]},
+        {"p": "Diese drei Zeilen sind das Skelett fast der gesamten Popmusik. Verschieb die Kästchen und finde deine eigenen Varianten; dein Ohr sagt dir sofort, welche davon „läuft\"."},
+        {"h2": "Schritt 4 — deine eigenen Sounds dazunehmen"},
+        {"p": "Auf die vier Sampler-Pads legst du, was du willst: ein „Hey!\" übers Mikrofon, ein Klopfen auf den Tisch, ein Schlüsselklirren oder irgendeine Audiodatei von deinem Rechner. Jeder Sound, den du lädst, bekommt im Drum-Sequencer <b>seine eigene Zeile</b>."},
+        {"box": "🎤 Der beliebteste Trick: ein kurzes „Ha!\" mit der eigenen Stimme aufnehmen und neben der Snare auf den zweiten Schlag setzen. Auf einmal trägt das Stück deine Handschrift."},
+        {"h2": "Schritt 5 — dazu singen und aufnehmen"},
+        {"p": "Das Gerüst steht: Akkorde, Arpeggio, Rhythmus und deine eigenen Sounds laufen in der Schleife. Jetzt wechselst du mit der linken Hand die Akkorde und summst darüber. Sobald es dir gefällt, drückst du auf Aufnahme — deine Stimme läuft durch den Harmonizer und landet fertig gemischt im Video."},
+        {"h2": "Drei empfohlene Skizzen"},
+        {"table": {"head": ["Stimmung", "Tonleiter", "BPM", "Taktart", "Klang"], "rows": [["Melancholisch / nach innen gekehrt", "a-Moll", "68", "4/4", "Grand Piano"], ["Nostalgisch / retro", "C-Dur", "96", "4/4", "Retro"], ["Atmosphärisch / filmisch", "e-Moll", "56", "6/8", "Analog"]]}},
+        {"h2": "Wohin trägst du die Idee weiter?"},
+        {"p": "Denk an ChordPlai wie an ein Skizzenbuch: Es fängt die Idee schnell ein, gießt sie in ein Video und macht sie teilbar. Trägt die Idee, kannst du dieselbe Akkordfolge später in einer Studio-Software ausbauen — meistens brauchst du aber nur eines: dass die Idee festgehalten wird, bevor sie verschwindet."},
+        {"p": "Und das Wichtigste: Für all das musst du weder Noten lesen noch ein Instrument spielen noch einen Cent bezahlen."}
+      ]
+    }
+  ]
+}

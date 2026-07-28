@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#14110b">
+<title>Rhythm, arpeggios and your own voice: a little studio in the browser · ChordPlai</title>
+<meta name="description" content="A metronome, arpeggiated chords, a kick-snare pattern you draw yourself and sounds you record yourself — here&#x27;s how to build the skeleton of a track from scratch in ChordPlai.">
+<link rel="canonical" href="https://chordplai.com/blog/en/make-your-own-beat">
+<link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/kendi-beatini-yap">
+<link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/make-your-own-beat">
+<link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/crea-tu-propio-beat">
+<link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/bau-deinen-eigenen-beat">
+<link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/creer-son-beat-dans-le-navigateur">
+<link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/faca-seu-proprio-beat">
+<link rel="alternate" hreflang="x-default" href="https://chordplai.com/blog/en/make-your-own-beat">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ChordPlai">
+<meta property="og:title" content="Rhythm, arpeggios and your own voice: a little studio in the browser · ChordPlai">
+<meta property="og:description" content="A metronome, arpeggiated chords, a kick-snare pattern you draw yourself and sounds you record yourself — here&#x27;s how to build the skeleton of a track from scratch in ChordPlai.">
+<meta property="og:url" content="https://chordplai.com/blog/en/make-your-own-beat">
+<meta property="og:image" content="https://chordplai.com/og.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rhythm, arpeggios and your own voice: a little studio in the browser · ChordPlai">
+<meta name="twitter:description" content="A metronome, arpeggiated chords, a kick-snare pattern you draw yourself and sounds you record yourself — here&#x27;s how to build the skeleton of a track from scratch in ChordPlai.">
+<meta name="twitter:image" content="https://chordplai.com/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%2314110b'/%3E%3Cpath d='M74 30 A28 28 0 1 0 74 90' fill='none' stroke='%23efe6d2' stroke-width='11' stroke-linecap='round'/%3E%3Cg stroke='%23f5c264' stroke-width='11' stroke-linecap='round' fill='none'%3E%3Cline x1='74' y1='26' x2='74' y2='98'/%3E%3Cpath d='M74 30 h10 a17 17 0 0 1 0 34 h-10'/%3E%3C/g%3E%3Ccircle cx='46' cy='60' r='6' fill='%23ffd98a'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/blog/blog.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Rhythm, arpeggios and your own voice: a little studio in the browser", "description": "A metronome, arpeggiated chords, a kick-snare pattern you draw yourself and sounds you record yourself — here's how to build the skeleton of a track from scratch in ChordPlai.", "datePublished": "2026-07-29", "dateModified": "2026-07-29", "inLanguage": "en", "author": {"@type": "Organization", "name": "ChordPlai"}, "publisher": {"@type": "Organization", "name": "ChordPlai", "logo": {"@type": "ImageObject", "url": "https://chordplai.com/og.png"}}, "image": "https://chordplai.com/og.png", "mainEntityOfPage": "https://chordplai.com/blog/en/make-your-own-beat"}</script>
+</head>
+<body>
+<div class="wrap">
+<header class="site">
+<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M74 30 A28 28 0 1 0 74 90" fill="none" stroke="#efe6d2" stroke-width="11" stroke-linecap="round"/><g stroke="#f5c264" stroke-width="11" stroke-linecap="round" fill="none"><line x1="74" y1="26" x2="74" y2="98"/><path d="M74 30 h10 a17 17 0 0 1 0 34 h-10"/></g><circle cx="46" cy="60" r="6" fill="#ffd98a"/></svg>
+<a class="home" href="/?lang=en" lang="en">CHORD<b>PLAI</b></a>
+<span class="crumb"><a href="/blog/en">← Blog</a></span>
+</header>
+<article>
+<h1>Rhythm, arpeggios and your own voice: a little studio in the browser</h1>
+<p class="meta">2026-07-29 · ChordPlai</p>
+<p>When an idea hits you, what's the fastest way to capture it? Usually humming into your phone's voice recorder. The problem is that the hum means nothing the next day: no key, no tempo, no chords.</p>
+<p>ChordPlai's groove section fills exactly that gap: you catch the idea <b>with its chords, its tempo and its rhythm</b>. Let's build one step by step.</p>
+<h2>Step 1 — lock in the key and tempo</h2>
+<p>Start by choosing a scale. Minor if you want something wistful, major if you want something bright. Then set the BPM: around 70 is calm and easy to sing over, 100–120 is energetic, and under 60 is slow and atmospheric.</p>
+<p>You pick the time signature here too: <b>4/4</b> is the standard for pop and rock, while <b>6/8</b> gives you a swaying, waltz-like feel. Playing the same chords in 6/8 completely changes the character of the track — well worth trying.</p>
+<h2>Step 2 — turn on the arpeggiator</h2>
+<p>The moment you start the metronome, your chords stop being sustained pads and start walking as <b>arpeggios</b>: the notes of the chord play one at a time, locked to the tempo. That single change instantly makes a static chord held in your hand sound like an actual track.</p>
+<p>Arpeggios work with the Electronic Keyboard and Grand Piano tones. Choose Analog or Retro and the chord stays a sustained pad — a deliberate choice for atmospheric pieces.</p>
+<h2>Step 3 — draw the rhythm yourself</h2>
+<p>The step sequencer is a grid: the rows are kick, snare and hihat, and the columns are the steps of the bar. You write the pattern by clicking the boxes. A classic starting point:</p>
+<ul><li><b>Kick:</b> steps 1 and 9 (the start and middle of each bar)</li><li><b>Snare:</b> steps 5 and 13 (the second and fourth beats)</li><li><b>Hihat:</b> every other step — a continuous texture</li></ul>
+<p>Those three rows are the skeleton of nearly all popular music. Shift the boxes around to find your own variations; your ear will tell you right away which one grooves.</p>
+<h2>Step 4 — add your own sounds</h2>
+<p>You can put any sound you like on the four sampler pads: a "hey!" from the mic, a knock on the table, jingling keys, or any audio file on your computer. Every sound you load opens <b>its own row</b> in the step sequencer.</p>
+<div class="box">🎤 The crowd favorite: record a short "ha!" in your own voice and drop it next to the snare, on the second beat. Suddenly the track carries your signature.</div>
+<h2>Step 5 — sing over it and record</h2>
+<p>The skeleton is ready: chords, arpeggio, rhythm and your own sounds looping. Now change chords with your left hand and hum over the top. The moment you like what you hear, hit record — your vocal goes through the harmonizer and lands mixed into the video.</p>
+<h2>Three sketches worth trying</h2>
+<div class="tw"><table><tr><th>Mood</th><th>Scale</th><th>BPM</th><th>Time signature</th><th>Tone</th></tr><tr><td>Wistful / introspective</td><td>A minor</td><td>68</td><td>4/4</td><td>Grand Piano</td></tr><tr><td>Nostalgic / retro</td><td>C major</td><td>96</td><td>4/4</td><td>Retro</td></tr><tr><td>Atmospheric / cinematic</td><td>E minor</td><td>56</td><td>6/8</td><td>Analog</td></tr></table></div>
+<h2>Where do you take the idea next?</h2>
+<p>Think of ChordPlai as a sketchbook: it catches the idea fast, turns it into video, and lets you share it. If the idea has legs, you can grow the same chord progression in a full studio program — but most of the time, all you need is for that idea to be captured before it disappears.</p>
+<p>And best of all: none of this requires reading music, playing an instrument, or paying a cent.</p>
+<div class="cta"><a href="/?lang=en">🖐️ Try Air Chord Now — Free</a></div>
+</article>
+<nav class="langs" aria-label="Language"><a href="/blog/kendi-beatini-yap" hreflang="tr" lang="tr">Türkçe</a><span class="on">English</span><a href="/blog/es/crea-tu-propio-beat" hreflang="es" lang="es">Español</a><a href="/blog/de/bau-deinen-eigenen-beat" hreflang="de" lang="de">Deutsch</a><a href="/blog/fr/creer-son-beat-dans-le-navigateur" hreflang="fr" lang="fr">Français</a><a href="/blog/pt/faca-seu-proprio-beat" hreflang="pt" lang="pt">Português</a></nav>
+<footer>© 2026 ChordPlai · <a href="/?lang=en">chordplai.com</a> · <a href="/blog/en">Blog</a> · Next article: <a href="/blog/en/what-is-air-chord">What is Air Chord? Play chords with your hands and a webcam</a></footer>
+</div>
+</body>
+</html>

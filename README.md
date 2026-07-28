@@ -5,8 +5,32 @@ Reels/YouTube videonu kaydet. Ayrıca gitar & piyano akor egzersizleri, nota oyu
 porte okuma, Akor Ninja ve Akor Tetris.
 
 Tek dosyalık istemci uygulaması: `index.html` (MediaPipe el takibi + Web Audio).
-Statik ekler: `blog/`, `og.png`, `sitemap.xml`, `robots.txt`, `llms.txt`,
+Statik ekler: `blog/`, `i18n/`, `og.png`, `sitemap.xml`, `robots.txt`, `llms.txt`,
 `samples/` (kullanıcı ritim sample'ları), `supabase/schema.sql` (üyelik şeması).
+
+## 🌍 Diller (6): TR · EN · ES · DE · FR · PT
+
+İçerik kaynağı `content/` klasöründe JSON olarak durur, HTML **üretilir**:
+
+| Dosya | İçerik |
+|---|---|
+| `content/blog.<dil>.json` | Blog yazıları (8 yazı × 6 dil) |
+| `content/ui.<dil>.json` | Uygulama arayüzü sözlüğü |
+| `content/ui.delta.<dil>.json` | Sonradan eklenen etiketler (üretimde birleştirilir) |
+
+**Metin değiştirdikten sonra mutlaka üreteci çalıştır:**
+
+```bash
+python3 build.py
+```
+
+Bu komut `blog/` altındaki 54 sayfayı, `i18n/<dil>.json` sözlüklerini ve
+hreflang'li `sitemap.xml`'i baştan yazar. `blog/` ve `i18n/` klasörlerini
+elle düzenleme — üretilen dosyalardır, bir sonraki `build.py` ezer.
+
+Uygulama arayüzü çevirisi çalışma anında yapılır: `?lang=en` (ya da tarayıcı
+dili / localStorage) sözlüğü indirir, DOM metinlerini değiştirir ve
+MutationObserver ile sonradan oluşan metinleri de yakalar.
 
 ## Yayınlama (deploy)
 

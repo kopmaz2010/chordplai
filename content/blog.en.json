@@ -1,0 +1,337 @@
+{
+  "lang": "en",
+  "locale": "en_US",
+  "name": "English",
+  "ui": {
+    "blogTitle": "ChordPlai Blog",
+    "blogLead": "Air Chord, chord degrees, scales and practice guides — for total beginners and teachers alike.",
+    "blogDesc": "The ChordPlai blog: playing chords with hand signs and a webcam, making music without an instrument, chord degrees and practice guides.",
+    "tagline": "Chord Trainer · play, jam, learn",
+    "backToBlog": "← Blog",
+    "blogCrumb": "Blog",
+    "cta": "🖐️ Open ChordPlai — Play With Your Hands",
+    "ctaPost": "🖐️ Try Air Chord Now — Free",
+    "footer": "play chords with your hands and a camera, then sing over them.",
+    "next": "Next article",
+    "readMore": "Read more",
+    "langLabel": "Language"
+  },
+  "posts": [
+    {
+      "id": "air-chord",
+      "slug": "what-is-air-chord",
+      "date": "2026-07-29",
+      "title": "What is Air Chord? Play chords with your hands and a webcam",
+      "desc": "Air Chord lets you play chords in mid-air using a webcam and hand tracking: your left-hand sign picks the scale degree, tilting your hand makes it major or minor. No setup, right in your browser, free.",
+      "excerpt": "You can play chords without an instrument — all you need is a webcam and a few hand signs. Here's how Air Chord's sign system, major/minor tilt and effects hand work.",
+      "body": [
+        {"p": "Until now, accompanying yourself on a song left you two options: learn to play an instrument, or press play on a backing track. <b>Air Chord</b> opens up a third path. You hold your hand up to your webcam, the sign you make turns into a chord, and you sing over it. No setup, no app to download — it all runs in your browser."},
+        {"h2": "How does it work?"},
+        {"p": "Air Chord uses a hand-tracking model that follows the 21 joints of your hand in real time. Your camera feed never leaves your device; everything is processed inside the browser. The system gives each of your hands a distinct job."},
+        {"h2": "Left hand: the chord itself"},
+        {"p": "The sign you make with your left hand selects the <i>degree</i> of the current scale:"},
+        {"ul": [
+          "☝️ index finger = 1st degree (<b>Am</b> in A minor)",
+          "✌️ two fingers = 2nd degree (<b>B°</b>)",
+          "Three fingers, four fingers and an open palm = 3rd, 4th and 5th degrees",
+          "🤘 = 6th degree · 🤟 = 7th degree"
+        ]},
+        {"p": "The sound sustains for as long as you hold the sign in the air — like a synth pad. Tilt your hand <b>inward</b> and the chord turns major; tilt it <b>outward</b> and it turns minor. Hold it upright and you get the scale's own chord. ✊ Make a fist and the sound stops."},
+        {"box": "💡 New to the degree system? Take a look at our guide to chord degrees — it explains why Air Chord's hand signs are numbered 1–7 in the first place.", "link": "akor-dereceleri"},
+        {"h2": "Right hand: effects"},
+        {"p": "Your right hand never touches the chord itself; it only shapes the character of the sound. <b>Tilt it left to add distortion</b>, <b>turn it right</b> to brighten the waveform, or hold it upright for a clean tone. So your left hand controls \"what is played\" and your right hand controls \"how it sounds\"."},
+        {"h2": "Choosing a key, scale or maqam"},
+        {"p": "The bottom panel lets you pick any key and scale you like: major, minor and maqam scales are all supported. When the scale changes, the hand signs stay exactly the same — only what each degree maps to changes. So the accompaniment you learned in A minor moves to E minor with a single click."},
+        {"h2": "Rhythm, arpeggios and pads in your own voice"},
+        {"ul": [
+          "<b>Metronome + arpeggiator:</b> Pick a BPM and let your chords walk in eighth notes (4/4 and 6/8).",
+          "<b>Step sequencer:</b> Click the boxes to write your own kick–snare–hihat pattern.",
+          "<b>Sampler pads:</b> Record your own voice or upload a file, then play it back as a pad.",
+          "<b>Vocal harmonizer:</b> As you sing, the recording gets 3rd/5th backing harmonies that follow the scale."
+        ]},
+        {"h2": "Record your video"},
+        {"p": "Air Chord records vertical video (9:16) for Reels and horizontal (16:9) for YouTube. The frame includes the hand skeleton overlay, the chord you're playing, the drum pattern and the ChordPlai watermark — so what you record is ready to share as is."},
+        {"h2": "Who is it for?"},
+        {"p": "Anyone who loves to sing but doesn't play an instrument. Music teachers also use it to demonstrate the idea of scale degrees in class, and creators use it to make performance videos that actually stop the scroll."}
+      ]
+    },
+    {
+      "id": "degrees",
+      "slug": "chord-degrees-explained",
+      "date": "2026-07-29",
+      "title": "Chord degrees: learn the I–VII system once, play in every key",
+      "desc": "Chord degrees let you think about songs independently of key. Diatonic chords explained with an A minor example, plus I–IV–V patterns and ways to practice with degrees.",
+      "excerpt": "Why is Am \"one\" and G \"seven\"? The degree system frees songs from being locked to a key. Diatonic chords and practice tips, using A minor as the example.",
+      "body": [
+        {"p": "If you memorize a song's chords as \"Am, F, C, G\", you only know that song in that one key. Think of it as \"i–VI–III–VII\" instead and you know it in <b>every key</b>. That's exactly what the degree system does: it names chords not by their letters, but by their <i>role</i> within the scale."},
+        {"h2": "What is a degree?"},
+        {"p": "A chord is built on each note of a scale, using only notes from that same scale. Whichever note of the scale it's built on gives the chord its degree. Uppercase (I, IV, V) means a major chord, lowercase (i, iv, v) means a minor chord, and the ° symbol marks a diminished chord."},
+        {"h2": "The A minor example"},
+        {"table": {"head": ["Degree", "Chord", "Quality"], "rows": [["i", "Am", "minor"], ["ii°", "B°", "diminished"], ["III", "C", "major"], ["iv", "Dm", "minor"], ["v", "Em", "minor"], ["VI", "F", "major"], ["VII", "G", "major"]]}},
+        {"p": "These seven chords are the scale's <b>diatonic chords</b>: every one of them uses only notes from the A minor scale, which is why they sound good together in any order."},
+        {"box": "🖐️ In ChordPlai's Air Chord mode this table is mapped onto your fingers: ☝️ = i, ✌️ = ii°, three fingers = III… You show the sign to the camera and the matching degree plays. It's the fastest way to learn degrees by ear.", "link": "air-chord"},
+        {"h2": "Why does it work so well?"},
+        {"ol": [
+          "<b>Transposing is free:</b> To move the \"i–VI–III–VII\" pattern into E minor, you just change the scale: Em–C–G–D. The pattern itself is identical.",
+          "<b>Songs resemble each other:</b> A huge share of popular music runs on a handful of degree patterns (I–V–vi–IV being the most famous). Once you recognize the pattern, you can figure out a new song on the first listen.",
+          "<b>Improvising gets easier:</b> The degrees tell you which chord feels like \"coming home\" (i) and which ones create tension (V, VII)."
+        ]},
+        {"h2": "Practice for training your ear on degrees"},
+        {"ul": [
+          "Pick a scale and loop the sequence i → iv → v → i; name the feeling each chord gives you.",
+          "Find the chords to a song you love, then write the degree next to each chord.",
+          "Play the same pattern in two different keys and confirm that you hear the same story."
+        ]},
+        {"p": "All three of these exercises can be done in ChordPlai: Air Chord plays by degree, the chord exercise module shows you the diagrams, and <i>Chord Ninja</i> listens through your mic and recognizes the chord you play on a real instrument."}
+      ]
+    },
+    {
+      "id": "no-instrument",
+      "slug": "sing-without-an-instrument",
+      "date": "2026-07-29",
+      "title": "Singing without an instrument: 3 ways to accompany yourself",
+      "desc": "You can sing even if you don't play guitar: backing tracks, chord apps, and playing chords in mid-air with a camera. The pros, cons and practical tips for all three.",
+      "excerpt": "If you don't own a guitar — or can't play one yet — don't put off singing. A head-to-head look at backing tracks, loop-pedal thinking, and playing chords with a camera.",
+      "body": [
+        {"p": "\"I'll learn guitar first, then I'll sing\" is the sentence that stops most people from ever singing at all. But the way to sing well is to sing a lot, and all you need for that is some accompaniment within reach."},
+        {"h2": "1) Backing tracks and karaoke"},
+        {"ul": [
+          "<b>Upside:</b> Zero learning curve, and the production quality is high.",
+          "<b>Downside:</b> You're stuck with someone else's key and tempo. If the song sits too high for your voice, you'll struggle. And you can only sing along to songs that already exist."
+        ]},
+        {"h2": "2) Apps that play chords from a screen"},
+        {"ul": [
+          "<b>Upside:</b> Key and tempo are yours; you build your own progressions.",
+          "<b>Downside:</b> Your eyes stay glued to a screen and your fingers to tiny buttons. Staring at a phone while performing ruins both your posture and your video."
+        ]},
+        {"h2": "3) Playing chords in mid-air with a camera (Air Chord)"},
+        {"p": "The third and newest option: hold your hand up to your computer's camera and <b>play chords with hand signs</b>. Your left-hand sign (1–7) plays the corresponding degree of the chosen scale, tilting your hand makes the chord major or minor, and your right hand drives the effects.", "link": "air-chord"},
+        {"ul": [
+          "<b>Upside:</b> Hands in the air, posture free, eyes on the camera — the performance looks natural. Key and tempo are entirely yours, and Reels/YouTube recording is built right in.",
+          "<b>Downside:</b> You need a device with a camera, and it takes a few minutes to get comfortable with the signs."
+        ]},
+        {"h2": "Which one should you pick?"},
+        {"table": {"head": ["", "Backing track", "Touchscreen chords", "Air Chord"], "rows": [["Learning curve", "None", "Low", "Low"], ["Key/tempo control", "None", "Yes", "Yes"], ["Trying your own songs", "No", "Yes", "Yes"], ["Video performance", "Medium", "Weak", "Strong"], ["Teaches theory", "No", "A little", "The degree system"]]}},
+        {"box": "🎤 Our advice: backing tracks to warm up, Air Chord for writing ideas and making video content. They're not mutually exclusive — what matters is singing every day."},
+        {"h2": "A 5-minute starter routine"},
+        {"ol": [
+          "Open ChordPlai and allow camera access.",
+          "Pick a scale that sits comfortably for your voice (A minor if you're not sure).",
+          "Move back and forth between ☝️ (i) and 🖐️ (v); let your breathing settle into the chord changes.",
+          "Build a four-degree loop (e.g. i–VI–III–VII) and hum a melody over it.",
+          "Hit record and shoot a test video — it's the best way to hear yourself improve."
+        ]}
+      ]
+    },
+    {
+      "id": "play-without-musician",
+      "slug": "play-your-first-song-without-reading-music",
+      "date": "2026-07-29",
+      "title": "Playing songs without being a musician: your first song without reading a note",
+      "desc": "Can you play a song without knowing how to play an instrument? Yes. No sheet music, no calloused fingertips — play chords with your hands and finish your first song today.",
+      "excerpt": "I can't read music, I don't play anything, I started too late… None of these stand between you and playing a song anymore. Here's the recipe for a song you can play today.",
+      "body": [
+        {"p": "Most people who want to make music hit the same wall: learning an instrument takes months. Your fingertips hurt, chord changes don't land, and reading music is a whole other language. Most people quit right there — not because they lack musical talent, but because the <b>distance between the tool and the desire</b> is simply too long."},
+        {"p": "There is a way to shorten that distance: remove the tool in the middle. Show your hand to the camera and play the chord directly."},
+        {"h2": "What do you actually need in order to play a song?"},
+        {"p": "Accompanying a song doesn't take technique. It takes three simple decisions:"},
+        {"ol": [
+          "<b>Which key?</b> Wherever your voice feels comfortable. If you're unsure, start with A minor or C major.",
+          "<b>Which chords?</b> Most popular songs revolve around four chords. Knowing those four unlocks hundreds of songs.",
+          "<b>When do they change?</b> Usually every four beats. The metronome counts that for you."
+        ]},
+        {"p": "Notice what's not on that list: no reading music, no finger technique, no 10,000 hours."},
+        {"h2": "The four-chord secret"},
+        {"p": "A surprisingly large chunk of Western popular music revolves around the same four-chord pattern. Written in the language of degrees, it looks like this: <b>I – V – vi – IV</b>. In the world of A minor, that's <b>Am – F – C – G</b>."},
+        {"p": "If you can play those four in order, you can sing dozens of familiar songs over them. And because you learned the pattern as degrees, if it sits too high for your voice you just change the key and keep playing with the exact same hand movements."},
+        {"box": "🎯 Why does thinking in degrees matter so much? Because chord names change with the key, but degrees never do. Our chord degrees guide walks through it in detail.", "link": "degrees"},
+        {"h2": "Playing with your hands: first song in 10 minutes"},
+        {"p": "In ChordPlai's <b>Air Chord</b> mode, the number of fingers you hold up picks the degree of the chord. All you have to learn is a handful of hand signs:"},
+        {"ul": [
+          "☝️ <b>One finger</b> — 1st degree: the song's \"home\", the chord that settles everything",
+          "🖐️ <b>Open palm</b> — 5th degree: tension, the chord that wants to go home",
+          "🤘 <b>Horns</b> — 6th degree: wistful, emotional color",
+          "4️⃣ <b>Four fingers</b> — 4th degree: opening up, a feeling of lift",
+          "✊ <b>Fist</b> — silence"
+        ]},
+        {"p": "Learning these five moves takes ten minutes and lasts a lifetime. Getting those same four chords to ring cleanly on a guitar takes weeks."},
+        {"h2": "A recipe for your first session"},
+        {"ol": [
+          "Open the site, allow camera access, and choose <b>A minor</b> as your scale.",
+          "Set the metronome to 70 BPM — calm, and easy to sing over.",
+          "Cycle through this sequence, changing every four beats: ☝️ → 🤘 → 4️⃣ → 🖐️",
+          "Just listen for two rounds. On the third, start humming \"la la\".",
+          "Once the melody settles, try the lyrics of a song you know — most of them will fit."
+        ]},
+        {"h2": "\"But is this real music?\""},
+        {"p": "The people who ask this question most are the ones who haven't started yet. Real music is being able to pass a feeling to a listener; the tool you use to do it is secondary. A piano is a machine too, and so is an electric guitar. A camera and hand tracking are simply the newest additions to the list."},
+        {"p": "What's more: by playing in degrees you end up learning real music theory without noticing. If you decide to pick up a guitar one day, your ear will already be ready."},
+        {"h2": "So what should you do today?"},
+        {"p": "Give it five minutes. Turn on the camera, try the four signs, hum something over them, and record it. When you listen back tomorrow you'll be surprised — because for the first time, you'll have moved \"someday I'll make music\" into the past tense."}
+      ]
+    },
+    {
+      "id": "hand-signs",
+      "slug": "play-chords-with-hand-signs",
+      "date": "2026-07-29",
+      "title": "Playing chords with hand signs: your fingers are the new instrument",
+      "desc": "How does hand-tracking technology make it possible to play chords in mid-air? From finger count to chord, the major/minor tilt, and the tricks for nailing every sign.",
+      "excerpt": "The camera tracks the 21 joints of your hand and turns your finger count into a chord degree. The technology behind the scenes, plus tips for flawless signs.",
+      "body": [
+        {"p": "Making music by moving your hands through the air isn't a new idea. In the 1920s, Leon Theremin built an instrument that read the electric field around two antennas: the <b>theremin</b>. You moved your hands through empty space and produced sound without touching anything. The catch was that the theremin was brutally difficult — pitch was continuous, and the slightest tremor ruined the note."},
+        {"p": "Today we have the one thing the theremin couldn't offer: <b>a computer that understands your hand</b>. Hand tracking turns that continuous, slippery space into discrete, dependable signs."},
+        {"h2": "What does the camera see in your hand?"},
+        {"p": "Air Chord detects the <b>21 joints of your hand</b> thirty times a second: the wrist, the knuckles of your palm, and the three joints of every finger. Those points form a skeleton, and the system reads three things from it:"},
+        {"ul": [
+          "<b>How many fingers are open</b> — sets the degree of the chord (1 through 7)",
+          "<b>The tilt angle of your hand</b> — turns the chord major or minor",
+          "<b>The rotation of your palm</b> — changes the character of the sound (the effects)"
+        ]},
+        {"p": "One important detail: the video never leaves your device. The recognition model runs inside the browser, and the camera stream is never sent to any server."},
+        {"h2": "From finger count to chord"},
+        {"p": "The system reads your finger count not as a specific note, but as a <b>scale degree</b>. That distinction changes everything: two fingers plays <i>B°</i> in A minor and <i>Dm</i> in C major. Your hand movements stay the same while the music adapts to whatever key you chose."},
+        {"box": "🎼 That's why Air Chord isn't a toy but a genuine musical tool: what you learn isn't \"press this key\" but \"play the chord with this role\". We covered the logic of degrees in detail in our chord degrees article.", "link": "degrees"},
+        {"h2": "Major and minor: the angle of your wrist"},
+        {"p": "Sometimes you want to hear the same degree sound wistful, and sometimes bright. You don't need to learn a separate sign for that — you just tilt your wrist. Tilt it <b>inward</b> and the chord turns major; tilt it <b>outward</b> and it turns minor. Keep your hand upright and you get the scale's own chord."},
+        {"p": "The nice thing about this design is that the gesture matches the emotion: a small turn of the same hand changes the color of the music, just like a guitarist striking the same chord hard or soft."},
+        {"h2": "6 tips for nailing every sign"},
+        {"ol": [
+          "<b>Mind the light:</b> Strong light behind your hand (a window) makes recognition harder. Let the light fall on your face instead.",
+          "<b>Distance:</b> Hold your hand at chest height, 40–70 cm from the camera.",
+          "<b>Spread your fingers:</b> On the two- and three-finger signs, don't let your fingers stick together.",
+          "<b>Palm toward the camera:</b> Show the inside of your hand, not the edge.",
+          "<b>Make clean transitions:</b> When changing degree, drop briefly to neutral and then form the new sign decisively.",
+          "<b>Plain background:</b> Avoid other moving hands or busy patterns behind you."
+        ]},
+        {"h2": "Why is this better than tapping a screen?"},
+        {"p": "You can tap chord buttons on a phone too — but your eyes end up locked on the screen. Playing in the air keeps your head up, your hands visible and your gaze on the camera. When you're singing, that difference shows up in both your voice and your video: easier breathing, a more natural posture, and a far more striking image."},
+        {"h2": "Like learning a new instrument — only shorter"},
+        {"p": "Every instrument has a learning curve. Air Chord's is measured in minutes: five signs and one wrist movement. Yet its expressive range isn't shallow — degrees, chord quality, octaves, distortion, arpeggios and rhythm layers give you hours of depth to explore."},
+        {"p": "Raise your hands and give it a try. Worst case, you lose five minutes; best case, the distance between you and music closes completely."}
+      ]
+    },
+    {
+      "id": "features-tour",
+      "slug": "chordplai-features-tour",
+      "date": "2026-07-29",
+      "title": "Every ChordPlai feature: from playing with your hands to the vocal harmonizer",
+      "desc": "Air Chord, 4 synth tones, metronome and arpeggiator, step sequencer, sampler pads, vocal harmonizer, video recording and instrument exercises — here's everything inside ChordPlai.",
+      "excerpt": "What looks like nothing more than a camera and a browser hides a full music studio. A tour of every feature, from Air Chord to the vocal harmonizer.",
+      "body": [
+        {"p": "From the outside, ChordPlai looks simple: you show your hand to the camera and a chord plays. But lift the lid and you'll find a surprisingly complete music environment underneath. Here's all of it."},
+        {"h2": "🖐️ Air Chord — the main event"},
+        {"p": "Your left-hand sign plays the corresponding degree of the chosen scale (1–7), tilting your wrist makes that chord major or minor, and your right hand drives the effects. The sound sustains as long as you hold the sign, and stops the moment you make a fist.", "link": "air-chord"},
+        {"h2": "🎛️ Four synth tones"},
+        {"ul": [
+          "<b>🎹 Electronic Keyboard</b> — a flexible modern tone whose waveform blends as you rotate your right palm",
+          "<b>🎼 Grand Piano</b> — a natural piano envelope that decays after each strike; beautiful under arpeggios",
+          "<b>🌊 Analog</b> — a warm, soft pad generated from a real analog wave sample",
+          "<b>🕹️ Retro</b> — a slightly dirty, nostalgic sawtooth wave"
+        ]},
+        {"h2": "🥁 Metronome, arpeggios and time signature"},
+        {"p": "You pick a BPM between 40 and 160. With the metronome on, your chords stop being sustained pads and start walking as <b>arpeggios</b> — the notes of the chord play one at a time, in order. Both 4/4 and 6/8 are supported, and the arpeggio follows whichever you choose."},
+        {"h2": "🎚️ Draw your own rhythm"},
+        {"p": "The step sequencer is a simple grid of boxes: click the ones you want across the kick, snare and hihat rows, and the pattern loops. No music theory required — you see it with your eyes and confirm it with your ears."},
+        {"h2": "🎤 Sampler pads — an instrument made of your own voice"},
+        {"p": "You can load your own sounds onto four pads, or record them straight from the microphone. A \"hey!\", a clap, a knock on the table… Play them by clicking a pad or pressing keys 1–4. Every sound you load gets its own row in the step sequencer, so you can write it into the groove and let it play automatically."},
+        {"box": "💡 This is the feature that turns ChordPlai from a chord toy into a real sketching tool: chords + rhythm + your own sounds = a complete draft of an idea."},
+        {"h2": "🎙️ Vocal harmonizer — a choir for your voice"},
+        {"p": "Your voice doesn't stay raw when you sing. The vocal going into the recording is filtered, compressed and given reverb, and if you like it's multiplied with <b>3rd and 5th harmonies that follow the selected scale</b>. So you sing alone and hear a choir in the recording. There are four modes: Natural, Hall, +3rds and Choir (3+5)."},
+        {"h2": "🎬 Reels and YouTube video recording"},
+        {"p": "The app records your performance as a directly shareable video. There are vertical (9:16) and horizontal (16:9) formats, and the frame shows the hand-tracking overlay, the name of the chord playing, the drum pattern and the ChordPlai watermark. When the recording ends, you're asked whether you'd like to download it."},
+        {"h2": "🎸 Instrument exercises — the second category"},
+        {"p": "There's a separate section for people who really do play an instrument:"},
+        {"ul": [
+          "<b>Chords:</b> Chord practice with a metronome, complete with guitar diagrams and a piano keyboard",
+          "<b>Note Game:</b> A speed game you play by saying note names out loud",
+          "<b>Stave:</b> Note-reading practice in both treble and bass clef",
+          "<b>Chord Ninja:</b> A game that recognizes, through your microphone, the chord you play on a real guitar",
+          "<b>Chord Tetris:</b> Tetris controlled by chords — play the right chord to rotate the block"
+        ]},
+        {"h2": "All in the browser, all free"},
+        {"p": "No installation, no payment. Sign in with your Google account and your progress is saved. Air Chord needs camera access; the exercise modules work fine without a camera."}
+      ]
+    },
+    {
+      "id": "reels",
+      "slug": "shoot-music-videos-for-reels",
+      "date": "2026-07-29",
+      "title": "Shooting a music video without an instrument: a practical guide for Reels",
+      "desc": "How do you shoot eye-catching music videos without playing an instrument? Framing, lighting, chord choice, and the recipe for a performance video that holds viewers for 15 seconds.",
+      "excerpt": "Playing chords with your hands appeals to the eye as much as the ear. A step-by-step recipe for shooting a striking music video for Reels and Shorts.",
+      "body": [
+        {"p": "Most people who want to make music content get stuck in the same place: just singing to a camera is visually static, and you don't know how to play an instrument. Playing chords with your hands fills exactly that gap — it's a performance you <b>both hear and see</b>."},
+        {"h2": "Why do hand gestures work so well on video?"},
+        {"p": "Viewers scan the first second of a video asking \"wait, what's happening here?\" Hands moving through the air with sound changing in sync creates that question instantly. Curiosity is the strongest fuel for watch time, and watch time is the only thing algorithms reward."},
+        {"h2": "Framing: vertical or horizontal?"},
+        {"ul": [
+          "<b>Reels / TikTok / Shorts:</b> Vertical 9:16. In this mode ChordPlai centers the camera and adds branded bands above and below — your hands and face stay visible at the same time.",
+          "<b>YouTube:</b> Horizontal 16:9. A wider frame, and the interface elements are easier to read."
+        ]},
+        {"p": "While you record, the name of the chord playing, the drum pattern and the hand skeleton overlay are burned into the video too. Those layers give viewers the sense that there's a real system at work here."},
+        {"h2": "Light and background"},
+        {"ol": [
+          "Put your main light source <b>in front of your face</b>; if there's a window behind you, close the curtains.",
+          "Keep the background plain — a flat wall is best. A busy background splits both the hand tracking and your viewer's attention.",
+          "Make sure there's contrast between the back of your hand and the background; hands read beautifully against a dark wall."
+        ]},
+        {"h2": "A structure that holds viewers for 15 seconds"},
+        {"ol": [
+          "<b>0–2 s:</b> Have the sound already playing as you raise your hand. A silent opening loses people.",
+          "<b>2–5 s:</b> Change a degree — let the viewer realize the sound is tied to your hand.",
+          "<b>5–10 s:</b> Start singing. At this point curiosity hands over to the music.",
+          "<b>10–15 s:</b> Tilt your wrist to flip the chord major or minor — a small but impressive closing trick."
+        ]},
+        {"h2": "Choosing chords: which patterns land best?"},
+        {"p": "Complex progressions get lost in a short video. Pick a four-chord loop and play it twice through. A pattern that's proven itself in A minor: <b>☝️ → 🤘 → 4️⃣ → 🖐️</b>. It sounds wistful and familiar, and almost any melody will sit on top of it.", "link": "play-without-musician"},
+        {"h2": "Vocals: you won't hear them live, but they land beautifully in the recording"},
+        {"p": "In ChordPlai your vocal isn't played back live through the speakers (which prevents mic feedback), but it <b>goes into the recording fully processed</b>: EQ, compression, reverb and scale-aware harmonies. So when you watch the recording, your voice will sound much fuller than you expected."},
+        {"box": "🎧 Tip: When the recording ends, hit \"Download\" and listen to the video on headphones. Shooting the same performance twice with different harmonizer modes quickly shows you which color suits you."},
+        {"h2": "When you publish"},
+        {"ul": [
+          "Explain what you did in one sentence in the first comment — people will be asking \"how is this happening?\"",
+          "Make the first frame the moment your hand is in the air; the cover frame has to create curiosity.",
+          "Produce a series with the same pattern in different scales — repeating a format that works is the fastest way to grow."
+        ]},
+        {"h2": "Gear list"},
+        {"p": "A laptop with a camera. That's it. No microphone, no interface, no instrument, no lighting kit — and if you want better sound, a headset mic is plenty."}
+      ]
+    },
+    {
+      "id": "studio",
+      "slug": "make-your-own-beat",
+      "date": "2026-07-29",
+      "title": "Rhythm, arpeggios and your own voice: a little studio in the browser",
+      "desc": "A metronome, arpeggiated chords, a kick-snare pattern you draw yourself and sounds you record yourself — here's how to build the skeleton of a track from scratch in ChordPlai.",
+      "excerpt": "Playing chords is just the start. A step-by-step walkthrough of building a track skeleton from scratch in ChordPlai with the step sequencer, arpeggios and sampler pads.",
+      "body": [
+        {"p": "When an idea hits you, what's the fastest way to capture it? Usually humming into your phone's voice recorder. The problem is that the hum means nothing the next day: no key, no tempo, no chords."},
+        {"p": "ChordPlai's groove section fills exactly that gap: you catch the idea <b>with its chords, its tempo and its rhythm</b>. Let's build one step by step."},
+        {"h2": "Step 1 — lock in the key and tempo"},
+        {"p": "Start by choosing a scale. Minor if you want something wistful, major if you want something bright. Then set the BPM: around 70 is calm and easy to sing over, 100–120 is energetic, and under 60 is slow and atmospheric."},
+        {"p": "You pick the time signature here too: <b>4/4</b> is the standard for pop and rock, while <b>6/8</b> gives you a swaying, waltz-like feel. Playing the same chords in 6/8 completely changes the character of the track — well worth trying."},
+        {"h2": "Step 2 — turn on the arpeggiator"},
+        {"p": "The moment you start the metronome, your chords stop being sustained pads and start walking as <b>arpeggios</b>: the notes of the chord play one at a time, locked to the tempo. That single change instantly makes a static chord held in your hand sound like an actual track."},
+        {"p": "Arpeggios work with the Electronic Keyboard and Grand Piano tones. Choose Analog or Retro and the chord stays a sustained pad — a deliberate choice for atmospheric pieces."},
+        {"h2": "Step 3 — draw the rhythm yourself"},
+        {"p": "The step sequencer is a grid: the rows are kick, snare and hihat, and the columns are the steps of the bar. You write the pattern by clicking the boxes. A classic starting point:"},
+        {"ul": [
+          "<b>Kick:</b> steps 1 and 9 (the start and middle of each bar)",
+          "<b>Snare:</b> steps 5 and 13 (the second and fourth beats)",
+          "<b>Hihat:</b> every other step — a continuous texture"
+        ]},
+        {"p": "Those three rows are the skeleton of nearly all popular music. Shift the boxes around to find your own variations; your ear will tell you right away which one grooves."},
+        {"h2": "Step 4 — add your own sounds"},
+        {"p": "You can put any sound you like on the four sampler pads: a \"hey!\" from the mic, a knock on the table, jingling keys, or any audio file on your computer. Every sound you load opens <b>its own row</b> in the step sequencer."},
+        {"box": "🎤 The crowd favorite: record a short \"ha!\" in your own voice and drop it next to the snare, on the second beat. Suddenly the track carries your signature."},
+        {"h2": "Step 5 — sing over it and record"},
+        {"p": "The skeleton is ready: chords, arpeggio, rhythm and your own sounds looping. Now change chords with your left hand and hum over the top. The moment you like what you hear, hit record — your vocal goes through the harmonizer and lands mixed into the video."},
+        {"h2": "Three sketches worth trying"},
+        {"table": {"head": ["Mood", "Scale", "BPM", "Time signature", "Tone"], "rows": [["Wistful / introspective", "A minor", "68", "4/4", "Grand Piano"], ["Nostalgic / retro", "C major", "96", "4/4", "Retro"], ["Atmospheric / cinematic", "E minor", "56", "6/8", "Analog"]]}},
+        {"h2": "Where do you take the idea next?"},
+        {"p": "Think of ChordPlai as a sketchbook: it catches the idea fast, turns it into video, and lets you share it. If the idea has legs, you can grow the same chord progression in a full studio program — but most of the time, all you need is for that idea to be captured before it disappears."},
+        {"p": "And best of all: none of this requires reading music, playing an instrument, or paying a cent."}
+      ]
+    }
+  ]
+}

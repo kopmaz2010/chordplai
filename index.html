@@ -8,6 +8,30 @@
 <meta name="description" content="ChordPlai ile enstrümansız müzik yap: kameraya elini göster, Air Chord el işaretlerinle akor çalsın; üzerine şarkı söyle, Reels/YouTube videosu kaydet. Ayrıca gitar & piyano akor egzersizleri, nota oyunu, porte okuma, Akor Ninja ve Akor Tetris.">
 <link rel="canonical" href="https://chordplai.com/">
 <meta name="robots" content="index, follow">
+<link rel="alternate" hreflang="tr" href="https://chordplai.com/">
+<link rel="alternate" hreflang="en" href="https://chordplai.com/?lang=en">
+<link rel="alternate" hreflang="es" href="https://chordplai.com/?lang=es">
+<link rel="alternate" hreflang="de" href="https://chordplai.com/?lang=de">
+<link rel="alternate" hreflang="fr" href="https://chordplai.com/?lang=fr">
+<link rel="alternate" hreflang="pt" href="https://chordplai.com/?lang=pt">
+<link rel="alternate" hreflang="x-default" href="https://chordplai.com/?lang=en">
+<!-- 🌍 Dil: seçimi olabildiğince erken belirle ve sözlüğü hemen indirmeye başla -->
+<script>
+window.CP_LANGS = { tr:"Türkçe", en:"English", es:"Español", de:"Deutsch", fr:"Français", pt:"Português" };
+window.CP_LANG = (() => {
+  try {
+    const q = new URLSearchParams(location.search).get("lang");
+    if (q && window.CP_LANGS[q]) { localStorage.setItem("cpLang", q); return q; }
+    const s = localStorage.getItem("cpLang");
+    if (s && window.CP_LANGS[s]) return s;
+  } catch (_) {}
+  const n = (navigator.language || "tr").slice(0, 2).toLowerCase();
+  return window.CP_LANGS[n] ? n : "en";   // tanımadığımız dilde İngilizce'ye düş
+})();
+window.CP_DICT = window.CP_LANG === "tr"
+  ? Promise.resolve(null)
+  : fetch("/i18n/" + window.CP_LANG + ".json").then(r => r.ok ? r.json() : null).catch(() => null);
+</script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ChordPlai">
 <meta property="og:title" content="ChordPlai — Air Chord: Kamerayla Elinle Akor Çal">
@@ -130,7 +154,13 @@ window.CP_SUPA = {
   .gate-mark { width: 74px; height: 74px; display: block; margin: 0 auto 6px; }
   .brand h1[lang="en"], .gate-card h2[lang="en"] { text-transform: none; }
   /* üyelik: profil çipi + popover + gate google + footer */
-  .brand-right { display: flex; align-items: center; gap: 12px; }
+  .brand-right { display: flex; align-items: center; gap: 10px; }
+  .lang-sel {
+    border: 1px solid var(--line); background: #201a10; color: var(--muted);
+    border-radius: 999px; padding: 5px 10px; font-size: .72rem; font-weight: 600;
+    cursor: pointer; outline: none; max-width: 128px;
+  }
+  .lang-sel:hover, .lang-sel:focus-visible { border-color: var(--amber); color: var(--cream); }
   .prof-chip {
     display: flex; align-items: center; gap: 8px; cursor: pointer;
     border: 1px solid var(--line); background: #201a10; color: var(--cream);
@@ -1024,6 +1054,7 @@ window.CP_SUPA = {
       <div class="sub">Elinle çal · AIR CHORD + enstrüman egzersizleri</div>
     </div>
     <div class="brand-right">
+      <select class="lang-sel" id="langSel" aria-label="Language"></select>
       <button class="prof-chip" id="profChip" hidden><img id="profAvatar" alt="" referrerpolicy="no-referrer"><span id="profName"></span></button>
       <div class="pilot" id="pilot"><span class="lamp"></span> <span id="pilotLabel">Hazır</span></div>
     </div>
@@ -5150,6 +5181,94 @@ window.CP_SUPA = {
 })();
 </script>
 
+<!-- 🌍 Çeviri motoru: statik metinleri + JS'in sonradan ürettiği metinleri değiştirir -->
+<script>
+(() => {
+  const LANGS = window.CP_LANGS, LANG = window.CP_LANG;
+
+  // dil seçici (her dilde kendi adıyla — çevrilmez)
+  const sel = document.getElementById("langSel");
+  if (sel) {
+    sel.innerHTML = Object.entries(LANGS)
+      .map(([k, v]) => `<option value="${k}"${k === LANG ? " selected" : ""}>${v}</option>`).join("");
+    sel.addEventListener("change", () => {
+      try { localStorage.setItem("cpLang", sel.value); } catch (_) {}
+      const u = new URL(location.href);
+      u.searchParams.set("lang", sel.value);
+      location.href = u.toString();
+    });
+  }
+  document.documentElement.lang = LANG;
+  // footer'daki blog bağlantısı o dilin bloguna gitsin
+  document.querySelectorAll('.site-foot a[href="/blog"]').forEach(a => {
+    if (LANG !== "tr") a.setAttribute("href", "/blog/" + LANG);
+  });
+  if (LANG === "tr") return;   // temel dil: çeviri gerekmez
+
+  const SKIP = { SCRIPT: 1, STYLE: 1, NOSCRIPT: 1, CANVAS: 1, TEXTAREA: 1, OPTION: 1 };
+  const ATTRS = ["placeholder", "aria-label", "title"];
+  let dict = null, obs = null;
+
+  function tText(root) {
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: n => (n.parentNode && SKIP[n.parentNode.nodeName])
+        ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT,
+    });
+    const list = [];
+    for (let n = w.nextNode(); n; n = w.nextNode()) list.push(n);
+    for (const n of list) {
+      const raw = n.nodeValue, key = raw.trim();
+      if (!key) continue;
+      const v = dict[key];
+      if (v) n.nodeValue = raw.replace(key, v);
+    }
+  }
+  function tAttrs(root) {
+    const els = root.nodeType === 1 ? [root, ...root.querySelectorAll("*")]
+                                    : [...(root.querySelectorAll ? root.querySelectorAll("*") : [])];
+    for (const el of els) {
+      if (el.nodeType !== 1 || SKIP[el.nodeName]) continue;
+      for (const a of ATTRS) {
+        const val = el.getAttribute && el.getAttribute(a);
+        if (val && dict[val.trim()]) el.setAttribute(a, dict[val.trim()]);
+      }
+    }
+  }
+  function apply(root) {
+    if (!dict) return;
+    if (obs) obs.disconnect();                  // kendi değişikliklerimizi tekrar işlemeyelim
+    try { tText(root); tAttrs(root); } catch (_) {}
+    if (obs) obs.observe(document.body, { childList: true, subtree: true, characterData: false });
+  }
+  window.CP_T = s => (dict && dict[s]) || s;    // JS'ten tek dize çevirmek için
+
+  window.CP_DICT.then(d => {
+    if (!d) return;
+    dict = d;
+    // sekme başlığı ve meta açıklaması
+    if (d.__title) document.title = d.__title;
+    if (d.__desc) {
+      const m = document.querySelector('meta[name="description"]');
+      if (m) m.setAttribute("content", d.__desc);
+    }
+    apply(document.body);
+    // sonradan eklenen düğümleri de çevir (akor çipleri, rehber kartları, durum yazıları…)
+    obs = new MutationObserver(muts => {
+      const added = [];
+      for (const m of muts) for (const n of m.addedNodes) if (n.nodeType === 1 || n.nodeType === 3) added.push(n);
+      if (!added.length) return;
+      obs.disconnect();
+      try { for (const n of added) { if (n.nodeType === 3) { const k = n.nodeValue.trim(); if (dict[k]) n.nodeValue = n.nodeValue.replace(k, dict[k]); } else { tText(n); tAttrs(n); } } } catch (_) {}
+      obs.observe(document.body, { childList: true, subtree: true });
+    });
+    obs.observe(document.body, { childList: true, subtree: true });
+    // JS durum yazıları doğrudan textContent ile değiştiğinden periyodik bir tarama daha
+    let ticks = 0;
+    const iv = setInterval(() => { apply(document.body); if (++ticks > 20) clearInterval(iv); }, 500);
+  });
+})();
+</script>
+
 <!-- 📊 Vercel Web Analytics (panelden Analytics > Enable yapılınca sayar; kapalıyken zararsız) -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -5214,7 +5333,7 @@ window.CP_SUPA = {
     });
     google.accounts.id.renderButton(ui.gBox, {
       type: "standard", theme: "outline", size: "large",
-      text: "signin_with", shape: "pill", locale: "tr", width: 300,
+      text: "signin_with", shape: "pill", locale: window.CP_LANG || "tr", width: 300,
     });
   }
   try {

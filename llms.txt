@@ -1,15 +1,32 @@
 # ChordPlai
 
-> ChordPlai (chordplai.com), tarayıcıda çalışan Türkçe bir müzik uygulamasıdır. Öne çıkan özelliği Air Chord'dur: kamera el takibiyle (MediaPipe) havada el işaretleri yaparak akor çalarsınız — enstrüman gerekmez. Sol elin işareti (1–7) seçili gamın/makamın derecesini seçer, elin içe/dışa yatışı o akoru majöre/minöre çevirir; sağ el distorsiyon ve dalga efektlerini kontrol eder. Uygulamada metronom, arpej, ritim dizgeci, kendi sesinle sampler pad'ler, gama uyumlu vokal harmonizer ve Reels (9:16) / YouTube (16:9) video kaydı vardır.
+> ChordPlai (chordplai.com) is a browser-based music app whose main feature is Air Chord: using webcam hand tracking, you play chords in the air — no instrument needed. Left-hand finger signs (1–7) select the degree of the chosen scale or maqam, tilting the wrist turns that chord major or minor, and the right hand controls effects (distortion and waveform). It also has four synth tones, a metronome with arpeggiator, a step sequencer for drums, sampler pads for your own recorded sounds, a scale-aware vocal harmonizer, and one-click video recording for Reels (9:16) and YouTube (16:9).
 
-ChordPlai ayrıca gitar ve piyano öğrencileri için egzersiz modülleri içerir: akor diyagramlı metronomlu akor antrenörü, nota-harf eşleştirme oyunu, porte (Sol/Fa anahtarı) okuma, mikrofonla akor tanıyan Akor Ninja ve akorlarla oynanan Akor Tetris.
+ChordPlai also includes practice modules for guitar and piano students: a metronome chord trainer with chord diagrams, a note-naming speed game, staff (treble/bass clef) reading practice, "Chord Ninja" (a fruit-ninja style game where you slice by playing real chords into the microphone) and "Chord Tetris" (tetris controlled by playing chords).
 
-Uygulama ücretsizdir, üyelik gerektirmez ve Türkçedir. Air Chord için kamera izni gerekir; diğer modüller kamerasız çalışır.
+The app is free, requires no installation, and stores progress via optional Google sign-in. Air Chord needs camera permission; camera video never leaves the device — hand tracking runs entirely in the browser. The other modules work without a camera.
 
-## Sayfalar
+Available in 6 languages: Turkish, English, Spanish, German, French and Portuguese.
 
-- [Uygulama](https://chordplai.com/): Air Chord ve tüm egzersiz modülleri
-- [Blog](https://chordplai.com/blog): Rehberler ve müzik teorisi yazıları
-- [Air Chord nedir?](https://chordplai.com/blog/air-chord-nedir): Kamerayla elinle akor çalma rehberi
-- [Akor dereceleri](https://chordplai.com/blog/akor-dereceleri): I–VII derece sistemi ve gamlar
-- [Enstrümansız eşlik](https://chordplai.com/blog/enstrumansiz-sarki-soylemek): Şarkı söylerken kendine eşlik etme yolları
+## App
+
+- [ChordPlai app](https://chordplai.com/): Air Chord plus all practice modules. Add `?lang=en|es|de|fr|pt` for other languages.
+
+## Blog — English
+
+- [What is Air Chord?](https://chordplai.com/blog/en/what-is-air-chord): How playing chords with webcam hand tracking works
+- [Chord degrees explained](https://chordplai.com/blog/en/chord-degrees-explained): The I–VII system and why it makes songs key-independent
+- [Sing without an instrument](https://chordplai.com/blog/en/sing-without-an-instrument): Three ways to accompany yourself
+- [Play your first song without reading music](https://chordplai.com/blog/en/play-your-first-song-without-reading-music): Playing songs without being a musician
+- [Play chords with hand signs](https://chordplai.com/blog/en/play-chords-with-hand-signs): The hand-tracking technology and how to make the signs reliably
+- [ChordPlai features tour](https://chordplai.com/blog/en/chordplai-features-tour): Every feature, from Air Chord to the vocal harmonizer
+- [Shoot music videos for Reels](https://chordplai.com/blog/en/shoot-music-videos-for-reels): Making music content without an instrument
+- [Make your own beat](https://chordplai.com/blog/en/make-your-own-beat): Rhythm, arpeggios and sampler pads
+
+## Blog — other languages
+
+- [Türkçe](https://chordplai.com/blog)
+- [Español](https://chordplai.com/blog/es)
+- [Deutsch](https://chordplai.com/blog/de)
+- [Français](https://chordplai.com/blog/fr)
+- [Português](https://chordplai.com/blog/pt)

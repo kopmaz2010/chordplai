@@ -1,0 +1,337 @@
+{
+  "lang": "tr",
+  "locale": "tr_TR",
+  "name": "Türkçe",
+  "ui": {
+    "blogTitle": "ChordPlai Blog",
+    "blogLead": "Air Chord, akor dereceleri, gamlar ve pratik rehberleri — hem yeni başlayanlar hem öğretmenler için.",
+    "blogDesc": "ChordPlai blogu: kamerayla el işaretleriyle akor çalma, enstrümansız müzik yapma, akor dereceleri ve pratik rehberleri.",
+    "tagline": "Akor Antrenörü · çal, oyna, öğren",
+    "backToBlog": "← Blog",
+    "blogCrumb": "Blog",
+    "cta": "🖐️ ChordPlai'ı Aç — Elinle Çal",
+    "ctaPost": "🖐️ Air Chord'u Şimdi Dene — Ücretsiz",
+    "footer": "kamerayla elinle akor çal, üzerine söyle.",
+    "next": "Sıradaki yazı",
+    "readMore": "Devamını oku",
+    "langLabel": "Dil"
+  },
+  "posts": [
+    {
+      "id": "air-chord",
+      "slug": "air-chord-nedir",
+      "date": "2026-07-29",
+      "title": "Air Chord nedir? Kamerayla elinizi kullanarak akor çalın",
+      "desc": "Air Chord, web kamerası ve el takibiyle havada akor çalmanızı sağlar: sol el işareti gamın derecesini seçer, elin yatışı akoru majör/minör yapar. Kurulumsuz, tarayıcıda, ücretsiz.",
+      "excerpt": "Enstrüman olmadan, sadece web kamerası ve el işaretleriyle akor çalmak mümkün. Air Chord'un el işareti sistemi, majör/minör tilt hareketi ve efekt eli bu rehberde.",
+      "body": [
+        {"p": "Bir şarkıya eşlik etmek için bugüne kadar iki seçeneğiniz vardı: ya bir enstrüman çalmayı öğrenecektiniz ya da hazır bir altyapı açacaktınız. <b>Air Chord</b> üçüncü bir yol açıyor: web kameranıza elinizi gösteriyorsunuz, yaptığınız el işareti bir akora dönüşüyor ve siz üzerine söylüyorsunuz. Kurulum yok, uygulama indirme yok — tarayıcıda çalışıyor."},
+        {"h2": "Nasıl çalışıyor?"},
+        {"p": "Air Chord, elinizin 21 eklem noktasını gerçek zamanlı izleyen bir el-takip modeli kullanır. Kamera görüntünüz cihazınızdan dışarı çıkmaz; işlem tarayıcının içinde yapılır. Sistem iki elinize iki ayrı rol verir."},
+        {"h2": "Sol el: akorun kendisi"},
+        {"p": "Sol elinizle yaptığınız işaret, seçili gamın <i>derecesini</i> seçer:"},
+        {"ul": [
+          "☝️ işaret parmağı = 1. derece (La minörde <b>Am</b>)",
+          "✌️ iki parmak = 2. derece (<b>B°</b>)",
+          "Üç, dört parmak ve açık el = 3., 4., 5. dereceler",
+          "🤘 = 6. derece · 🤟 = 7. derece"
+        ]},
+        {"p": "İşaret havada durduğu sürece ses uzar — synth-pad gibi. Elinizi <b>içe yatırırsanız</b> o akor majöre, <b>dışa yatırırsanız</b> minöre döner; dik tutarsanız gamın kendi akoru çalınır. ✊ Yumruk yaparsanız ses susar."},
+        {"box": "💡 Derece sistemi size yabancıysa akor dereceleri rehberimize göz atın — Air Chord'un el işaretlerinin neden 1–7 diye numaralandığını orada anlatıyoruz.", "link": "akor-dereceleri"},
+        {"h2": "Sağ el: efektler"},
+        {"p": "Sağ el akora hiç dokunmaz; sadece sesin karakterini şekillendirir. Eli <b>sola eğdikçe distorsiyon</b> artar, <b>sağa çevirdikçe</b> dalga biçimi parlar, dik tutunca ses temizlenir. Böylece sol el \"ne çalındığını\", sağ el \"nasıl duyulduğunu\" kontrol eder."},
+        {"h2": "Ton, gam ve makam seçimi"},
+        {"p": "Alt panelden istediğiniz tonu ve gamı seçersiniz: majör, minör ve makam dizileri desteklenir. Gam değiştiğinde el işaretleri aynı kalır; sadece derecelerin karşılığı değişir. Bu yüzden La minörde öğrendiğiniz eşlik, tek tıkla Mi minöre taşınır."},
+        {"h2": "Ritim, arpej ve kendi sesinizle pad'ler"},
+        {"ul": [
+          "<b>Metronom + arpej:</b> BPM'i seçin; akorlar 8'liklerle yürüsün (4/4 ve 6/8).",
+          "<b>Ritim dizgeci:</b> Kick–snare–hihat desenini kutucuklara tıklayarak kendiniz yazın.",
+          "<b>Sampler pad:</b> Kendi sesinizi kaydedin ya da dosya yükleyin; pad olarak çalın.",
+          "<b>Vokal harmonizer:</b> Şarkı söylerken kayda gama uyumlu 3'lü/5'li koro eşliği eklenir."
+        ]},
+        {"h2": "Videonuzu kaydedin"},
+        {"p": "Air Chord, Reels için dikey (9:16) ve YouTube için yatay (16:9) video kaydı yapar. Kadraja el iskeleti çizimleri, çalan akor, ritim deseni ve ChordPlai filigranı dahildir — çektiğiniz video doğrudan paylaşılmaya hazırdır."},
+        {"h2": "Kimler için?"},
+        {"p": "Şarkı söylemeyi seven ama enstrüman çalmayan herkes için. Ayrıca müzik öğretmenleri derste derece kavramını göstermek için, içerik üreticileri de dikkat çekici performans videoları için kullanıyor."}
+      ]
+    },
+    {
+      "id": "degrees",
+      "slug": "akor-dereceleri",
+      "date": "2026-07-29",
+      "title": "Akor dereceleri: I–VII sistemini bir kere öğren, her tonda çal",
+      "desc": "Akor dereceleri şarkıları tondan bağımsız düşünmenizi sağlar. La minör örneğiyle diyatonik akorlar, I–IV–V kalıpları ve derecelerle pratik yapmanın yolları.",
+      "excerpt": "Am neden \"bir\", G neden \"yedi\"? Derece sistemi şarkıları tona bağımlı olmaktan kurtarır. La minör örneğiyle diyatonik akorlar ve pratik ipuçları.",
+      "body": [
+        {"p": "Bir şarkının akorlarını \"Am, F, C, G\" diye ezberlerseniz o şarkıyı yalnız o tonda bilirsiniz. Aynı şarkıyı \"i–VI–III–VII\" diye düşünürseniz, <b>her tonda</b> bilirsiniz. Derece sistemi tam olarak bunu yapar: akorları isimleriyle değil, gam içindeki <i>görevleriyle</i> adlandırır."},
+        {"h2": "Derece nedir?"},
+        {"p": "Bir gamın her notası üzerine, yine o gamın notalarını kullanarak bir akor kurulur. Gamın kaçıncı notasından kurulduysa akorun derecesi odur. Büyük harf (I, IV, V) majör akoru, küçük harf (i, iv, v) minör akoru, ° işareti eksilmiş akoru gösterir."},
+        {"h2": "La minör örneği"},
+        {"table": {"head": ["Derece", "Akor", "Tür"], "rows": [["i", "Am", "minör"], ["ii°", "B°", "eksilmiş"], ["III", "C", "majör"], ["iv", "Dm", "minör"], ["v", "Em", "minör"], ["VI", "F", "majör"], ["VII", "G", "majör"]]}},
+        {"p": "Bu yedi akora gamın <b>diyatonik akorları</b> denir: hepsi yalnız La minör gamının notalarını kullanır, bu yüzden birbirleriyle her sırada uyumlu duyulurlar."},
+        {"box": "🖐️ ChordPlai'ın Air Chord modunda bu tablo elinizin parmaklarına eşlenir: ☝️ = i, ✌️ = ii°, üç parmak = III… Kameraya işareti gösterirsiniz, ilgili derece çalar. Derece kavramını kulakla öğrenmenin en hızlı yolu budur.", "link": "air-chord"},
+        {"h2": "Neden işe yarar?"},
+        {"ol": [
+          "<b>Transpoze bedava:</b> \"i–VI–III–VII\" kalıbını Mi minöre taşımak için sadece gamı değiştirirsiniz: Em–C–G–D. Kalıp aynıdır.",
+          "<b>Şarkılar birbirine benzer:</b> Popüler müziğin büyük bölümü birkaç derece kalıbından oluşur (I–V–vi–IV en ünlüsü). Kalıbı tanıyınca yeni şarkıyı ilk dinleyişte çözersiniz.",
+          "<b>Doğaçlama kolaylaşır:</b> Hangi akorun \"eve dönme\" (i), hangisinin \"gerilim\" (V, VII) hissi verdiğini derecelerden bilirsiniz."
+        ]},
+        {"h2": "Kulağınızı derecelere alıştırma pratiği"},
+        {"ul": [
+          "Bir gam seçin ve i → iv → v → i sırasını döngüde çalın; her akorun hissini adlandırın.",
+          "Sevdiğiniz bir şarkının akorlarını bulun, sonra her akorun derecesini yazın.",
+          "Aynı kalıbı iki farklı tonda çalıp aynı hikâyeyi duyduğunuzu doğrulayın."
+        ]},
+        {"p": "Bu alıştırmaların üçü de ChordPlai'da yapılabilir: Air Chord derecelerle çalar, akor egzersizi modülü diyagramları gösterir, <i>Akor Ninja</i> ise gerçek enstrümanınızla çaldığınız akoru mikrofondan tanır."}
+      ]
+    },
+    {
+      "id": "no-instrument",
+      "slug": "enstrumansiz-sarki-soylemek",
+      "date": "2026-07-29",
+      "title": "Enstrümansız şarkı söylemek: kendine eşlik etmenin 3 yolu",
+      "desc": "Gitar çalamıyorsanız da şarkı söyleyebilirsiniz: backing track, akor uygulamaları ve kamerayla havada akor çalma. Üç yöntemin artıları, eksileri ve pratik önerileri.",
+      "excerpt": "Gitarın yoksa ya da henüz çalamıyorsan şarkı söylemeyi bekletme. Backing track, loop pedalı mantığı ve kamerayla akor çalma — üçünün karşılaştırması.",
+      "body": [
+        {"p": "\"Önce gitar öğreneyim, sonra söylerim\" cümlesi, çoğu insanın şarkı söylemeye hiç başlamamasıyla sonuçlanır. Oysa iyi şarkı söylemenin yolu çok söylemekten geçer ve bunun için elinizin altında bir eşlik olması yeter."},
+        {"h2": "1) Hazır altyapı (backing track / karaoke)"},
+        {"ul": [
+          "<b>Artısı:</b> Sıfır öğrenme eşiği; prodüksiyon kalitesi yüksek.",
+          "<b>Eksisi:</b> Tona ve tempoya mahkûmsunuz. Şarkı sesinize göre yüksekse zorlanırsınız. Ayrıca yalnız var olan şarkılara eşlik edebilirsiniz."
+        ]},
+        {"h2": "2) Ekrandan akor çalan uygulamalar"},
+        {"ul": [
+          "<b>Artısı:</b> Ton ve tempo sizin elinizde; kendi kalıplarınızı kurarsınız.",
+          "<b>Eksisi:</b> Gözünüz sürekli ekranda, parmağınız küçük tuşlarda. Performans verirken telefona bakmak hem duruşu hem videoyu bozar."
+        ]},
+        {"h2": "3) Kamerayla havada akor çalmak (Air Chord)"},
+        {"p": "Üçüncü ve en yeni yol: bilgisayarın kamerasına elinizi gösterip <b>el işaretiyle akor çalmak</b>. Sol elinizin işareti (1–7) seçili gamın derecesini çalar, elinizi yatırınca akor majör/minör olur; sağ eliniz efektleri yönetir.", "link": "air-chord"},
+        {"ul": [
+          "<b>Artısı:</b> Elleriniz havada, duruşunuz serbest, gözünüz kamerada — performans doğal görünür. Ton/tempo tamamen sizde; Reels/YouTube kaydı uygulamanın içinde.",
+          "<b>Eksisi:</b> Kameralı bir cihaz gerekir; işaretlere alışmak birkaç dakika sürer."
+        ]},
+        {"h2": "Hangisini seçmeli?"},
+        {"table": {"head": ["", "Backing track", "Dokunmatik akor", "Air Chord"], "rows": [["Öğrenme eşiği", "Yok", "Düşük", "Düşük"], ["Ton/tempo kontrolü", "Yok", "Var", "Var"], ["Kendi şarkını deneme", "Yok", "Var", "Var"], ["Video performansı", "Orta", "Zayıf", "Güçlü"], ["Teori öğretimi", "Yok", "Az", "Derece sistemi"]]}},
+        {"box": "🎤 Önerimiz: ısınmak için backing track, beste denemeleri ve video içerikleri için Air Chord. İkisi birbirini dışlamaz — önemli olan her gün söylemek."},
+        {"h2": "5 dakikalık başlangıç rutini"},
+        {"ol": [
+          "ChordPlai'ı açın, kamera izni verin.",
+          "Sesinize rahat gelen bir gam seçin (emin değilseniz La minör).",
+          "☝️ (i) ve 🖐️ (v) işaretleri arasında gidip gelin; nefesinizi akor değişimine oturtun.",
+          "Dört derecelik bir döngü kurun (örn. i–VI–III–VII) ve üzerine melodi mırıldanın.",
+          "Kayıt butonuna basıp bir deneme videosu alın — ilerlemenizi görmenin en iyi yolu."
+        ]}
+      ]
+    },
+    {
+      "id": "play-without-musician",
+      "slug": "muzisyen-olmadan-sarki-calmak",
+      "date": "2026-07-29",
+      "title": "Müzisyen olmadan şarkı çalmak: nota bilmeden ilk şarkınız",
+      "desc": "Enstrüman çalmayı bilmeden şarkı çalmak mümkün mü? Evet. Nota okumadan, parmak nasırı olmadan, elinizle akor çalarak ilk şarkınızı bugün bitirin.",
+      "excerpt": "Nota bilmiyorum, enstrüman çalamıyorum, geç kaldım… Üçü de artık şarkı çalmanın önünde engel değil. Bugün çalabileceğiniz ilk şarkının tarifi.",
+      "body": [
+        {"p": "Müzik yapmak isteyen çoğu insan aynı duvara çarpar: enstrüman öğrenmek aylar sürer. Parmak uçlarınız acır, akor geçişleri tutmaz, nota okuma bambaşka bir dildir. Çoğu kişi tam da burada bırakır — müzikal yeteneği olmadığı için değil, <b>araç ile arzu arasındaki mesafe</b> çok uzun olduğu için."},
+        {"p": "Bu mesafeyi kısaltmanın bir yolu var: aradaki aracı kaldırmak. Elinizi kameraya gösterip akoru doğrudan çalmak."},
+        {"h2": "Şarkı çalmak için gerçekten ne gerekir?"},
+        {"p": "Bir şarkıya eşlik etmek için ihtiyacınız olan şey teknik değil, üç basit karardır:"},
+        {"ol": [
+          "<b>Hangi ton?</b> Sesinize rahat gelen bir yer. Emin değilseniz La minör ya da Do majörle başlayın.",
+          "<b>Hangi akorlar?</b> Popüler şarkıların çoğu dört akorla döner. Dördünü bilmek yüzlerce şarkı açar.",
+          "<b>Ne zaman değişecek?</b> Genellikle her dört vuruşta bir. Metronom bunu sizin yerinize sayar."
+        ]},
+        {"p": "Dikkat edin: bu listede \"nota okumak\" yok, \"parmak tekniği\" yok, \"10.000 saat\" yok."},
+        {"h2": "Dört akorluk sır"},
+        {"p": "Batı popüler müziğinin şaşırtıcı biçimde büyük bir kısmı aynı dört akor kalıbının etrafında döner. Derece diliyle yazınca kalıp şöyle görünür: <b>I – V – vi – IV</b>. La minör dünyasında karşılığı: <b>Am – F – C – G</b>."},
+        {"p": "Bu dördünü sırayla çalabilirseniz, üzerine onlarca tanıdık şarkı söyleyebilirsiniz. Üstelik kalıbı derece olarak öğrendiğiniz için sesiniz için fazla tiz gelirse tonu değiştirir, aynı el hareketleriyle çalmaya devam edersiniz."},
+        {"box": "🎯 Kalıbı derece olarak düşünmek neden önemli? Çünkü akor isimleri tona göre değişir ama dereceler değişmez. Ayrıntılı anlatım için akor dereceleri rehberimize bakın.", "link": "degrees"},
+        {"h2": "Elinizle çalmak: 10 dakikada ilk şarkı"},
+        {"p": "ChordPlai'ın <b>Air Chord</b> modunda parmak sayınız akorun derecesini seçer. Öğrenmeniz gereken tek şey birkaç el işareti:"},
+        {"ul": [
+          "☝️ <b>Tek parmak</b> — 1. derece: şarkının \"evi\", huzur veren akor",
+          "🖐️ <b>Açık el</b> — 5. derece: gerilim, eve dönmek isteyen akor",
+          "🤘 <b>Boynuz</b> — 6. derece: hüzünlü, duygusal renk",
+          "4️⃣ <b>Dört parmak</b> — 4. derece: açılım, yükselme hissi",
+          "✊ <b>Yumruk</b> — sessizlik"
+        ]},
+        {"p": "Bu beş hareketi öğrenmek on dakikanızı alır ve bir ömür yeter. Gitarda aynı dört akoru temiz basmak haftalar sürer."},
+        {"h2": "İlk oturumunuz için tarif"},
+        {"ol": [
+          "Siteyi açın, kamera izni verin, gam olarak <b>La minör</b> seçin.",
+          "Metronomu 70 BPM'e alın — sakin, şarkı söylenebilir bir tempo.",
+          "Şu sırayı dört vuruşta bir değiştirerek dönün: ☝️ → 🤘 → 4️⃣ → 🖐️",
+          "İki tur sadece dinleyin. Üçüncü turda \"la la\" diye mırıldanmaya başlayın.",
+          "Melodi oturunca bildiğiniz bir şarkının sözlerini deneyin — çoğu oturur."
+        ]},
+        {"h2": "\"Ama bu gerçek müzik mi?\""},
+        {"p": "Bu soruyu en çok, henüz başlamamış olanlar sorar. Gerçek müzik, bir dinleyiciye bir duygu geçirebilmektir; bunu hangi araçla yaptığınız ikincildir. Piyano da bir makinedir, elektrogitar da. Kamera ve el takibi sadece listeye eklenen yeni bir araçtır."},
+        {"p": "Dahası: derecelerle çalarak farkında olmadan gerçek müzik teorisi öğrenirsiniz. Bir gün gitara geçmeye karar verirseniz kulağınız çoktan hazır olacak."},
+        {"h2": "Bugün ne yapmalısınız?"},
+        {"p": "Beş dakika ayırın. Kamerayı açın, dört işareti deneyin, üzerine bir şey mırıldanın ve kaydedin. Yarın dinlediğinizde şaşıracaksınız — çünkü ilk kez \"bir gün müzik yapacağım\" cümlesini geçmiş zamana çevirmiş olacaksınız."}
+      ]
+    },
+    {
+      "id": "hand-signs",
+      "slug": "el-isaretleriyle-akor-calmak",
+      "date": "2026-07-29",
+      "title": "El işaretleriyle akor çalmak: parmaklarınız yeni enstrümanınız",
+      "desc": "El takibi teknolojisiyle havada akor çalmak nasıl mümkün oluyor? Parmak sayısından akora giden yol, majör/minör tilt hareketi ve işaretleri kusursuz yapmanın püf noktaları.",
+      "excerpt": "Kamera elinizin 21 eklemini izliyor, parmak sayınız akorun derecesine dönüşüyor. Perde arkasındaki teknoloji ve işaretleri hatasız yapmanın püf noktaları.",
+      "body": [
+        {"p": "Havada el hareketiyle müzik yapmak yeni bir fikir değil. 1920'lerde Leon Theremin, iki antenin etrafındaki elektrik alanını okuyan bir enstrüman yaptı: <b>theremin</b>. Ellerinizi havada gezdiriyor, hiçbir yere dokunmadan ses üretiyordunuz. Sorun şuydu: theremin acımasızca zordu — perde sürekliydi, en ufak titreme sesi bozardı."},
+        {"p": "Bugün elimizde theremin'in çözemediği şey var: <b>bilgisayarın elinizi anlaması</b>. El takibi, sürekli ve kaygan olan boşluğu ayrık ve güvenilir işaretlere çeviriyor."},
+        {"h2": "Kamera elinizde ne görüyor?"},
+        {"p": "Air Chord, elinizin <b>21 eklem noktasını</b> saniyede otuz kez tespit eder: bilek, avuç içi eklemleri ve her parmağın üç boğumu. Bu noktalar bir iskelet oluşturur ve sistem o iskeletten üç şey okur:"},
+        {"ul": [
+          "<b>Kaç parmak açık</b> — akorun derecesini belirler (1'den 7'ye)",
+          "<b>Elin eğim açısı</b> — akoru majöre ya da minöre çevirir",
+          "<b>Avucun dönüşü</b> — sesin karakterini (efektleri) değiştirir"
+        ]},
+        {"p": "Önemli bir ayrıntı: görüntü cihazınızdan hiç çıkmaz. Tanıma modeli tarayıcının içinde çalışır, kamera akışı hiçbir sunucuya gönderilmez."},
+        {"h2": "Parmak sayısından akora giden yol"},
+        {"p": "Sistem parmak sayısını doğrudan bir nota değil, <b>gam derecesi</b> olarak yorumlar. Bu ayrım her şeyi değiştirir: iki parmak La minörde <i>B°</i>, Do majörde <i>Dm</i> çalar. Yani el hareketleriniz sabit kalırken müzik seçtiğiniz tona uyum sağlar."},
+        {"box": "🎼 Bu yüzden Air Chord bir oyuncak değil, gerçek bir müzik aracı: öğrendiğiniz şey \"şu tuşa bas\" değil, \"şu görevdeki akoru çal\". Derece mantığını akor dereceleri yazımızda ayrıntılı anlattık.", "link": "degrees"},
+        {"h2": "Majör ve minör: bileğinizin açısı"},
+        {"p": "Aynı dereceyi hem hüzünlü hem neşeli duyurmak isteyebilirsiniz. Bunun için ayrı bir işaret öğrenmenize gerek yok — sadece bileğinizi yatırırsınız. <b>İçe doğru</b> yatırınca o akor majöre, <b>dışa doğru</b> yatırınca minöre döner; eli dik tutarsanız gamın kendi akoru çalar."},
+        {"p": "Bu tasarımın güzel yanı, hareketin duyguyla eşleşmesi: aynı elin küçük bir dönüşü müziğin rengini değiştirir, tıpkı bir gitaristin aynı akoru sert veya yumuşak vurması gibi."},
+        {"h2": "İşaretleri kusursuz yapmanın 6 püf noktası"},
+        {"ol": [
+          "<b>Işığa dikkat:</b> Elinizin arkasından gelen güçlü ışık (pencere) tanımayı zorlaştırır. Işık yüzünüze gelsin.",
+          "<b>Mesafe:</b> Elinizi göğüs hizasında, kameraya 40–70 cm uzaklıkta tutun.",
+          "<b>Parmakları ayırın:</b> İki ve üç parmak işaretlerinde parmaklar birbirine yapışmasın.",
+          "<b>Avuç kameraya baksın:</b> Elin yanı değil, içi görünsün.",
+          "<b>Net geçiş yapın:</b> Derece değiştirirken elinizi bir an nötre alıp yeni işareti kesin yapın.",
+          "<b>Sade arka plan:</b> Arkanızda hareket eden başka eller ya da desenli yüzeyler olmasın."
+        ]},
+        {"h2": "Neden ekrana dokunmaktan daha iyi?"},
+        {"p": "Telefonda akor tuşlarına basmak da mümkün — ama gözünüz ekrana kilitlenir. Havada çalarken başınız dik, elleriniz görünür, bakışınız kamerada olur. Şarkı söylerken bu fark hem sesinize hem videonuza yansır: nefes daha rahat, duruş daha doğal, görüntü çok daha etkileyici."},
+        {"h2": "Yeni bir enstrüman öğrenmek gibi — ama kısa"},
+        {"p": "Her enstrümanın bir öğrenme eğrisi vardır. Air Chord'un eğrisi dakikalarla ölçülür: beş işaret ve bir bilek hareketi. Buna karşılık ifade alanı sığ değildir — derece, kalite, oktav, distorsiyon, arpej ve ritim katmanlarıyla saatlerce derinleşebilirsiniz."},
+        {"p": "Ellerinizi kaldırın ve deneyin. En kötü ihtimalle beş dakika kaybedersiniz; en iyi ihtimalle müzikle aranızdaki mesafe tamamen kapanır."}
+      ]
+    },
+    {
+      "id": "features-tour",
+      "slug": "chordplai-ozellikleri",
+      "date": "2026-07-29",
+      "title": "ChordPlai'ın tüm özellikleri: elinizle çalmaktan vokal harmonizere",
+      "desc": "Air Chord, 4 synth tonu, metronom ve arpej, ritim dizgeci, sampler pad'ler, vokal harmonizer, video kaydı ve enstrüman egzersizleri — ChordPlai'da neler var?",
+      "excerpt": "Bir kamera ve tarayıcıdan ibaret görünen sitede tam bir müzik stüdyosu var. Air Chord'dan vokal harmonizere, tüm özelliklerin turu.",
+      "body": [
+        {"p": "ChordPlai dışarıdan bakınca basit görünür: kameraya elinizi gösterirsiniz, akor çalar. Ama kapağı kaldırdığınızda altında şaşırtıcı derecede eksiksiz bir müzik ortamı var. İşte tamamı."},
+        {"h2": "🖐️ Air Chord — ana olay"},
+        {"p": "Sol elinizin işareti seçili gamın derecesini çalar (1–7), bileğinizi yatırmanız o akoru majör ya da minör yapar, sağ eliniz efektleri yönetir. İşaret havada durduğu sürece ses uzar, yumruk yapınca susar.", "link": "air-chord"},
+        {"h2": "🎛️ Dört synth tonu"},
+        {"ul": [
+          "<b>🎹 Elektronik Klavye</b> — sağ avucunuzu çevirdikçe dalga biçimi karışan, esnek modern ton",
+          "<b>🎼 Grand Piyano</b> — vurdukça sönen doğal piyano zarfı; arpejlerde çok güzel duyulur",
+          "<b>🌊 Analog</b> — gerçek bir analog dalga örneğinden üretilen sıcak, yumuşak pad",
+          "<b>🕹️ Retro</b> — hafif kirli, nostaljik testere dalgası"
+        ]},
+        {"h2": "🥁 Metronom, arpej ve ölçü"},
+        {"p": "BPM'i 40 ile 160 arasında seçersiniz. Metronom açıkken akorlarınız uzayan bir pad olmaktan çıkıp <b>arpej</b> olarak yürümeye başlar — akorun sesleri tek tek, sırayla çalar. Ölçü olarak 4/4 ve 6/8 desteklenir; arpej seçtiğiniz ölçüye göre yürür."},
+        {"h2": "🎚️ Kendi ritminizi çizin"},
+        {"p": "Ritim dizgeci basit bir kutucuk ızgarasıdır: kick, snare ve hihat satırlarında istediğiniz kutuları tıklarsınız, desen döngüde çalar. Nota bilgisi gerekmez — gözünüzle görüp kulağınızla onaylarsınız."},
+        {"h2": "🎤 Sampler pad — kendi sesinizle enstrüman"},
+        {"p": "Dört pad'e kendi seslerinizi yükleyebilir ya da doğrudan mikrofondan kaydedebilirsiniz. Bir \"hey!\", bir alkış, bir masa vuruşu… Pad'e tıklayarak veya 1-4 tuşlarına basarak çalarsınız. Yüklediğiniz ses ritim dizgecinde kendi satırını açar, yani groove'a yazıp otomatik çaldırabilirsiniz."},
+        {"box": "💡 Bu özellik ChordPlai'ı bir akor oyuncağından çıkarıp gerçek bir eskiz aracına dönüştürür: akor + ritim + kendi sesleriniz = tam bir fikir taslağı."},
+        {"h2": "🎙️ Vokal harmonizer — sesinize koro"},
+        {"p": "Şarkı söylerken sesiniz ham kalmaz. Kayda giren vokaliniz filtrelenir, sıkıştırılır, reverb eklenir ve isterseniz <b>seçili gama uyumlu 3'lü ve 5'li harmoniler</b> ile çoğaltılır. Yani tek başınıza söylerken kayıtta bir koro duyarsınız. Dört mod vardır: Doğal, Hall, +3'lü ve Koro (3+5)."},
+        {"h2": "🎬 Reels ve YouTube video kaydı"},
+        {"p": "Uygulama, performansınızı doğrudan paylaşılabilir video olarak kaydeder. Dikey (9:16) ve yatay (16:9) formatları vardır; kadrajda el takibi çizimleri, çalan akorun adı, ritim deseni ve ChordPlai filigranı görünür. Kayıt bitince indirmek isteyip istemediğiniz sorulur."},
+        {"h2": "🎸 Enstrüman egzersizleri — ikinci kategori"},
+        {"p": "Gerçekten enstrüman çalanlar için ayrı bir bölüm var:"},
+        {"ul": [
+          "<b>Akorlar:</b> Metronomlu akor pratiği; gitar diyagramı ve piyano klavyesiyle",
+          "<b>Nota Oyunu:</b> Nota adlarını sesli söyleyerek oynanan hız oyunu",
+          "<b>Porte:</b> Sol ve Fa anahtarında nota okuma alıştırması",
+          "<b>Akor Ninja:</b> Gerçek gitarınızla çaldığınız akoru mikrofondan tanıyan oyun",
+          "<b>Akor Tetris:</b> Kumandası akorlar olan tetris — doğru akoru çalarak blok çevirirsiniz"
+        ]},
+        {"h2": "Hepsi tarayıcıda, ücretsiz"},
+        {"p": "Kurulum yok, ödeme yok. Google hesabınızla giriş yaparsanız ilerlemeniz kayıtlı kalır. Air Chord için kamera izni gerekir; egzersiz modülleri kamerasız da çalışır."}
+      ]
+    },
+    {
+      "id": "reels",
+      "slug": "muzik-videosu-cekmek",
+      "date": "2026-07-29",
+      "title": "Enstrümansız müzik videosu çekmek: Reels için pratik rehber",
+      "desc": "Enstrüman çalmadan dikkat çeken müzik videoları nasıl çekilir? Kadraj, ışık, akor seçimi ve 15 saniyede izleyiciyi tutan performans videosunun tarifi.",
+      "excerpt": "El hareketiyle akor çalmak sadece kulağa değil, göze de hitap ediyor. Reels ve Shorts için etkileyici müzik videosu çekmenin adım adım tarifi.",
+      "body": [
+        {"p": "Sosyal medyada müzik içeriği üretmek isteyenlerin çoğu aynı yerde takılır: kamera karşısında yalnızca şarkı söylemek görsel olarak durgun kalır, enstrüman çalmayı ise bilmiyorsunuzdur. El hareketiyle akor çalmak tam da bu boşluğu doldurur — <b>hem duyulur hem görülür</b> bir performanstır."},
+        {"h2": "Neden el hareketi videoda iyi çalışıyor?"},
+        {"p": "İzleyici bir videoyu ilk saniyede \"ne oluyor burada?\" sorusuyla tarar. Havada hareket eden eller ve onlara senkron değişen sesler bu soruyu anında yaratır. Merak, izlenme süresinin en güçlü yakıtıdır ve algoritmaların ödüllendirdiği tek şey de izlenme süresidir."},
+        {"h2": "Kadraj: dikey mi yatay mı?"},
+        {"ul": [
+          "<b>Reels / TikTok / Shorts:</b> Dikey 9:16. ChordPlai bu modda kamerayı ortalar, üstüne ve altına marka bantları ekler — eller ve yüz aynı anda görünür.",
+          "<b>YouTube:</b> Yatay 16:9. Daha geniş kadraj, arayüz öğeleri daha rahat okunur."
+        ]},
+        {"p": "Kayıt sırasında ekranda çalan akorun adı, ritim deseni ve el iskeleti çizimleri de videoya işlenir. Bu katmanlar izleyiciye \"burada gerçek bir sistem var\" hissi verir."},
+        {"h2": "Işık ve arka plan"},
+        {"ol": [
+          "Ana ışık kaynağı <b>yüzünüzün önünde</b> olsun; arkanızda pencere varsa perdeyi kapatın.",
+          "Arka plan sade olsun — düz duvar en iyisi. Hareketli arka plan hem el takibini hem izleyicinin dikkatini böler.",
+          "Elinizin arkası ile arka plan arasında kontrast olsun; koyu duvar önünde el çok iyi okunur."
+        ]},
+        {"h2": "15 saniyede izleyiciyi tutan yapı"},
+        {"ol": [
+          "<b>0–2 sn:</b> Ses zaten çalıyor olsun ve elinizi kaldırın. Sessiz açılış izleyiciyi kaçırır.",
+          "<b>2–5 sn:</b> Bir derece değişimi yapın — izleyici sesin elinize bağlı olduğunu fark etsin.",
+          "<b>5–10 sn:</b> Söylemeye başlayın. Bu noktada merak yerini müziğe bırakır.",
+          "<b>10–15 sn:</b> Bileğinizi yatırıp akoru majöre/minöre çevirin — küçük ama etkileyici bir final numarası."
+        ]},
+        {"h2": "Akor seçimi: hangi kalıp iyi duyulur?"},
+        {"p": "Kısa videoda karmaşık ilerlemeler kaybolur. Dört akorluk bir döngü seçin ve iki tur çalın. La minörde denenmiş bir kalıp: <b>☝️ → 🤘 → 4️⃣ → 🖐️</b>. Hüzünlü ve tanıdık duyulur, üzerine hemen hemen her melodi oturur.", "link": "play-without-musician"},
+        {"h2": "Vokal: canlı duymasanız da kayda güzel girer"},
+        {"p": "ChordPlai'da vokaliniz canlı olarak hoparlörden duyulmaz (bu, mikrofon uğultusunu önler) ama <b>kayda işlenmiş halde girer</b>: EQ, kompresör, reverb ve gama uyumlu harmoniler eklenir. Yani kaydı izlediğinizde sesinizi beklediğinizden çok daha dolgun bulacaksınız."},
+        {"box": "🎧 İpucu: Kayıt bitince \"İndir\" deyip videoyu kulaklıkla dinleyin. Harmonizer modunu değiştirip aynı performansı iki kez çekmek, hangi rengin size yakıştığını hızla gösterir."},
+        {"h2": "Yayınlarken"},
+        {"ul": [
+          "İlk yorumda ne yaptığınızı bir cümleyle açıklayın — insanlar \"bu nasıl oluyor?\" diye soracak.",
+          "Videonun ilk karesi elinizin havada olduğu an olsun; kapak karesi merak yaratmalı.",
+          "Aynı kalıpla farklı gamlarda seri üretin — tutan formatı tekrar etmek en hızlı büyüme yoludur."
+        ]},
+        {"h2": "Ekipman listesi"},
+        {"p": "Kameralı bir dizüstü bilgisayar. Hepsi bu. Mikrofon, arayüz, enstrüman, ışık seti gerekmez — daha iyi ses isterseniz kulaklık mikrofonu yeterli."}
+      ]
+    },
+    {
+      "id": "studio",
+      "slug": "kendi-beatini-yap",
+      "date": "2026-07-29",
+      "title": "Ritim, arpej ve kendi sesin: tarayıcıda küçük bir stüdyo",
+      "desc": "Metronom, arpejli akorlar, kendi çizdiğiniz kick-snare deseni ve kendi kaydettiğiniz sesler — ChordPlai'da sıfırdan bir parça iskeleti nasıl kurulur?",
+      "excerpt": "Akor çalmak başlangıç. Ritim dizgeci, arpejler ve sampler pad'lerle ChordPlai'da sıfırdan bir parça iskeleti kurmanın adım adım anlatımı.",
+      "body": [
+        {"p": "Bir fikir aklınıza geldiğinde onu kaydetmenin en hızlı yolu ne? Çoğu zaman telefonun ses kaydına mırıldanmak. Sorun, o mırıltının ertesi gün hiçbir şey ifade etmemesi: ne tonu belli, ne temposu, ne de akorları."},
+        {"p": "ChordPlai'ın groove bölümü tam olarak bu boşluğu doldurur: fikri <b>akoruyla, temposuyla ve ritmiyle</b> yakalarsınız. Adım adım kuralım."},
+        {"h2": "1. Adım — tonu ve tempoyu sabitleyin"},
+        {"p": "Önce gamı seçin. Hüzünlü bir şey istiyorsanız minör, parlak bir şey istiyorsanız majör. Sonra BPM'i belirleyin: 70 civarı sakin ve şarkı söylenebilir, 100–120 arası enerjik, 60 altı ağır ve atmosferik."},
+        {"p": "Ölçüyü de burada seçersiniz: <b>4/4</b> pop ve rock'ın standardı, <b>6/8</b> ise sallanan, vals benzeri bir his verir. Aynı akorları 6/8'de çalmak parçanın karakterini tamamen değiştirir — denemeye değer."},
+        {"h2": "2. Adım — arpeji açın"},
+        {"p": "Metronomu başlattığınızda akorlarınız uzayan bir pad olmaktan çıkar ve <b>arpej</b> olarak yürümeye başlar: akorun sesleri tek tek, tempoya kilitli biçimde çalar. Bu tek değişiklik, elinizle tuttuğunuz statik bir akoru anında \"parça\" gibi duyurur."},
+        {"p": "Arpej, Elektronik Klavye ve Grand Piyano tonlarında çalışır. Analog ve Retro tonlarını seçtiğinizde akor uzayan pad olarak kalır — atmosferik parçalar için bilinçli bir tercih."},
+        {"h2": "3. Adım — ritmi kendiniz çizin"},
+        {"p": "Ritim dizgeci bir ızgaradır: satırlar kick, snare ve hihat; sütunlar ise ölçünün adımları. Kutulara tıklayarak deseni siz yazarsınız. Klasik bir başlangıç:"},
+        {"ul": [
+          "<b>Kick:</b> 1. ve 9. adım (yani her ölçünün başı ve ortası)",
+          "<b>Snare:</b> 5. ve 13. adım (ikinci ve dördüncü vuruş)",
+          "<b>Hihat:</b> tek atlayarak hepsi — sürekli bir doku"
+        ]},
+        {"p": "Bu üç satır neredeyse tüm popüler müziğin iskeletidir. Kutucukları kaydırarak kendi varyasyonlarınızı bulun; kulağınız hangisinin \"yürüdüğünü\" hemen söyleyecektir."},
+        {"h2": "4. Adım — kendi seslerinizi katın"},
+        {"p": "Dört sampler pad'e istediğiniz sesi koyabilirsiniz: mikrofondan bir \"hey!\", masaya vuruş, anahtar şıngırtısı, ya da bilgisayarınızdaki herhangi bir ses dosyası. Yüklediğiniz her ses ritim dizgecinde <b>kendi satırını</b> açar."},
+        {"box": "🎤 En sevilen numara: kendi sesinizle kısa bir \"ha!\" kaydedip snare'in yanına, ikinci vuruşa yerleştirmek. Parça bir anda size ait bir imza kazanır."},
+        {"h2": "5. Adım — üzerine söyleyin ve kaydedin"},
+        {"p": "İskelet hazır: akor, arpej, ritim ve kendi sesleriniz döngüde. Şimdi sol elinizle akorları değiştirerek üzerine mırıldanın. Beğendiğiniz an kayda basın — vokaliniz harmonizerden geçerek videoya mixlenmiş olarak girer."},
+        {"h2": "Tavsiye edilen üç eskiz"},
+        {"table": {"head": ["His", "Gam", "BPM", "Ölçü", "Ton"], "rows": [["Hüzünlü / içe dönük", "La minör", "68", "4/4", "Grand Piyano"], ["Nostaljik / retro", "Do majör", "96", "4/4", "Retro"], ["Atmosferik / sinematik", "Mi minör", "56", "6/8", "Analog"]]}},
+        {"h2": "Fikri nereye taşırsınız?"},
+        {"p": "ChordPlai bir eskiz defteri gibi düşünülmelidir: fikri hızla yakalar, videoya döker, paylaşmanızı sağlar. Fikir tutarsa aynı akor ilerlemesini bir stüdyo yazılımında büyütebilirsiniz — ama çoğu zaman ihtiyacınız olan tek şey, o fikrin kaybolmadan kaydedilmesidir."},
+        {"p": "Ve en önemlisi: tüm bunlar için nota okumanız, enstrüman çalmanız ya da tek kuruş ödemeniz gerekmez."}
+      ]
+    }
+  ]
+}

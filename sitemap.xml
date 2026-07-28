@@ -1,31 +1,661 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://chordplai.com/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/?lang=pt"/>
     <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://chordplai.com/blog</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt"/>
     <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://chordplai.com/blog/air-chord-nedir</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/air-chord-nedir"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/what-is-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/que-es-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/was-ist-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/qu-est-ce-que-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/o-que-e-air-chord"/>
     <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://chordplai.com/blog/akor-dereceleri</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/akor-dereceleri"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/chord-degrees-explained"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/grados-de-acordes-explicados"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/akkordstufen-einmal-lernen-ueberall-spielen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/comprendre-les-degres-d-accords"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/graus-de-acordes-explicados"/>
     <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://chordplai.com/blog/enstrumansiz-sarki-soylemek</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/enstrumansiz-sarki-soylemek"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/sing-without-an-instrument"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/cantar-sin-instrumento-acompanarte"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/singen-ohne-instrument-begleiten"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/chanter-sans-instrument"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/cantar-sem-instrumento"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/muzisyen-olmadan-sarki-calmak</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/muzisyen-olmadan-sarki-calmak"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/play-your-first-song-without-reading-music"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/tocar-canciones-sin-ser-musico"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/musik-machen-ohne-noten-lesen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/jouer-une-chanson-sans-etre-musicien"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/tocar-musica-sem-ser-musico"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/el-isaretleriyle-akor-calmak</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/el-isaretleriyle-akor-calmak"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/play-chords-with-hand-signs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/tocar-acordes-con-senas-de-mano"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/akkorde-mit-handzeichen-spielen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/jouer-des-accords-avec-les-mains"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/tocar-acordes-com-gestos-de-mao"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/chordplai-ozellikleri</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/chordplai-ozellikleri"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/chordplai-features-tour"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/todas-las-funciones-de-chordplai"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/alle-chordplai-funktionen-im-ueberblick"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/toutes-les-fonctionnalites-de-chordplai"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/recursos-do-chordplai"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/muzik-videosu-cekmek</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/muzik-videosu-cekmek"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/shoot-music-videos-for-reels"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/grabar-video-musical-sin-instrumento"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/musikvideos-ohne-instrument-drehen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/filmer-un-clip-musical-sans-instrument"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/gravar-video-musical-para-reels"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/kendi-beatini-yap</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/kendi-beatini-yap"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/make-your-own-beat"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/crea-tu-propio-beat"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/bau-deinen-eigenen-beat"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/creer-son-beat-dans-le-navigateur"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/faca-seu-proprio-beat"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/en</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/en/what-is-air-chord</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/air-chord-nedir"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/what-is-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/que-es-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/was-ist-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/qu-est-ce-que-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/o-que-e-air-chord"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/en/chord-degrees-explained</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/akor-dereceleri"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/chord-degrees-explained"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/grados-de-acordes-explicados"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/akkordstufen-einmal-lernen-ueberall-spielen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/comprendre-les-degres-d-accords"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/graus-de-acordes-explicados"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/en/sing-without-an-instrument</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/enstrumansiz-sarki-soylemek"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/sing-without-an-instrument"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/cantar-sin-instrumento-acompanarte"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/singen-ohne-instrument-begleiten"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/chanter-sans-instrument"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/cantar-sem-instrumento"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/en/play-your-first-song-without-reading-music</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/muzisyen-olmadan-sarki-calmak"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/play-your-first-song-without-reading-music"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/tocar-canciones-sin-ser-musico"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/musik-machen-ohne-noten-lesen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/jouer-une-chanson-sans-etre-musicien"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/tocar-musica-sem-ser-musico"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/en/play-chords-with-hand-signs</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/el-isaretleriyle-akor-calmak"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/play-chords-with-hand-signs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/tocar-acordes-con-senas-de-mano"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/akkorde-mit-handzeichen-spielen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/jouer-des-accords-avec-les-mains"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/tocar-acordes-com-gestos-de-mao"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/en/chordplai-features-tour</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/chordplai-ozellikleri"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/chordplai-features-tour"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/todas-las-funciones-de-chordplai"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/alle-chordplai-funktionen-im-ueberblick"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/toutes-les-fonctionnalites-de-chordplai"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/recursos-do-chordplai"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/en/shoot-music-videos-for-reels</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/muzik-videosu-cekmek"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/shoot-music-videos-for-reels"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/grabar-video-musical-sin-instrumento"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/musikvideos-ohne-instrument-drehen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/filmer-un-clip-musical-sans-instrument"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/gravar-video-musical-para-reels"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/en/make-your-own-beat</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/kendi-beatini-yap"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/make-your-own-beat"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/crea-tu-propio-beat"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/bau-deinen-eigenen-beat"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/creer-son-beat-dans-le-navigateur"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/faca-seu-proprio-beat"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/es</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/es/que-es-air-chord</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/air-chord-nedir"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/what-is-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/que-es-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/was-ist-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/qu-est-ce-que-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/o-que-e-air-chord"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/es/grados-de-acordes-explicados</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/akor-dereceleri"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/chord-degrees-explained"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/grados-de-acordes-explicados"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/akkordstufen-einmal-lernen-ueberall-spielen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/comprendre-les-degres-d-accords"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/graus-de-acordes-explicados"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/es/cantar-sin-instrumento-acompanarte</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/enstrumansiz-sarki-soylemek"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/sing-without-an-instrument"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/cantar-sin-instrumento-acompanarte"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/singen-ohne-instrument-begleiten"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/chanter-sans-instrument"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/cantar-sem-instrumento"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/es/tocar-canciones-sin-ser-musico</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/muzisyen-olmadan-sarki-calmak"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/play-your-first-song-without-reading-music"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/tocar-canciones-sin-ser-musico"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/musik-machen-ohne-noten-lesen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/jouer-une-chanson-sans-etre-musicien"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/tocar-musica-sem-ser-musico"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/es/tocar-acordes-con-senas-de-mano</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/el-isaretleriyle-akor-calmak"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/play-chords-with-hand-signs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/tocar-acordes-con-senas-de-mano"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/akkorde-mit-handzeichen-spielen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/jouer-des-accords-avec-les-mains"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/tocar-acordes-com-gestos-de-mao"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/es/todas-las-funciones-de-chordplai</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/chordplai-ozellikleri"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/chordplai-features-tour"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/todas-las-funciones-de-chordplai"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/alle-chordplai-funktionen-im-ueberblick"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/toutes-les-fonctionnalites-de-chordplai"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/recursos-do-chordplai"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/es/grabar-video-musical-sin-instrumento</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/muzik-videosu-cekmek"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/shoot-music-videos-for-reels"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/grabar-video-musical-sin-instrumento"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/musikvideos-ohne-instrument-drehen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/filmer-un-clip-musical-sans-instrument"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/gravar-video-musical-para-reels"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/es/crea-tu-propio-beat</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/kendi-beatini-yap"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/make-your-own-beat"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/crea-tu-propio-beat"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/bau-deinen-eigenen-beat"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/creer-son-beat-dans-le-navigateur"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/faca-seu-proprio-beat"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/de</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/de/was-ist-air-chord</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/air-chord-nedir"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/what-is-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/que-es-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/was-ist-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/qu-est-ce-que-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/o-que-e-air-chord"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/de/akkordstufen-einmal-lernen-ueberall-spielen</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/akor-dereceleri"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/chord-degrees-explained"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/grados-de-acordes-explicados"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/akkordstufen-einmal-lernen-ueberall-spielen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/comprendre-les-degres-d-accords"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/graus-de-acordes-explicados"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/de/singen-ohne-instrument-begleiten</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/enstrumansiz-sarki-soylemek"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/sing-without-an-instrument"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/cantar-sin-instrumento-acompanarte"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/singen-ohne-instrument-begleiten"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/chanter-sans-instrument"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/cantar-sem-instrumento"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/de/musik-machen-ohne-noten-lesen</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/muzisyen-olmadan-sarki-calmak"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/play-your-first-song-without-reading-music"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/tocar-canciones-sin-ser-musico"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/musik-machen-ohne-noten-lesen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/jouer-une-chanson-sans-etre-musicien"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/tocar-musica-sem-ser-musico"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/de/akkorde-mit-handzeichen-spielen</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/el-isaretleriyle-akor-calmak"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/play-chords-with-hand-signs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/tocar-acordes-con-senas-de-mano"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/akkorde-mit-handzeichen-spielen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/jouer-des-accords-avec-les-mains"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/tocar-acordes-com-gestos-de-mao"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/de/alle-chordplai-funktionen-im-ueberblick</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/chordplai-ozellikleri"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/chordplai-features-tour"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/todas-las-funciones-de-chordplai"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/alle-chordplai-funktionen-im-ueberblick"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/toutes-les-fonctionnalites-de-chordplai"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/recursos-do-chordplai"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/de/musikvideos-ohne-instrument-drehen</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/muzik-videosu-cekmek"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/shoot-music-videos-for-reels"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/grabar-video-musical-sin-instrumento"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/musikvideos-ohne-instrument-drehen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/filmer-un-clip-musical-sans-instrument"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/gravar-video-musical-para-reels"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/de/bau-deinen-eigenen-beat</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/kendi-beatini-yap"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/make-your-own-beat"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/crea-tu-propio-beat"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/bau-deinen-eigenen-beat"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/creer-son-beat-dans-le-navigateur"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/faca-seu-proprio-beat"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/fr</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/fr/qu-est-ce-que-air-chord</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/air-chord-nedir"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/what-is-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/que-es-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/was-ist-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/qu-est-ce-que-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/o-que-e-air-chord"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/fr/comprendre-les-degres-d-accords</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/akor-dereceleri"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/chord-degrees-explained"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/grados-de-acordes-explicados"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/akkordstufen-einmal-lernen-ueberall-spielen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/comprendre-les-degres-d-accords"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/graus-de-acordes-explicados"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/fr/chanter-sans-instrument</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/enstrumansiz-sarki-soylemek"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/sing-without-an-instrument"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/cantar-sin-instrumento-acompanarte"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/singen-ohne-instrument-begleiten"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/chanter-sans-instrument"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/cantar-sem-instrumento"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/fr/jouer-une-chanson-sans-etre-musicien</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/muzisyen-olmadan-sarki-calmak"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/play-your-first-song-without-reading-music"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/tocar-canciones-sin-ser-musico"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/musik-machen-ohne-noten-lesen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/jouer-une-chanson-sans-etre-musicien"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/tocar-musica-sem-ser-musico"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/fr/jouer-des-accords-avec-les-mains</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/el-isaretleriyle-akor-calmak"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/play-chords-with-hand-signs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/tocar-acordes-con-senas-de-mano"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/akkorde-mit-handzeichen-spielen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/jouer-des-accords-avec-les-mains"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/tocar-acordes-com-gestos-de-mao"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/fr/toutes-les-fonctionnalites-de-chordplai</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/chordplai-ozellikleri"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/chordplai-features-tour"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/todas-las-funciones-de-chordplai"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/alle-chordplai-funktionen-im-ueberblick"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/toutes-les-fonctionnalites-de-chordplai"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/recursos-do-chordplai"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/fr/filmer-un-clip-musical-sans-instrument</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/muzik-videosu-cekmek"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/shoot-music-videos-for-reels"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/grabar-video-musical-sin-instrumento"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/musikvideos-ohne-instrument-drehen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/filmer-un-clip-musical-sans-instrument"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/gravar-video-musical-para-reels"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/fr/creer-son-beat-dans-le-navigateur</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/kendi-beatini-yap"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/make-your-own-beat"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/crea-tu-propio-beat"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/bau-deinen-eigenen-beat"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/creer-son-beat-dans-le-navigateur"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/faca-seu-proprio-beat"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/pt</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/pt/o-que-e-air-chord</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/air-chord-nedir"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/what-is-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/que-es-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/was-ist-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/qu-est-ce-que-air-chord"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/o-que-e-air-chord"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/pt/graus-de-acordes-explicados</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/akor-dereceleri"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/chord-degrees-explained"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/grados-de-acordes-explicados"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/akkordstufen-einmal-lernen-ueberall-spielen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/comprendre-les-degres-d-accords"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/graus-de-acordes-explicados"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/pt/cantar-sem-instrumento</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/enstrumansiz-sarki-soylemek"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/sing-without-an-instrument"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/cantar-sin-instrumento-acompanarte"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/singen-ohne-instrument-begleiten"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/chanter-sans-instrument"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/cantar-sem-instrumento"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/pt/tocar-musica-sem-ser-musico</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/muzisyen-olmadan-sarki-calmak"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/play-your-first-song-without-reading-music"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/tocar-canciones-sin-ser-musico"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/musik-machen-ohne-noten-lesen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/jouer-une-chanson-sans-etre-musicien"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/tocar-musica-sem-ser-musico"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/pt/tocar-acordes-com-gestos-de-mao</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/el-isaretleriyle-akor-calmak"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/play-chords-with-hand-signs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/tocar-acordes-con-senas-de-mano"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/akkorde-mit-handzeichen-spielen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/jouer-des-accords-avec-les-mains"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/tocar-acordes-com-gestos-de-mao"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/pt/recursos-do-chordplai</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/chordplai-ozellikleri"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/chordplai-features-tour"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/todas-las-funciones-de-chordplai"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/alle-chordplai-funktionen-im-ueberblick"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/toutes-les-fonctionnalites-de-chordplai"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/recursos-do-chordplai"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/pt/gravar-video-musical-para-reels</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/muzik-videosu-cekmek"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/shoot-music-videos-for-reels"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/grabar-video-musical-sin-instrumento"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/musikvideos-ohne-instrument-drehen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/filmer-un-clip-musical-sans-instrument"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/gravar-video-musical-para-reels"/>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/blog/pt/faca-seu-proprio-beat</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog/kendi-beatini-yap"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en/make-your-own-beat"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://chordplai.com/blog/es/crea-tu-propio-beat"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://chordplai.com/blog/de/bau-deinen-eigenen-beat"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://chordplai.com/blog/fr/creer-son-beat-dans-le-navigateur"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://chordplai.com/blog/pt/faca-seu-proprio-beat"/>
     <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
