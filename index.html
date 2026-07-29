@@ -1028,6 +1028,28 @@ window.CP_SUPA = {
   .sq-cell.ph { outline: 2px solid rgba(255,217,138,.85); outline-offset: 1px; }
   .sq-cell.dim { opacity: .35; }
   .sq-lbl.dim { opacity: .45; }
+  /* ✏️ özel akorlar */
+  .cst-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .cst-row .seg { flex: 1; }
+  .cst-row input[type="text"] {
+    flex: 1; min-width: 130px; padding: 9px 12px; border-radius: 10px;
+    border: 1px solid var(--line); background: #14100a; color: var(--cream);
+    font-size: .85rem; outline: none;
+  }
+  .cst-row input[type="text"]:focus { border-color: var(--amber); }
+  .cst-row .scale-sel { flex: 1; min-width: 140px; }
+  .cst-box[hidden] { display: none; }
+  .cst-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 8px; margin-top: 10px; }
+  .cst-cell { display: flex; align-items: center; gap: 7px; }
+  .cst-cell .sgn { font-size: 1.1rem; width: 1.5em; text-align: center; flex: 0 0 auto; }
+  .cst-cell .rn { font-size: .62rem; color: var(--muted-dim, #6d6250); width: 2.2em; flex: 0 0 auto; font-family: ui-monospace, monospace; }
+  .cst-cell input {
+    flex: 1; min-width: 0; padding: 8px 10px; border-radius: 9px;
+    border: 1px solid var(--line); background: #14100a; color: var(--amber-hot);
+    font: 600 .92rem ui-monospace, Menlo, monospace; outline: none; text-align: center;
+  }
+  .cst-cell input:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(245,194,100,.12); }
+  .cst-cell input.bad { border-color: #ff7a5a; color: #ff9a80; }
   /* 🤖 şarkı asistanı */
   .sa-ta {
     width: 100%; resize: vertical; min-height: 74px; margin-top: 10px;
@@ -1557,6 +1579,28 @@ window.CP_SUPA = {
           <button class="chip" data-o="2">+2</button>
         </div>
       </div>
+      <div class="cst-row">
+        <div class="seg" id="airModeSeg">
+          <button class="chip" data-m="scale" aria-pressed="true">🎼 Gamdan</button>
+          <button class="chip" data-m="custom">✏️ Özel akorlar</button>
+        </div>
+      </div>
+
+      <div class="cst-box" id="airCustom" hidden>
+        <div class="poolcount-line">Her şarkı gama oturmaz. Buraya şarkının akorlarını sırayla yaz — parmak işareti önünde. <b>Otomatik kaydedilir.</b></div>
+        <div class="cst-grid" id="cstGrid"></div>
+        <div class="cst-row">
+          <input id="cstName" type="text" maxlength="28" placeholder="Preset adı · ör. Gülümse" autocomplete="off" spellcheck="false">
+          <button class="chip" id="cstSave">💾 Kaydet</button>
+        </div>
+        <div class="cst-row">
+          <select id="cstList" class="scale-sel" aria-label="Kayıtlı presetler"></select>
+          <button class="chip" id="cstLoad">📂 Yükle</button>
+          <button class="chip" id="cstDel">🗑</button>
+        </div>
+        <div class="poolcount-line" id="cstHint">Yazabilirsin: C · Am · F#m7 · Bb · Csus4 · G7 · Dmaj7 · Em9 · C/G</div>
+      </div>
+
       <div class="scale-chords" id="airChips"></div>
       <div class="poolcount-line" id="airHint">Sol el: ☝️1…🤟7 derece · <b>dik = gamın akoru</b>, içe yatır=majöre çevir, dışa=minöre çevir · ✊ sustur · Sağ el: <b>sadece efekt</b> — ◂ sola eğ = distorsiyon, ▸ sağa çevir = dalga parlar, dik = temiz</div>
     </div>
@@ -3709,6 +3753,10 @@ window.CP_SUPA = {
     bpm: 70, meter: 4, metroOn: false, drumOn: false,
     trTimer: null, trNext: 0, trStep: 0, arpIdx: 0, arpNotes: null, stepFlash: -1,
     seq: null,
+    // ✏️ özel akorlar: gama oturmayan şarkılar için 7 dereceyi elle yaz
+    customOn: false,
+    customChords: ["Am", "F", "C", "G", "Dm", "E7", "Bb"],
+    presets: [],
     wavePos: 1, waveTarget: 1, tilt: 0, tiltSm: 0,
     thumbL: false, thumbR: false, thumbRatio: 0,
     lastVideoTime: -1, lastHands: null, muteFlash: 0, waveFlash: 0, dpr: 1,
@@ -3756,7 +3804,61 @@ window.CP_SUPA = {
     });
     return arr;
   }
+  // ---- özel akor: kullanıcının yazdığı akor adını seslere çevir ----
+  // Her şarkı gama oturmaz; bu yüzden 7 dereceyi elle yazabilmek gerekiyor.
+  const CUSTOM_IV = {
+    "": [0,4,7], "M": [0,4,7], "maj": [0,4,7],
+    "m": [0,3,7], "min": [0,3,7], "-": [0,3,7],
+    "5": [0,7],
+    "dim": [0,3,6], "°": [0,3,6], "o": [0,3,6],
+    "aug": [0,4,8], "+": [0,4,8],
+    "sus2": [0,2,7], "sus4": [0,5,7], "sus": [0,5,7],
+    "6": [0,4,7,9], "m6": [0,3,7,9], "min6": [0,3,7,9],
+    "7": [0,4,7,10], "dom7": [0,4,7,10],
+    "maj7": [0,4,7,11], "M7": [0,4,7,11], "Δ": [0,4,7,11], "Δ7": [0,4,7,11],
+    "m7": [0,3,7,10], "min7": [0,3,7,10], "-7": [0,3,7,10],
+    "mmaj7": [0,3,7,11], "mM7": [0,3,7,11],
+    "dim7": [0,3,6,9], "°7": [0,3,6,9],
+    "m7b5": [0,3,6,10], "ø": [0,3,6,10], "ø7": [0,3,6,10],
+    "add9": [0,4,7,14], "madd9": [0,3,7,14],
+    "9": [0,4,7,10,14], "maj9": [0,4,7,11,14], "M9": [0,4,7,11,14], "m9": [0,3,7,10,14],
+    "11": [0,4,7,10,14,17], "m11": [0,3,7,10,14,17],
+    "13": [0,4,7,10,14,21], "m13": [0,3,7,10,14,21],
+  };
+  function parseCustom(raw) {
+    let s = String(raw || "").trim();
+    if (!s) return null;
+    s = s.split("/")[0].trim();                       // "C/G" → bas notasını yok say
+    const m = s.match(/^([A-Ga-g])([#♯b♭]?)(.*)$/);
+    if (!m) return null;
+    let pc = CH.indexOf(m[1].toUpperCase());
+    if (pc < 0) return null;
+    if (m[2] === "#" || m[2] === "♯") pc = (pc + 1) % 12;
+    if (m[2] === "b" || m[2] === "♭") pc = (pc + 11) % 12;
+    let suf = (m[3] || "").trim();
+    let iv = CUSTOM_IV[suf];
+    if (!iv) iv = CUSTOM_IV[suf.toLowerCase()];
+    if (!iv) {                                        // tanımadığımız ek: minör mü majör mü?
+      iv = /^(m|min|-)/i.test(suf) ? [0,3,7] : [0,4,7];
+      suf = /^(m|min|-)/i.test(suf) ? "m" : "";
+    }
+    // kullanıcının yazımı korunsun: "Bb" yazana "A#" gösterme
+    const acc = m[2] === "♯" ? "#" : m[2] === "♭" ? "b" : m[2];
+    const pretty = m[1].toUpperCase() + acc + (suf === "M" ? "" : suf);
+    return { name: pretty, pcs: iv.map(i => (pc + i) % 12), iv: iv.slice(), rootPc: pc };
+  }
+  function customDeg() {
+    return A.customChords.map((txt, i) => {
+      const p = parseCustom(txt);
+      return p ? { name: p.name, pcs: p.pcs, iv: p.iv, deg: i, custom: true } : null;
+    });
+  }
+
   function rebuildPool() {
+    if (A.customOn) {
+      // ÖZEL MOD: dereceler kullanıcının yazdığı 7 akordan gelir, gam yok sayılır
+      A.deg = customDeg();
+    } else {
     // TEK gam: alttan seçilen ne ise dereceler ondan gelir. Yatırma gamı DEĞİŞTİRMEZ,
     // yalnız o an çalınan akoru majöre/minöre çevirir (kullanıcı isteği).
     A.deg = diatonic(A.scale);
@@ -3765,6 +3867,7 @@ window.CP_SUPA = {
     if (seven && (parseName(seven.name) || {}).suf === "°") {
       const r7 = seven.pcs[0];
       A.deg[6] = { name: CH[r7], pcs: [r7, (r7 + 4) % 12, (r7 + 7) % 12], deg: 6 };
+    }
     }
     ui.poolCount.textContent = A.deg.filter(Boolean).length;
     A.cur = -1; A.qual = 0; A.tq = "dia";
@@ -3801,6 +3904,110 @@ window.CP_SUPA = {
   fillSelects();
   ui.tonSel.addEventListener("change", () => { A.ton = +ui.tonSel.value; rebuildPool(); });
   ui.scaleSel.addEventListener("change", () => { A.scale = ui.scaleSel.value; rebuildPool(); });
+
+  // ---- ✏️ özel akorlar: 7 dereceyi elle yaz, presete kaydet ----
+  const cst = {
+    seg: $("airModeSeg"), box: $("airCustom"), grid: $("cstGrid"),
+    name: $("cstName"), save: $("cstSave"), list: $("cstList"),
+    load: $("cstLoad"), del: $("cstDel"), hint: $("cstHint"),
+  };
+  const ROMAN7 = ["I", "II", "III", "IV", "V", "VI", "VII"];
+  function cstSavePresets() {
+    try { localStorage.setItem("akorAirPresets", JSON.stringify(A.presets)); } catch (_) {}
+  }
+  function cstSaveCurrent() {
+    try {
+      localStorage.setItem("akorAirCustom", JSON.stringify({ on: A.customOn, chords: A.customChords }));
+    } catch (_) {}
+  }
+  function cstRenderList() {
+    if (!cst.list) return;
+    cst.list.innerHTML = A.presets.length
+      ? A.presets.map((p, i) => `<option value="${i}">${p.name.replace(/[<>&]/g, "")}</option>`).join("")
+      : `<option value="-1">— kayıtlı preset yok —</option>`;
+  }
+  function cstMark() {   // geçersiz akorları kırmızıya boya
+    if (!cst.grid) return;
+    [...cst.grid.querySelectorAll("input")].forEach((inp, i) => {
+      const v = inp.value.trim();
+      inp.classList.toggle("bad", !!v && !parseCustom(v));
+    });
+    const ok = A.customChords.filter(c => parseCustom(c)).length;
+    if (cst.hint) cst.hint.textContent = A.customOn
+      ? `${ok}/7 akor tanındı · yazabilirsin: C · Am · F#m7 · Bb · Csus4 · G7 · Dmaj7 · Em9 · C/G`
+      : "Yazabilirsin: C · Am · F#m7 · Bb · Csus4 · G7 · Dmaj7 · Em9 · C/G";
+  }
+  function cstRenderGrid() {
+    if (!cst.grid) return;
+    cst.grid.innerHTML = A.customChords.map((v, i) =>
+      `<div class="cst-cell"><span class="sgn">${SIGN[i + 1]}</span><span class="rn">${ROMAN7[i]}</span>` +
+      `<input data-i="${i}" value="${String(v).replace(/"/g, "&quot;")}" maxlength="10" ` +
+      `placeholder="—" autocomplete="off" spellcheck="false" aria-label="${ROMAN7[i]}. derece akoru"></div>`
+    ).join("");
+    cstMark();
+  }
+  function setCustomMode(on) {
+    A.customOn = !!on;
+    if (cst.seg) [...cst.seg.children].forEach(b =>
+      b.setAttribute("aria-pressed", String((b.dataset.m === "custom") === A.customOn)));
+    if (cst.box) cst.box.hidden = !A.customOn;
+    // özel moddayken ton/gam seçicileri anlamsız — kapat
+    ui.tonSel.disabled = A.customOn;
+    ui.scaleSel.disabled = A.customOn;
+    cstSaveCurrent();
+    rebuildPool();
+    cstMark();
+  }
+  if (cst.seg) {
+    cst.seg.addEventListener("click", e => {
+      const b = e.target.closest(".chip"); if (b) setCustomMode(b.dataset.m === "custom");
+    });
+    cst.grid.addEventListener("input", e => {
+      const inp = e.target.closest("input[data-i]"); if (!inp) return;
+      A.customChords[+inp.dataset.i] = inp.value;
+      cstSaveCurrent();          // otomatik kayıt
+      rebuildPool();             // çipler ve sesler anında güncellensin
+      cstMark();
+    });
+    cst.save.addEventListener("click", () => {
+      const nm = (cst.name.value || "").trim() || ("Preset " + (A.presets.length + 1));
+      const ix = A.presets.findIndex(p => p.name === nm);
+      const rec = { name: nm, chords: A.customChords.slice() };
+      if (ix >= 0) A.presets[ix] = rec; else A.presets.push(rec);
+      cstSavePresets(); cstRenderList();
+      cst.list.value = String(A.presets.findIndex(p => p.name === nm));
+      cst.save.textContent = "✓ Kaydedildi";
+      setTimeout(() => { cst.save.textContent = "💾 Kaydet"; }, 1400);
+    });
+    cst.load.addEventListener("click", () => {
+      const i = +cst.list.value;
+      if (!(i >= 0) || !A.presets[i]) return;
+      A.customChords = A.presets[i].chords.slice();
+      cst.name.value = A.presets[i].name;
+      cstRenderGrid(); cstSaveCurrent();
+      if (!A.customOn) setCustomMode(true); else rebuildPool();
+    });
+    cst.del.addEventListener("click", () => {
+      const i = +cst.list.value;
+      if (!(i >= 0) || !A.presets[i]) return;
+      A.presets.splice(i, 1);
+      cstSavePresets(); cstRenderList();
+    });
+  }
+  // kayıtlıları geri yükle
+  try {
+    const p = JSON.parse(localStorage.getItem("akorAirPresets") || "[]");
+    if (Array.isArray(p)) A.presets = p.filter(x => x && x.name && Array.isArray(x.chords));
+  } catch (_) {}
+  try {
+    const c = JSON.parse(localStorage.getItem("akorAirCustom") || "null");
+    if (c && Array.isArray(c.chords) && c.chords.length === 7) {
+      A.customChords = c.chords.map(x => String(x || ""));
+      A.customOn = !!c.on;
+    }
+  } catch (_) {}
+  cstRenderGrid(); cstRenderList();
+  if (A.customOn) setCustomMode(true);
   ui.octSeg.addEventListener("click", e => {
     const b = e.target.closest(".chip"); if (b) setOct(+b.dataset.o);
   });
@@ -3831,7 +4038,8 @@ window.CP_SUPA = {
       if (tq === "maj")      { iv = [0, 4, 7]; name = CH[r]; }
       else if (tq === "min") { iv = [0, 3, 7]; name = CH[r] + "m"; }
       else {
-        iv = c.pcs.map(pc => ((pc - r) + 12) % 12).sort((a, b) => a - b);
+        // özel akorda aralıklar hazır gelir (9'lu/11'li oktav bilgisi korunsun)
+        iv = c.iv ? c.iv.slice() : c.pcs.map(pc => ((pc - r) + 12) % 12).sort((a, b) => a - b);
         name = c.name;
       }
     } else {

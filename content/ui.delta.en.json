@@ -67,5 +67,15 @@
  "🎥 Küçük": "🎥 Small",
  "Kamera boyutu": "Camera size",
  "Panel saydamlığı": "Panel transparency",
- "Paneli kapat": "Close panel"
+ "Paneli kapat": "Close panel",
+ "🎼 Gamdan": "🎼 From scale",
+ "✏️ Özel akorlar": "✏️ Custom chords",
+ "Her şarkı gama oturmaz. Buraya şarkının akorlarını sırayla yaz — parmak işareti önünde. Otomatik kaydedilir.": "Not every song fits a scale. Type the song's chords here in order — the finger sign is shown in front. Saved automatically.",
+ "Preset adı · ör. Gülümse": "Preset name · e.g. Hallelujah",
+ "💾 Kaydet": "💾 Save",
+ "✓ Kaydedildi": "✓ Saved",
+ "📂 Yükle": "📂 Load",
+ "— kayıtlı preset yok —": "— no saved presets —",
+ "Yazabilirsin: C · Am · F#m7 · Bb · Csus4 · G7 · Dmaj7 · Em9 · C/G": "You can type: C · Am · F#m7 · Bb · Csus4 · G7 · Dmaj7 · Em9 · C/G",
+ "Kayıtlı presetler": "Saved presets"
 }

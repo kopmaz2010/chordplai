@@ -67,5 +67,15 @@
  "🎥 Küçük": "🎥 Petit",
  "Kamera boyutu": "Taille caméra",
  "Panel saydamlığı": "Transparence du panneau",
- "Paneli kapat": "Fermer le panneau"
+ "Paneli kapat": "Fermer le panneau",
+ "🎼 Gamdan": "🎼 Depuis la gamme",
+ "✏️ Özel akorlar": "✏️ Accords perso",
+ "Her şarkı gama oturmaz. Buraya şarkının akorlarını sırayla yaz — parmak işareti önünde. Otomatik kaydedilir.": "Toutes les chansons ne rentrent pas dans une gamme. Écrivez les accords dans l'ordre — le signe apparaît devant. Sauvegarde automatique.",
+ "Preset adı · ör. Gülümse": "Nom du préréglage · ex. Hallelujah",
+ "💾 Kaydet": "💾 Enregistrer",
+ "✓ Kaydedildi": "✓ Enregistré",
+ "📂 Yükle": "📂 Charger",
+ "— kayıtlı preset yok —": "— aucun préréglage —",
+ "Yazabilirsin: C · Am · F#m7 · Bb · Csus4 · G7 · Dmaj7 · Em9 · C/G": "Vous pouvez écrire : C · Am · F#m7 · Bb · Csus4 · G7 · Dmaj7 · Em9 · C/G",
+ "Kayıtlı presetler": "Préréglages enregistrés"
 }
