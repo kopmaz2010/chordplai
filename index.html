@@ -1740,6 +1740,7 @@ window.CP_SUPA = {
       <span class="air-fsbrand" lang="en">AIR CHORD</span>
       <span class="air-fsstatus" id="airFsStatus">🖐️ Ellerini kameraya göster</span>
       <span class="air-fsgap"></span>
+      <button class="chip" id="airBodyBtn" title="El işaretleri ↔ beden pozları">🖐️ El</button>
       <button class="chip" id="airCamSize" title="Kamera boyutu">🎥 Tam</button>
       <button class="chip" id="airDockBtn" aria-pressed="true">🎛️ Panel</button>
       <button class="chip" id="airFsStop">⏹ Durdur</button>
@@ -3988,6 +3989,7 @@ window.CP_SUPA = {
 
   const A = {
     running: false, loading: false, hand: null, stream: null, timer: null,
+    body: false, pose: null, poseLoading: false, lastPose: null,   // 🧍 beden pozu modu
     ctx: null, bus: null, filt: null, preG: null, postG: null, dry: null, wet: null, volG: null,
     ton: 9, scale: "aeolian",
     tq: "dia", tqCand: null, tqStable: 0, shownTq: null, shownOct: 0, worldFlash: 0,
@@ -5040,11 +5042,154 @@ window.CP_SUPA = {
     });
   }
 
+  // ---- 🧍 beden pozu modu ----
+  // 7 poz → 7 derece (kollar): 1 iki kol yukarı (V) · 2 sağ↑ sol yanda · 3 sol↑ sağ yanda
+  // 4 iki kol yana (T) · 5 sağ↑ sol aşağı · 6 sol↑ sağ aşağı · 7 bilekler üstte çapraz (X)
+  // iki kol aşağı = sustur (dinlenme duruşu ses çıkarmaz)
+  const POSE_DESC = ["🙎 iki kol aşağı = sus", "🙌 iki kol yukarı (V)", "sağ kol yukarı · sol yanda",
+    "sol kol yukarı · sağ yanda", "🤸 iki kol yana açık (T)", "sağ kol yukarı · sol aşağı",
+    "sol kol yukarı · sağ aşağı", "🙅 bilekler üstte çapraz (X)"];
+  async function loadPose() {
+    if (A.pose || A.poseLoading) return !!A.pose;
+    A.poseLoading = true;
+    const st = ui.status;
+    if (st) st.textContent = "⏳ Beden-takip modeli yükleniyor… (~5 MB, tek seferlik)";
+    try {
+      const mod = await import(`https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MP_VER}`);
+      const fs = await mod.FilesetResolver.forVisionTasks(`https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MP_VER}/wasm`);
+      A.pose = await mod.PoseLandmarker.createFromOptions(fs, {
+        baseOptions: {
+          modelAssetPath: "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task",
+          delegate: "GPU",
+        },
+        runningMode: "VIDEO", numPoses: 1,
+      });
+      return true;
+    } catch (_) {
+      if (st) st.textContent = "⚠️ Beden modeli yüklenemedi — el moduna dönülüyor";
+      setBody(false);
+      return false;
+    } finally { A.poseLoading = false; }
+  }
+  // MediaPipe Pose indeksleri: 0 burun · 11/12 omuz · 13/14 dirsek · 15/16 bilek · 23/24 kalça
+  // lm: aynaланmış (x = 1-x) normalize noktalar. Dönen değer: -1 belirsiz · 0 sus · 1..7 derece
+  function classifyPose(lm) {
+    if (!lm || lm.length < 25) return -1;
+    const nose = lm[0], shL = lm[11], shR = lm[12], wrL = lm[15], wrR = lm[16], hpL = lm[23], hpR = lm[24];
+    const torso = Math.abs(((hpL.y + hpR.y) / 2) - ((shL.y + shR.y) / 2));
+    if (torso < 0.05) return -1;                       // gövde görünmüyor / çok uzak
+    const shW = Math.abs(shL.x - shR.x) || 0.2;
+    const arm = (wr, sh) => {
+      if (wr.y < nose.y) return "up";                                    // bilek burnun üstünde
+      if (Math.abs(wr.y - sh.y) < torso * 0.35 &&
+          Math.abs(wr.x - sh.x) > shW * 0.55) return "out";              // omuz hizasında yanda
+      if (wr.y > sh.y + torso * 0.55) return "down";                     // kalçaya doğru sarkık
+      return "mid";
+    };
+    const L = arm(wrL, shL), R = arm(wrR, shR);
+    if (L === "up" && R === "up") {
+      // çapraz: bilekler x'te yer değiştirmiş ya da birbirine çok yakın
+      const crossed = (wrL.x - wrR.x) * (shL.x - shR.x) < 0 || Math.abs(wrL.x - wrR.x) < shW * 0.4;
+      return crossed ? 7 : 1;
+    }
+    if (R === "up" && L === "out") return 2;
+    if (L === "up" && R === "out") return 3;
+    if (L === "out" && R === "out") return 4;
+    if (R === "up" && L === "down") return 5;
+    if (L === "up" && R === "down") return 6;
+    if (L === "down" && R === "down") return 0;
+    return -1;
+  }
+  // el modundaki step()'in derece kısmının poz karşılığı — yatış yok, gamın akoru çalar
+  function stepBody(deg) {
+    if (deg === A.degCand) A.degStable++; else { A.degCand = deg; A.degStable = 1; }
+    if (A.degStable >= 4 && A.degCand === 0) {          // poz kararlılığı: el işaretinden biraz yavaş
+      padOff(true); A.arpNotes = null;
+      if (A.cur !== -1) { A.cur = -1; ui.big.hidden = true; renderChips(); }
+      return { state: "mute" };
+    }
+    if (A.degStable >= 4 && A.degCand >= 1 && A.deg[A.degCand - 1]) {
+      const deg2 = A.degCand - 1;
+      const ch = chordFor(deg2, "dia", 0, A.oct);
+      A.arpNotes = arpFrom(ch);
+      if (!arpActive()) setPad(padMidis(ch));
+      if (deg2 !== A.cur || A.oct !== A.shownOct) {
+        A.cur = deg2; A.shownTq = "dia"; A.shownOct = A.oct;
+        refreshBig(ch); renderChips();
+      }
+      return { state: "play", chord: ch.name, deg: deg2 };
+    }
+    if (A.degCand === -1 && A.degStable >= 8) {         // poz kaybolduysa arpej sussun
+      A.arpNotes = null;
+      if (PAD.size) padOff(false);
+    }
+    return { state: A.degCand === -1 ? "idle" : "wait" };
+  }
+  const POSE_BONES = [[11,12],[11,13],[13,15],[12,14],[14,16],[11,23],[12,24],[23,24],[23,25],[24,26]];
+  function drawPose(lm) {
+    resizeIfNeeded();
+    const W = ui.canvas.width, H = ui.canvas.height, d = A.dpr;
+    ctx2d.clearRect(0, 0, W, H);
+    if (!lm) return;
+    ctx2d.strokeStyle = "rgba(245,194,100,.8)"; ctx2d.lineWidth = 3 * d;
+    for (const [a, b] of POSE_BONES) {
+      if (!lm[a] || !lm[b]) continue;
+      ctx2d.beginPath();
+      ctx2d.moveTo(lm[a].x * W, lm[a].y * H);
+      ctx2d.lineTo(lm[b].x * W, lm[b].y * H);
+      ctx2d.stroke();
+    }
+    for (const i of [0, 11, 12, 13, 14, 15, 16]) {
+      if (!lm[i]) continue;
+      ctx2d.fillStyle = (i === 15 || i === 16) ? "#ffd98a" : "rgba(239,230,210,.85)";
+      ctx2d.beginPath();
+      ctx2d.arc(lm[i].x * W, lm[i].y * H, (i === 15 || i === 16 ? 6 : 4) * d, 0, 7);
+      ctx2d.fill();
+    }
+  }
+  function resizeIfNeeded() {
+    if (ui.canvas.width !== Math.round(ui.arena.clientWidth * A.dpr)) resizeCanvas();
+  }
+  function setBody(on) {
+    A.body = !!on;
+    try { localStorage.setItem("akorAirBody", on ? "1" : "0"); } catch (_) {}
+    const b = document.getElementById("airBodyBtn");
+    if (b) b.textContent = on ? "🧍 Beden" : "🖐️ El";
+    if (on) loadPose();
+    // moddan çıkarken çalanı sustur — iki sınıflandırıcı çakışmasın
+    padOff(true); A.arpNotes = null; A.degCand = -1; A.degStable = 0;
+  }
+  window.__airPose = { classify: classifyPose, set: setBody, step: stepBody };   // test kancası
+
   // ---- döngü ----
   function loop() {
     if (!A.running) return;
     const v = ui.cam;
     if (!v.videoWidth) return;
+
+    if (A.body) {                                     // 🧍 beden pozu modu
+      if (!A.pose) { loadPose(); return; }
+      let lm = null;
+      if (v.currentTime !== A.lastVideoTime) {
+        A.lastVideoTime = v.currentTime;
+        try {
+          const res = A.pose.detectForVideo(v, performance.now());
+          lm = (res.landmarks && res.landmarks[0] || null);
+          if (lm) lm = lm.map(pt => ({ x: 1 - pt.x, y: pt.y }));
+        } catch (_) { lm = null; }
+        A.lastPose = lm;
+      } else lm = A.lastPose;
+      const deg = classifyPose(lm);
+      const r = stepBody(deg);
+      drawPose(lm);
+      ui.status.textContent = !lm
+        ? "🧍 Gövden kadraja girsin — kameradan biraz uzaklaş"
+        : r.state === "play" ? `🎹 ${ui.bigName.textContent} · ${CH[A.ton]} ${scaleName()} sürüyor`
+        : r.state === "mute" ? "🙎 Sus (iki kol aşağı)"
+        : `🧍 Poz yap: ${POSE_DESC.slice(1).join(" · ")}`;
+      return;
+    }
+
     let hands = [];
     if (v.currentTime !== A.lastVideoTime) {
       A.lastVideoTime = v.currentTime;
@@ -5110,7 +5255,12 @@ window.CP_SUPA = {
       `<div class="air-g-item"><div class="emo">🎛️</div><b>4 Synth Tonu</b><i>🎹 E.Klavye (avuç çevirme dalgayı karıştırır) · 🎼 Grand Piyano (vurdukça sönen) · 🌊 Analog (kendi örneğin) · 🕹️ Retro</i><span class="cap">ton seçici</span></div>` +
       `<div class="air-g-item"><div class="emo">▶️</div><b>Metronom + Arp</b><i>açınca akor arpejle BPM'e ve ölçüye (4/4 · 6/8) göre yürür — <b>arpej yalnız 🎹 E.Klavye ve 🎼 Grand Piyano</b> tonlarında; Analog/Retro'da akor pad olarak durur</i><span class="cap">transport</span></div>` +
       `<div class="air-g-item"><div class="emo">🥁</div><b>Ritim</b><i>kick · snare · hihat yürüyüşünü kareleri tıklayarak kendin çiz</i><span class="cap">dizgeç</span></div>` +
-      `<div class="air-g-item"><div class="emo">🎚️</div><b>Vokal Mix</b><i>kayıtta sesin EQ + kompresör + reverb'le işlenir; <b>+3'lü / Koro</b> modları gama uyumlu harmoni ekler (canlıda duyulmaz, videoya mixli girer) — kayıttayken sağ el 1-4 parmakla mod değişir</i><span class="cap">🎙️/🏛/🎶/👥</span></div>`;
+      `<div class="air-g-item"><div class="emo">🎚️</div><b>Vokal Mix</b><i>kayıtta sesin EQ + kompresör + reverb'le işlenir; <b>+3'lü / Koro</b> modları gama uyumlu harmoni ekler (canlıda duyulmaz, videoya mixli girer) — kayıttayken sağ el 1-4 parmakla mod değişir</i><span class="cap">🎙️/🏛/🎶/👥</span></div>` +
+      `<div class="air-g-head">🧍 Beden modu — üst bardan "🖐️ El"e basıp geç, kollarınla çal</div>` +
+      A.deg.map((c, dg) => c
+        ? `<div class="air-g-item"><div class="emo">🧍</div><b>${romanFor(dg, c.name)} · ${c.name}</b><i>${POSE_DESC[dg + 1]}</i><span class="cap">poz ${dg + 1}</span></div>`
+        : "").join("") +
+      `<div class="air-g-item"><div class="emo">🙎</div><b>Sus</b><i>${POSE_DESC[0]} — dinlenme duruşu ses çıkarmaz</i><span class="cap">sus</span></div>`;
   }
   function openOnb() {
     renderGuide();
@@ -5228,6 +5378,10 @@ window.CP_SUPA = {
     if (A.running) resizeCanvas();
   }
   if (camBtn) camBtn.addEventListener("click", () => { camIx = (camIx + 1) % CAM.length; applyCam(); });
+  // 🧍 el ↔ beden geçişi
+  const bodyBtn = document.getElementById("airBodyBtn");
+  if (bodyBtn) bodyBtn.addEventListener("click", () => setBody(!A.body));
+  try { if (localStorage.getItem("akorAirBody") === "1") setBody(true); } catch (_) {}
   applyCam();
 
   // ---- panel saydamlığı (sol kontrol paneli) ----

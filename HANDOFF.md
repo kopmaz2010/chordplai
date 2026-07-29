@@ -87,14 +87,27 @@ Tek dosya, 14 bağımsız IIFE modülü. Aralarında `window.*` üzerinden konu�
 (hover akor önizleme), `window.CP_T(s)` (tek dize çevir).
 
 **Test kancaları** (tarayıcı konsolundan): `__air`, `__np`, `__sa`, `__aiSet`,
-`__nj`, `__tt`, `__sf`, `__ng`. Örnek:
+`__nj`, `__tt`, `__sf`, `__ng`, `__acap`, `__airPose`. Örnek:
 
 ```js
 window.__air.state()            // Air Chord durumu
 window.__air.simPlay(1, 0, null)// 1. dereceyi kamerasız çal
 window.__np.state()             // not defteri / prompter
 window.__aiSet.parse("Ton = A · Gam/Makam = Kürdi")
+window.__acap.load(f32, 44100)  // Akapella'ya sentetik ses ver (mikrofonsuz test)
+window.__airPose.classify(lm)   // 33 noktalı sentetik iskelet → 0-7 poz
+window.__airPose.step(1)        // pozu derece boru hattına sok (4× kararlılıkta çalar)
 ```
+
+**Akapella (`#view-acap`)**: kayıt → otokorelasyon pitch analizi →
+granüler pitch-shift ile 2-6 diyatonik ses → 6'lı video ızgara → WebM.
+Demo melodi butonu mikrofonsuz uçtan uca test sağlar. Ton tahmini
+son/ilk nota tonik sezgisi kullanır (C/G ayrımı için şart).
+
+**Beden pozu modu**: Air Chord üst barındaki "🖐️ El / 🧍 Beden" butonu;
+`akorAirBody` localStorage'da. PoseLandmarker lite tembel yüklenir
+(~5 MB). 7 poz = 7 derece, iki kol aşağı = sus, poz kararlılığı 4 kare
+(el işaretinden yavaş — kol hareketi büyük).
 
 ### Air Chord çalışma mantığı
 
