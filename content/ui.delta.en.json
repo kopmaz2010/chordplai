@@ -51,10 +51,10 @@
  "Language": "Language",
  "Tempoyu azalt": "Slow down tempo",
  "🤖 Şarkı Asistanı — teori bilmeden çal": "🤖 Song Assistant — play without theory",
- "Google'da \"şarkı adı + akor\" ara, akorları kopyala, aşağıya yapıştır. Yapay zekâ şarkının tonunu bulur ve sana adım adım ChordPlai talimatı yazar: hangi ayarı seç, hangi işaretleri sırayla yap.": "Search Google for \"song name + chords\", copy the chords and paste them below. The AI finds the song's key and writes step-by-step ChordPlai instructions: which setting to pick and which signs to make in order.",
- "Şarkı adı + akorlar…\nörn: Sezen Aksu – Gülümse\nEm  G  D  C  /  Em  C  D  Em": "Song name + chords…\ne.g. Leonard Cohen – Hallelujah\nC  Am  F  G  /  C  F  G  Am",
  "Promptu gör / düzenle": "View / edit the prompt",
  "📋 Kopyala": "📋 Copy",
  "✓ Kopyalandı": "✓ Copied",
- "Butona basınca prompt seçtiğin yapay zekâda açılır · yanıt gelince buradaki Ton–Gam ayarını yap, işaret sırasını takip et 🖐️": "The prompt opens in the AI you pick · when the answer arrives, set the Key–Scale here and follow the sign sequence 🖐️"
+ "Google'da \"şarkı adı + akor\" ara; akorlarıyla birlikte sözlerin tamamını kopyalayıp aşağıya yapıştır. Yapay zekâ tonu bulur, ChordPlai ayarını verir ve şarkının sözlerini akorlar yerine el işaretleriyle yeniden yazar — o metni not defterine yapıştırıp prompter ile söyleyebilirsin.": "Search Google for \"song name + chords\"; copy the full lyrics together with their chords and paste them below. The AI finds the key, gives you the ChordPlai setting and rewrites the lyrics with hand signs instead of chord names — paste that text into the notepad and sing it with the prompter.",
+ "Butona basınca prompt seçtiğin yapay zekâda açılır · yanıt gelince Ton–Gam ayarını yukarıdan seç, işaretli sözleri 📝 Notlar paneline yapıştır ve 🎬 Prompter ile kaydırarak söyle 🖐️": "The prompt opens in the AI you pick · when the answer arrives, set Key–Scale above, paste the signed lyrics into the 📝 Notes panel and sing along with the 🎬 Prompter 🖐️",
+ "Şarkı adı + akorlu sözler…\n\nörn: Sezen Aksu – Gülümse\nEm          G\nBir sabah uyandım\nD            C\nGüneş yüzüme vurdu": "Song name + lyrics with chords…\n\ne.g. Leonard Cohen – Hallelujah\nC           Am\nI heard there was a secret chord\nF           G\nThat David played and it pleased the Lord"
 }

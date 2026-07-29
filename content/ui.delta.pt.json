@@ -51,10 +51,10 @@
  "Language": "Idioma",
  "Tempoyu azalt": "Diminuir o tempo",
  "🤖 Şarkı Asistanı — teori bilmeden çal": "🤖 Assistente de músicas — toque sem teoria",
- "Google'da \"şarkı adı + akor\" ara, akorları kopyala, aşağıya yapıştır. Yapay zekâ şarkının tonunu bulur ve sana adım adım ChordPlai talimatı yazar: hangi ayarı seç, hangi işaretleri sırayla yap.": "Pesquise no Google \"nome da música + cifra\", copie os acordes e cole abaixo. A IA encontra o tom e escreve instruções passo a passo para o ChordPlai: qual ajuste escolher e quais sinais fazer em ordem.",
- "Şarkı adı + akorlar…\nörn: Sezen Aksu – Gülümse\nEm  G  D  C  /  Em  C  D  Em": "Nome da música + acordes…\nex.: Leonard Cohen – Hallelujah\nC  Am  F  G  /  C  F  G  Am",
  "Promptu gör / düzenle": "Ver / editar o prompt",
  "📋 Kopyala": "📋 Copiar",
  "✓ Kopyalandı": "✓ Copiado",
- "Butona basınca prompt seçtiğin yapay zekâda açılır · yanıt gelince buradaki Ton–Gam ayarını yap, işaret sırasını takip et 🖐️": "O prompt abre na IA escolhida · quando a resposta chegar, ajuste aqui Tom–Escala e siga a sequência de sinais 🖐️"
+ "Google'da \"şarkı adı + akor\" ara; akorlarıyla birlikte sözlerin tamamını kopyalayıp aşağıya yapıştır. Yapay zekâ tonu bulur, ChordPlai ayarını verir ve şarkının sözlerini akorlar yerine el işaretleriyle yeniden yazar — o metni not defterine yapıştırıp prompter ile söyleyebilirsin.": "Pesquise no Google \"nome da música + cifra\"; copie a letra completa junto com os acordes e cole abaixo. A IA encontra o tom, dá o ajuste do ChordPlai e reescreve a letra com sinais de mão no lugar dos acordes — cole esse texto no bloco de notas e cante com o teleprompter.",
+ "Butona basınca prompt seçtiğin yapay zekâda açılır · yanıt gelince Ton–Gam ayarını yukarıdan seç, işaretli sözleri 📝 Notlar paneline yapıştır ve 🎬 Prompter ile kaydırarak söyle 🖐️": "O prompt abre na IA escolhida · quando a resposta chegar, ajuste Tom–Escala acima, cole a letra com sinais no painel 📝 Notas e cante com o 🎬 Teleprompter 🖐️",
+ "Şarkı adı + akorlu sözler…\n\nörn: Sezen Aksu – Gülümse\nEm          G\nBir sabah uyandım\nD            C\nGüneş yüzüme vurdu": "Nome da música + letra com cifra…\n\nex.: Leonard Cohen – Hallelujah\nC           Am\nprimeira linha da letra\nF           G\nsegunda linha da letra"
 }

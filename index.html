@@ -1513,9 +1513,9 @@ window.CP_SUPA = {
 
     <div class="card">
       <label>🤖 Şarkı Asistanı — teori bilmeden çal</label>
-      <div class="poolcount-line">Google'da "şarkı adı + akor" ara, akorları kopyala, aşağıya yapıştır. Yapay zekâ şarkının tonunu bulur ve sana adım adım ChordPlai talimatı yazar: hangi ayarı seç, hangi işaretleri sırayla yap.</div>
-      <textarea class="sa-ta" id="saInput" rows="4" spellcheck="false" maxlength="4000"
-        placeholder="Şarkı adı + akorlar…&#10;örn: Sezen Aksu – Gülümse&#10;Em  G  D  C  /  Em  C  D  Em"></textarea>
+      <div class="poolcount-line">Google'da "şarkı adı + akor" ara; <b>akorlarıyla birlikte sözlerin tamamını</b> kopyalayıp aşağıya yapıştır. Yapay zekâ tonu bulur, ChordPlai ayarını verir ve <b>şarkının sözlerini akorlar yerine el işaretleriyle</b> yeniden yazar — o metni not defterine yapıştırıp prompter ile söyleyebilirsin.</div>
+      <textarea class="sa-ta" id="saInput" rows="6" spellcheck="false" maxlength="8000"
+        placeholder="Şarkı adı + akorlu sözler…&#10;&#10;örn: Sezen Aksu – Gülümse&#10;Em          G&#10;Bir sabah uyandım&#10;D            C&#10;Güneş yüzüme vurdu"></textarea>
       <div class="sa-btns" id="saBtns">
         <button class="chip" data-ai="chatgpt">ChatGPT</button>
         <button class="chip" data-ai="claude">Claude</button>
@@ -1528,7 +1528,7 @@ window.CP_SUPA = {
         <summary>Promptu gör / düzenle</summary>
         <textarea class="sa-ta" id="saPrompt" rows="10" spellcheck="false"></textarea>
       </details>
-      <div class="poolcount-line" id="saHint">Butona basınca prompt seçtiğin yapay zekâda açılır · yanıt gelince buradaki Ton–Gam ayarını yap, işaret sırasını takip et 🖐️</div>
+      <div class="poolcount-line" id="saHint">Butona basınca prompt seçtiğin yapay zekâda açılır · yanıt gelince Ton–Gam ayarını yukarıdan seç, işaretli sözleri 📝 <b>Notlar</b> paneline yapıştır ve 🎬 <b>Prompter</b> ile kaydırarak söyle 🖐️</div>
     </div>
 
     <div class="card">
@@ -4715,9 +4715,20 @@ Senden istediklerim (sırayla, kısa ve net):
 1) Şarkının tonunu ve gamını bul. "ChordPlai AYARI: Ton = X · Gam/Makam = Y" diye tek satır yaz (Y yukarıdaki listeden birebir olmalı; şarkı Türk müziğiyse uygun makamı tercih et).
 2) AKOR → İŞARET tablosu: şarkıdaki her akor için hangi el işareti (derece) yapılacak; akor gamın kendi akoru değilse "içe yatır (majör)" ya da "dışa yatır (minör)" notu ekle. Gama hiç oturmayan akor varsa en yakın dereceyi öner ve belirt.
 3) ŞARKI AKIŞI: bölüm bölüm (intro/kıta/nakarat) işaret sırasını emoji ile yaz, örn: nakarat = ☝️ → 🤘 → 4️⃣ → 🖐️
-4) Önerilen BPM ve ölçü (4/4 mü 6/8 mi) — tek satır.
-5) 2 cümlelik pratik tavsiyesi (hangi bölümden başlamalı, nefes nerede alınmalı).
+4) ⭐ EN ÖNEMLİSİ — İŞARETLİ SÖZLER: Aşağıda yapıştırdığım metnin TAMAMINI baştan sona yeniden yaz; tek fark, akor adlarının yerine o akorun EL İŞARETİ emojisini koy. Sözlere hiç dokunma, kısaltma, özetleme — birebir aynı kalsın. İşaret, tam olarak akorun durduğu hecenin üzerinde olsun (akor satırı sözün üstünde). Tamamını tek bir kod bloğu (\`\`\`) içine yaz ki hizalama bozulmasın. Örnek biçim:
+\`\`\`
+🤟  ☝️  🤘
+
+🤟      ☝️          🤘
+Nasıl birisin, beni böyle üzebilirsin
+🤟       ☝️                     🖐️
+Sanki her şeyi denedin
+\`\`\`
+Eğer aşağıya sadece akorları yapıştırdıysam ve sözler yoksa, sözleri kendin uydurma/hatırlama — bana "sözleri de yapıştır" de ve bu adımı atla.
+5) Önerilen BPM ve ölçü (4/4 mü 6/8 mi) — tek satır.
+6) 2 cümlelik pratik tavsiyesi (hangi bölümden başlamalı, nefes nerede alınmalı).
 Tablo ve listeler kullan, uzun paragraf yazma.
+NOT: 4. maddedeki kod bloğunu ChordPlai'ın not defterine yapıştırıp prompter ile kaydırarak söyleyeceğim — o yüzden o blok temiz ve eksiksiz olsun.
 
 ŞARKI:
 ${song}`;
@@ -4735,9 +4746,20 @@ What I need (in order, short and clear):
 1) Find the song's key and scale. Write one line: "ChordPlai SETTING: Key = X · Scale/Maqam = Y" (Y must match the list above exactly).
 2) CHORD → SIGN table: for every chord in the song, which hand sign (degree) to make; if a chord is not diatonic, add "tilt inward (major)" or "tilt outward (minor)". If a chord doesn't fit at all, suggest the closest degree and say so.
 3) SONG FLOW: section by section (intro/verse/chorus), the sign sequence with emoji, e.g. chorus = ☝️ → 🤘 → 4️⃣ → 🖐️
-4) Suggested BPM and meter (4/4 or 6/8) — one line.
-5) Two sentences of practice advice.
+4) ⭐ MOST IMPORTANT — LYRICS WITH SIGNS: Rewrite the ENTIRE text I pasted below from start to finish; the only change is replacing each chord name with that chord's HAND SIGN emoji. Do not touch, shorten or summarise the lyrics — keep them exactly as pasted. Put each sign directly above the syllable where the chord lands (sign line above the lyric line). Put the whole thing inside a single code block (\`\`\`) so the alignment survives. Format example:
+\`\`\`
+🤟  ☝️  🤘
+
+🤟      ☝️          🤘
+First line of the lyrics goes here
+🤟       ☝️                     🖐️
+Second line of the lyrics goes here
+\`\`\`
+If I only pasted chords with no lyrics, do NOT invent or recall lyrics from memory — tell me "paste the lyrics too" and skip this step.
+5) Suggested BPM and meter (4/4 or 6/8) — one line.
+6) Two sentences of practice advice.
 Use tables and lists, no long paragraphs.
+NOTE: I will paste the code block from step 4 into ChordPlai's notepad and scroll it with the prompter while singing — so keep that block clean and complete.
 
 SONG:
 ${song}`;

@@ -51,10 +51,10 @@
  "Language": "Langue",
  "Tempoyu azalt": "Réduire le tempo",
  "🤖 Şarkı Asistanı — teori bilmeden çal": "🤖 Assistant chanson — jouez sans théorie",
- "Google'da \"şarkı adı + akor\" ara, akorları kopyala, aşağıya yapıştır. Yapay zekâ şarkının tonunu bulur ve sana adım adım ChordPlai talimatı yazar: hangi ayarı seç, hangi işaretleri sırayla yap.": "Cherchez sur Google « nom de la chanson + accords », copiez les accords et collez-les ci-dessous. L'IA trouve la tonalité et vous écrit des instructions ChordPlai pas à pas : quel réglage choisir et quels signes faire dans l'ordre.",
- "Şarkı adı + akorlar…\nörn: Sezen Aksu – Gülümse\nEm  G  D  C  /  Em  C  D  Em": "Nom de la chanson + accords…\nex. : Leonard Cohen – Hallelujah\nC  Am  F  G  /  C  F  G  Am",
  "Promptu gör / düzenle": "Voir / modifier le prompt",
  "📋 Kopyala": "📋 Copier",
  "✓ Kopyalandı": "✓ Copié",
- "Butona basınca prompt seçtiğin yapay zekâda açılır · yanıt gelince buradaki Ton–Gam ayarını yap, işaret sırasını takip et 🖐️": "Le prompt s'ouvre dans l'IA choisie · à la réponse, réglez ici Tonalité–Gamme et suivez la séquence de signes 🖐️"
+ "Google'da \"şarkı adı + akor\" ara; akorlarıyla birlikte sözlerin tamamını kopyalayıp aşağıya yapıştır. Yapay zekâ tonu bulur, ChordPlai ayarını verir ve şarkının sözlerini akorlar yerine el işaretleriyle yeniden yazar — o metni not defterine yapıştırıp prompter ile söyleyebilirsin.": "Cherchez sur Google « nom de la chanson + accords » ; copiez les paroles complètes avec leurs accords et collez-les ci-dessous. L'IA trouve la tonalité, donne le réglage ChordPlai et réécrit les paroles avec des signes de la main à la place des accords — collez ce texte dans le bloc-notes et chantez-le avec le prompteur.",
+ "Butona basınca prompt seçtiğin yapay zekâda açılır · yanıt gelince Ton–Gam ayarını yukarıdan seç, işaretli sözleri 📝 Notlar paneline yapıştır ve 🎬 Prompter ile kaydırarak söyle 🖐️": "Le prompt s'ouvre dans l'IA choisie · à la réponse, réglez Tonalité–Gamme ci-dessus, collez les paroles signées dans le panneau 📝 Notes et chantez avec le 🎬 Prompteur 🖐️",
+ "Şarkı adı + akorlu sözler…\n\nörn: Sezen Aksu – Gülümse\nEm          G\nBir sabah uyandım\nD            C\nGüneş yüzüme vurdu": "Nom de la chanson + paroles avec accords…\n\nex. : Leonard Cohen – Hallelujah\nC           Am\npremière ligne des paroles\nF           G\ndeuxième ligne des paroles"
 }
