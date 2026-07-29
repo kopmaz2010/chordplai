@@ -10,7 +10,7 @@
  "'a bas": " — drücken",
  "Power": "Power",
  "Hepsi": "Alle",
- "Temizle": "Löschen",
+ "Temizle": "Leeren",
  "Mod:": "Modus:",
  "Seri": "Serie",
  "'ya bas": " — drücken",
@@ -101,5 +101,8 @@
  "Minör 11": "Moll 11",
  "Minör 13": "Moll 13",
  "Majör 13": "Dur 13",
- "Minör add9": "Moll add9"
+ "Minör add9": "Moll add9",
+ "🤖 AI ayarını yapıştır: ChordPlai AYARI: Ton = A · Gam/Makam = Kürdi": "🤖 KI-Einstellung einfügen: ChordPlai SETTING: Key = A · Scale/Maqam = Kurdi",
+ "Şarkı asistanından gelen ayar satırını buraya yapıştır — ton ve gam kendiliğinden kurulur.": "Füge hier die Einstellungszeile aus dem Song-Assistenten ein — Tonart und Tonleiter werden automatisch gesetzt.",
+ "⚠️ Ayar okunamadı — satırın tamamını yapıştır, örnek: ChordPlai AYARI: Ton = A · Gam/Makam = Kürdi": "⚠️ Einstellung nicht lesbar — füge die ganze Zeile ein, z. B. ChordPlai SETTING: Key = A · Scale/Maqam = Kurdi"
 }

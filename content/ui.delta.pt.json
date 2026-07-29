@@ -101,5 +101,8 @@
  "Minör 11": "Menor 11",
  "Minör 13": "Menor 13",
  "Majör 13": "Maior 13",
- "Minör add9": "Menor add9"
+ "Minör add9": "Menor add9",
+ "🤖 AI ayarını yapıştır: ChordPlai AYARI: Ton = A · Gam/Makam = Kürdi": "🤖 Cole o ajuste da IA: ChordPlai SETTING: Key = A · Scale/Maqam = Kurdi",
+ "Şarkı asistanından gelen ayar satırını buraya yapıştır — ton ve gam kendiliğinden kurulur.": "Cole aqui a linha de ajuste do Assistente de músicas — tom e escala são aplicados automaticamente.",
+ "⚠️ Ayar okunamadı — satırın tamamını yapıştır, örnek: ChordPlai AYARI: Ton = A · Gam/Makam = Kürdi": "⚠️ Não deu para ler o ajuste — cole a linha inteira, ex. ChordPlai SETTING: Key = A · Scale/Maqam = Kurdi"
 }

@@ -1041,6 +1041,16 @@ window.CP_SUPA = {
   .cst-sgn { width: 26px; height: 26px; flex: 0 0 auto; }
   .g-img { width: 46px; height: 46px; }
   .air-g-item .emo { line-height: 0; }
+  /* 🤖 AI ayarını yapıştır */
+  .ai-set-row input {
+    flex: 1; min-width: 0; padding: 9px 12px; border-radius: 10px;
+    border: 1px dashed rgba(245,194,100,.4); background: #14100a; color: var(--cream);
+    font-size: .8rem; outline: none;
+  }
+  .ai-set-row input:focus { border-style: solid; border-color: var(--amber); box-shadow: 0 0 0 3px rgba(245,194,100,.12); }
+  .ai-set-row .chip { flex: 0 0 auto; min-width: 0; padding: 9px 12px; }
+  #aiSetHint.ok { color: var(--amber-hot); }
+  #aiSetHint.err { color: #ff9a80; }
   /* ✏️ özel akorlar */
   .cst-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
   .cst-row .seg { flex: 1; }
@@ -1611,6 +1621,12 @@ window.CP_SUPA = {
         <select id="airTon" class="scale-sel" aria-label="Ton (Anahtar)"></select>
         <select id="airScale" class="scale-sel" aria-label="Gam / Makam"></select>
       </div>
+      <div class="cst-row ai-set-row">
+        <input id="aiSet" type="text" autocomplete="off" spellcheck="false"
+          placeholder="🤖 AI ayarını yapıştır: ChordPlai AYARI: Ton = A · Gam/Makam = Kürdi">
+        <button class="chip" id="aiSetClear" title="Temizle">✕</button>
+      </div>
+      <div class="poolcount-line" id="aiSetHint">Şarkı asistanından gelen ayar satırını buraya yapıştır — ton ve gam kendiliğinden kurulur.</div>
       <div class="air-oct-row">
         <span class="instr-lbl">Oktav</span>
         <div class="seg" id="airOctSeg">
@@ -4012,6 +4028,90 @@ window.CP_SUPA = {
   fillSelects();
   ui.tonSel.addEventListener("change", () => { A.ton = +ui.tonSel.value; rebuildPool(); });
   ui.scaleSel.addEventListener("change", () => { A.scale = ui.scaleSel.value; rebuildPool(); });
+
+  // ---- 🤖 "ChordPlai AYARI: Ton = A · Gam/Makam = Kürdi" satırını yapıştır → ton+gam kurulsun ----
+  // Prompt 6 dilde olduğu için gam adlarının her dildeki karşılığını tanımamız gerekiyor.
+  // Sıra ÖNEMLİ: uzun kalıplar önce ("miksolidyen" içinde "lidyen" geçiyor).
+  const SCALE_HINTS = [
+    ["mixolydian", ["miksolidyen", "mixolydian", "mixolydien", "mixolydisch", "mixolidio", "mixolidio"]],
+    ["locrian",    ["lokriyen", "locrian", "locrien", "lokrisch", "locrio"]],
+    ["lydian",     ["lidyen", "lydian", "lydien", "lydisch", "lidio"]],
+    ["phrygian",   ["frigyen", "phrygian", "phrygien", "phrygisch", "frigio"]],
+    ["dorian",     ["dorian", "dorien", "dorisch", "dorico"]],
+    ["nihavend",   ["nihavend", "nihavent"]],
+    ["huseyni",    ["huseyni", "hüseyni"]],
+    ["ussak",      ["ussak", "uşşak"]],
+    ["kurdi",      ["kurdi", "kürdi", "kurd"]],
+    ["hicaz",      ["hicaz", "hijaz", "hedjaz"]],
+    ["rast",       ["rast"]],
+    ["aeolian",    ["minor", "minör", "aeolian", "aeolyen", "aolisch", "moll", "menor", "mineur", "eolico"]],
+    ["major",      ["major", "majör", "ionian", "iyonyen", "dur", "mayor", "majeur", "maior", "ionien"]],
+  ];
+  const deacc = s => String(s).toLowerCase()
+    .replace(/[ıİ]/g, "i").replace(/[şŞ]/g, "s").replace(/[ğĞ]/g, "g")
+    .replace(/[üÜ]/g, "u").replace(/[öÖ]/g, "o").replace(/[çÇ]/g, "c")
+    .normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+  function parseAiSetting(raw) {
+    const txt = String(raw || "");
+    if (!txt.trim()) return null;
+    const flat = deacc(txt);
+    // --- ton: "Ton/Key/Tonart/Tonalidad/Tonalité/Tom = X" ya da metindeki ilk tek nota ---
+    let tonPc = null;
+    const keyRe = /(?:ton|key|tonart|tonalidad|tonalite|tom)\s*[:=]\s*([a-g])\s*([#♯b♭]?)/i;
+    let m = flat.match(keyRe);
+    if (!m) m = flat.match(/\b([a-g])([#♯b♭]?)\b(?=\s*(?:·|\||,|-|$|\s))/);
+    if (m) {
+      let pc = CH.indexOf(m[1].toUpperCase());
+      if (pc >= 0) {
+        if (m[2] === "#" || m[2] === "♯") pc = (pc + 1) % 12;
+        if (m[2] === "b" || m[2] === "♭") pc = (pc + 11) % 12;
+        tonPc = pc;
+      }
+    }
+    // --- gam/makam: bilinen adlardan hangisi geçiyor ---
+    let scaleKey = null;
+    const hit = w => {
+      const t = deacc(w);
+      // kısa ipuçları ("dur", "rast") kelime içinde yanlış eşleşmesin
+      if (t.length <= 5) return new RegExp("(^|[^a-z0-9])" + t + "([^a-z0-9]|$)").test(flat);
+      return flat.includes(t);
+    };
+    for (const [key, words] of SCALE_HINTS) {
+      if (words.some(hit)) { scaleKey = key; break; }
+    }
+    if (tonPc == null && !scaleKey) return null;
+    return { tonPc, scaleKey };
+  }
+
+  const aiSet = { inp: $("aiSet"), hint: $("aiSetHint"), clear: $("aiSetClear") };
+  if (aiSet.inp) {
+    const DEFAULT_HINT = aiSet.hint.textContent;
+    const applyAi = () => {
+      const v = aiSet.inp.value;
+      if (!v.trim()) { aiSet.hint.textContent = DEFAULT_HINT; aiSet.hint.className = "poolcount-line"; return; }
+      const r = parseAiSetting(v);
+      if (!r) {
+        aiSet.hint.textContent = "⚠️ Ayar okunamadı — satırın tamamını yapıştır, örnek: ChordPlai AYARI: Ton = A · Gam/Makam = Kürdi";
+        aiSet.hint.className = "poolcount-line err";
+        return;
+      }
+      const parts = [];
+      if (A.customOn) setCustomMode(false);          // gam moduna dön, yoksa ayar görünmez
+      if (r.tonPc != null) { A.ton = r.tonPc; ui.tonSel.value = String(r.tonPc); parts.push("Ton = " + CH[r.tonPc]); }
+      if (r.scaleKey && TH.SCALES[r.scaleKey]) {
+        A.scale = r.scaleKey; ui.scaleSel.value = r.scaleKey;
+        parts.push("Gam = " + TH.SCALES[r.scaleKey].name.replace(" ~", ""));
+      }
+      rebuildPool();
+      aiSet.hint.textContent = "✓ Ayarlandı — " + parts.join(" · ");
+      aiSet.hint.className = "poolcount-line ok";
+    };
+    aiSet.inp.addEventListener("input", applyAi);
+    aiSet.inp.addEventListener("paste", () => setTimeout(applyAi, 0));
+    aiSet.clear.addEventListener("click", () => { aiSet.inp.value = ""; applyAi(); aiSet.inp.focus(); });
+    window.__aiSet = { parse: parseAiSetting, apply: applyAi };
+  }
 
   // ---- ✏️ özel akorlar: 7 dereceyi elle yaz, presete kaydet ----
   const cst = {
