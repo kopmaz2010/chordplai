@@ -13,6 +13,18 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://chordplai.com/gizlilik</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://chordplai.com/kosullar</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://chordplai.com/blog</loc>
     <xhtml:link rel="alternate" hreflang="tr" href="https://chordplai.com/blog"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://chordplai.com/blog/en"/>

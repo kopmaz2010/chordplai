@@ -320,6 +320,9 @@ def main():
               "    <priority>%s</priority>" % prio, "  </url>"]
         return e
     sm += entry("/", home_alts, "1.0", "weekly")
+    # elle yazılan statik sayfalar (üretilmez, kökte durur)
+    for static in ("/gizlilik", "/kosullar"):
+        sm += entry(static, {}, "0.3", "yearly")
     for loc, alts in urls:
         is_index = loc.rstrip("/").endswith("blog") or re.match(r"^/blog/[a-z]{2}$", loc)
         sm += entry(loc, alts, "0.8" if is_index else "0.7", "weekly" if is_index else "monthly")
