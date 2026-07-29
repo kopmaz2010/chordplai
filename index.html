@@ -2664,7 +2664,8 @@ window.CP_SUPA = {
   }
 
   function startGame() {
-    if (!PLAYER) { openGate(); return; }
+    if (!PLAYER) { pendingStart = true; openGate(); return; }
+    pendingStart = false;
     ensureAudio();
     G.running = true; G.score = 0; G.streak = 0;
     setupTimer();
@@ -2739,6 +2740,7 @@ window.CP_SUPA = {
   // ---- oyuncu adı (isim kapısı) ----
   let PLAYER = "";
   try { PLAYER = localStorage.getItem("akorPlayer") || ""; } catch (_) {}
+  let pendingStart = false;   // kapı yüzünden ertelenen "Başla"
   const gate = { el: $("gate"), name: $("gateName"), go: $("gateGo"), hint: $("gateHint") };
   const gateFb = document.getElementById("gateFallback");
   function openGate() {
@@ -2765,11 +2767,25 @@ window.CP_SUPA = {
     // birincil deneyim: isim girilir girilmez Air Chord başlasın (tıklama = ses izni)
     const va = document.getElementById("view-air");
     if (va && !va.hidden && window.__airAutoStart) window.__airAutoStart();
+    // kapıyı "Başla" açtıysa oyunu sürdür (Google'a ulaşılamayan yedek yol)
+    else if (pendingStart && !G.running) startGame();
   }
   function updatePlayer() { ui.player.textContent = "👤 " + (PLAYER || "İsim gir"); }
   gate.go.addEventListener("click", saveName);
   gate.name.addEventListener("keydown", e => { if (e.key === "Enter") saveName(); });
   ui.player.addEventListener("click", openGate);
+  // Üyelik modülü girişte akorPlayer'ı yazar, çıkışta siler. PLAYER yükleme
+  // anında yakalandığı için olayla tazelenmezse sayfa yenilenene kadar boş
+  // kalır ve kapı sonsuz döngüye girer (Başla → kapı → giriş → Başla → kapı).
+  document.addEventListener("cp:player", () => {
+    let v = ""; try { v = localStorage.getItem("akorPlayer") || ""; } catch (_) {}
+    PLAYER = v;
+    updatePlayer();
+    refreshBoard();
+    if (!v) { pendingStart = false; if (G.running) stopGame(); return; }
+    // giriş kapıyı açan "Başla" yüzünden istendiyse oyunu kaldığı yerden sürdür
+    if (pendingStart && !G.running) startGame();
+  });
 
   // ---- liderlik tablosu (şimdilik cihazda; sonra Supabase'e taşınacak) ----
   function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
@@ -5890,11 +5906,15 @@ ${song}`;
     ui.popStats.textContent = localStats();
     // oyuncu adı Google adından gelir (takma ad sorulmuyor)
     try { localStorage.setItem("akorPlayer", name.split(" ")[0].slice(0, 16)); } catch (_) {}
-    // kapıyı kapat ve Air Chord'u başlat (giriş tıklaması = ses/kamera için geçerli jest)
+    // kapıyı kapat, sonra oyuncunun belli olduğunu diğer modüllere duyur
     const gateEl = document.getElementById("gate");
     const wasOpen = gateEl && !gateEl.hidden;
     if (window.__gateClose) window.__gateClose();
-    if (wasOpen && window.__airAutoStart) setTimeout(window.__airAutoStart, 250);
+    document.dispatchEvent(new CustomEvent("cp:player"));
+    // Air Chord yalnızca o ekrandayken başlasın — nota oyunundan giriş yapanın
+    // karşısına kamera izni çıkmasın (giriş tıklaması ses/kamera için geçerli jest)
+    const airEl = document.getElementById("view-air");
+    if (wasOpen && airEl && !airEl.hidden && window.__airAutoStart) setTimeout(window.__airAutoStart, 250);
     // profili kaydet/tazele (RLS: sadece kendi satırı)
     try {
       await supa.from("profiles").upsert({
@@ -5910,6 +5930,7 @@ ${song}`;
     await supa.auth.signOut();
     ui.pop.hidden = true;
     try { localStorage.removeItem("akorPlayer"); } catch (_) {}
+    document.dispatchEvent(new CustomEvent("cp:player"));
     if (window.__airStop) window.__airStop();     // kamera kapansın
     if (window.__gateOpen) window.__gateOpen();
   });
