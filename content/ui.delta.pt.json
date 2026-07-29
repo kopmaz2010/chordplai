@@ -104,5 +104,8 @@
  "Minör add9": "Menor add9",
  "🤖 AI ayarını yapıştır: ChordPlai AYARI: Ton = A · Gam/Makam = Kürdi": "🤖 Cole o ajuste da IA: ChordPlai SETTING: Key = A · Scale/Maqam = Kurdi",
  "Şarkı asistanından gelen ayar satırını buraya yapıştır — ton ve gam kendiliğinden kurulur.": "Cole aqui a linha de ajuste do Assistente de músicas — tom e escala são aplicados automaticamente.",
- "⚠️ Ayar okunamadı — satırın tamamını yapıştır, örnek: ChordPlai AYARI: Ton = A · Gam/Makam = Kürdi": "⚠️ Não deu para ler o ajuste — cole a linha inteira, ex. ChordPlai SETTING: Key = A · Scale/Maqam = Kurdi"
+ "⚠️ Ayar okunamadı — satırın tamamını yapıştır, örnek: ChordPlai AYARI: Ton = A · Gam/Makam = Kürdi": "⚠️ Não deu para ler o ajuste — cole a linha inteira, ex. ChordPlai SETTING: Key = A · Scale/Maqam = Kurdi",
+ "📷 Kamerayı Aç ve Çalmaya Başla": "📷 Ligar a câmera e tocar",
+ "📖 Nasıl çalınır?": "📖 Como tocar?",
+ "Kamera izni istenecek · ilk açılışta el-takip modeli (~7 MB) inilir · görüntün cihazından çıkmaz": "A permissão da câmera será solicitada · o modelo de rastreamento (~7 MB) baixa na primeira vez · seu vídeo nunca sai do dispositivo"
 }

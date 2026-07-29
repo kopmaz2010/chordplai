@@ -918,6 +918,22 @@ window.CP_SUPA = {
     border-radius: 14px; margin-bottom: 2px;
   }
   .air-idle-lead { max-width: 62ch; }
+  /* kamera kapalıyken alttaki başlat düğmesi tekrar olur — gizle.
+     Tam ekranda (çalışırken) panelin içinde "Durdur" olarak görünmeye devam eder. */
+  #view-air:not(.air-full) .transport { display: none; }
+  /* boş ekrandaki asıl eylem: başlat düğmesi burada, aşağıda değil */
+  .idle-cta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 4px; }
+  .idle-go {
+    font-size: 1rem; padding: 15px 30px; border-radius: 14px;
+    box-shadow: 0 10px 30px -8px rgba(245,194,100,.6);
+    animation: idlePulse 2.6s ease-in-out infinite;
+  }
+  @keyframes idlePulse {
+    0%, 100% { box-shadow: 0 10px 30px -8px rgba(245,194,100,.55); }
+    50%      { box-shadow: 0 10px 38px -6px rgba(245,194,100,.9); }
+  }
+  .idle-help { flex: 0 0 auto; background: rgba(20,16,10,.7); backdrop-filter: blur(4px); }
+  @media (prefers-reduced-motion: reduce) { .idle-go { animation: none; } }
   @media (max-width: 700px) { .air-signs { width: 94%; } }
   #airChips .sc-chip { cursor: default; }
   #airChips .sc-chip.on { border-color: var(--amber, #f5c264); box-shadow: 0 0 12px rgba(245,194,100,.35); background: rgba(245,194,100,.12); }
@@ -1589,7 +1605,11 @@ window.CP_SUPA = {
              width="1600" height="893" decoding="async"
              alt="Air Chord el işaretleri: I'den VII'ye gam dereceleri — tek parmak, iki parmak, üç parmak, dört parmak, açık el, boynuz ve başparmaklı boynuz">
         <p class="air-idle-lead"><b>Sol elin</b> derece seçer · <b>dik tut</b> gamın akoru, <b>içe yatır</b> majör, <b>dışa yatır</b> minör</p>
-        <p class="sub">Sağ el yalnız efekt · ✊ yumruk susturur · kamera izni istenecek, ilk açılışta el-takip modeli (~7 MB) inilir</p>
+        <div class="idle-cta">
+          <button class="go idle-go" id="airStartBig">📷 Kamerayı Aç ve Çalmaya Başla</button>
+          <button class="chip idle-help" id="airIdleGuide">📖 Nasıl çalınır?</button>
+        </div>
+        <p class="sub">Kamera izni istenecek · ilk açılışta el-takip modeli (~7 MB) inilir · görüntün cihazından çıkmaz</p>
       </div>
     </div>
 
@@ -5090,11 +5110,17 @@ window.CP_SUPA = {
   // durum satırını üst çubuğa aynala
   new MutationObserver(() => { ui.fsStatus.textContent = ui.status.textContent; })
     .observe(ui.status, { childList: true, characterData: true, subtree: true });
-  ui.go.addEventListener("click", () => {
+  function goToggle() {
     if (A.running) return stop();
     let seen = false; try { seen = localStorage.getItem("akorAirOnb") === "5"; } catch (_) {}
     if (seen) start(); else openOnb();
-  });
+  }
+  ui.go.addEventListener("click", goToggle);
+  // asıl başlat düğmesi boş ekranın ORTASINDA — kullanıcı aşağı kaydırmak zorunda kalmasın
+  const bigStart = document.getElementById("airStartBig");
+  if (bigStart) bigStart.addEventListener("click", goToggle);
+  const idleGuide = document.getElementById("airIdleGuide");
+  if (idleGuide) idleGuide.addEventListener("click", openOnb);
   window.__airStop = stop;
 
   // ---- otomatik açılış: Air Chord sitenin birincil deneyimi ----
