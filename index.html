@@ -1205,6 +1205,15 @@ window.CP_SUPA = {
     height: 1.5em; width: auto; max-width: 200%;
     object-fit: contain; pointer-events: none;
   }
+  /* elin yatırılması gerektiğini gösteren küçük ok — işaretin hemen sağında */
+  .np-sgn.has-tilt img { transform: translate(-62%, -55%); }
+  .np-tilt {
+    position: absolute; right: -.06em; top: 50%; transform: translateY(-58%);
+    font-size: .62em; line-height: 1; font-weight: 700;
+    color: var(--amber-hot, #ffd98a); text-shadow: 0 0 6px rgba(245,194,100,.5);
+    pointer-events: none;
+  }
+  .np-tilt.min { color: #9fd0ff; text-shadow: 0 0 6px rgba(120,180,255,.45); }
   .np-guide {
     position: absolute; left: 0; right: 0; top: 38%; height: 2px; pointer-events: none;
     background: linear-gradient(90deg, transparent, rgba(245,194,100,.55), transparent);
@@ -5321,11 +5330,11 @@ Senden istediklerim (sırayla, kısa ve net):
 1) Şarkının tonunu ve gamını bul. "ChordPlai AYARI: Ton = X · Gam/Makam = Y" diye tek satır yaz (Y yukarıdaki listeden birebir olmalı; şarkı Türk müziğiyse uygun makamı tercih et).
 2) AKOR → İŞARET tablosu: şarkıdaki her akor için hangi el işareti (derece) yapılacak; akor gamın kendi akoru değilse "içe yatır (majör)" ya da "dışa yatır (minör)" notu ekle. Gama hiç oturmayan akor varsa en yakın dereceyi öner ve belirt.
 3) ŞARKI AKIŞI: bölüm bölüm (intro/kıta/nakarat) işaret sırasını emoji ile yaz, örn: nakarat = ☝️ → 🤘 → 4️⃣ → 🖐️
-4) ⭐ EN ÖNEMLİSİ — İŞARETLİ SÖZLER: Aşağıda yapıştırdığım metnin TAMAMINI baştan sona yeniden yaz; tek fark, akor adlarının yerine o akorun EL İŞARETİ emojisini koy. Sözlere hiç dokunma, kısaltma, özetleme — birebir aynı kalsın. İşaret, tam olarak akorun durduğu hecenin üzerinde olsun (akor satırı sözün üstünde). Tamamını tek bir kod bloğu (\`\`\`) içine yaz ki hizalama bozulmasın. Örnek biçim:
+4) ⭐ EN ÖNEMLİSİ — İŞARETLİ SÖZLER: Aşağıda yapıştırdığım metnin TAMAMINI baştan sona yeniden yaz; tek fark, akor adlarının yerine o akorun EL İŞARETİ emojisini koy. Akor gamın kendi akoru DEĞİLSE işaretin hemen ardına ok koy: majöre çevrilecekse ▸ , minöre çevrilecekse ◂ (ör. gamda Em varken şarkı E istiyorsa: 🖐️▸). Gamın kendi akorunda ok KOYMA. Sözlere hiç dokunma, kısaltma, özetleme — birebir aynı kalsın. İşaret, tam olarak akorun durduğu hecenin üzerinde olsun (akor satırı sözün üstünde). Tamamını tek bir kod bloğu (\`\`\`) içine yaz ki hizalama bozulmasın. Örnek biçim:
 \`\`\`
 🤟  ☝️  🤘
 
-🤟      ☝️          🤘
+🤟      ☝️          🤘▸
 Nasıl birisin, beni böyle üzebilirsin
 🤟       ☝️                     🖐️
 Sanki her şeyi denedin
@@ -5353,11 +5362,11 @@ What I need (in order, short and clear):
 1) Find the song's key and scale. Write one line: "ChordPlai SETTING: Key = X · Scale/Maqam = Y" (Y must match the list above exactly).
 2) CHORD → SIGN table: for every chord in the song, which hand sign (degree) to make; if a chord is not diatonic, add "tilt inward (major)" or "tilt outward (minor)". If a chord doesn't fit at all, suggest the closest degree and say so.
 3) SONG FLOW: section by section (intro/verse/chorus), the sign sequence with emoji, e.g. chorus = ☝️ → 🤘 → 4️⃣ → 🖐️
-4) ⭐ MOST IMPORTANT — LYRICS WITH SIGNS: Rewrite the ENTIRE text I pasted below from start to finish; the only change is replacing each chord name with that chord's HAND SIGN emoji. Do not touch, shorten or summarise the lyrics — keep them exactly as pasted. Put each sign directly above the syllable where the chord lands (sign line above the lyric line). Put the whole thing inside a single code block (\`\`\`) so the alignment survives. Format example:
+4) ⭐ MOST IMPORTANT — LYRICS WITH SIGNS: Rewrite the ENTIRE text I pasted below from start to finish; the only change is replacing each chord name with that chord's HAND SIGN emoji. If a chord is NOT the scale's own chord, put an arrow right after the sign: ▸ if it must be tilted to major, ◂ if to minor (e.g. the scale has Em but the song wants E: 🖐️▸). Do NOT add an arrow for the scale's own chords. Do not touch, shorten or summarise the lyrics — keep them exactly as pasted. Put each sign directly above the syllable where the chord lands (sign line above the lyric line). Put the whole thing inside a single code block (\`\`\`) so the alignment survives. Format example:
 \`\`\`
 🤟  ☝️  🤘
 
-🤟      ☝️          🤘
+🤟      ☝️          🤘▸
 First line of the lyrics goes here
 🤟       ☝️                     🖐️
 Second line of the lyrics goes here
@@ -5552,22 +5561,36 @@ ${song}`;
   // Maliyet yok: ek istek/işlem gerektirmez, görseller zaten sitede.
   // Hizalama kritik — emoji tek boşluk genişliğinde değil, o yüzden görseli
   // GİZLİ emojinin üstüne bindiriyoruz; satır genişliği birebir korunuyor.
-  const SGN_EMOJI = [
-    [/☝️?/g, 1],                     // ☝️
-    [/✌️?/g, 2],                     // ✌️
-    [/3️?⃣/g, 3],                    // 3️⃣
-    [/4️?⃣/g, 4],                    // 4️⃣
-    [/🖐️?/g, 5],               // 🖐️
-    [/✋/g, 5],                            // ✋ (bazı modeller bunu yazıyor)
-    [/🤘/g, 6],                      // 🤘
-    [/🤟/g, 7],                      // 🤟
+  const SGN_PAT = [
+    ["\u261D\uFE0F?", 1],          // ☝️
+    ["\u270C\uFE0F?", 2],          // ✌️
+    ["3\uFE0F?\u20E3", 3],         // 3️⃣
+    ["4\uFE0F?\u20E3", 4],         // 4️⃣
+    ["\uD83D\uDD90\uFE0F?", 5],   // 🖐️
+    ["\u270B", 5],                  // ✋ (bazı modeller bunu yazıyor)
+    ["\uD83E\uDD18", 6],           // 🤘
+    ["\uD83E\uDD1F", 7],           // 🤟
   ];
+  // AI, gamın kendi akoru olmayanları işaretin ardına ok koyarak belirtir:
+  // ▸ = eli yatır, akor MAJÖRE dönsün · ◂ = MİNÖRE dönsün (uygulamadaki çip işaretiyle aynı)
+  const ARROW_RE = "(\\s*[\u25B8\u25B6\u2192\u203A\u00BB\u25C2\u25C0\u2190\u2039\u00AB]\uFE0F?)?";
+  const MAJ_ARROWS = "\u25B8\u25B6\u2192\u203A\u00BB";
+  const SGN_EMOJI = SGN_PAT.map(([pat, deg]) => [new RegExp(pat + ARROW_RE, "g"), deg]);
+
   function signHTML(escapedLine) {
     let s = escapedLine;
     for (const [re, deg] of SGN_EMOJI) {
-      s = s.replace(re, m =>
-        `<span class="np-sgn"><i>${m}</i>` +
-        `<img src="/tasarim/sign/${deg}.webp" alt="${deg}. derece" decoding="async"></span>`);
+      s = s.replace(re, (m, arrow) => {
+        let tilt = "";
+        if (arrow) {
+          const a = arrow.trim().replace("\uFE0F", "");
+          const maj = MAJ_ARROWS.includes(a);
+          tilt = `<b class="np-tilt${maj ? "" : " min"}" title="${maj ? "İçe yatır (majör)" : "Dışa yatır (minör)"}">` +
+                 (maj ? "\u25B8" : "\u25C2") + "</b>";
+        }
+        return `<span class="np-sgn${arrow ? " has-tilt" : ""}"><i>${m}</i>` +
+               `<img src="/tasarim/sign/${deg}.webp" alt="${deg}. derece" decoding="async">${tilt}</span>`;
+      });
     }
     return s;
   }

@@ -109,5 +109,7 @@
  "📖 Nasıl çalınır?": "📖 Comment jouer ?",
  "Kamera izni istenecek · ilk açılışta el-takip modeli (~7 MB) inilir · görüntün cihazından çıkmaz": "L'autorisation caméra sera demandée · le modèle de suivi (~7 Mo) se télécharge au premier lancement · votre vidéo ne quitte jamais votre appareil",
  "Sürükleyerek genişlet": "Glissez pour élargir",
- "Paneli büyüt / küçült": "Agrandir / réduire le panneau"
+ "Paneli büyüt / küçült": "Agrandir / réduire le panneau",
+ "İçe yatır (majör)": "Inclinez vers l'intérieur (majeur)",
+ "Dışa yatır (minör)": "Inclinez vers l'extérieur (mineur)"
 }

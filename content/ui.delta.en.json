@@ -109,5 +109,7 @@
  "📖 Nasıl çalınır?": "📖 How do I play?",
  "Kamera izni istenecek · ilk açılışta el-takip modeli (~7 MB) inilir · görüntün cihazından çıkmaz": "Camera permission will be requested · the hand-tracking model (~7 MB) downloads on first use · your video never leaves your device",
  "Sürükleyerek genişlet": "Drag to resize",
- "Paneli büyüt / küçült": "Expand / shrink panel"
+ "Paneli büyüt / küçült": "Expand / shrink panel",
+ "İçe yatır (majör)": "Tilt inward (major)",
+ "Dışa yatır (minör)": "Tilt outward (minor)"
 }

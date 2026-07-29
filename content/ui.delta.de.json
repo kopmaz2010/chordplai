@@ -109,5 +109,7 @@
  "📖 Nasıl çalınır?": "📖 Wie spielt man?",
  "Kamera izni istenecek · ilk açılışta el-takip modeli (~7 MB) inilir · görüntün cihazından çıkmaz": "Kamerazugriff wird erfragt · das Hand-Tracking-Modell (~7 MB) lädt beim ersten Mal · dein Video verlässt nie dein Gerät",
  "Sürükleyerek genişlet": "Zum Verbreitern ziehen",
- "Paneli büyüt / küçült": "Panel vergrößern / verkleinern"
+ "Paneli büyüt / küçült": "Panel vergrößern / verkleinern",
+ "İçe yatır (majör)": "Nach innen kippen (Dur)",
+ "Dışa yatır (minör)": "Nach außen kippen (Moll)"
 }

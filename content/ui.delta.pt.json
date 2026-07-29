@@ -109,5 +109,7 @@
  "📖 Nasıl çalınır?": "📖 Como tocar?",
  "Kamera izni istenecek · ilk açılışta el-takip modeli (~7 MB) inilir · görüntün cihazından çıkmaz": "A permissão da câmera será solicitada · o modelo de rastreamento (~7 MB) baixa na primeira vez · seu vídeo nunca sai do dispositivo",
  "Sürükleyerek genişlet": "Arraste para alargar",
- "Paneli büyüt / küçült": "Ampliar / reduzir painel"
+ "Paneli büyüt / küçült": "Ampliar / reduzir painel",
+ "İçe yatır (majör)": "Incline para dentro (maior)",
+ "Dışa yatır (minör)": "Incline para fora (menor)"
 }
