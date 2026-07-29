@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#14110b">
 <title>ChordPlai — Air Chord: Kamerayla Elinle Akor Çal · Akor Antrenörü</title>
-<meta name="description" content="ChordPlai ile enstrümansız müzik yap: kameraya elini göster, Air Chord el işaretlerinle akor çalsın; üzerine şarkı söyle, Reels/YouTube videosu kaydet. Ayrıca gitar & piyano akor egzersizleri, nota oyunu, porte okuma, Akor Ninja ve Akor Tetris.">
+<meta name="description" content="ChordPlai ile enstrümansız müzik yap: kameraya elini göster, Air Chord el işaretlerinle akor çalsın; üzerine şarkı söyle. Metronom, arpej ve ritim dizgeciyle groove kur. Ayrıca gitar & piyano akor egzersizleri, nota oyunu, porte okuma, Akor Ninja ve Akor Tetris.">
 <link rel="canonical" href="https://chordplai.com/">
 <meta name="robots" content="index, follow">
 <link rel="alternate" hreflang="tr" href="https://chordplai.com/">
@@ -16,6 +16,11 @@
 <link rel="alternate" hreflang="pt" href="https://chordplai.com/?lang=pt">
 <link rel="alternate" hreflang="x-default" href="https://chordplai.com/?lang=en">
 <!-- 🌍 Dil: seçimi olabildiğince erken belirle ve sözlüğü hemen indirmeye başla -->
+<script>
+// www'dan gelen (Google OAuth origin'i yalnız apex'e kayıtlı) → apex'e taşı
+if (location.hostname === "www.chordplai.com")
+  location.replace("https://chordplai.com" + location.pathname + location.search + location.hash);
+</script>
 <script>
 window.CP_LANGS = { tr:"Türkçe", en:"English", es:"Español", de:"Deutsch", fr:"Français", pt:"Português" };
 window.CP_LANG = (() => {
@@ -47,7 +52,7 @@ window.CP_DICT = window.CP_LANG === "tr"
 <meta name="twitter:image" content="https://chordplai.com/og.png">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
- {"@type":"WebApplication","@id":"https://chordplai.com/#app","name":"ChordPlai","alternateName":"Air Chord","url":"https://chordplai.com/","applicationCategory":"MusicApplication","operatingSystem":"Web","browserRequirements":"Kamera erişimli modern tarayıcı (Chrome, Edge, Safari)","inLanguage":"tr","offers":{"@type":"Offer","price":"0","priceCurrency":"TRY"},"description":"Kamera el takibiyle havada akor çalınan müzik uygulaması: el işaretleri gam derecelerini seçer, tilt majör/minör yapar, vokal harmonizer ve Reels/YouTube video kaydı vardır. Gitar ve piyano akor egzersizleri, nota oyunu, porte okuma, Akor Ninja ve Akor Tetris mini oyunlarını da içerir.","featureList":["Air Chord: kamerayla el işaretinden akor çalma","5 synth tonu, metronom, arpej, ritim dizgeci","Gama uyumlu vokal harmonizer","Reels (9:16) ve YouTube (16:9) video kaydı","Gitar & piyano akor diyagramları","Akor Ninja ve Akor Tetris oyunları"]},
+ {"@type":"WebApplication","@id":"https://chordplai.com/#app","name":"ChordPlai","alternateName":"Air Chord","url":"https://chordplai.com/","applicationCategory":"MusicApplication","operatingSystem":"Web","browserRequirements":"Kamera erişimli modern tarayıcı (Chrome, Edge, Safari)","inLanguage":"tr","offers":{"@type":"Offer","price":"0","priceCurrency":"TRY"},"description":"Kamera el takibiyle havada akor çalınan müzik uygulaması: el işaretleri gam derecelerini seçer, elin yatışı akoru majör/minör yapar. Metronom, arpej ve ritim dizgeci ile groove kurulur. Gitar ve piyano akor egzersizleri, nota oyunu, porte okuma, Akor Ninja ve Akor Tetris mini oyunlarını da içerir.","featureList":["Air Chord: kamerayla el işaretinden akor çalma","4 synth tonu, metronom, arpej, ritim dizgeci","Not defteri ve hızı ayarlanabilir prompter","Gitar & piyano akor diyagramları","Akor Ninja ve Akor Tetris oyunları"]},
  {"@type":"Organization","@id":"https://chordplai.com/#org","name":"ChordPlai","url":"https://chordplai.com/","logo":"https://chordplai.com/og.png"},
  {"@type":"FAQPage","mainEntity":[
   {"@type":"Question","name":"Air Chord nedir?","acceptedAnswer":{"@type":"Answer","text":"Air Chord, ChordPlai'ın kamera el takibiyle çalışan modudur: sol elinizle 1–7 arası işaret yaparak gamın derecesini seçersiniz, eli içe/dışa yatırınca akor majöre/minöre döner, sağ el distorsiyon ve dalga efektlerini kontrol eder. Enstrüman gerekmez."},
@@ -976,30 +981,70 @@ window.CP_SUPA = {
   .sq-cell.ph { outline: 2px solid rgba(255,217,138,.85); outline-offset: 1px; }
   .sq-cell.dim { opacity: .35; }
   .sq-lbl.dim { opacity: .45; }
-  /* sampler pad */
-  .air-pads { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 10px; }
-  .air-pad { display: flex; flex-direction: column; gap: 6px; }
-  .pad-hit {
-    height: 66px; border-radius: 12px; border: 1px solid #2a2417; cursor: pointer;
-    background: linear-gradient(180deg, #201a10, #14100a); color: var(--muted);
-    font-family: ui-monospace, monospace; font-size: 1.1rem;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  /* 📝 not defteri + prompter (Logic Pro tarzı sağdan açılan panel) */
+  .pad-btn {
+    position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 46;
+    writing-mode: vertical-rl; padding: 16px 7px; cursor: pointer;
+    border: 1px solid var(--line); border-right: none; border-radius: 12px 0 0 12px;
+    background: linear-gradient(180deg, #241d13, #1a140c); color: var(--muted);
+    font-size: .7rem; font-weight: 700; letter-spacing: .18em;
+    box-shadow: -6px 0 20px rgba(0,0,0,.45);
   }
-  .pad-hit span { font-size: .6rem; letter-spacing: .16em; color: var(--muted-dim, #6d6250); }
-  .air-pad.loaded .pad-hit { border-color: var(--amber, #f5c264); color: var(--amber-hot, #ffd98a); box-shadow: 0 0 10px rgba(245,194,100,.25); }
-  .pad-hit:active, .pad-hit.hit { transform: scale(.96); border-color: var(--amber-hot, #ffd98a); box-shadow: 0 0 18px rgba(245,194,100,.45); }
-  .pad-ctl { display: flex; gap: 6px; }
-  .pad-ctl .chip { flex: 1; text-align: center; font-size: .68rem; cursor: pointer; }
-  .pad-rec.rec { border-color: #ff7a5a; color: #ff9a80; animation: recPulse 1s infinite; }
-  @keyframes recPulse { 50% { box-shadow: 0 0 12px rgba(255,122,90,.5); } }
-  /* video kaydı */
-  .air-rec-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-  .air-rec-time { font-family: ui-monospace, monospace; color: #ff9a80; font-size: .9rem; letter-spacing: .08em; }
-  #airRecBtn.rec { border-color: #ff7a5a; color: #ff9a80; animation: recPulse 1s infinite; }
-  .air-ask-btns { display: flex; gap: 10px; align-items: center; }
-  .air-ask-btns .go { flex: 1; }
-  .air-ask-btns .chip { flex: 0 0 auto; cursor: pointer; padding: 12px 16px; }
-  #airChips .sc-chip .fing { font-size: .85rem; margin-right: 2px; }
+  .pad-btn:hover { color: var(--amber-hot); border-color: var(--amber); }
+  .notepad {
+    position: fixed; right: 0; top: 0; bottom: 0; z-index: 47;
+    width: min(420px, 100vw); display: flex; flex-direction: column;
+    background: linear-gradient(180deg, #221b11, #17120b);
+    border-left: 1px solid rgba(245,194,100,.28);
+    box-shadow: -18px 0 50px rgba(0,0,0,.6);
+    transform: translateX(100%); transition: transform .3s cubic-bezier(.4,0,.2,1);
+  }
+  .notepad.open { transform: none; }
+  .np-head {
+    display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+    border-bottom: 1px solid var(--line); flex: 0 0 auto;
+  }
+  .np-head b { font-size: .76rem; letter-spacing: .16em; text-transform: uppercase; color: var(--amber-hot); }
+  .np-head .sp { flex: 1; }
+  .np-x { background: none; border: none; color: var(--muted); font-size: 1.15rem; cursor: pointer; padding: 0 4px; }
+  .np-x:hover { color: var(--cream); }
+  .np-tabs { display: flex; gap: 6px; padding: 10px 14px 0; flex: 0 0 auto; }
+  .np-tabs .chip { padding: 7px 10px; font-size: .72rem; }
+  .np-body { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 10px 14px 14px; gap: 10px; }
+  .np-body[hidden] { display: none; }   /* display:flex, hidden özniteliğini ezmesin! */
+  .np-ta {
+    flex: 1; min-height: 0; resize: none; width: 100%;
+    background: #14100a; color: var(--cream); border: 1px solid var(--line);
+    border-radius: 12px; padding: 12px 14px; outline: none;
+    font: 15px/1.7 ui-monospace, Menlo, monospace;
+  }
+  .np-ta:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(245,194,100,.13); }
+  .np-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; flex: 0 0 auto; }
+  .np-row input[type="range"] { flex: 1; min-width: 90px; accent-color: var(--amber); }
+  .np-lbl { font-size: .68rem; letter-spacing: .1em; color: var(--muted); white-space: nowrap; }
+  .np-lbl b { color: var(--amber-hot); font-family: ui-monospace, monospace; font-size: .84rem; }
+  .np-save { font-size: .66rem; color: var(--muted-dim); min-height: 1em; }
+  /* prompter görünümü */
+  .np-prompt {
+    flex: 1; min-height: 0; overflow: hidden; position: relative;
+    background: #0d0a06; border: 1px solid var(--line); border-radius: 12px;
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000 84%, transparent);
+            mask-image: linear-gradient(180deg, transparent, #000 14%, #000 84%, transparent);
+  }
+  .np-scroll { position: absolute; left: 0; right: 0; top: 0; padding: 0 18px; will-change: transform; }
+  .np-scroll p {
+    margin: 0 0 .55em; font-size: var(--np-size, 26px); line-height: 1.5;
+    font-weight: 600; color: var(--cream); text-align: center;
+  }
+  .np-scroll p:empty { height: .7em; }
+  .np-guide {
+    position: absolute; left: 0; right: 0; top: 38%; height: 2px; pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(245,194,100,.55), transparent);
+  }
+  @media (max-width: 560px) {
+    .notepad { width: 100vw; }
+    .pad-btn { padding: 12px 6px; font-size: .64rem; }
+  }
   .air-onb {
     position: fixed; inset: 0; z-index: 60; display: flex; align-items: safe center; justify-content: center;
     background: rgba(8,7,4,.82); backdrop-filter: blur(4px); padding: 18px; overflow: auto;
@@ -1460,49 +1505,12 @@ window.CP_SUPA = {
       <div class="poolcount-line">Kareleri tıkla · senin yüklediğin kick/snare/hihat sample'ları çalar · ölçü değişince grid de değişir</div>
     </div>
 
-    <div class="card">
-      <label>🎤 Sampler Pad — kendi sesinle çal</label>
-      <div class="air-pads" id="airPads"></div>
-      <div class="poolcount-line">🎙️ kaydet ya da 📁 dosya yükle · pad'e tıkla <b>veya 1-4 tuşlarına bas</b> · yüklediğin ses <b>ritim dizgecinde kendi satırını açar</b>, groove'a yazıp otomatik çaldırabilirsin — kayda da girer</div>
-    </div>
 
-    <div class="card">
-      <label>🎬 Video Kaydı — Reels / YouTube paylaşımı</label>
-      <div class="air-rec-row">
-        <div class="seg" id="airRecFmt">
-          <button class="chip" data-f="v" aria-pressed="true">📱 Dikey 9:16</button>
-          <button class="chip" data-f="h">🖥️ Yatay 16:9</button>
-        </div>
-        <button class="chip" id="airRecMic" aria-pressed="true">🎤 Mikrofon: Açık</button>
-        <button class="chip air-tr-btn" id="airRecBtn">⏺ Kayda Al</button>
-        <span class="air-rec-time" id="airRecTime" hidden>00:00</span>
-      </div>
-      <div class="air-rec-row">
-        <span class="instr-lbl">Vokal</span>
-        <div class="seg" id="airVoxSeg" style="flex:1">
-          <button class="chip" data-v="0">🎙️ Doğal</button>
-          <button class="chip" data-v="1">🏛 Hall</button>
-          <button class="chip" data-v="2">🎶 +3'lü</button>
-          <button class="chip" data-v="3" aria-pressed="true">👥 Koro 3+5</button>
-        </div>
-      </div>
-      <div class="poolcount-line">Vokalin kayda <b>mixlenmiş</b> girer: EQ + kompresör + reverb + <b>gama uyumlu 3'lü/5'li harmoni</b> · canlıda duyulmaz · kayıttayken sağ el 1-4 parmakla da mod seçilir</div>
-    </div>
 
     <div class="transport"><button class="go" id="airGo">📷 Başla</button></div>
     <p class="hint">Kamera el takibi (MediaPipe) + uzamalı synth-pad — mikrofon gerekmez, akorların üzerine istediğin gibi söyle 🎤</p>
     </div><!-- /air-dock -->
 
-    <div class="air-onb" id="airAsk" hidden>
-      <div class="air-onb-card" style="max-width:440px">
-        <h3>🎬 Kayıt bitti</h3>
-        <p class="poolcount-line" id="airAskInfo" style="margin-bottom:14px"></p>
-        <div class="air-ask-btns">
-          <button class="go" id="airAskSave">💾 İndir</button>
-          <button class="chip" id="airAskDrop">🗑 Kaydetme</button>
-        </div>
-      </div>
-    </div>
 
     <div class="air-onb" id="airOnb" hidden>
       <div class="air-onb-card">
@@ -1528,6 +1536,48 @@ window.CP_SUPA = {
     <span class="foot-tag">Elinle çal, üzerine söyle 🎤</span>
   </footer>
 </main>
+
+<!-- 📝 Not defteri + prompter — sağdan açılır, her modda kullanılabilir -->
+<button class="pad-btn" id="npBtn" aria-expanded="false">📝 NOTLAR</button>
+<aside class="notepad" id="notepad" aria-hidden="true">
+  <div class="np-head">
+    <b>📝 Not Defteri</b>
+    <span class="sp"></span>
+    <button class="np-x" id="npClose" aria-label="Kapat">✕</button>
+  </div>
+  <div class="np-tabs seg" id="npTabs">
+    <button class="chip" data-t="note" aria-pressed="true">✍️ Yaz</button>
+    <button class="chip" data-t="prompt">🎬 Prompter</button>
+  </div>
+
+  <div class="np-body" id="npEdit">
+    <textarea class="np-ta" id="npText" spellcheck="false"
+      placeholder="Şarkı sözlerini, akor dizilimini ya da aklına geleni buraya yaz…&#10;&#10;Prompter sekmesine geçince bu yazı kayarak akar."></textarea>
+    <div class="np-row">
+      <span class="np-lbl">Yazı boyu</span>
+      <input type="range" id="npSize" min="16" max="52" step="1" value="26" aria-label="Yazı boyutu">
+      <span class="np-lbl"><b id="npSizeVal">26</b>px</span>
+    </div>
+    <div class="np-save" id="npSaved">Otomatik kaydedilir · bu cihazda saklanır</div>
+  </div>
+
+  <div class="np-body" id="npPlay" hidden>
+    <div class="np-prompt" id="npStage">
+      <div class="np-scroll" id="npScroll"></div>
+      <div class="np-guide"></div>
+    </div>
+    <div class="np-row">
+      <button class="chip air-tr-btn" id="npPlayBtn">▶️ Başlat</button>
+      <button class="chip" id="npReset">⏮ Başa Al</button>
+    </div>
+    <div class="np-row">
+      <span class="np-lbl">Hız</span>
+      <input type="range" id="npSpeed" min="10" max="200" step="5" value="55" aria-label="Kaydırma hızı">
+      <span class="np-lbl"><b id="npSpeedVal">55</b> px/sn</span>
+    </div>
+    <div class="np-save">Boşluk tuşu başlatır/durdurur · ↑↓ ile hız · yazıyı ✍️ sekmesinden düzenle</div>
+  </div>
+</aside>
 
 <div class="gate" id="gate" hidden>
   <div class="gate-card">
@@ -3572,11 +3622,7 @@ window.CP_SUPA = {
     tone: 0, buffers: {}, samplesLoaded: false,
     bpm: 70, meter: 4, metroOn: false, drumOn: false,
     trTimer: null, trNext: 0, trStep: 0, arpIdx: 0, arpNotes: null, stepFlash: -1,
-    seq: null, pads: [null, null, null, null], padRec: -1, recStream: null, recorder: null,
-    recOn: false, recFmt: "v", recMic: true, recCanvas: null, recDraw: null, recTick: null, recSecs: 0,
-    voxMode: 3, voxCand: -1, voxStable: 0, vox: null, voxAnl: null, voxBuf: null, voxTimer: null,
-    voxWorkletOk: null, voxNote: 0,
-    recRecorder: null, recChunks: [], recStart: 0, recMicStream: null, recDest: null,
+    seq: null,
     wavePos: 1, waveTarget: 1, tilt: 0, tiltSm: 0,
     thumbL: false, thumbR: false, thumbRatio: 0,
     lastVideoTime: -1, lastHands: null, muteFlash: 0, waveFlash: 0, dpr: 1,
@@ -3589,10 +3635,7 @@ window.CP_SUPA = {
     tonSel: $("airTon"), scaleSel: $("airScale"), octSeg: $("airOctSeg"),
     toneSeg: $("airToneSeg"), metroBtn: $("airMetroBtn"), drumBtn: $("airDrumBtn"),
     bpm: $("airBpm"), bpmVal: $("airBpmVal"), meterSeg: $("airMeterSeg"),
-    seqGrid: $("airSeqGrid"), pads: $("airPads"),
-    recFmt: $("airRecFmt"), recMic: $("airRecMic"), recBtn: $("airRecBtn"), recTime: $("airRecTime"),
-    ask: $("airAsk"), askInfo: $("airAskInfo"), askSave: $("airAskSave"), askDrop: $("airAskDrop"),
-    voxSeg: $("airVoxSeg"),
+    seqGrid: $("airSeqGrid"),
     big: $("airChordBig"), bigName: $("airChordName"), bigFull: $("airChordFull"),
     onb: $("airOnb"), onbGo: $("airOnbGo"), guide: $("airGuide"), guideBtn: $("airGuideBtn"),
     view: document.getElementById("view-air"), dock: $("airDock"),
@@ -3966,10 +4009,6 @@ window.CP_SUPA = {
       if (q.kick.has(s)) playBuf(A.buffers.kick, t, 1);
       if (q.snare.has(s)) playBuf(A.buffers.snare, t, 0.9);
       if (q.hihat.has(s)) playBuf(A.buffers.hihat, t, 0.5);
-      // kullanıcının kendi sesleri de grooveun parçası: pad'ler dizgeçten tetiklenir
-      for (let i = 0; i < 4; i++) {
-        if (A.pads[i] && q["p" + i] && q["p" + i].has(s)) playBuf(A.pads[i], t, 0.9, 1, A.comp);
-      }
     }
     if (A.metroOn) {
       if (arpActive() && s % 2 === 0 && A.arpNotes && A.arpNotes.length) {   // 8'lik arpej (yalnız klavye tonları)
@@ -4015,15 +4054,13 @@ window.CP_SUPA = {
   }
   // ---- ritim dizgeci arayüzü ----
   const SEQ_ROWS = [["kick", "🦶 Kick"], ["snare", "🥁 Snare"], ["hihat", "🎩 Hihat"]];
-  function seqRows() {   // davullar + kullanıcının yüklediği pad'ler
-    return SEQ_ROWS.concat(A.pads.map((b, i) => ["p" + i, (b ? "🎤" : "○") + " Pad " + (i + 1)]));
-  }
+  function seqRows() { return SEQ_ROWS; }
   function renderSeq() {
     if (!ui.seqGrid) return;
     const spb = stepsPerBar(), q = A.seq[A.meter];
     ui.seqGrid.style.setProperty("--steps", spb);
     ui.seqGrid.innerHTML = seqRows().map(([row, label], ri) => {
-      const empty = ri >= 3 && !A.pads[ri - 3];
+      const empty = false;
       return `<div class="sq-lbl${empty ? " dim" : ""}">${label}</div>` +
         Array.from({ length: spb }, (_, s) =>
           `<button class="sq-cell${q[row].has(s) ? " on" : ""}${s % (A.meter === 4 ? 4 : 2) === 0 ? " bt" : ""}${empty ? " dim" : ""}" data-r="${row}" data-s="${s}"></button>`
@@ -4034,516 +4071,6 @@ window.CP_SUPA = {
     if (!ui.seqGrid) return;
     ui.seqGrid.querySelectorAll(".sq-cell.ph").forEach(c => c.classList.remove("ph"));
     if (s >= 0) ui.seqGrid.querySelectorAll(`.sq-cell[data-s="${s}"]`).forEach(c => c.classList.add("ph"));
-  }
-
-  // ---- sampler pad: kendi sesini kaydet ya da yükle, tıklayınca çal ----
-  function renderPads() {
-    if (!ui.pads) return;
-    ui.pads.innerHTML = A.pads.map((b, i) =>
-      `<div class="air-pad${b ? " loaded" : ""}">
-        <button class="pad-hit" data-i="${i}">${b ? "▶︎" : "…"}<span>PAD ${i + 1} · tuş ${i + 1}</span></button>
-        <div class="pad-ctl">
-          <button class="chip pad-rec${A.padRec === i ? " rec" : ""}" data-i="${i}">${A.padRec === i ? "⏹ durdur" : "🎙️ kaydet"}</button>
-          <label class="chip pad-load">📁 yükle<input type="file" accept="audio/*" data-i="${i}" hidden></label>
-        </div>
-      </div>`).join("");
-  }
-  async function padRecord(i) {
-    if (A.padRec === i) {   // durdur
-      try { A.recorder.stop(); } catch (_) {}
-      return;
-    }
-    if (A.padRec >= 0) return;
-    try {
-      A.recStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    } catch (e) { ui.status.textContent = "⚠️ Mikrofon izni gerekli (sampler kaydı)"; return; }
-    ensureAudio();
-    const chunks = [];
-    A.recorder = new MediaRecorder(A.recStream);
-    A.recorder.ondataavailable = e => chunks.push(e.data);
-    A.recorder.onstop = async () => {
-      A.recStream.getTracks().forEach(tr => tr.stop());
-      A.padRec = -1;
-      try {
-        const buf = await new Blob(chunks).arrayBuffer();
-        A.pads[i] = await A.ctx.decodeAudioData(buf);
-        ui.status.textContent = `✅ Pad ${i + 1} kaydedildi (${A.pads[i].duration.toFixed(1)} sn) — ${i + 1} tuşu ya da dizgeç`;
-      } catch (e) {
-        ui.status.textContent = `⚠️ Pad ${i + 1} kaydı çözümlenemedi, tekrar dene`;
-      }
-      renderPads(); renderSeq();
-    };
-    A.padRec = i;
-    A.recorder.start();
-    renderPads();
-  }
-  async function padLoad(i, file) {
-    ensureAudio();
-    ui.status.textContent = `⏳ Pad ${i + 1}: "${file.name}" yükleniyor…`;
-    try {
-      A.pads[i] = await A.ctx.decodeAudioData(await file.arrayBuffer());
-      ui.status.textContent = `✅ Pad ${i + 1} hazır (${A.pads[i].duration.toFixed(1)} sn) — tıkla, ${i + 1} tuşuna bas ya da ritim dizgecine yaz`;
-    } catch (e) {
-      A.pads[i] = null;
-      ui.status.textContent = `⚠️ Pad ${i + 1}: bu ses dosyası okunamadı (mp3/wav/m4a dene)`;
-    }
-    renderPads(); renderSeq();   // dizgeçte de pad satırı canlansın
-  }
-  function padHit(i) {
-    ensureAudio();
-    if (!A.pads[i]) { ui.status.textContent = `🎤 Pad ${i + 1} boş — 🎙️ kaydet ya da 📁 yükle`; return; }
-    playBuf(A.pads[i], null, 0.95, 1, A.comp);
-    A.padFlash = { i, t: performance.now() };
-    const el = ui.pads && ui.pads.querySelector(`.pad-hit[data-i="${i}"]`);
-    if (el) { el.classList.add("hit"); setTimeout(() => el.classList.remove("hit"), 160); }
-  }
-  // klavye: 1-4 pad tetikler (eller havadayken fareye uzanmaya gerek kalmasın)
-  document.addEventListener("keydown", e => {
-    const v = document.getElementById("view-air");
-    if (!v || v.hidden) return;
-    if (e.target instanceof Element && e.target.matches("input, select, textarea")) return;
-    if (e.metaKey || e.ctrlKey || e.altKey) return;
-    const n = "1234".indexOf(e.key);
-    if (n >= 0) { padHit(n); e.preventDefault(); }
-  });
-
-  // ---- 🎬 video kaydı: sade sahne (kamera + akor + ChordPlai filigranı) → webm dosyası ----
-  function recPickMime() {
-    const list = ["video/mp4;codecs=avc1", "video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm", "video/mp4"];
-    for (const m of list) { try { if (MediaRecorder.isTypeSupported(m)) return m; } catch (_) {} }
-    return "";
-  }
-  // kayıt sahnesine el iskeleti: asıl olayımız el takibi — videoda da görünmeli
-  function recHands(x, dx, dy, dw, dh, m) {
-    const hands = A.lastHands || [];
-    hands.forEach(h => {
-      x.strokeStyle = "rgba(245,194,100,.7)"; x.lineWidth = m * 0.0035;
-      BONES.forEach(([a, b]) => {
-        x.beginPath();
-        x.moveTo(dx + h[a].x * dw, dy + h[a].y * dh);
-        x.lineTo(dx + h[b].x * dw, dy + h[b].y * dh);
-        x.stroke();
-      });
-      h.forEach((pt, i) => {
-        x.fillStyle = i === 8 ? "#ffd98a" : "rgba(239,230,210,.85)";
-        x.beginPath();
-        x.arc(dx + pt.x * dw, dy + pt.y * dh, (i === 8 ? 0.008 : 0.005) * m, 0, 7);
-        x.fill();
-      });
-    });
-  }
-  // CP monogram (logo 04) — 120×120 çizimi istenen boyuta ölçeklenir
-  function recMark(x, cx, cy, size) {
-    const s = size / 120;
-    x.save();
-    x.translate(cx - 60 * s, cy - 60 * s); x.scale(s, s);
-    x.lineCap = "round"; x.lineWidth = 11;
-    x.strokeStyle = "rgba(239,230,210,.95)";
-    x.beginPath(); x.arc(74, 60, 30, -Math.PI / 2, Math.PI / 2, true); x.stroke();
-    x.strokeStyle = "#f5c264";
-    x.beginPath(); x.moveTo(74, 26); x.lineTo(74, 98); x.stroke();
-    x.beginPath(); x.moveTo(74, 30); x.lineTo(84, 30);
-    x.arc(84, 47, 17, -Math.PI / 2, Math.PI / 2, false); x.lineTo(74, 64); x.stroke();
-    x.fillStyle = "#ffd98a";
-    x.beginPath(); x.arc(46, 60, 6, 0, 7); x.fill();
-    x.restore();
-  }
-  function recWordmark(x, cx, cy, size) {
-    x.font = `700 ${size}px ui-monospace, Menlo, monospace`;
-    const wCh = x.measureText("CHORD").width, wPl = x.measureText("PLAI").width;
-    const mk = size * 1.3, gap = size * 0.32;
-    const bx = cx - (mk + gap + wCh + wPl) / 2;
-    recMark(x, bx + mk / 2, cy - size * 0.34, mk);
-    x.textAlign = "left";
-    x.fillStyle = "rgba(239,230,210,.95)"; x.fillText("CHORD", bx + mk + gap, cy);
-    x.fillStyle = "#f5c264"; x.fillText("PLAI", bx + mk + gap + wCh, cy);
-    x.textAlign = "center";
-  }
-  // ---- kayıt sahnesi yardımcıları: tuvale çizilen arayüz çipleri (amp estetiği) ----
-  function rr(x, X, Y, w, h, r) {
-    x.beginPath();
-    x.moveTo(X + r, Y);
-    x.arcTo(X + w, Y, X + w, Y + h, r); x.arcTo(X + w, Y + h, X, Y + h, r);
-    x.arcTo(X, Y + h, X, Y, r); x.arcTo(X, Y, X + w, Y, r);
-    x.closePath();
-  }
-  // ortalanmış çip sırası: items = [{t, on}] — aktif olan amber parlar
-  function chipRow(x, cy, items, fs, padX, gap) {
-    x.font = `600 ${fs}px ui-monospace, Menlo, monospace`;
-    const ws = items.map(it => x.measureText(it.t).width + padX * 2);
-    const total = ws.reduce((a, b) => a + b, 0) + gap * (items.length - 1);
-    let X = (A.recCanvas.width - total) / 2;
-    const h = fs * 1.9;
-    items.forEach((it, i) => {
-      rr(x, X, cy - h / 2, ws[i], h, h / 2.4);
-      x.fillStyle = it.on ? "rgba(245,194,100,.16)" : "rgba(255,255,255,.045)";
-      x.fill();
-      x.strokeStyle = it.on ? "#f5c264" : "rgba(245,194,100,.25)";
-      x.lineWidth = it.on ? 2.4 : 1.2;
-      if (it.on) { x.shadowColor = "rgba(245,194,100,.5)"; x.shadowBlur = fs * 0.5; }
-      x.stroke(); x.shadowBlur = 0;
-      x.fillStyle = it.on ? "#ffd98a" : "rgba(239,230,210,.66)";
-      x.textAlign = "center";
-      x.fillText(it.t, X + ws[i] / 2, cy + fs * 0.34);
-      X += ws[i] + gap;
-    });
-  }
-  // mini ritim dizgeci: gerçek desen + playhead
-  function seqMini(x, cy, w, cell) {
-    const spb = stepsPerBar(), q = A.seq[A.meter];
-    const rows = [["kick", "🦶"], ["snare", "🥁"], ["hihat", "🎩"]]
-      .concat(A.pads.map((b, i) => b && q["p" + i] && q["p" + i].size ? ["p" + i, "🎤"] : null).filter(Boolean));
-    const gap = cell * 0.24, lw = cell * 1.6;
-    const gridW = lw + spb * (cell + gap);
-    let X0 = (A.recCanvas.width - gridW) / 2;
-    rows.forEach(([row, emo], ri) => {
-      const Y = cy + ri * (cell + gap);
-      x.font = `${cell * 0.8}px system-ui`;
-      x.textAlign = "left";
-      x.fillStyle = "rgba(239,230,210,.6)";
-      x.fillText(emo, X0, Y + cell * 0.82);
-      for (let s = 0; s < spb; s++) {
-        const X = X0 + lw + s * (cell + gap);
-        rr(x, X, Y, cell, cell, cell * 0.22);
-        const on = q[row].has(s);
-        const ph = (A.metroOn || A.drumOn) && s === ((A.trStep - 1 + spb) % spb);
-        x.fillStyle = on ? (ph ? "#ffd98a" : "#f5c264") : (ph ? "rgba(245,194,100,.28)" : "rgba(255,255,255,.06)");
-        x.fill();
-        if (on && ph) { x.shadowColor = "#ffd98a"; x.shadowBlur = cell * 0.5; x.fill(); x.shadowBlur = 0; }
-      }
-    });
-  }
-  // marka arka planı: düz siyah değil — amp dokusu (radyal ışıma + vinyet)
-  function recBg(x, W, H) {
-    let g = x.createRadialGradient(W / 2, H * 0.18, 0, W / 2, H * 0.4, H * 0.85);
-    g.addColorStop(0, "#1b160e"); g.addColorStop(0.55, "#120e08"); g.addColorStop(1, "#0a0805");
-    x.fillStyle = g; x.fillRect(0, 0, W, H);
-    g = x.createRadialGradient(W / 2, H * 0.12, 0, W / 2, H * 0.12, W * 0.5);
-    g.addColorStop(0, "rgba(245,194,100,.07)"); g.addColorStop(1, "rgba(245,194,100,0)");
-    x.fillStyle = g; x.fillRect(0, 0, W, H * 0.4);
-  }
-  // kayıt sahnesi: kamera HEP 16:9 kadraj ortada; bantlarda GERÇEK arayüz —
-  // izleyen "ne kadar çok özelliği var" desin: ton/gam, synth tonları, BPM/ölçü,
-  // derece çipleri, ritim dizgeci, akor, dalga, filigran.
-  function recScene() {
-    const c = A.recCanvas, x = c.getContext("2d"), W = c.width, H = c.height;
-    const now = performance.now(), m = Math.min(W, H);
-    recBg(x, W, H);
-    const v = ui.cam, hasCam = v && v.videoWidth;
-    const vAsp = hasCam ? v.videoWidth / v.videoHeight : 16 / 9;
-    const dw = W, dh = W / vAsp, dx = 0, dy = (H - dh) / 2;
-    if (hasCam) {
-      x.save(); x.translate(W, 0); x.scale(-1, 1);
-      x.drawImage(v, dx, dy, dw, dh);
-      x.restore();
-    } else {
-      x.fillStyle = "#171209"; x.fillRect(dx, dy, dw, dh);
-    }
-    recHands(x, dx, dy, dw, dh, m);
-    x.strokeStyle = "rgba(245,194,100,.4)"; x.lineWidth = Math.max(2, m * 0.002);
-    x.strokeRect(0.5, dy + 0.5, W - 1, dh - 1);
-    x.textAlign = "center";
-    const topH = dy, botY = dy + dh, botH = H - botY;
-    const scName = TH.SCALES[A.scale] ? TH.SCALES[A.scale].name : "";
-    const dia = A.cur >= 0 ? worldDeg()[A.cur] : null;
-    const ch = A.cur >= 0 ? chordFor(A.cur, A.tq, A.qual, A.oct) : null;
-    if (topH > m * 0.1) {
-      // ═══ ÜST BANT: marka + kontrol vitrini ═══
-      recWordmark(x, W / 2, topH * 0.17, m * 0.052);
-      x.font = `500 ${m * 0.021}px ui-monospace, Menlo, monospace`;
-      x.fillStyle = "rgba(239,230,210,.55)";
-      x.fillText("AIR CHORD · elinle çal, üzerine söyle", W / 2, topH * 0.17 + m * 0.038);
-      // ton · gam + oktav + dünya
-      chipRow(x, topH * 0.40, [
-        { t: CH[A.ton] + " · " + scName, on: true },
-        { t: A.tq === "maj" ? "▸ majöre çevrildi" : A.tq === "min" ? "◂ minöre çevrildi" : "⌂ gamın akoru", on: A.tq !== "dia" },
-        ...(A.oct ? [{ t: octLabel(A.oct), on: false }] : []),
-      ], m * 0.021, m * 0.017, m * 0.011);
-      // 5 synth tonu
-      chipRow(x, topH * 0.60, TONES.map((t, i) => ({ t: t.label, on: i === A.tone })), m * 0.019, m * 0.014, m * 0.009);
-      // transport
-      chipRow(x, topH * 0.80, [
-        { t: (A.metroOn ? "▶ " : "") + A.bpm + " BPM", on: A.metroOn },
-        { t: A.meter === 4 ? "4/4" : "6/8", on: true },
-        { t: "Arp", on: A.metroOn },
-        { t: "🥁 Ritim", on: A.drumOn },
-      ], m * 0.02, m * 0.016, m * 0.01);
-      // ═══ ALT BANT: dereceler + akor + dizgeç + filigran ═══
-      const wd = worldDeg();
-      chipRow(x, botY + botH * 0.10,
-        wd.map((cc, d) => cc ? { t: SIGN[d + 1] + " " + cc.name, on: d === A.cur } : null).filter(Boolean),
-        m * 0.019, m * 0.011, m * 0.007);
-      if (ch && dia) {
-        x.font = `700 ${m * 0.115}px ui-monospace, Menlo, monospace`;
-        x.fillStyle = "#ffd98a";
-        x.shadowColor = "rgba(245,194,100,.55)"; x.shadowBlur = m * 0.025;
-        x.fillText(ch.name, W / 2, botY + botH * 0.36);
-        x.shadowBlur = 0;
-        const rom = romanFor(A.cur, dia.name);
-        x.font = `500 ${m * 0.026}px ui-monospace, Menlo, monospace`;
-        x.fillStyle = "rgba(239,230,210,.85)";
-        x.fillText(rom + " · " + (TH.fullFromName ? TH.fullFromName(ch.name.replace(" ¹", "")) : ""), W / 2, botY + botH * 0.445);
-      }
-      if (PAD.size || (A.metroOn && A.arpNotes)) {
-        x.strokeStyle = "rgba(255,217,138,.7)"; x.lineWidth = m * 0.004;
-        x.beginPath();
-        const y0 = botY + botH * 0.55, amp = m * 0.011 * (1 + A.dist);
-        for (let px = 0; px <= W; px += m * 0.008) {
-          const py = y0 + Math.sin(now / 95 + px / (m * 0.05)) * amp + Math.sin(now / 41 + px / (m * 0.018)) * amp * 0.4;
-          px === 0 ? x.moveTo(px, py) : x.lineTo(px, py);
-        }
-        x.stroke();
-      }
-      seqMini(x, botY + botH * 0.63, W * 0.8, m * 0.028);
-      x.font = `400 ${m * 0.02}px ui-monospace, Menlo, monospace`;
-      x.textAlign = "center";
-      x.fillStyle = "rgba(239,230,210,.5)";
-      x.fillText("akor-antrenoru.vercel.app", W / 2, H - m * 0.028);
-    } else {
-      // ═══ YATAY: kadraj dolu — üstte özet çipler, altta dereceler + akor + filigran ═══
-      let g = x.createLinearGradient(0, H * 0.6, 0, H);
-      g.addColorStop(0, "rgba(10,8,5,0)"); g.addColorStop(1, "rgba(10,8,5,.78)");
-      x.fillStyle = g; x.fillRect(0, H * 0.6, W, H * 0.4);
-      g = x.createLinearGradient(0, 0, 0, H * 0.16);
-      g.addColorStop(0, "rgba(10,8,5,.6)"); g.addColorStop(1, "rgba(10,8,5,0)");
-      x.fillStyle = g; x.fillRect(0, 0, W, H * 0.16);
-      x.font = `600 ${m * 0.026}px ui-monospace, Menlo, monospace`;
-      x.textAlign = "left";
-      x.fillStyle = "rgba(239,230,210,.8)";
-      x.fillText("🖐️ AIR CHORD", m * 0.04, m * 0.055);
-      x.textAlign = "right";
-      x.font = `500 ${m * 0.022}px ui-monospace, Menlo, monospace`;
-      x.fillStyle = "rgba(255,217,138,.85)";
-      x.fillText(CH[A.ton] + " · " + scName + " · " + TONES[A.tone].label + " · " + A.bpm + " BPM " + (A.meter === 4 ? "4/4" : "6/8"), W - m * 0.04, m * 0.055);
-      x.textAlign = "center";
-      const wd = worldDeg();
-      chipRow(x, H * 0.71,
-        wd.map((cc, d) => cc ? { t: SIGN[d + 1] + " " + cc.name, on: d === A.cur } : null).filter(Boolean),
-        m * 0.02, m * 0.012, m * 0.008);
-      if (ch && dia) {
-        x.font = `700 ${m * 0.12}px ui-monospace, Menlo, monospace`;
-        x.fillStyle = "#ffd98a";
-        x.shadowColor = "rgba(245,194,100,.55)"; x.shadowBlur = m * 0.025;
-        x.fillText(ch.name, W / 2, H * 0.86);
-        x.shadowBlur = 0;
-        const rom = romanFor(A.cur, dia.name);
-        x.font = `500 ${m * 0.026}px ui-monospace, Menlo, monospace`;
-        x.fillStyle = "rgba(239,230,210,.85)";
-        x.fillText(rom + " · " + (TH.fullFromName ? TH.fullFromName(ch.name.replace(" ¹", "")) : ""), W / 2, H * 0.905);
-      }
-      recWordmark(x, W / 2, H * 0.965, m * 0.034);
-    }
-  }
-  // ---- 🎤 vokal zinciri: highpass → kompresör → (kuru + gama uyumlu 3'lü/5'li harmoni) → reverb ----
-  // Yalnız KAYDA karışır (hoparlöre gitmez); harmoni aralıkları canlı ses algılamayla diyatonik seçilir.
-  const VOXM = [
-    { key: "dogal", label: "Doğal",     dry: 0.95, rev: 0.18, h3: 0,    h5: 0 },
-    { key: "hall",  label: "Hall",      dry: 0.90, rev: 0.42, h3: 0,    h5: 0 },
-    { key: "terz",  label: "+3'lü",     dry: 0.90, rev: 0.28, h3: 0.40, h5: 0 },
-    { key: "koro",  label: "Koro 3+5",  dry: 0.85, rev: 0.30, h3: 0.38, h5: 0.34 },
-  ];
-  // gecikme-hattı (doppler) gren kaydırıcı: iki 180° faz farklı pencere, çapraz sönümlü
-  const VOX_WORKLET = `
-    class GrainShift extends AudioWorkletProcessor {
-      static get parameterDescriptors() {
-        return [{ name: "ratio", defaultValue: 1, minValue: 0.5, maxValue: 2, automationRate: "k-rate" }];
-      }
-      constructor() { super(); this.N = 1 << 15; this.buf = new Float32Array(this.N); this.w = 0; this.ph = 0; }
-      process(inputs, outputs, params) {
-        const inp = inputs[0] && inputs[0][0], out = outputs[0] && outputs[0][0];
-        if (!out) return true;
-        const ratio = params.ratio[0], grain = sampleRate * 0.09;
-        const inc = (1 - ratio) / grain;
-        for (let i = 0; i < out.length; i++) {
-          this.buf[this.w] = inp ? inp[i] : 0;
-          this.ph += inc; this.ph -= Math.floor(this.ph);
-          const p2 = (this.ph + 0.5) % 1;
-          const rd = (d) => {
-            let pos = this.w - d; pos -= Math.floor(pos / this.N) * this.N;
-            const i0 = pos | 0, fr = pos - i0;
-            return this.buf[i0] * (1 - fr) + this.buf[(i0 + 1) % this.N] * fr;
-          };
-          out[i] = rd(this.ph * grain + 1) * Math.sin(Math.PI * this.ph)
-                 + rd(p2 * grain + 1) * Math.sin(Math.PI * p2);
-          this.w = (this.w + 1) % this.N;
-        }
-        return true;
-      }
-    }
-    registerProcessor("grain-shift", GrainShift);`;
-  async function ensureVoxWorklet() {
-    if (A.voxWorkletOk != null) return A.voxWorkletOk;
-    try {
-      await A.ctx.audioWorklet.addModule(URL.createObjectURL(new Blob([VOX_WORKLET], { type: "text/javascript" })));
-      A.voxWorkletOk = true;
-    } catch (e) { A.voxWorkletOk = false; }
-    return A.voxWorkletOk;
-  }
-  function buildVoxChain(srcNode) {
-    const c = A.ctx;
-    const hp = c.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 110;
-    const comp = c.createDynamicsCompressor();
-    comp.threshold.value = -26; comp.ratio.value = 4; comp.knee.value = 18;
-    comp.attack.value = 0.004; comp.release.value = 0.18;
-    const out = c.createGain();                       // vokal toplamı → yalnız kayda
-    const dry = c.createGain();
-    const revSend = c.createGain();
-    const rev = c.createConvolver(); rev.buffer = makeIR(c, 2.2);
-    srcNode.connect(hp); hp.connect(comp);
-    comp.connect(dry); dry.connect(out);
-    out.connect(A.recDest);
-    revSend.connect(rev); rev.connect(A.recDest);
-    dry.connect(revSend);
-    const vox = { hp, comp, out, dry, revSend, rev, h3: null, h5: null, g3: null, g5: null };
-    if (A.voxWorkletOk) {
-      const mk = (panv) => {
-        const sh = new AudioWorkletNode(c, "grain-shift");
-        const g = c.createGain(); g.gain.value = 0;
-        const pan = c.createStereoPanner ? c.createStereoPanner() : null;
-        comp.connect(sh); sh.connect(g);
-        if (pan) { pan.pan.value = panv; g.connect(pan); pan.connect(out); pan.connect(revSend); }
-        else { g.connect(out); g.connect(revSend); }
-        return { sh, g };
-      };
-      const v3 = mk(-0.35), v5 = mk(0.35);
-      vox.h3 = v3.sh; vox.g3 = v3.g; vox.h5 = v5.sh; vox.g5 = v5.g;
-    }
-    return vox;
-  }
-  function applyVoxMode() {
-    if (!A.vox) return;
-    const M = VOXM[A.voxMode] || VOXM[0], t = A.ctx.currentTime;
-    A.vox.dry.gain.setTargetAtTime(M.dry, t, 0.08);
-    A.vox.revSend.gain.setTargetAtTime(M.rev, t, 0.08);
-    if (A.vox.g3) A.vox.g3.gain.setTargetAtTime(A.voxWorkletOk ? M.h3 : 0, t, 0.1);
-    if (A.vox.g5) A.vox.g5.gain.setTargetAtTime(A.voxWorkletOk ? M.h5 : 0, t, 0.1);
-  }
-  function setVoxMode(m) {
-    A.voxMode = Math.max(0, Math.min(VOXM.length - 1, m));
-    if (ui.voxSeg) [...ui.voxSeg.children].forEach(c => c.setAttribute("aria-pressed", String(+c.dataset.v === A.voxMode)));
-    try { localStorage.setItem("akorAirVox", String(A.voxMode)); } catch (_) {}
-    applyVoxMode();
-  }
-  // seçili gama diyatonik hedefler: söylenen midi → en yakın gam sesi → +2 derece (3'lü), +4 derece (5'li)
-  function voxTargets(midi) {
-    const iv = (TH.SCALES[A.scale] || { iv: [0, 2, 4, 5, 7, 9, 11] }).iv;
-    const m0 = Math.round(midi);
-    let best = 0, bd = 99;
-    for (let i = 0; i < 7; i++) {
-      const d = Math.min((((m0 - A.ton - iv[i]) % 12) + 12) % 12, (((A.ton + iv[i] - m0) % 12) + 12) % 12);
-      if (d < bd) { bd = d; best = i; }
-    }
-    const i3 = ((iv[(best + 2) % 7] - iv[best]) + 12) % 12 || 12;
-    const i5 = ((iv[(best + 4) % 7] - iv[best]) + 12) % 12 || 12;
-    return { r3: Math.pow(2, i3 / 12), r5: Math.pow(2, i5 / 12), deg: best, i3, i5 };
-  }
-  // basit otokorelasyon perde algılama (tek sesli vokal için yeterli)
-  function detectPitch(buf, sr) {
-    let rms = 0;
-    for (let i = 0; i < buf.length; i++) rms += buf[i] * buf[i];
-    if (Math.sqrt(rms / buf.length) < 0.015) return 0;
-    const minL = Math.floor(sr / 600), maxL = Math.floor(sr / 70);
-    let bestL = 0, bestC = 0;
-    for (let lag = minL; lag <= maxL; lag++) {
-      let c = 0;
-      for (let i = 0; i < buf.length - lag; i += 2) c += buf[i] * buf[i + lag];
-      if (c > bestC) { bestC = c; bestL = lag; }
-    }
-    return bestL ? sr / bestL : 0;
-  }
-  function voxTick() {
-    if (!A.vox || !A.voxAnl || !A.voxWorkletOk) return;
-    A.voxAnl.getFloatTimeDomainData(A.voxBuf);
-    const f = detectPitch(A.voxBuf, A.ctx.sampleRate);
-    if (!f) return;
-    const midi = 69 + 12 * Math.log2(f / 440);
-    const tg = voxTargets(midi);
-    const t = A.ctx.currentTime;
-    try {
-      A.vox.h3.parameters.get("ratio").setTargetAtTime(tg.r3, t, 0.06);
-      A.vox.h5.parameters.get("ratio").setTargetAtTime(tg.r5, t, 0.06);
-    } catch (_) {}
-    A.voxNote = Math.round(midi);
-  }
-
-  async function recStartFn() {
-    if (A.recOn) return;
-    if (!A.running) { ui.status.textContent = "🎬 Kayıt için önce 📷 Başla ile kamerayı aç"; return; }
-    ensureAudio();
-    if (!A.recDest) { A.recDest = A.ctx.createMediaStreamDestination(); A.volG.connect(A.recDest); }
-    if (A.recMic) {   // mikrofon: yalnız kayda karışır (hoparlöre gitmez — feedback olmaz)
-      try {
-        A.recMicStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } });
-        A.recMicSrc = A.ctx.createMediaStreamSource(A.recMicStream);
-        await ensureVoxWorklet();
-        A.vox = buildVoxChain(A.recMicSrc);          // ham mic yerine işlenmiş vokal kayda gider
-        applyVoxMode();
-        A.voxAnl = A.ctx.createAnalyser(); A.voxAnl.fftSize = 2048;
-        A.vox.comp.connect(A.voxAnl);
-        A.voxBuf = new Float32Array(A.voxAnl.fftSize);
-        A.voxTimer = setInterval(voxTick, 70);       // perde algıla → harmoni aralıklarını gama oturt
-      } catch (e) { A.recMicStream = null; }
-    }
-    A.recCanvas = document.createElement("canvas");
-    if (A.recFmt === "v") { A.recCanvas.width = 1080; A.recCanvas.height = 1920; }
-    else { A.recCanvas.width = 1920; A.recCanvas.height = 1080; }
-    const stream = A.recCanvas.captureStream(30);
-    const at = A.recDest.stream.getAudioTracks()[0];
-    if (at) stream.addTrack(at);
-    const mime = recPickMime();
-    A.recChunks = [];
-    A.recRecorder = new MediaRecorder(stream, mime ? { mimeType: mime, videoBitsPerSecond: 8_000_000 } : undefined);
-    A.recRecorder.ondataavailable = e => { if (e.data && e.data.size) A.recChunks.push(e.data); };
-    A.recRecorder.onstop = () => {
-      const type = A.recRecorder.mimeType || "video/webm";
-      const ext = type.includes("mp4") ? "mp4" : "webm";
-      const blob = new Blob(A.recChunks, { type });
-      A.recChunks = [];
-      recAsk(blob, ext, A.recSecs);   // kayıt asla sessizce kaybolmaz: kullanıcıya sorulur
-    };
-    A.recRecorder.start(500);
-    A.recOn = true; A.recStart = performance.now();
-    recScene();
-    A.recDraw = setInterval(recScene, 33);
-    A.recTick = setInterval(() => {
-      const s = Math.floor((performance.now() - A.recStart) / 1000);
-      ui.recTime.textContent = String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
-    }, 500);
-    ui.recTime.hidden = false; ui.recTime.textContent = "00:00";
-    ui.recBtn.textContent = "⏹ Bitir"; ui.recBtn.classList.add("rec");
-  }
-  // kayıt bitti: indirilsin mi diye sor (⏹ Bitir de, kamerayı Durdur da buraya düşer)
-  function recDownload(blob, ext) {
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `chordplai-${A.recFmt === "v" ? "reels" : "youtube"}-${Date.now()}.${ext}`;
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 8000);
-    ui.status.textContent = "🎬 Kayıt indirildi — paylaşmaya hazır!";
-  }
-  function recAsk(blob, ext, secs) {
-    if (!ui.ask) { recDownload(blob, ext); return; }
-    const mm = String(Math.floor((secs || 0) / 60)).padStart(2, "0");
-    const ss = String((secs || 0) % 60).padStart(2, "0");
-    ui.askInfo.textContent =
-      `${A.recFmt === "v" ? "📱 Dikey 9:16 (Reels)" : "🖥️ Yatay 16:9 (YouTube)"} · ${mm}:${ss} · ${(blob.size / 1048576).toFixed(1)} MB — indirilsin mi?`;
-    ui.ask.hidden = false;
-    const close = () => { ui.ask.hidden = true; ui.askSave.onclick = null; ui.askDrop.onclick = null; };
-    ui.askSave.onclick = () => { close(); recDownload(blob, ext); };
-    ui.askDrop.onclick = () => { close(); ui.status.textContent = "🗑 Kayıt silindi"; };
-  }
-  function recStopFn() {
-    if (!A.recOn) return;
-    A.recOn = false;
-    A.recSecs = Math.floor((performance.now() - A.recStart) / 1000);
-    clearInterval(A.recDraw); clearInterval(A.recTick);
-    try { A.recRecorder.stop(); } catch (_) {}
-    if (A.recMicStream) { A.recMicStream.getTracks().forEach(t => t.stop()); A.recMicStream = null; }
-    if (A.recMicSrc) { try { A.recMicSrc.disconnect(); } catch (_) {} A.recMicSrc = null; }
-    clearInterval(A.voxTimer); A.voxTimer = null;
-    if (A.vox) { try { A.vox.out.disconnect(); A.vox.rev.disconnect(); } catch (_) {} A.vox = null; A.voxAnl = null; }
-    ui.recTime.hidden = true;
-    ui.recBtn.textContent = "⏺ Kayda Al"; ui.recBtn.classList.remove("rec");
   }
 
   // ---- el analizi (aynalı koordinat; parmaklar avuç eksenine göre, el dönse de bozulmaz) ----
@@ -4642,12 +4169,7 @@ window.CP_SUPA = {
       A.tilt = handTilt(right);
       A.tiltSm += (A.tilt - A.tiltSm) * 0.25;
       A.waveTarget = tiltToPos(A.tiltSm);
-      if (A.recOn && A.recMicStream) {
-        const vq = fingersExt(right).filter(Boolean).length;
-        if (vq === A.voxCand) A.voxStable++; else { A.voxCand = vq; A.voxStable = 1; }
-        if (A.voxStable >= 5 && vq >= 1 && vq <= 4 && vq - 1 !== A.voxMode) setVoxMode(vq - 1);
-      }
-    } else { A.voxCand = -1; A.voxStable = 0; }
+    }
     applyVibes(right);
     const dp = A.waveTarget - A.wavePos;
     if (Math.abs(dp) > 0.002) {
@@ -4774,10 +4296,6 @@ window.CP_SUPA = {
     ctx2d.fillText("🎛️ sağ el: efekt", 0.60 * W, 0.1 * H);
     ctx2d.fillStyle = A.oct ? "#ffd98a" : "rgba(239,230,210,.35)";
     ctx2d.fillText(A.oct ? "🎚 " + octLabel(A.oct) : "🎚 oktav: normal", 0.60 * W, 0.165 * H);
-    if (A.recOn && A.recMicStream) {   // kayıtta vokal modu göstergesi (sağ el 1-4 parmak seçer)
-      ctx2d.fillStyle = "#ff9a80";
-      ctx2d.fillText("🎤 vokal: " + VOXM[A.voxMode].label, 0.60 * W, 0.225 * H);
-    }
     ctx2d.textAlign = "start";
     meter(0.78 * W, 0.155 * H, 0.18 * W, A.dist, "DİST ◂ sola eğ", A.volLive);
     waveIcon(0.70 * W, 0.225 * H, 40 * d, 12 * d);
@@ -4891,7 +4409,6 @@ window.CP_SUPA = {
       `<div class="air-g-item"><div class="emo">🎛️</div><b>4 Synth Tonu</b><i>🎹 E.Klavye (avuç çevirme dalgayı karıştırır) · 🎼 Grand Piyano (vurdukça sönen) · 🌊 Analog (kendi örneğin) · 🕹️ Retro</i><span class="cap">ton seçici</span></div>` +
       `<div class="air-g-item"><div class="emo">▶️</div><b>Metronom + Arp</b><i>açınca akor arpejle BPM'e ve ölçüye (4/4 · 6/8) göre yürür — <b>arpej yalnız 🎹 E.Klavye ve 🎼 Grand Piyano</b> tonlarında; Analog/Retro'da akor pad olarak durur</i><span class="cap">transport</span></div>` +
       `<div class="air-g-item"><div class="emo">🥁</div><b>Ritim</b><i>kick · snare · hihat yürüyüşünü kareleri tıklayarak kendin çiz</i><span class="cap">dizgeç</span></div>` +
-      `<div class="air-g-item"><div class="emo">🎤</div><b>Sampler Pad</b><i>kendi sesini kaydet ya da dosya yükle · <b>1-4 tuşlarıyla</b> tetikle · ritim dizgecinde kendi satırı olur, groove'a yazılır</i><span class="cap">4 pad</span></div>` +
       `<div class="air-g-item"><div class="emo">🎚️</div><b>Vokal Mix</b><i>kayıtta sesin EQ + kompresör + reverb'le işlenir; <b>+3'lü / Koro</b> modları gama uyumlu harmoni ekler (canlıda duyulmaz, videoya mixli girer) — kayıttayken sağ el 1-4 parmakla mod değişir</i><span class="cap">🎙️/🏛/🎶/👥</span></div>`;
   }
   function openOnb() {
@@ -4957,8 +4474,6 @@ window.CP_SUPA = {
     if (ui.onb) ui.onb.hidden = true;
     clearInterval(A.timer); A.timer = null;
     A.metroOn = false; A.drumOn = false; trUpdate();   // transport da durur
-    recStopFn();                                       // video kaydı da biter (dosya iner)
-    if (A.padRec >= 0) { try { A.recorder.stop(); } catch (_) {} }
     padOff(true);
     A.arpNotes = null;
     if (A.stream) { A.stream.getTracks().forEach(t => t.stop()); A.stream = null; }
@@ -5052,39 +4567,6 @@ window.CP_SUPA = {
     });
     renderSeq();
   }
-  if (ui.pads) {
-    ui.pads.addEventListener("click", e => {
-      const hit = e.target.closest(".pad-hit");
-      if (hit) { padHit(+hit.dataset.i); return; }
-      const rec = e.target.closest(".pad-rec");
-      if (rec) padRecord(+rec.dataset.i);
-    });
-    ui.pads.addEventListener("change", e => {
-      const inp = e.target.closest("input[type=file]");
-      if (inp && inp.files[0]) padLoad(+inp.dataset.i, inp.files[0]);
-    });
-    renderPads();
-  }
-  if (ui.recBtn) {
-    ui.recFmt.addEventListener("click", e => {
-      const b = e.target.closest(".chip"); if (!b || A.recOn) return;
-      A.recFmt = b.dataset.f;
-      [...ui.recFmt.children].forEach(c => c.setAttribute("aria-pressed", String(c === b)));
-    });
-    ui.recMic.addEventListener("click", () => {
-      if (A.recOn) return;
-      A.recMic = !A.recMic;
-      ui.recMic.setAttribute("aria-pressed", String(A.recMic));
-      ui.recMic.textContent = A.recMic ? "🎤 Mikrofon: Açık" : "🎤 Mikrofon: Kapalı";
-    });
-    ui.recBtn.addEventListener("click", () => A.recOn ? recStopFn() : recStartFn());
-    ui.voxSeg.addEventListener("click", e => {
-      const b = e.target.closest(".chip"); if (b) setVoxMode(+b.dataset.v);
-    });
-    try { const sv = localStorage.getItem("akorAirVox"); if (sv != null) A.voxMode = Math.max(0, Math.min(3, +sv)); } catch (_) {}
-    [...ui.voxSeg.children].forEach(c => c.setAttribute("aria-pressed", String(+c.dataset.v === A.voxMode)));
-  }
-
   // ---- test kancaları ----
   window.__air = {
     state: () => ({ running: A.running, ton: A.ton, scale: A.scale,
@@ -5097,31 +4579,11 @@ window.CP_SUPA = {
     handSign, qualSign, handTilt, worldFromTilt, tiltToPos, morphWeights, chordFor, step, setOct,
     thumbOut, thumbExt, thumbState: () => ({ L: A.thumbL, R: A.thumbR, son: A.thumbRatio }),
     setTone, loadSamples, arpFrom, trUpdate, playArpNote,
-    recScene, recStartFn, recStopFn, recPickMime, recAsk, recDownload,
-    voxTargets, detectPitch, setVoxMode, VOXM: VOXM.map(v => v.key),
-    voxState: () => ({ mode: VOXM[A.voxMode].key, workletOk: A.voxWorkletOk,
-      chain: !!A.vox, note: A.voxNote }),
-    askState: () => ({ open: ui.ask ? !ui.ask.hidden : null, info: ui.askInfo ? ui.askInfo.textContent : null }),
-    recSceneTest: (w, h) => {   // sahneyi kamerasız çiz (filigran+akor) → piksel doğrulaması
-      const keep = A.recCanvas;
-      A.recCanvas = document.createElement("canvas");
-      A.recCanvas.width = w || 1080; A.recCanvas.height = h || 1920;
-      recScene();
-      const x = A.recCanvas.getContext("2d");
-      const mid = x.getImageData((w || 1080) / 2, (h || 1920) * 0.93, 1, 1).data;
-      const url = A.recCanvas.toDataURL("image/png");
-      A.recCanvas = keep;
-      return { pngBytes: url.length, filigranPikseli: [...mid], dataUrl: url };
-    },
-    recState: () => ({ on: A.recOn, fmt: A.recFmt, mic: A.recMic,
-      canvas: A.recCanvas ? A.recCanvas.width + "x" + A.recCanvas.height : null,
-      mime: recPickMime() }),
     groove: () => ({ tone: TONES[A.tone].key, bpm: A.bpm, meter: A.meter,
       metroOn: A.metroOn, drumOn: A.drumOn, trStep: A.trStep, arpNotes: A.arpNotes,
       buffers: Object.fromEntries(Object.entries(A.buffers).map(([k, v]) => [k, v ? +v.duration.toFixed(2) : null])),
-      seq: Object.fromEntries(["kick", "snare", "hihat", "p0", "p1", "p2", "p3"]
-        .map(r => [r, [...(A.seq[A.meter][r] || [])].sort((a, b) => a - b)])),
-      pads: A.pads.map(b => !!b) }),
+      seq: Object.fromEntries(["kick", "snare", "hihat"]
+        .map(r => [r, [...(A.seq[A.meter][r] || [])].sort((a, b) => a - b)])) }),
     setGroove: o => {   // test: {bpm, meter, metroOn, drumOn}
       if (o.bpm) { A.bpm = o.bpm; ui.bpm.value = o.bpm; ui.bpmVal.textContent = o.bpm; }
       if (o.meter) { A.meter = o.meter; renderSeq(); }
@@ -5177,6 +4639,139 @@ window.CP_SUPA = {
     },
     simRelease: () => { for (let i = 0; i < 3; i++) step([]); return [...PAD.keys()]; },
     padOff, openOnb, guideItems: () => ui.guide ? ui.guide.children.length : 0,
+  };
+})();
+</script>
+
+<!-- 📝 Not defteri + prompter -->
+<script>
+(() => {
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const el = {
+    btn: $("npBtn"), pad: $("notepad"), close: $("npClose"), tabs: $("npTabs"),
+    edit: $("npEdit"), play: $("npPlay"), text: $("npText"),
+    size: $("npSize"), sizeVal: $("npSizeVal"), saved: $("npSaved"),
+    stage: $("npStage"), scroll: $("npScroll"),
+    playBtn: $("npPlayBtn"), reset: $("npReset"),
+    speed: $("npSpeed"), speedVal: $("npSpeedVal"),
+  };
+  if (!el.pad) return;
+
+  const S = { open: false, tab: "note", running: false, y: 0, last: 0, raf: null, size: 26, speed: 55 };
+
+  // ---- kalıcılık ----
+  try {
+    el.text.value = localStorage.getItem("cpNote") || "";
+    const sz = +localStorage.getItem("cpNoteSize"); if (sz >= 16 && sz <= 52) S.size = sz;
+    const sp = +localStorage.getItem("cpNoteSpeed"); if (sp >= 10 && sp <= 200) S.speed = sp;
+  } catch (_) {}
+  el.size.value = S.size; el.sizeVal.textContent = S.size;
+  el.speed.value = S.speed; el.speedVal.textContent = S.speed;
+  el.scroll.style.setProperty("--np-size", S.size + "px");
+
+  let saveT = null;
+  el.text.addEventListener("input", () => {
+    clearTimeout(saveT);
+    saveT = setTimeout(() => {
+      try { localStorage.setItem("cpNote", el.text.value); } catch (_) {}
+      el.saved.textContent = "✓ Kaydedildi";
+      setTimeout(() => { el.saved.textContent = "Otomatik kaydedilir · bu cihazda saklanır"; }, 1400);
+    }, 400);
+  });
+
+  // ---- panel aç/kapat ----
+  function setOpen(v) {
+    S.open = v;
+    el.pad.classList.toggle("open", v);
+    el.pad.setAttribute("aria-hidden", String(!v));
+    el.btn.setAttribute("aria-expanded", String(v));
+    el.btn.style.display = v ? "none" : "";
+    if (!v) stop();
+  }
+  el.btn.addEventListener("click", () => setOpen(true));
+  el.close.addEventListener("click", () => setOpen(false));
+
+  // ---- sekmeler ----
+  function setTab(t) {
+    S.tab = t;
+    [...el.tabs.children].forEach(c => c.setAttribute("aria-pressed", String(c.dataset.t === t)));
+    el.edit.hidden = t !== "note";
+    el.play.hidden = t !== "prompt";
+    if (t === "prompt") { render(); resetPos(); } else { stop(); }
+  }
+  el.tabs.addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if (b) setTab(b.dataset.t);
+  });
+
+  // ---- prompter ----
+  function render() {
+    const lines = (el.text.value || "Prompter için önce ✍️ sekmesinden söz yaz.").split("\n");
+    el.scroll.innerHTML = lines.map(l =>
+      "<p>" + l.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c])) + "</p>").join("");
+  }
+  function resetPos() {
+    S.y = el.stage.clientHeight * 0.38;    // ilk satır kılavuz çizgisinde başlasın
+    el.scroll.style.transform = "translateY(" + S.y + "px)";
+  }
+  function tick(t) {
+    if (!S.running) return;
+    const dt = S.last ? (t - S.last) / 1000 : 0;
+    S.last = t;
+    S.y -= S.speed * dt;
+    const end = -el.scroll.scrollHeight;
+    if (S.y < end) { S.y = end; stop(); }     // sonuna gelince dur
+    el.scroll.style.transform = "translateY(" + S.y + "px)";
+    S.raf = requestAnimationFrame(tick);
+  }
+  function start() {
+    if (S.running) return;
+    if (!el.scroll.children.length) render();
+    S.running = true; S.last = 0;
+    el.playBtn.textContent = "⏸ Duraklat";
+    el.playBtn.setAttribute("aria-pressed", "true");
+    S.raf = requestAnimationFrame(tick);
+  }
+  function stop() {
+    S.running = false;
+    if (S.raf) cancelAnimationFrame(S.raf);
+    S.raf = null;
+    el.playBtn.textContent = "▶️ Başlat";
+    el.playBtn.setAttribute("aria-pressed", "false");
+  }
+  el.playBtn.addEventListener("click", () => S.running ? stop() : start());
+  el.reset.addEventListener("click", () => { stop(); render(); resetPos(); });
+
+  // ---- ayarlar ----
+  el.size.addEventListener("input", () => {
+    S.size = +el.size.value;
+    el.sizeVal.textContent = S.size;
+    el.scroll.style.setProperty("--np-size", S.size + "px");
+    try { localStorage.setItem("cpNoteSize", S.size); } catch (_) {}
+  });
+  el.speed.addEventListener("input", () => {
+    S.speed = +el.speed.value;
+    el.speedVal.textContent = S.speed;
+    try { localStorage.setItem("cpNoteSpeed", S.speed); } catch (_) {}
+  });
+
+  // ---- klavye: panel açıkken ve yazı alanında değilken ----
+  document.addEventListener("keydown", e => {
+    if (!S.open || S.tab !== "prompt") return;
+    if (e.target instanceof Element && e.target.matches("input, textarea, select")) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.code === "Space") { e.preventDefault(); S.running ? stop() : start(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); el.speed.value = Math.min(200, S.speed + 5); el.speed.dispatchEvent(new Event("input")); }
+    else if (e.key === "ArrowDown") { e.preventDefault(); el.speed.value = Math.max(10, S.speed - 5); el.speed.dispatchEvent(new Event("input")); }
+    else if (e.key === "Escape") setOpen(false);
+  });
+  window.addEventListener("resize", () => { if (S.tab === "prompt" && !S.running) resetPos(); });
+
+  window.__np = {
+    open: setOpen, tab: setTab, start, stop, render,
+    state: () => ({ open: S.open, tab: S.tab, running: S.running,
+      y: Math.round(S.y), speed: S.speed, size: S.size,
+      lines: el.scroll.children.length, text: el.text.value.length }),
   };
 })();
 </script>
@@ -5291,15 +4886,27 @@ window.CP_SUPA = {
     hint: $("gateHint"),
   };
 
+  // --- ortam tespiti: origin_mismatch ve webview engellerine karşı ---
+  // GIS popup YALNIZ Google Console'da kayıtlı origin'de çalışır (https://chordplai.com).
+  // www'dan ya da Instagram/Facebook/TikTok uygulama-içi tarayıcısından gelenlerde
+  // popup "Erişim engellendi: origin_mismatch / disallowed_useragent" verir —
+  // o ortamlarda baştan yönlendirmeli girişe düşüyoruz (Supabase authorize akışı
+  // kayıtlı callback'i kullandığı için sayfanın origin'inden bağımsız çalışır).
+  const GIS_ORIGIN_OK = location.origin === "https://chordplai.com";
+  const IN_APP_BROWSER = /Instagram|FBAN|FBAV|FB_IAB|Line\/|MicroMessenger|TikTok|musical_ly|Twitter/i
+    .test(navigator.userAgent);
+
   // --- klasik yol: Supabase'e yönlendirmeli OAuth (popup engellenirse yedek) ---
   async function redirectSignIn() {
     try {
       const { error } = await supa.auth.signInWithOAuth({
-        provider: "google", options: { redirectTo: location.origin },
+        provider: "google", options: { redirectTo: "https://chordplai.com" },
       });
       if (error) throw error;
     } catch (_) {
-      ui.hint.textContent = "Google girişi şu an kullanılamıyor, birazdan tekrar dene.";
+      ui.hint.textContent = IN_APP_BROWSER
+        ? "Google girişi bu uygulama-içi tarayıcıda çalışmayabilir — sağ üst menüden “Tarayıcıda aç” de."
+        : "Google girişi şu an kullanılamıyor, birazdan tekrar dene.";
     }
   }
   ui.gGoogle.addEventListener("click", redirectSignIn);
@@ -5337,9 +4944,10 @@ window.CP_SUPA = {
     });
   }
   try {
+    if (!GIS_ORIGIN_OK || IN_APP_BROWSER) throw new Error("gis uygun degil");
     await initGis();
   } catch (_) {
-    ui.gGoogle.hidden = false;          // GIS gelmedi → klasik buton
+    ui.gGoogle.hidden = false;          // GIS uygun değil/gelmedi → yönlendirmeli buton
   } finally {
     ui.gLoad.hidden = true;
     window.__cpAuthReady = true;        // takma ad yedeği açılmasın
