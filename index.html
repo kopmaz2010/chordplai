@@ -1150,9 +1150,23 @@ window.CP_SUPA = {
   .np-scroll { position: absolute; left: 0; right: 0; top: 0; padding: 0 18px; will-change: transform; }
   .np-scroll p {
     margin: 0 0 .55em; font-size: var(--np-psize, 26px); line-height: 1.5;
-    font-weight: 600; color: var(--cream); text-align: center;
+    font-weight: 600; color: var(--cream);
+    /* AI işaretleri boşlukla hizalıyor: ardışık boşluklar KORUNMALI ve
+       eşit genişlikli yazı tipi şart, yoksa işaret hecenin üstünden kayar */
+    white-space: pre-wrap;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    text-align: left;
   }
   .np-scroll p:empty { height: .7em; }
+  /* emoji yerine el fotoğrafı — gizli emoji genişliği tutar, görsel üstüne biner */
+  .np-sgn { position: relative; display: inline-block; vertical-align: baseline; }
+  .np-sgn i { visibility: hidden; font-style: normal; }
+  .np-sgn img {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -55%);
+    height: 1.5em; width: auto; max-width: 200%;
+    object-fit: contain; pointer-events: none;
+  }
   .np-guide {
     position: absolute; left: 0; right: 0; top: 38%; height: 2px; pointer-events: none;
     background: linear-gradient(90deg, transparent, rgba(245,194,100,.55), transparent);
@@ -5340,10 +5354,33 @@ ${song}`;
   });
 
   // ---- prompter ----
+  // Yapay zekânın yazdığı işaret emojilerini KENDİ el fotoğraflarımıza çevir.
+  // Maliyet yok: ek istek/işlem gerektirmez, görseller zaten sitede.
+  // Hizalama kritik — emoji tek boşluk genişliğinde değil, o yüzden görseli
+  // GİZLİ emojinin üstüne bindiriyoruz; satır genişliği birebir korunuyor.
+  const SGN_EMOJI = [
+    [/☝️?/g, 1],                     // ☝️
+    [/✌️?/g, 2],                     // ✌️
+    [/3️?⃣/g, 3],                    // 3️⃣
+    [/4️?⃣/g, 4],                    // 4️⃣
+    [/🖐️?/g, 5],               // 🖐️
+    [/✋/g, 5],                            // ✋ (bazı modeller bunu yazıyor)
+    [/🤘/g, 6],                      // 🤘
+    [/🤟/g, 7],                      // 🤟
+  ];
+  function signHTML(escapedLine) {
+    let s = escapedLine;
+    for (const [re, deg] of SGN_EMOJI) {
+      s = s.replace(re, m =>
+        `<span class="np-sgn"><i>${m}</i>` +
+        `<img src="/tasarim/sign/${deg}.webp" alt="${deg}. derece" decoding="async"></span>`);
+    }
+    return s;
+  }
   function render() {
     const lines = (el.text.value || "Prompter için önce ✍️ sekmesinden söz yaz.").split("\n");
     el.scroll.innerHTML = lines.map(l =>
-      "<p>" + l.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c])) + "</p>").join("");
+      "<p>" + signHTML(l.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]))) + "</p>").join("");
   }
   function resetPos() {
     S.y = el.stage.clientHeight * 0.38;    // ilk satır kılavuz çizgisinde başlasın
