@@ -925,9 +925,26 @@ window.CP_SUPA = {
   /* ---- tam ekran mod: kamera tüm siteyi kaplar ---- */
   body.air-fs { overflow: hidden; }
   #view-air.air-full .ng-topbar { display: none; }
+  /* --cam'i SAYI olarak kaydet: yoksa calc'lı geçiş bir adım geriden gelir (Chrome) */
+  @property --cam { syntax: "<number>"; inherits: true; initial-value: 1; }
+  /* kamera küçülünce arkada sayfa değil, amp dokulu zemin görünsün */
+  #view-air.air-full::before {
+    content: ""; position: fixed; inset: 0; z-index: 39;
+    background: radial-gradient(120% 130% at 50% 0%, #16150f, #0a0a07);
+  }
+  /* kamera boyutu: --cam 1 = tam ekran, 0.55 = küçük pencere (ortalanır) */
   #view-air.air-full .air-arena {
-    position: fixed; inset: 0; z-index: 40; border-radius: 0; border: none;
-    aspect-ratio: auto; min-height: 0; box-shadow: none;
+    position: fixed; inset: auto; z-index: 40; border: none;
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: calc(100vw * var(--cam, 1));
+    height: calc(100vh * var(--cam, 1));
+    border-radius: calc((1 - var(--cam, 1)) * 70px);
+    aspect-ratio: auto; min-height: 0;
+    box-shadow: 0 0 0 1px rgba(245,194,100,calc((1 - var(--cam, 1)) * 1.4)),
+                0 30px 80px rgba(0,0,0,calc((1 - var(--cam, 1)) * 2));
+    /* width/height GEÇİŞSİZ: calc+değişken geçişi bir kare geriden geliyor ve
+       tuval yeniden ölçümü kaçıyordu — boyut anında otursun. */
+    transition: border-radius .2s ease, box-shadow .2s ease;
   }
   #view-air.air-full .air-chordbig {
     left: 50%; right: auto; top: auto; bottom: 20px; transform: translateX(-50%);
@@ -957,11 +974,34 @@ window.CP_SUPA = {
   #view-air.air-full .air-dock .card { background: rgba(255,255,255,.035); border-color: rgba(245,194,100,.14); }
   #view-air.air-full.dock-hide .air-dock { transform: translateX(calc(-100% - 24px)); opacity: 0; pointer-events: none; }
   #view-air.air-full .hint { margin: 0; }
+  /* saydamlık modları: panel hayalet olur, üstüne gelince tekrar netleşir */
+  #view-air.air-full .air-dock { opacity: var(--dock-op, 1); }
+  #view-air.air-full .air-dock:hover,
+  #view-air.air-full .air-dock:focus-within { opacity: 1; }
+  #view-air.air-full.dock-hide .air-dock { opacity: 0; }
+  /* panel başlığı (yalnız tam ekranda görünür) */
+  .dock-head { display: none; }
+  #view-air.air-full .dock-head {
+    display: flex; align-items: center; gap: 8px;
+    padding-bottom: 8px; margin-bottom: 2px; border-bottom: 1px solid var(--line);
+  }
+  .dock-head b { font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--amber-hot); }
+  .dock-head .sp { flex: 1; }
+  .dock-mini {
+    background: rgba(255,255,255,.05); border: 1px solid var(--line); color: var(--muted);
+    border-radius: 8px; padding: 3px 8px; font-size: .68rem; cursor: pointer; white-space: nowrap;
+  }
+  .dock-mini:hover { border-color: var(--amber); color: var(--cream); }
+  /* not defteri saydamlığı */
+  .notepad { opacity: var(--np-op, 1); }
+  .notepad:hover, .notepad:focus-within { opacity: 1; }
+  .notepad:not(.open) { opacity: 0; }
   @media (max-width: 640px) {
     #view-air.air-full .air-dock { top: auto; bottom: 0; left: 0; width: 100vw; max-height: 52vh; border-radius: 16px 16px 0 0; }
     #view-air.air-full.dock-hide .air-dock { transform: translateY(110%); }
     .air-fsstatus, .air-fsbrand { display: none; }
-    .air-fsbar { gap: 8px; padding: 8px 10px; }
+    .air-fsbar { gap: 6px; padding: 8px 10px; }
+    .air-fsbar .chip { padding: 8px 9px; font-size: .72rem; }
   }
   /* groove: metronom + arp satırı */
   .air-metro-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
@@ -1020,7 +1060,8 @@ window.CP_SUPA = {
     background: linear-gradient(180deg, #221b11, #17120b);
     border-left: 1px solid rgba(245,194,100,.28);
     box-shadow: -18px 0 50px rgba(0,0,0,.6);
-    transform: translateX(100%); transition: transform .3s cubic-bezier(.4,0,.2,1);
+    transform: translateX(100%);
+    transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .25s ease;
   }
   .notepad.open { transform: none; }
   .np-head {
@@ -1481,11 +1522,18 @@ window.CP_SUPA = {
       <span class="air-fsbrand" lang="en">AIR CHORD</span>
       <span class="air-fsstatus" id="airFsStatus">🖐️ Ellerini kameraya göster</span>
       <span class="air-fsgap"></span>
+      <button class="chip" id="airCamSize" title="Kamera boyutu">🎥 Tam</button>
       <button class="chip" id="airDockBtn" aria-pressed="true">🎛️ Panel</button>
       <button class="chip" id="airFsStop">⏹ Durdur</button>
     </div>
 
     <div class="air-dock" id="airDock">
+    <div class="dock-head">
+      <b>🎛️ Kontroller</b>
+      <span class="sp"></span>
+      <button class="dock-mini" id="dockOpac" title="Panel saydamlığı">◐ Net</button>
+      <button class="dock-mini" id="dockClose" title="Paneli kapat">✕</button>
+    </div>
     <div class="nj-monitor">
       <div class="nj-heard" id="airStatus">📷 Kamera kapalı</div>
       <button class="chip" id="airGuideBtn">📖 Rehber</button>
@@ -1590,6 +1638,7 @@ window.CP_SUPA = {
   <div class="np-head">
     <b>📝 Not Defteri</b>
     <span class="sp"></span>
+    <button class="dock-mini" id="npOpac" title="Panel saydamlığı">◐ Net</button>
     <button class="np-x" id="npClose" aria-label="Kapat">✕</button>
   </div>
   <div class="np-tabs seg" id="npTabs">
@@ -4539,6 +4588,51 @@ window.CP_SUPA = {
     ui.dockBtn.textContent = open ? "🎛️ Panel" : "🎛️ Panel Aç";
   }
   ui.dockBtn.addEventListener("click", () => { ui.view.classList.toggle("dock-hide"); dockBtnSync(); });
+  const dockClose = document.getElementById("dockClose");
+  if (dockClose) dockClose.addEventListener("click", () => { ui.view.classList.add("dock-hide"); dockBtnSync(); });
+
+  // ---- kamera boyutu: tam ekrandan küçük pencereye ----
+  const CAM = [
+    { v: 1,    label: "🎥 Tam" },
+    { v: 0.82, label: "🎥 Büyük" },
+    { v: 0.64, label: "🎥 Orta" },
+    { v: 0.46, label: "🎥 Küçük" },
+  ];
+  let camIx = 0;
+  try { const s = +localStorage.getItem("akorAirCam"); if (s >= 0 && s < CAM.length) camIx = s; } catch (_) {}
+  const camBtn = document.getElementById("airCamSize");
+  function applyCam() {
+    const c = CAM[camIx];
+    ui.view.style.setProperty("--cam", c.v);
+    if (camBtn) camBtn.textContent = c.label;
+    try { localStorage.setItem("akorAirCam", camIx); } catch (_) {}
+    // tuvali yeni boyutta yeniden ölç — rAF kullanma (arka planda/önizlemede kısılıyor),
+    // clientWidth okuması zaten yeniden yerleşimi tetikler
+    if (A.running) resizeCanvas();
+  }
+  if (camBtn) camBtn.addEventListener("click", () => { camIx = (camIx + 1) % CAM.length; applyCam(); });
+  applyCam();
+
+  // ---- panel saydamlığı (sol kontrol paneli) ----
+  const OPAC = [
+    { v: 1,    label: "◐ Net" },
+    { v: 0.68, label: "◐ Yarı" },
+    { v: 0.38, label: "◐ Hayalet" },
+  ];
+  function opacCycle(btn, cssVar, storeKey) {
+    if (!btn) return;
+    let ix = 0;
+    try { const s = +localStorage.getItem(storeKey); if (s >= 0 && s < OPAC.length) ix = s; } catch (_) {}
+    const apply = () => {
+      document.documentElement.style.setProperty(cssVar, OPAC[ix].v);
+      btn.textContent = OPAC[ix].label;
+      try { localStorage.setItem(storeKey, ix); } catch (_) {}
+    };
+    btn.addEventListener("click", () => { ix = (ix + 1) % OPAC.length; apply(); });
+    apply();
+  }
+  opacCycle(document.getElementById("dockOpac"), "--dock-op", "akorAirDockOp");
+  opacCycle(document.getElementById("npOpac"), "--np-op", "akorAirNpOp");
   ui.fsStop.addEventListener("click", () => { stop(); fsExit(); });
   // durum satırını üst çubuğa aynala
   new MutationObserver(() => { ui.fsStatus.textContent = ui.status.textContent; })
@@ -4701,13 +4795,15 @@ window.CP_SUPA = {
     const tr = lang === "tr";
     const scales = "Majör (İyonyen), Dorian, Frigyen, Lidyen, Miksolidyen, Minör (Aeolyen), Lokriyen, Hicaz, Uşşak, Kürdi, Nihavend, Hüseyni, Rast";
     const tons = "A, A#, B, C, C#, D, D#, E, F, F#, G, G#";
-    const signs = "☝️ 1 · ✌️ 2 · üç parmak 3 · dört parmak 4 · 🖐️ 5 · 🤘 6 · 🤟 7";
+    // uygulamadaki SIGN dizisiyle birebir aynı emojiler — AI kelime yazarsa hizalama bozulur
+    const signs = "☝️ 1 · ✌️ 2 · 3️⃣ 3 · 4️⃣ 4 · 🖐️ 5 · 🤘 6 · 🤟 7";
     if (tr) return `Müzik teorisi bilmiyorum. ChordPlai (chordplai.com) adlı sitede kameraya el işareti göstererek akor çalıyorum ve üzerine şarkı söylüyorum. Aşağıya bir şarkının adını ve akorlarını yapıştırdım. Bana bu şarkıyı ChordPlai'da çalmak için ADIM ADIM talimat yaz.
 
 ChordPlai şöyle çalışır:
 - Ton seçenekleri: ${tons}
 - Gam/Makam seçenekleri (birebir bu adlarla): ${scales}
 - Sol el işaretleri gamın DERECESİNİ çalar: ${signs}
+- ÇOK ÖNEMLİ: Cevabında bir işareti göstermek için SADECE bu 7 emojiden birini kullan (☝️ ✌️ 3️⃣ 4️⃣ 🖐️ 🤘 🤟). "üç parmak", "dört parmak" gibi KELİME YAZMA — kelime yazarsan sözlerin üstündeki hizalama bozulur.
 - El dik = gamın kendi akoru · el İÇE yatık = o akor majöre döner · el DIŞA yatık = minöre döner
 - ✊ yumruk = sustur · Metronom BPM 40–160, ölçü 4/4 veya 6/8
 
@@ -4739,6 +4835,7 @@ How ChordPlai works:
 - Key options: ${tons}
 - Scale/Maqam options (use these exact names): ${scales}
 - Left-hand signs play the DEGREE of the scale: ${signs}
+- VERY IMPORTANT: to show a sign in your answer use ONLY one of these 7 emoji (☝️ ✌️ 3️⃣ 4️⃣ 🖐️ 🤘 🤟). Never write words like "three fingers" — words break the alignment above the lyrics.
 - Hand upright = the scale's own chord · tilt INWARD = that chord becomes major · tilt OUTWARD = minor
 - ✊ fist = mute · Metronome BPM 40–160, meter 4/4 or 6/8
 

@@ -56,5 +56,16 @@
  "✓ Kopyalandı": "✓ Kopiert",
  "Google'da \"şarkı adı + akor\" ara; akorlarıyla birlikte sözlerin tamamını kopyalayıp aşağıya yapıştır. Yapay zekâ tonu bulur, ChordPlai ayarını verir ve şarkının sözlerini akorlar yerine el işaretleriyle yeniden yazar — o metni not defterine yapıştırıp prompter ile söyleyebilirsin.": "Suche bei Google nach \"Songname + Chords\"; kopiere den kompletten Text samt Akkorden und füge ihn unten ein. Die KI findet die Tonart, gibt dir die ChordPlai-Einstellung und schreibt den Text mit Handzeichen statt Akkordnamen neu — füge ihn in den Notizblock ein und singe ihn mit dem Prompter.",
  "Butona basınca prompt seçtiğin yapay zekâda açılır · yanıt gelince Ton–Gam ayarını yukarıdan seç, işaretli sözleri 📝 Notlar paneline yapıştır ve 🎬 Prompter ile kaydırarak söyle 🖐️": "Der Prompt öffnet sich in der gewählten KI · wenn die Antwort da ist, stelle oben Tonart–Tonleiter ein, füge den Text mit Zeichen in das 📝 Notizen-Panel ein und singe mit dem 🎬 Prompter 🖐️",
- "Şarkı adı + akorlu sözler…\n\nörn: Sezen Aksu – Gülümse\nEm          G\nBir sabah uyandım\nD            C\nGüneş yüzüme vurdu": "Songname + Text mit Akkorden…\n\nz. B. Leonard Cohen – Hallelujah\nC           Am\nerste Zeile des Textes\nF           G\nzweite Zeile des Textes"
+ "Şarkı adı + akorlu sözler…\n\nörn: Sezen Aksu – Gülümse\nEm          G\nBir sabah uyandım\nD            C\nGüneş yüzüme vurdu": "Songname + Text mit Akkorden…\n\nz. B. Leonard Cohen – Hallelujah\nC           Am\nerste Zeile des Textes\nF           G\nzweite Zeile des Textes",
+ "🎛️ Kontroller": "🎛️ Regler",
+ "◐ Net": "◐ Voll",
+ "◐ Yarı": "◐ Halb",
+ "◐ Hayalet": "◐ Geist",
+ "🎥 Tam": "🎥 Voll",
+ "🎥 Büyük": "🎥 Groß",
+ "🎥 Orta": "🎥 Mittel",
+ "🎥 Küçük": "🎥 Klein",
+ "Kamera boyutu": "Kameragröße",
+ "Panel saydamlığı": "Panel-Transparenz",
+ "Paneli kapat": "Panel schließen"
 }
