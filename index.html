@@ -895,6 +895,10 @@ window.CP_SUPA = {
     border-radius: 12px; padding: 6px 14px 8px; text-align: center;
     backdrop-filter: blur(3px);
   }
+  .air-chordbig { display: flex; align-items: center; gap: 10px; }
+  .big-sgn { width: 44px; height: 44px; object-fit: contain; flex: 0 0 auto; }
+  .big-sgn[hidden] { display: none; }
+  .air-chordbig > div { min-width: 0; }
   .air-chordbig b { display: block; font-family: ui-monospace, monospace; font-size: clamp(1.6rem, 5vw, 2.6rem); color: var(--amber-hot, #ffd98a); line-height: 1.05; text-shadow: 0 0 18px rgba(245,194,100,.45); }
   .air-chordbig span { display: block; font-size: .68rem; letter-spacing: .08em; color: var(--cream, #efe6d2); opacity: .85; }
   .air-idle {
@@ -959,6 +963,9 @@ window.CP_SUPA = {
     background: linear-gradient(180deg, rgba(10,8,4,.85), rgba(10,8,4,0));
   }
   .air-fsbar[hidden] { display: none; }
+  /* not defteri açıkken üst çubuk düğmeleri panelin altına girmesin */
+  body.np-open .air-fsbar { padding-right: calc(min(420px, 100vw) + 18px); }
+  body.np-open .air-fsstatus { max-width: 22vw; }
   .air-fsmark { width: 26px; height: 26px; flex: 0 0 auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,.6)); }
   .air-fsbrand { font-weight: 700; letter-spacing: .26em; color: var(--cream, #efe6d2); font-size: .82rem; text-transform: none; text-shadow: 0 2px 8px rgba(0,0,0,.7); }
   .air-fsstatus { font-size: .74rem; color: var(--amber-hot, #ffd98a); letter-spacing: .04em; text-shadow: 0 2px 8px rgba(0,0,0,.8); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 42vw; }
@@ -1028,6 +1035,12 @@ window.CP_SUPA = {
   .sq-cell.ph { outline: 2px solid rgba(255,217,138,.85); outline-offset: 1px; }
   .sq-cell.dim { opacity: .35; }
   .sq-lbl.dim { opacity: .45; }
+  /* 🖐️ el işareti görselleri (emoji yerine) */
+  .sgn-img { display: inline-block; vertical-align: middle; object-fit: contain; }
+  .fing-img { width: 1.45em; height: 1.45em; margin-right: 3px; }
+  .cst-sgn { width: 26px; height: 26px; flex: 0 0 auto; }
+  .g-img { width: 46px; height: 46px; }
+  .air-g-item .emo { line-height: 0; }
   /* ✏️ özel akorlar */
   .cst-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
   .cst-row .seg { flex: 1; }
@@ -1112,6 +1125,18 @@ window.CP_SUPA = {
   .np-lbl { font-size: .68rem; letter-spacing: .1em; color: var(--muted); white-space: nowrap; }
   .np-lbl b { color: var(--amber-hot); font-family: ui-monospace, monospace; font-size: .84rem; }
   .np-save { font-size: .66rem; color: var(--muted-dim); min-height: 1em; }
+  /* iki yazı-boyu faderını birbirine bağlayan düğme */
+  .np-link {
+    flex: 0 0 auto; width: 30px; height: 28px; cursor: pointer;
+    border: 1px solid var(--line); background: rgba(255,255,255,.04);
+    border-radius: 8px; font-size: .82rem; line-height: 1; opacity: .5;
+    filter: grayscale(1);
+  }
+  .np-link:hover { border-color: var(--amber); opacity: .8; }
+  .np-link[aria-pressed="true"] {
+    opacity: 1; filter: none; border-color: var(--amber);
+    background: rgba(245,194,100,.14); box-shadow: 0 0 10px rgba(245,194,100,.25);
+  }
   /* prompter görünümü */
   .np-prompt {
     flex: 1; min-height: 0; overflow: hidden; position: relative;
@@ -1121,7 +1146,7 @@ window.CP_SUPA = {
   }
   .np-scroll { position: absolute; left: 0; right: 0; top: 0; padding: 0 18px; will-change: transform; }
   .np-scroll p {
-    margin: 0 0 .55em; font-size: var(--np-size, 26px); line-height: 1.5;
+    margin: 0 0 .55em; font-size: var(--np-psize, 26px); line-height: 1.5;
     font-weight: 600; color: var(--cream); text-align: center;
   }
   .np-scroll p:empty { height: .7em; }
@@ -1529,7 +1554,7 @@ window.CP_SUPA = {
     <div class="air-arena" id="airArena">
       <video id="airCam" autoplay playsinline muted hidden></video>
       <canvas id="airCanvas"></canvas>
-      <div class="air-chordbig" id="airChordBig" hidden><b id="airChordName">G</b><span id="airChordFull">Sol majör</span></div>
+      <div class="air-chordbig" id="airChordBig" hidden><img class="big-sgn" id="airBigSign" alt="" hidden><div><b id="airChordName">G</b><span id="airChordFull">Sol majör</span></div></div>
       <div class="air-idle" id="airIdle">
         <img class="air-signs" src="/tasarim/air-signs.webp"
              srcset="/tasarim/air-signs-sm.webp 900w, /tasarim/air-signs.webp 1600w"
@@ -1697,8 +1722,9 @@ window.CP_SUPA = {
       placeholder="Şarkı sözlerini, akor dizilimini ya da aklına geleni buraya yaz…&#10;&#10;Prompter sekmesine geçince bu yazı kayarak akar."></textarea>
     <div class="np-row">
       <span class="np-lbl">Yazı boyu</span>
-      <input type="range" id="npSize" min="16" max="52" step="1" value="26" aria-label="Yazı boyutu">
+      <input type="range" id="npSize" min="14" max="52" step="1" value="26" aria-label="Yazı boyutu">
       <span class="np-lbl"><b id="npSizeVal">26</b>px</span>
+      <button class="np-link" id="npLink" aria-pressed="false" title="Prompter yazı boyuyla birlikte değişsin">🔗</button>
     </div>
     <div class="np-save" id="npSaved">Otomatik kaydedilir · bu cihazda saklanır</div>
   </div>
@@ -1716,6 +1742,12 @@ window.CP_SUPA = {
       <span class="np-lbl">Hız</span>
       <input type="range" id="npSpeed" min="10" max="200" step="5" value="55" aria-label="Kaydırma hızı">
       <span class="np-lbl"><b id="npSpeedVal">55</b> px/sn</span>
+    </div>
+    <div class="np-row">
+      <span class="np-lbl">Yazı boyu</span>
+      <input type="range" id="npPSize" min="14" max="72" step="1" value="26" aria-label="Prompter yazı boyutu">
+      <span class="np-lbl"><b id="npPSizeVal">26</b>px</span>
+      <button class="np-link" id="npLink2" aria-pressed="false" title="Not defteri yazı boyuyla birlikte değişsin">🔗</button>
     </div>
     <div class="np-save">Boşluk tuşu başlatır/durdurur · ↑↓ ile hız · yazıyı ✍️ sekmesinden düzenle</div>
   </div>
@@ -3694,6 +3726,17 @@ window.CP_SUPA = {
   const CH = TH.CHROMA;
   const MP_VER = "0.10.14";
   const SIGN = ["✊", "☝️", "✌️", "3️⃣", "4️⃣", "🖐️", "🤘", "🤟"];
+  // Arayüzde emoji yerine gerçek el fotoğrafları (1..7 = dereceler, şeffaf arka plan).
+  // Emoji dizisi metin bağlamlarında (yapay zekâ promtu, ipuçları) DURMAYA devam eder.
+  const SIGN_IMG = i => `/tasarim/sign/${i}.webp`;
+  function signTag(deg, cls) {          // deg: 1..7
+    return (deg >= 1 && deg <= 7)
+      ? `<img class="sgn-img${cls ? " " + cls : ""}" src="${SIGN_IMG(deg)}" alt="${SIGN_DESC[deg]}" decoding="async">`
+      : `<span class="sgn-emo">${SIGN[deg] || ""}</span>`;
+  }
+  // kamera üzerine çizmek için önceden yükle
+  const SIGN_BMP = [];
+  for (let i = 1; i <= 7; i++) { const im = new Image(); im.src = SIGN_IMG(i); SIGN_BMP[i] = im; }
   const SIGN_DESC = ["yumruk", "işaret parmağı", "işaret + orta", "işaret + orta + yüzük",
     "4 parmak (başparmak kapalı)", "5 parmak açık", "işaret + serçe", "başparmak + işaret + serçe"];
   const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII"];
@@ -3770,7 +3813,7 @@ window.CP_SUPA = {
     toneSeg: $("airToneSeg"), metroBtn: $("airMetroBtn"), drumBtn: $("airDrumBtn"),
     bpm: $("airBpm"), bpmVal: $("airBpmVal"), meterSeg: $("airMeterSeg"),
     seqGrid: $("airSeqGrid"),
-    big: $("airChordBig"), bigName: $("airChordName"), bigFull: $("airChordFull"),
+    big: $("airChordBig"), bigName: $("airChordName"), bigFull: $("airChordFull"), bigSign: $("airBigSign"),
     onb: $("airOnb"), onbGo: $("airOnbGo"), guide: $("airGuide"), guideBtn: $("airGuideBtn"),
     view: document.getElementById("view-air"), dock: $("airDock"),
     fsBar: $("airFsBar"), fsStatus: $("airFsStatus"), fsStop: $("airFsStop"), dockBtn: $("airDockBtn"),
@@ -3886,7 +3929,7 @@ window.CP_SUPA = {
       // aktif akor yatırılmışsa çipte de dönüşmüş hali görünür
       const nm = on ? (chordFor(d, A.tq, A.qual, 0) || c).name : c.name;
       const mark = on && A.tq !== "dia" ? (A.tq === "maj" ? " ▸" : " ◂") : "";
-      return `<span class="sc-chip${on ? " on" : ""}"><span class="fing">${SIGN[d + 1]}</span><b>${nm}${mark}</b><i>${romanFor(d, c.name)}</i></span>`;
+      return `<span class="sc-chip${on ? " on" : ""}">${signTag(d + 1, "fing-img")}<b>${nm}${mark}</b><i>${romanFor(d, c.name)}</i></span>`;
     }).join("");
   }
   // büyük akor kartı: derece · akor adı · kalite · oktav · gam
@@ -3896,6 +3939,11 @@ window.CP_SUPA = {
     const rom = romanFor(deg, dia.name);
     const qLabel = A.qual ? (isMinorish(ch.name) ? QUAL_MIN : QUAL_MAJ)[A.qual - 1].label : TQ_LABEL[A.tq];
     const oc = octLabel(A.oct);
+    if (ui.bigSign) {                       // hangi işareti yaptığını kartta da göster
+      ui.bigSign.src = SIGN_IMG(deg + 1);
+      ui.bigSign.alt = SIGN_DESC[deg + 1] || "";
+      ui.bigSign.hidden = false;
+    }
     ui.bigName.textContent = ch.name;
     const full = TH.fullFromName ? TH.fullFromName(ch.name.replace(" ¹", "")) : "";
     ui.bigFull.textContent = rom + " · " + full + " · " + qLabel + (oc ? " · " + oc : "") + " · " + CH[A.ton] + " " + scaleName();
@@ -3940,7 +3988,7 @@ window.CP_SUPA = {
   function cstRenderGrid() {
     if (!cst.grid) return;
     cst.grid.innerHTML = A.customChords.map((v, i) =>
-      `<div class="cst-cell"><span class="sgn">${SIGN[i + 1]}</span><span class="rn">${ROMAN7[i]}</span>` +
+      `<div class="cst-cell">${signTag(i + 1, "cst-sgn")}<span class="rn">${ROMAN7[i]}</span>` +
       `<input data-i="${i}" value="${String(v).replace(/"/g, "&quot;")}" maxlength="10" ` +
       `placeholder="—" autocomplete="off" spellcheck="false" aria-label="${ROMAN7[i]}. derece akoru"></div>`
     ).join("");
@@ -4673,7 +4721,7 @@ window.CP_SUPA = {
         cap = instr === "piyano" ? "piyanoda basımı" : "notalar (klavye)";
       }
       const full = TH.fullFromName ? TH.fullFromName(c.name) : "";
-      return `<div class="air-g-item"><div class="emo">${SIGN[dg + 1]}</div><b>${romanFor(dg, c.name)} · ${c.name}</b><i>${full} — sol el: ${SIGN_DESC[dg + 1]}</i>${viz}<span class="cap">${cap}</span></div>`;
+      return `<div class="air-g-item"><div class="emo">${signTag(dg + 1, "g-img")}</div><b>${romanFor(dg, c.name)} · ${c.name}</b><i>${full} — sol el: ${SIGN_DESC[dg + 1]}</i>${viz}<span class="cap">${cap}</span></div>`;
     }).join("");
     const scNm = CH[A.ton] + " " + scaleName();
     const rootPc = (A.deg.find(Boolean) || { pcs: [0] }).pcs[0];
@@ -4681,7 +4729,7 @@ window.CP_SUPA = {
       const ex = CH[rootPc] + Q.suf + (Q.inv ? " ¹" : "");
       const pcs = Q.iv.map(x => (rootPc + x) % 12);
       const viz = TH.pianoSVG ? TH.pianoSVG(pcs, rootPc) : "";
-      return `<div class="air-g-item"><div class="emo">${SIGN[i + 1]}</div><b>${Q.label}</b><i>akor ${fam} iken sağ el ${i + 1} parmak — I. derecede: <b>${ex}</b></i>${viz}<span class="cap">${SIGN_DESC[i + 1]}</span></div>`;
+      return `<div class="air-g-item"><div class="emo">${signTag(i + 1, "g-img")}</div><b>${Q.label}</b><i>akor ${fam} iken sağ el ${i + 1} parmak — I. derecede: <b>${ex}</b></i>${viz}<span class="cap">${SIGN_DESC[i + 1]}</span></div>`;
     }).join("");
     // örnek: I. derecenin yatırılmış halleri
     const d0 = A.deg.findIndex(Boolean);
@@ -4982,6 +5030,24 @@ window.CP_SUPA = {
 })();
 </script>
 
+<!-- 🎚 Tüm faderların dolgusu değeri takip etsin (global range stili --fill kullanıyor) -->
+<script>
+(() => {
+  const paint = r => {
+    const min = +r.min || 0, max = +r.max || 100;
+    const pct = max > min ? ((+r.value - min) / (max - min)) * 100 : 0;
+    r.style.setProperty("--fill", pct.toFixed(1) + "%");
+  };
+  const all = () => document.querySelectorAll('input[type="range"]').forEach(paint);
+  document.addEventListener("input", e => {
+    if (e.target instanceof HTMLInputElement && e.target.type === "range") paint(e.target);
+  }, true);
+  all();
+  // sonradan eklenen faderlar için (rehber, dizgeç vb.)
+  new MutationObserver(all).observe(document.body, { childList: true, subtree: true });
+})();
+</script>
+
 <!-- 🤖 Şarkı Asistanı: akorları yapıştır → hazır prompt → yapay zekâ ChordPlai talimatı yazsın -->
 <script>
 (() => {
@@ -5119,20 +5185,43 @@ ${song}`;
     stage: $("npStage"), scroll: $("npScroll"),
     playBtn: $("npPlayBtn"), reset: $("npReset"),
     speed: $("npSpeed"), speedVal: $("npSpeedVal"),
+    pSize: $("npPSize"), pSizeVal: $("npPSizeVal"),
+    link1: $("npLink"), link2: $("npLink2"),
   };
   if (!el.pad) return;
 
-  const S = { open: false, tab: "note", running: false, y: 0, last: 0, raf: null, size: 26, speed: 55 };
+  const S = { open: false, tab: "note", running: false, y: 0, last: 0, raf: null,
+              size: 26, pSize: 26, speed: 55, link: false };
 
   // ---- kalıcılık ----
   try {
     el.text.value = localStorage.getItem("cpNote") || "";
-    const sz = +localStorage.getItem("cpNoteSize"); if (sz >= 16 && sz <= 52) S.size = sz;
+    const sz = +localStorage.getItem("cpNoteSize"); if (sz >= 14 && sz <= 52) S.size = sz;
+    const ps = +localStorage.getItem("cpNotePSize"); if (ps >= 14 && ps <= 72) S.pSize = ps;
     const sp = +localStorage.getItem("cpNoteSpeed"); if (sp >= 10 && sp <= 200) S.speed = sp;
+    S.link = localStorage.getItem("cpNoteLink") === "1";
   } catch (_) {}
-  el.size.value = S.size; el.sizeVal.textContent = S.size;
+
+  // slider dolgusunu değere göre boya (--fill global range stilinde kullanılıyor)
+  function paintRange(inp) {
+    if (!inp) return;
+    const min = +inp.min || 0, max = +inp.max || 100;
+    const pct = max > min ? ((+inp.value - min) / (max - min)) * 100 : 0;
+    inp.style.setProperty("--fill", pct.toFixed(1) + "%");
+  }
+  function applySizes() {
+    el.pad.style.setProperty("--np-size", S.size + "px");
+    el.pad.style.setProperty("--np-psize", S.pSize + "px");
+    el.size.value = S.size;   el.sizeVal.textContent = S.size;
+    el.pSize.value = S.pSize; el.pSizeVal.textContent = S.pSize;
+    paintRange(el.size); paintRange(el.pSize);
+  }
+  function applyLink() {
+    [el.link1, el.link2].forEach(b => b && b.setAttribute("aria-pressed", String(S.link)));
+    try { localStorage.setItem("cpNoteLink", S.link ? "1" : "0"); } catch (_) {}
+  }
   el.speed.value = S.speed; el.speedVal.textContent = S.speed;
-  el.pad.style.setProperty("--np-size", S.size + "px");
+  applySizes(); applyLink(); paintRange(el.speed);
 
   let saveT = null;
   el.text.addEventListener("input", () => {
@@ -5151,6 +5240,7 @@ ${song}`;
     el.pad.setAttribute("aria-hidden", String(!v));
     el.btn.setAttribute("aria-expanded", String(v));
     el.btn.style.display = v ? "none" : "";
+    document.body.classList.toggle("np-open", v);
     if (!v) stop();
   }
   el.btn.addEventListener("click", () => setOpen(true));
@@ -5207,15 +5297,32 @@ ${song}`;
   el.reset.addEventListener("click", () => { stop(); render(); resetPos(); });
 
   // ---- ayarlar ----
+  function saveSizes() {
+    try {
+      localStorage.setItem("cpNoteSize", S.size);
+      localStorage.setItem("cpNotePSize", S.pSize);
+    } catch (_) {}
+  }
   el.size.addEventListener("input", () => {
     S.size = +el.size.value;
-    el.sizeVal.textContent = S.size;
-    el.pad.style.setProperty("--np-size", S.size + "px");
-    try { localStorage.setItem("cpNoteSize", S.size); } catch (_) {}
+    if (S.link) S.pSize = Math.min(72, Math.max(14, S.size));   // bağlıysa prompter da büyüsün
+    applySizes(); saveSizes();
   });
+  el.pSize.addEventListener("input", () => {
+    S.pSize = +el.pSize.value;
+    if (S.link) S.size = Math.min(52, Math.max(14, S.pSize));   // bağlıysa not defteri de büyüsün
+    applySizes(); saveSizes();
+    if (S.tab === "prompt" && !S.running) resetPos();           // satır yüksekliği değişti
+  });
+  [el.link1, el.link2].forEach(b => b && b.addEventListener("click", () => {
+    S.link = !S.link;
+    if (S.link) { S.pSize = Math.min(72, Math.max(14, S.size)); applySizes(); saveSizes(); }
+    applyLink();
+  }));
   el.speed.addEventListener("input", () => {
     S.speed = +el.speed.value;
     el.speedVal.textContent = S.speed;
+    paintRange(el.speed);
     try { localStorage.setItem("cpNoteSpeed", S.speed); } catch (_) {}
   });
 

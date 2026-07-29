@@ -77,5 +77,8 @@
  "📂 Yükle": "📂 Load",
  "— kayıtlı preset yok —": "— no saved presets —",
  "Yazabilirsin: C · Am · F#m7 · Bb · Csus4 · G7 · Dmaj7 · Em9 · C/G": "You can type: C · Am · F#m7 · Bb · Csus4 · G7 · Dmaj7 · Em9 · C/G",
- "Kayıtlı presetler": "Saved presets"
+ "Kayıtlı presetler": "Saved presets",
+ "Prompter yazı boyuyla birlikte değişsin": "Change together with the prompter text size",
+ "Not defteri yazı boyuyla birlikte değişsin": "Change together with the notepad text size",
+ "Prompter yazı boyutu": "Prompter text size"
 }

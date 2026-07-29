@@ -77,5 +77,8 @@
  "📂 Yükle": "📂 Cargar",
  "— kayıtlı preset yok —": "— sin presets guardados —",
  "Yazabilirsin: C · Am · F#m7 · Bb · Csus4 · G7 · Dmaj7 · Em9 · C/G": "Puedes escribir: C · Am · F#m7 · Bb · Csus4 · G7 · Dmaj7 · Em9 · C/G",
- "Kayıtlı presetler": "Presets guardados"
+ "Kayıtlı presetler": "Presets guardados",
+ "Prompter yazı boyuyla birlikte değişsin": "Cambiar junto con el tamaño del teleprompter",
+ "Not defteri yazı boyuyla birlikte değişsin": "Cambiar junto con el tamaño del bloc de notas",
+ "Prompter yazı boyutu": "Tamaño de texto del teleprompter"
 }
