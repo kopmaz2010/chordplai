@@ -1,5 +1,9 @@
 # ChordPlai 🖐️🎸
 
+> 📋 **Projeyi devralıyorsan ya da başka bir makinede devam ediyorsan:
+> önce [HANDOFF.md](HANDOFF.md)'yi oku** — mimari, tuzaklar, hesaplar ve
+> yapılmayanlar orada.
+
 **https://chordplai.com** — kamerayla elinle akor çal (Air Chord), üzerine söyle,
 Reels/YouTube videonu kaydet. Ayrıca gitar & piyano akor egzersizleri, nota oyunu,
 porte okuma, Akor Ninja ve Akor Tetris.
