@@ -204,6 +204,20 @@ kendi akoru olmayanlarda işaretin sağında **▸** (içe yatır/majör) veya
   guard'ı olmadan `.matches()` patlar.
 - Akor eki araması **büyük/küçük harfe duyarlı** olmalı: `M13` majör,
   `m13` minör. Küçük harfe indirgeyen tek harita `Dm13 → Dmaj13` hatası verdi.
+- **localStorage değerini modül kapsamında önbelleğe alma.** Modüller
+  bağımsız IIFE; biri yazınca diğerinin değişkeni bayat kalır ve hata
+  yalnızca "sayfayı yenileyince düzeliyor" şeklinde görünür. Nota oyunu
+  `PLAYER`'ı yüklemede okuyordu, üyelik modülü girişte `akorPlayer`'ı
+  yazıyordu → Başla → kapı → giriş → Başla → kapı döngüsü. Çözüm:
+  yazan taraf `document.dispatchEvent(new CustomEvent("cp:player"))`,
+  okuyan taraf dinleyip tazeliyor (`cp:i18n` ile aynı desen). Ya her
+  kullanımda localStorage'dan oku, ya da olayla tazele — ikisinin arası yok.
+- Girişin bir eylemi bölmesi gerekiyorsa niyeti sakla (`pendingStart`) ve
+  giriş bitince sürdür; yoksa kullanıcı butona ikinci kez basmak zorunda
+  kalır ve bunu hata sanar.
+- `window.__airAutoStart` gibi otomatik başlatıcıları çağırmadan önce
+  **o görünüm açık mı** diye bak. Nota oyunundan giriş yapan kullanıcının
+  karşısına kamera izni çıkıyordu.
 
 **Türkçe/i18n**
 
