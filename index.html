@@ -980,7 +980,7 @@ window.CP_SUPA = {
   }
   .air-fsbar[hidden] { display: none; }
   /* not defteri açıkken üst çubuk düğmeleri panelin altına girmesin */
-  body.np-open .air-fsbar { padding-right: calc(min(420px, 100vw) + 18px); }
+  body.np-open .air-fsbar { padding-right: calc(var(--np-w, min(420px, 100vw)) + 18px); }
   body.np-open .air-fsstatus { max-width: 22vw; }
   .air-fsmark { width: 26px; height: 26px; flex: 0 0 auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,.6)); }
   .air-fsbrand { font-weight: 700; letter-spacing: .26em; color: var(--cream, #efe6d2); font-size: .82rem; text-transform: none; text-shadow: 0 2px 8px rgba(0,0,0,.7); }
@@ -1121,7 +1121,7 @@ window.CP_SUPA = {
   .pad-btn:hover { color: var(--amber-hot); border-color: var(--amber); }
   .notepad {
     position: fixed; right: 0; top: 0; bottom: 0; z-index: 47;
-    width: min(420px, 100vw); display: flex; flex-direction: column;
+    width: var(--np-w, min(420px, 100vw)); display: flex; flex-direction: column;
     background: linear-gradient(180deg, #221b11, #17120b);
     border-left: 1px solid rgba(245,194,100,.28);
     box-shadow: -18px 0 50px rgba(0,0,0,.6);
@@ -1129,6 +1129,18 @@ window.CP_SUPA = {
     transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .25s ease;
   }
   .notepad.open { transform: none; }
+  .np-grip {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 10px; z-index: 2;
+    cursor: ew-resize; background: transparent;
+  }
+  .np-grip::after {
+    content: ""; position: absolute; left: 3px; top: 50%; transform: translateY(-50%);
+    width: 3px; height: 46px; border-radius: 3px; background: rgba(245,194,100,.35);
+    transition: background .15s, height .15s;
+  }
+  .np-grip:hover::after, body.np-resizing .np-grip::after { background: var(--amber); height: 90px; }
+  body.np-resizing { cursor: ew-resize; user-select: none; }
+  body.np-resizing .notepad { transition: none; }
   .np-head {
     display: flex; align-items: center; gap: 10px; padding: 12px 14px;
     border-bottom: 1px solid var(--line); flex: 0 0 auto;
@@ -1764,10 +1776,11 @@ window.CP_SUPA = {
 
 <!-- 📝 Not defteri + prompter — sağdan açılır, her modda kullanılabilir -->
 <button class="pad-btn" id="npBtn" aria-expanded="false">📝 NOTLAR</button>
-<aside class="notepad" id="notepad" aria-hidden="true">
+<aside class="notepad" id="notepad" aria-hidden="true"><div class="np-grip" id="npGrip" title="Sürükleyerek genişlet"></div>
   <div class="np-head">
     <b>📝 Not Defteri</b>
     <span class="sp"></span>
+    <button class="dock-mini" id="npWide" title="Paneli büyüt / küçült" aria-pressed="false">⤢</button>
     <button class="dock-mini" id="npOpac" title="Panel saydamlığı">◐ Net</button>
     <button class="np-x" id="npClose" aria-label="Kapat">✕</button>
   </div>
@@ -5408,6 +5421,7 @@ ${song}`;
     speed: $("npSpeed"), speedVal: $("npSpeedVal"),
     pSize: $("npPSize"), pSizeVal: $("npPSizeVal"),
     link1: $("npLink"), link2: $("npLink2"),
+    grip: $("npGrip"), wide: $("npWide"),
   };
   if (!el.pad) return;
 
@@ -5443,6 +5457,60 @@ ${song}`;
   }
   el.speed.value = S.speed; el.speedVal.textContent = S.speed;
   applySizes(); applyLink(); paintRange(el.speed);
+
+  // ---- panel genişliği: kenardan sürükle ya da ⤢ ile büyüt ----
+  // Dar panelde yazı büyütünce satır sarıyor ve işaretler üst üste biniyordu.
+  const NP_MIN = 300, npMax = () => Math.min(1200, window.innerWidth);
+  let npW = 0, npWide = false;
+  try {
+    const w = +localStorage.getItem("cpNoteW"); if (w >= NP_MIN) npW = w;
+    npWide = localStorage.getItem("cpNoteWide") === "1";
+  } catch (_) {}
+  function applyW() {
+    const w = npWide ? npMax() : (npW || Math.min(420, window.innerWidth));
+    document.documentElement.style.setProperty("--np-w", Math.round(w) + "px");
+    if (el.wide) el.wide.setAttribute("aria-pressed", String(npWide));
+    if (S.tab === "prompt" && !S.running) resetPos();
+  }
+  function setW(w, save) {
+    npW = Math.max(NP_MIN, Math.min(npMax(), w));
+    npWide = false;
+    if (save) { try { localStorage.setItem("cpNoteW", npW); localStorage.setItem("cpNoteWide", "0"); } catch (_) {} }
+    applyW();
+  }
+  if (el.wide) el.wide.addEventListener("click", () => {
+    npWide = !npWide;
+    try { localStorage.setItem("cpNoteWide", npWide ? "1" : "0"); } catch (_) {}
+    applyW();
+  });
+  if (el.grip) {
+    let dragging = false;
+    const move = e => {
+      if (!dragging) return;
+      setW(window.innerWidth - e.clientX, false);   // sağa yaslı panel: sol kenar sürüklenir
+      e.preventDefault();
+    };
+    const up = e => {
+      if (!dragging) return;
+      dragging = false;
+      document.body.classList.remove("np-resizing");
+      try { el.grip.releasePointerCapture(e.pointerId); } catch (_) {}
+      try { localStorage.setItem("cpNoteW", npW); localStorage.setItem("cpNoteWide", "0"); } catch (_) {}
+    };
+    el.grip.addEventListener("pointerdown", e => {
+      dragging = true;
+      document.body.classList.add("np-resizing");
+      try { el.grip.setPointerCapture(e.pointerId); } catch (_) {}
+      e.preventDefault();
+    });
+    el.grip.addEventListener("pointermove", move);
+    el.grip.addEventListener("pointerup", up);
+    el.grip.addEventListener("pointercancel", up);
+    // çift tıkla varsayılana dön
+    el.grip.addEventListener("dblclick", () => setW(420, true));
+  }
+  window.addEventListener("resize", applyW);
+  applyW();
 
   let saveT = null;
   el.text.addEventListener("input", () => {

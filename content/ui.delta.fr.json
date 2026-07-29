@@ -107,5 +107,7 @@
  "⚠️ Ayar okunamadı — satırın tamamını yapıştır, örnek: ChordPlai AYARI: Ton = A · Gam/Makam = Kürdi": "⚠️ Réglage illisible — collez la ligne entière, ex. ChordPlai SETTING: Key = A · Scale/Maqam = Kurdi",
  "📷 Kamerayı Aç ve Çalmaya Başla": "📷 Activer la caméra et jouer",
  "📖 Nasıl çalınır?": "📖 Comment jouer ?",
- "Kamera izni istenecek · ilk açılışta el-takip modeli (~7 MB) inilir · görüntün cihazından çıkmaz": "L'autorisation caméra sera demandée · le modèle de suivi (~7 Mo) se télécharge au premier lancement · votre vidéo ne quitte jamais votre appareil"
+ "Kamera izni istenecek · ilk açılışta el-takip modeli (~7 MB) inilir · görüntün cihazından çıkmaz": "L'autorisation caméra sera demandée · le modèle de suivi (~7 Mo) se télécharge au premier lancement · votre vidéo ne quitte jamais votre appareil",
+ "Sürükleyerek genişlet": "Glissez pour élargir",
+ "Paneli büyüt / küçült": "Agrandir / réduire le panneau"
 }
