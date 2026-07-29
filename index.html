@@ -987,6 +987,23 @@ window.CP_SUPA = {
   .sq-cell.ph { outline: 2px solid rgba(255,217,138,.85); outline-offset: 1px; }
   .sq-cell.dim { opacity: .35; }
   .sq-lbl.dim { opacity: .45; }
+  /* 🤖 şarkı asistanı */
+  .sa-ta {
+    width: 100%; resize: vertical; min-height: 74px; margin-top: 10px;
+    background: #14100a; color: var(--cream); border: 1px solid var(--line);
+    border-radius: 10px; padding: 10px 12px; outline: none;
+    font: 13px/1.6 ui-monospace, Menlo, monospace;
+  }
+  .sa-ta:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(245,194,100,.12); }
+  .sa-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .sa-btns .chip { flex: 1 1 30%; }
+  .sa-preview { margin-top: 8px; }
+  .sa-preview summary {
+    cursor: pointer; font-size: .72rem; color: var(--muted); letter-spacing: .06em;
+  }
+  .sa-preview summary:hover { color: var(--amber-hot); }
+  .sa-preview .sa-ta { min-height: 160px; font-size: 12px; }
+
   /* 📝 not defteri + prompter (Logic Pro tarzı sağdan açılan panel) */
   .pad-btn {
     position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 46;
@@ -1492,6 +1509,26 @@ window.CP_SUPA = {
       </div>
       <div class="scale-chords" id="airChips"></div>
       <div class="poolcount-line" id="airHint">Sol el: ☝️1…🤟7 derece · <b>dik = gamın akoru</b>, içe yatır=majöre çevir, dışa=minöre çevir · ✊ sustur · Sağ el: <b>sadece efekt</b> — ◂ sola eğ = distorsiyon, ▸ sağa çevir = dalga parlar, dik = temiz</div>
+    </div>
+
+    <div class="card">
+      <label>🤖 Şarkı Asistanı — teori bilmeden çal</label>
+      <div class="poolcount-line">Google'da "şarkı adı + akor" ara, akorları kopyala, aşağıya yapıştır. Yapay zekâ şarkının tonunu bulur ve sana adım adım ChordPlai talimatı yazar: hangi ayarı seç, hangi işaretleri sırayla yap.</div>
+      <textarea class="sa-ta" id="saInput" rows="4" spellcheck="false" maxlength="4000"
+        placeholder="Şarkı adı + akorlar…&#10;örn: Sezen Aksu – Gülümse&#10;Em  G  D  C  /  Em  C  D  Em"></textarea>
+      <div class="sa-btns" id="saBtns">
+        <button class="chip" data-ai="chatgpt">ChatGPT</button>
+        <button class="chip" data-ai="claude">Claude</button>
+        <button class="chip" data-ai="googleai">Gemini</button>
+        <button class="chip" data-ai="grok">Grok</button>
+        <button class="chip" data-ai="perplexity">Perplexity</button>
+        <button class="chip" id="saCopy">📋 Kopyala</button>
+      </div>
+      <details class="sa-preview">
+        <summary>Promptu gör / düzenle</summary>
+        <textarea class="sa-ta" id="saPrompt" rows="10" spellcheck="false"></textarea>
+      </details>
+      <div class="poolcount-line" id="saHint">Butona basınca prompt seçtiğin yapay zekâda açılır · yanıt gelince buradaki Ton–Gam ayarını yap, işaret sırasını takip et 🖐️</div>
     </div>
 
     <div class="card">
@@ -4641,6 +4678,106 @@ window.CP_SUPA = {
 })();
 </script>
 
+<!-- 🤖 Şarkı Asistanı: akorları yapıştır → hazır prompt → yapay zekâ ChordPlai talimatı yazsın -->
+<script>
+(() => {
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const el = { input: $("saInput"), prompt: $("saPrompt"), btns: $("saBtns"), copy: $("saCopy"), hint: $("saHint") };
+  if (!el.input) return;
+
+  const AI = {
+    chatgpt:    q => "https://chatgpt.com/?q=" + q,
+    claude:     q => "https://claude.ai/new?q=" + q,
+    googleai:   q => "https://www.google.com/search?udm=50&q=" + q,   // Google AI Modu (Gemini)
+    grok:       q => "https://grok.com/?q=" + q,
+    perplexity: q => "https://www.perplexity.ai/search?q=" + q,
+  };
+  const LANG_NAME = { tr: "Türkçe", en: "English", es: "español", de: "Deutsch", fr: "français", pt: "português" };
+
+  // Şablon: uygulamadaki GERÇEK seçeneklerle konuşur (Ton listesi + Gam/Makam adları birebir).
+  function template(song) {
+    const lang = (window.CP_LANG || "tr");
+    const tr = lang === "tr";
+    const scales = "Majör (İyonyen), Dorian, Frigyen, Lidyen, Miksolidyen, Minör (Aeolyen), Lokriyen, Hicaz, Uşşak, Kürdi, Nihavend, Hüseyni, Rast";
+    const tons = "A, A#, B, C, C#, D, D#, E, F, F#, G, G#";
+    const signs = "☝️ 1 · ✌️ 2 · üç parmak 3 · dört parmak 4 · 🖐️ 5 · 🤘 6 · 🤟 7";
+    if (tr) return `Müzik teorisi bilmiyorum. ChordPlai (chordplai.com) adlı sitede kameraya el işareti göstererek akor çalıyorum ve üzerine şarkı söylüyorum. Aşağıya bir şarkının adını ve akorlarını yapıştırdım. Bana bu şarkıyı ChordPlai'da çalmak için ADIM ADIM talimat yaz.
+
+ChordPlai şöyle çalışır:
+- Ton seçenekleri: ${tons}
+- Gam/Makam seçenekleri (birebir bu adlarla): ${scales}
+- Sol el işaretleri gamın DERECESİNİ çalar: ${signs}
+- El dik = gamın kendi akoru · el İÇE yatık = o akor majöre döner · el DIŞA yatık = minöre döner
+- ✊ yumruk = sustur · Metronom BPM 40–160, ölçü 4/4 veya 6/8
+
+Senden istediklerim (sırayla, kısa ve net):
+1) Şarkının tonunu ve gamını bul. "ChordPlai AYARI: Ton = X · Gam/Makam = Y" diye tek satır yaz (Y yukarıdaki listeden birebir olmalı; şarkı Türk müziğiyse uygun makamı tercih et).
+2) AKOR → İŞARET tablosu: şarkıdaki her akor için hangi el işareti (derece) yapılacak; akor gamın kendi akoru değilse "içe yatır (majör)" ya da "dışa yatır (minör)" notu ekle. Gama hiç oturmayan akor varsa en yakın dereceyi öner ve belirt.
+3) ŞARKI AKIŞI: bölüm bölüm (intro/kıta/nakarat) işaret sırasını emoji ile yaz, örn: nakarat = ☝️ → 🤘 → 4️⃣ → 🖐️
+4) Önerilen BPM ve ölçü (4/4 mü 6/8 mi) — tek satır.
+5) 2 cümlelik pratik tavsiyesi (hangi bölümden başlamalı, nefes nerede alınmalı).
+Tablo ve listeler kullan, uzun paragraf yazma.
+
+ŞARKI:
+${song}`;
+    // Türkçe dışı arayüz dilleri: İngilizce şablon + yanıt dili talimatı
+    return `I don't know music theory. On ChordPlai (chordplai.com) I play chords by showing hand signs to my camera and sing over them. Below I pasted a song name and its chords. Write me STEP-BY-STEP instructions to play it on ChordPlai. Answer in ${LANG_NAME[lang] || "English"}.
+
+How ChordPlai works:
+- Key options: ${tons}
+- Scale/Maqam options (use these exact names): ${scales}
+- Left-hand signs play the DEGREE of the scale: ${signs}
+- Hand upright = the scale's own chord · tilt INWARD = that chord becomes major · tilt OUTWARD = minor
+- ✊ fist = mute · Metronome BPM 40–160, meter 4/4 or 6/8
+
+What I need (in order, short and clear):
+1) Find the song's key and scale. Write one line: "ChordPlai SETTING: Key = X · Scale/Maqam = Y" (Y must match the list above exactly).
+2) CHORD → SIGN table: for every chord in the song, which hand sign (degree) to make; if a chord is not diatonic, add "tilt inward (major)" or "tilt outward (minor)". If a chord doesn't fit at all, suggest the closest degree and say so.
+3) SONG FLOW: section by section (intro/verse/chorus), the sign sequence with emoji, e.g. chorus = ☝️ → 🤘 → 4️⃣ → 🖐️
+4) Suggested BPM and meter (4/4 or 6/8) — one line.
+5) Two sentences of practice advice.
+Use tables and lists, no long paragraphs.
+
+SONG:
+${song}`;
+  }
+
+  function build() {
+    const song = el.input.value.trim() || (window.CP_LANG === "tr" ? "(şarkı adı ve akorlar buraya)" : "(song name and chords here)");
+    return template(song);
+  }
+  function sync() { el.prompt.value = build(); }
+  el.input.addEventListener("input", sync);
+  sync();
+
+  let edited = false;
+  el.prompt.addEventListener("input", () => { edited = true; });
+  el.input.addEventListener("input", () => { edited = false; });
+  const finalPrompt = () => (edited ? el.prompt.value : build());
+
+  el.btns.addEventListener("click", e => {
+    const b = e.target.closest("[data-ai]");
+    if (!b) return;
+    const mk = AI[b.dataset.ai]; if (!mk) return;
+    window.open(mk(encodeURIComponent(finalPrompt())), "_blank", "noopener");
+  });
+  el.copy.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(finalPrompt());
+      el.copy.textContent = "✓ Kopyalandı";
+    } catch (_) {
+      el.prompt.closest("details").open = true;
+      el.prompt.select(); document.execCommand("copy");
+      el.copy.textContent = "✓ Kopyalandı";
+    }
+    setTimeout(() => { el.copy.textContent = "📋 Kopyala"; }, 1600);
+  });
+
+  window.__sa = { build, state: () => ({ len: build().length, edited }) };
+})();
+</script>
+
 <!-- 📝 Not defteri + prompter -->
 <script>
 (() => {
@@ -4820,7 +4957,8 @@ window.CP_SUPA = {
     const els = root.nodeType === 1 ? [root, ...root.querySelectorAll("*")]
                                     : [...(root.querySelectorAll ? root.querySelectorAll("*") : [])];
     for (const el of els) {
-      if (el.nodeType !== 1 || SKIP[el.nodeName]) continue;
+      // TEXTAREA içeriği korunur (tText atlar) ama placeholder'ı çevrilebilir
+      if (el.nodeType !== 1 || (SKIP[el.nodeName] && el.nodeName !== "TEXTAREA")) continue;
       for (const a of ATTRS) {
         const val = el.getAttribute && el.getAttribute(a);
         if (val && dict[val.trim()]) el.setAttribute(a, dict[val.trim()]);
