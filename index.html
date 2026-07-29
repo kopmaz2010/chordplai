@@ -927,6 +927,9 @@ window.CP_SUPA = {
   #view-air.air-full .ng-topbar { display: none; }
   /* --cam'i SAYI olarak kaydet: yoksa calc'lı geçiş bir adım geriden gelir (Chrome) */
   @property --cam { syntax: "<number>"; inherits: true; initial-value: 1; }
+  /* panel saydamlıkları da SAYI olarak kayıtlı olmalı — yoksa opacity bir adım geriden gelir */
+  @property --dock-op { syntax: "<number>"; inherits: true; initial-value: 1; }
+  @property --np-op   { syntax: "<number>"; inherits: true; initial-value: 1; }
   /* kamera küçülünce arkada sayfa değil, amp dokulu zemin görünsün */
   #view-air.air-full::before {
     content: ""; position: fixed; inset: 0; z-index: 39;
@@ -974,10 +977,9 @@ window.CP_SUPA = {
   #view-air.air-full .air-dock .card { background: rgba(255,255,255,.035); border-color: rgba(245,194,100,.14); }
   #view-air.air-full.dock-hide .air-dock { transform: translateX(calc(-100% - 24px)); opacity: 0; pointer-events: none; }
   #view-air.air-full .hint { margin: 0; }
-  /* saydamlık modları: panel hayalet olur, üstüne gelince tekrar netleşir */
-  #view-air.air-full .air-dock { opacity: var(--dock-op, 1); }
-  #view-air.air-full .air-dock:hover,
-  #view-air.air-full .air-dock:focus-within { opacity: 1; }
+  /* saydamlık modları — hover/focus ile "netleştirme" YOK:
+     düğmeye basınca odak/fare panelde kaldığı için değişim hiç görünmüyordu. */
+  #view-air.air-full .air-dock { opacity: var(--dock-op, 1); transition: opacity .2s ease; }
   #view-air.air-full.dock-hide .air-dock { opacity: 0; }
   /* panel başlığı (yalnız tam ekranda görünür) */
   .dock-head { display: none; }
@@ -992,9 +994,8 @@ window.CP_SUPA = {
     border-radius: 8px; padding: 3px 8px; font-size: .68rem; cursor: pointer; white-space: nowrap;
   }
   .dock-mini:hover { border-color: var(--amber); color: var(--cream); }
-  /* not defteri saydamlığı */
-  .notepad { opacity: var(--np-op, 1); }
-  .notepad:hover, .notepad:focus-within { opacity: 1; }
+  /* not defteri saydamlığı (aynı sebeple hover/focus istisnası yok) */
+  .notepad.open { opacity: var(--np-op, 1); }
   .notepad:not(.open) { opacity: 0; }
   @media (max-width: 640px) {
     #view-air.air-full .air-dock { top: auto; bottom: 0; left: 0; width: 100vw; max-height: 52vh; border-radius: 16px 16px 0 0; }
@@ -1080,7 +1081,8 @@ window.CP_SUPA = {
     flex: 1; min-height: 0; resize: none; width: 100%;
     background: #14100a; color: var(--cream); border: 1px solid var(--line);
     border-radius: 12px; padding: 12px 14px; outline: none;
-    font: 15px/1.7 ui-monospace, Menlo, monospace;
+    font-family: ui-monospace, Menlo, monospace; line-height: 1.6;
+    font-size: var(--np-size, 16px);   /* fader hem yazarken hem prompter'da geçerli */
   }
   .np-ta:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(245,194,100,.13); }
   .np-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; flex: 0 0 auto; }
@@ -4922,7 +4924,7 @@ ${song}`;
   } catch (_) {}
   el.size.value = S.size; el.sizeVal.textContent = S.size;
   el.speed.value = S.speed; el.speedVal.textContent = S.speed;
-  el.scroll.style.setProperty("--np-size", S.size + "px");
+  el.pad.style.setProperty("--np-size", S.size + "px");
 
   let saveT = null;
   el.text.addEventListener("input", () => {
@@ -5000,7 +5002,7 @@ ${song}`;
   el.size.addEventListener("input", () => {
     S.size = +el.size.value;
     el.sizeVal.textContent = S.size;
-    el.scroll.style.setProperty("--np-size", S.size + "px");
+    el.pad.style.setProperty("--np-size", S.size + "px");
     try { localStorage.setItem("cpNoteSize", S.size); } catch (_) {}
   });
   el.speed.addEventListener("input", () => {
