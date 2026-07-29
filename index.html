@@ -907,6 +907,14 @@ window.CP_SUPA = {
   .air-idle p { margin: 0; font-size: .88rem; line-height: 1.55; }
   .air-idle .nj-idle-emoji, .air-idle-emoji { font-size: 2.4rem; }
   .air-idle .sub { color: var(--muted); font-size: .72rem; }
+  /* el işaretleri görseli (7 derece) */
+  .air-signs {
+    width: min(760px, 88%); height: auto; display: block;
+    max-height: 58%; object-fit: contain;   /* alan daralınca gizlenmez, küçülür */
+    border-radius: 14px; margin-bottom: 2px;
+  }
+  .air-idle-lead { max-width: 62ch; }
+  @media (max-width: 700px) { .air-signs { width: 94%; } }
   #airChips .sc-chip { cursor: default; }
   #airChips .sc-chip.on { border-color: var(--amber, #f5c264); box-shadow: 0 0 12px rgba(245,194,100,.35); background: rgba(245,194,100,.12); }
   #airChips .sc-chip.off { opacity: .35; }
@@ -1441,9 +1449,13 @@ window.CP_SUPA = {
       <canvas id="airCanvas"></canvas>
       <div class="air-chordbig" id="airChordBig" hidden><b id="airChordName">G</b><span id="airChordFull">Sol majör</span></div>
       <div class="air-idle" id="airIdle">
-        <div class="air-idle-emoji">🖐️🎹</div>
-        <p><b>Sol el</b> = derece: ☝️ 1 · ✌️ 2 · 3️⃣ · 4️⃣ · 🖐️ 5 · 🤘 6 · 🤟 7<br>Sol eli <b>dik tut → gamın akoru</b> · <b>içe yatır → o akor majöre</b> · <b>dışa yatır → minöre</b><br><b>Sağ el = sadece efekt:</b> <b>sola eğ</b> distorsiyon · <b>sağa çevir</b> dalga parlar · <b>dik</b> temiz 🎛️<br>Oktav alttaki seçenekten ayarlanır 🎚</p>
-        <p class="sub">Kamera izni istenecek · ilk açılışta el-takip modeli (~7 MB) indirilir · ✊ yumruk = sustur</p>
+        <img class="air-signs" src="/tasarim/air-signs.webp"
+             srcset="/tasarim/air-signs-sm.webp 900w, /tasarim/air-signs.webp 1600w"
+             sizes="(max-width: 700px) 94vw, min(760px, 88%)"
+             width="1600" height="893" decoding="async"
+             alt="Air Chord el işaretleri: I'den VII'ye gam dereceleri — tek parmak, iki parmak, üç parmak, dört parmak, açık el, boynuz ve başparmaklı boynuz">
+        <p class="air-idle-lead"><b>Sol elin</b> derece seçer · <b>dik tut</b> gamın akoru, <b>içe yatır</b> majör, <b>dışa yatır</b> minör</p>
+        <p class="sub">Sağ el yalnız efekt · ✊ yumruk susturur · kamera izni istenecek, ilk açılışta el-takip modeli (~7 MB) inilir</p>
       </div>
     </div>
 
