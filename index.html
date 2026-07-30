@@ -769,7 +769,19 @@ window.CP_SUPA = {
   .acap-seg button[aria-pressed="true"] { background: var(--amber); color: #1a1508; font-weight: 700; }
   .acap-slider { min-width: 190px; }
   .acap-slider b { color: var(--amber-hot, #ffd98a); }
-  #acapRoll { width: 100%; border-radius: 10px; background: #0c0b08; border: 1px solid #26231a; margin-top: 10px; }
+  .acap-rollwrap { position: relative; margin-top: 10px; }
+  /* CSS yüksekliği açıkça verilmeli: yoksa öğe yüksekliği kanvasın dpr'li
+     iç yüksekliğine oturur ve fare koordinatı ölçeği ikiye katlanır */
+  #acapRoll { width: 100%; height: 180px; display: block; border-radius: 10px; background: #0c0b08; border: 1px solid #26231a; }
+  #acapRoll.on-note { cursor: pointer; }
+  .acap-tip { position: absolute; z-index: 3; pointer-events: none; transform: translate(-50%, -125%);
+              background: rgba(10,8,4,.96); border: 1px solid var(--amber); border-radius: 8px;
+              padding: 5px 10px; font-size: .78rem; color: var(--cream); white-space: nowrap;
+              box-shadow: 0 6px 18px rgba(0,0,0,.5); }
+  .acap-tip[hidden] { display: none; }
+  .acap-tip b { color: var(--amber-hot, #ffd98a); font-size: .92rem; }
+  .acap-tip i { color: var(--muted); font-style: normal; }
+  .acap-tip .off-pitch { color: #ff9f7a; }
   .acap-stats { display: flex; flex-wrap: wrap; gap: 8px; }
   .acap-stats span { background: rgba(245,194,100,.1); border: 1px solid rgba(245,194,100,.25); color: var(--cream);
                      border-radius: 999px; padding: 4px 12px; font-size: .78rem; }
@@ -784,8 +796,20 @@ window.CP_SUPA = {
   .acap-tile video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
   .acap-tile .lbl { position: absolute; left: 8px; bottom: 8px; background: rgba(8,6,3,.75); color: var(--cream);
                     border-radius: 7px; padding: 3px 9px; font-size: .72rem; }
-  .acap-tile.demo { display: flex; align-items: center; justify-content: center; font-size: 2rem;
+  .acap-tile.demo { display: flex; align-items: center; justify-content: center;
                     background: radial-gradient(90% 90% at 50% 20%, #1d1b12, #0a0a07); }
+  .acap-tile .ph { font-size: 2rem; }
+  .acap-tile.off { opacity: .4; filter: grayscale(1); border-color: #3a3526; box-shadow: none; }
+  /* kanal şeridi: aç/kapa · aralık · seviye (Antares Harmony Player düzeni) */
+  .acap-vctl { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 5px;
+               padding: 6px 7px; background: linear-gradient(to top, rgba(8,6,3,.92), rgba(8,6,3,.55) 70%, transparent); }
+  .acap-pwr { flex: 0 0 auto; background: rgba(30,26,16,.9); color: var(--muted); border: 1px solid #4a4230;
+              border-radius: 7px; padding: 3px 7px; font-size: .8rem; cursor: pointer; line-height: 1.1; }
+  .acap-pwr[aria-pressed="true"] { color: #78ffbe; border-color: rgba(120,255,190,.5); }
+  .acap-iv { flex: 0 0 auto; min-width: 74px; background: #0f0e0a; color: var(--amber); border: 1px solid #4a4230;
+             border-radius: 7px; padding: 3px 4px; font-size: .74rem; font-weight: 700; cursor: pointer; }
+  .acap-iv:disabled { opacity: .5; }
+  .acap-lvl { flex: 1 1 40px; min-width: 34px; height: 16px; }
   .gate { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(8,6,3,.82); backdrop-filter: blur(8px); }
   .gate[hidden] { display: none; }
   .gate-card {
@@ -1675,7 +1699,10 @@ window.CP_SUPA = {
     <section class="acap-card" id="acapAnaCard" hidden>
       <h3>2 · Nota analizi</h3>
       <div class="acap-stats" id="acapStats"></div>
-      <canvas id="acapRoll" height="180"></canvas>
+      <div class="acap-rollwrap">
+        <canvas id="acapRoll" height="180"></canvas>
+        <div class="acap-tip" id="acapTip" hidden></div>
+      </div>
       <div class="acap-row acap-controls">
         <label>Ton <select id="acapTon"></select></label>
         <label>Gam/Makam <select id="acapScale"></select></label>
@@ -1687,6 +1714,9 @@ window.CP_SUPA = {
         </label>
         <label class="acap-slider">Autotune şiddeti <b id="acapTuneVal">70%</b>
           <input type="range" id="acapTune" min="0" max="100" value="70">
+        </label>
+        <label class="acap-slider">Doğallık <b id="acapHumanVal">45%</b>
+          <input type="range" id="acapHuman" min="0" max="100" value="45">
         </label>
       </div>
       <div class="acap-row">
@@ -5967,9 +5997,10 @@ ${song}`;
   const el = {
     view: $("view-acap"), cam: $("acapCam"), idle: $("acapStageIdle"),
     dot: $("acapRecDot"), time: $("acapRecTime"), recBtn: $("acapRecBtn"), demoBtn: $("acapDemoBtn"),
-    anaCard: $("acapAnaCard"), stats: $("acapStats"), roll: $("acapRoll"),
+    anaCard: $("acapAnaCard"), stats: $("acapStats"), roll: $("acapRoll"), tip: $("acapTip"),
     ton: $("acapTon"), scale: $("acapScale"), voices: $("acapVoices"),
     tune: $("acapTune"), tuneVal: $("acapTuneVal"), makeBtn: $("acapMakeBtn"),
+    human: $("acapHuman"), humanVal: $("acapHumanVal"),
     aiBtn: $("acapAiBtn"), aiPaste: $("acapAiPaste"), aiHint: $("acapAiHint"), reRec: $("acapReRec"),
     outCard: $("acapOutCard"), grid: $("acapGrid"), playBtn: $("acapPlayBtn"),
     saveBtn: $("acapSaveBtn"), outStatus: $("acapOutStatus"),
@@ -5982,9 +6013,10 @@ ${song}`;
   const S = {
     stream: null, rec: null, chunks: [], blobUrl: null, hasVideo: false,
     audio: null, sr: 48000, frames: [], notes: [],
-    ton: 7, scale: "major", nVoices: 6, tune: 0.7,
-    voiceBufs: [], ctx: null, playing: false, sources: [], vids: [],
-    recTimer: 0, saveRec: null,
+    ton: 7, scale: "major", nVoices: 6, tune: 0.7, human: 0.45,
+    voices: [], ctx: null, playing: false, sources: [],
+    hop: 1024, srcM: [], marks: [], snap: null, stepK: null, ir: null,
+    recTimer: 0, saveRec: null, saveDest: null,
   };
 
   // ---- seçiciler ----
@@ -5999,6 +6031,7 @@ ${song}`;
     [...el.voices.children].forEach(x => x.setAttribute("aria-pressed", String(x === b)));
   });
   el.tune.addEventListener("input", () => { S.tune = el.tune.value / 100; el.tuneVal.textContent = el.tune.value + "%"; });
+  el.human.addEventListener("input", () => { S.human = el.human.value / 100; el.humanVal.textContent = el.human.value + "%"; });
 
   // ---- kayıt ----
   function fmtT(s) { return Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0"); }
@@ -6164,8 +6197,9 @@ ${song}`;
       drawRoll(); return;
     }
     S.ton = guessTon(); el.ton.value = S.ton;
-    reAnalyzeUi();
+    // kartı ÖNCE göster: gizli öğenin clientWidth'i 0, kanvas boş çizilirdi
     el.anaCard.hidden = false;
+    reAnalyzeUi();
     el.anaCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
   function reAnalyzeUi() {
@@ -6182,6 +6216,8 @@ ${song}`;
   // ---- piano-roll ----
   function drawRoll() {
     const c = el.roll, dpr = Math.min(2, devicePixelRatio || 1);
+    // gizli/henüz yerleşmemiş öğede genişlik 0 olur — çizmek yerine tekrar dene
+    if (!c.clientWidth) { clearTimeout(S.rollT); S.rollT = setTimeout(drawRoll, 80); return; }
     c.width = c.clientWidth * dpr; c.height = 180 * dpr;
     const g = c.getContext("2d");
     g.fillStyle = "#0c0b08"; g.fillRect(0, 0, c.width, c.height);
@@ -6197,15 +6233,63 @@ ${song}`;
       g.fillStyle = set.has(((m % 12) + 12) % 12) ? "rgba(245,194,100,.07)" : "rgba(255,255,255,.02)";
       g.fillRect(0, px(m + 1), c.width, px(m) - px(m + 1));
     }
-    // notalar
+    // notalar — dikdörtgenleri sakla, imleç için isabet testi yapılacak
+    S.rollRects = [];
     for (const nt of S.notes) {
       const x0 = (nt.t0 / dur) * c.width, x1 = (nt.t1 / dur) * c.width;
       const y = px(nt.midi + 0.5), h = Math.max(3 * dpr, px(0) - px(1));
+      const w = Math.max(2 * dpr, x1 - x0 - dpr);
       g.fillStyle = "#78ffbe";
-      g.beginPath(); g.roundRect(x0, y, Math.max(2 * dpr, x1 - x0 - dpr), h, 3 * dpr); g.fill();
+      g.beginPath(); g.roundRect(x0, y, w, h, 3 * dpr); g.fill();
+      S.rollRects.push({ x: x0, y, w, h, nt });   // kanvas pikseli olarak sakla
     }
   }
   window.addEventListener("resize", () => { if (!el.anaCard.hidden) drawRoll(); });
+
+  // ---- nota ipucu: imleç bir notanın üstündeyken adı, sapması ve zamanı ----
+  function noteLabel(nt) {
+    const near = Math.round(nt.midi);
+    const pc = ((near % 12) + 12) % 12;
+    const cents = Math.round((nt.midi - near) * 100);
+    const oct = Math.floor(near / 12) - 1;
+    const iv = (SCALES[S.scale] || SCALES.major).iv;
+    const inScale = new Set(iv.map(v => (v + S.ton) % 12)).has(pc);
+    const sign = cents > 0 ? "+" : "";
+    const offCls = Math.abs(cents) >= 25 ? " class='off-pitch'" : "";
+    return `<b>${CH[pc]}${oct}</b> <i>·</i> <span${offCls}>${sign}${cents}¢</span>` +
+           ` <i>·</i> <i>${nt.t0.toFixed(1)}s</i> <i>·</i> ${inScale ? "gamda ✓" : "gam dışı"}`;
+  }
+  // Ölçek CSS'e güvenmeden ölçülür: kanvas iç çözünürlüğü ile ekrandaki
+  // boyutu farklı olabilir (dpr, %100 genişlik, yakınlaştırma).
+  function rollScale() {
+    const r = el.roll.getBoundingClientRect();
+    return { r, sx: el.roll.width / (r.width || 1), sy: el.roll.height / (r.height || 1) };
+  }
+  function rollHit(ev) {
+    const { r, sx, sy } = rollScale();
+    const x = (ev.clientX - r.left) * sx, y = (ev.clientY - r.top) * sy;
+    const padX = 4 * sx, padY = 7 * sy;   // ince notalar dokunmatikte de yakalansın
+    let best = null, bestD = Infinity;
+    for (const q of (S.rollRects || [])) {
+      if (x < q.x - padX || x > q.x + q.w + padX) continue;
+      const d = Math.abs(y - (q.y + q.h / 2));
+      if (d <= q.h / 2 + padY && d < bestD) { bestD = d; best = q; }
+    }
+    return best;
+  }
+  function showTip(ev) {
+    const hit = rollHit(ev);
+    el.roll.classList.toggle("on-note", !!hit);
+    if (!hit) { el.tip.hidden = true; return; }
+    const { sx, sy } = rollScale();
+    el.tip.innerHTML = noteLabel(hit.nt);
+    el.tip.hidden = false;
+    el.tip.style.left = Math.round((hit.x + hit.w / 2) / sx) + "px";
+    el.tip.style.top = Math.round(hit.y / sy) + "px";
+  }
+  el.roll.addEventListener("pointermove", showTip);
+  el.roll.addEventListener("pointerdown", showTip);
+  el.roll.addEventListener("pointerleave", () => { el.tip.hidden = true; el.roll.classList.remove("on-note"); });
 
   // ---- armoni hedefleri ----
   function scaleMidis() {
@@ -6229,76 +6313,147 @@ ${song}`;
       return sm[Math.max(0, Math.min(sm.length - 1, ix + k))];
     };
   }
-  // öncelik sırası: 2 ses = melodi+alt3'lü … 6 ses = tam koro
-  const VOICE_DEFS = [
-    { key: "melody", lbl: "🎤 Melodi",      pan: 0,    gain: 1.0 },
-    { key: "alt3",   lbl: "🎶 Alt 3'lü",    pan: -0.5, gain: 0.72 },
-    { key: "ust3",   lbl: "🎶 Üst 3'lü",    pan: 0.5,  gain: 0.66 },
-    { key: "bass",   lbl: "🎸 Bas (oktav ↓)", pan: 0,  gain: 0.8 },
-    { key: "alt6",   lbl: "🎶 Alt 6'lı",    pan: -0.8, gain: 0.6 },
-    { key: "unison", lbl: "👤 Unison (ham)", pan: 0.8, gain: 0.55 },
+  // Antares Harmony Player mantığı: her kanal kendi aralığını seçer.
+  // Aralıklar GAM-GÖRELİ ("3rd" = 2 gam adımı), o yüzden hepsi tona oturur.
+  const INTERVALS = (() => {
+    const L = [{ id: "16va", steps: 0, oct: 2 }];
+    for (let n = 7; n >= 2; n--) L.push({ id: `8va+${ord(n)}`, steps: n - 1, oct: 1 });
+    L.push({ id: "8va", steps: 0, oct: 1 });
+    for (let n = 7; n >= 2; n--) L.push({ id: `+${ord(n)}`, steps: n - 1, oct: 0 });
+    L.push({ id: "U", steps: 0, oct: 0 });
+    for (let n = 2; n <= 7; n++) L.push({ id: `-${ord(n)}`, steps: -(n - 1), oct: 0 });
+    L.push({ id: "8vb", steps: 0, oct: -1 });
+    for (let n = 2; n <= 7; n++) L.push({ id: `8vb-${ord(n)}`, steps: -(n - 1), oct: -1 });
+    L.push({ id: "16vb", steps: 0, oct: -2 });
+    return L;
+  })();
+  function ord(n) { return n === 2 ? "2nd" : n === 3 ? "3rd" : n + "th"; }
+  const IV_MAP = new Map(INTERVALS.map(i => [i.id, i]));
+  const ivById = id => IV_MAP.get(id) || IV_MAP.get("U");
+  // yaklaşık yarım ton (süzgeç seçimi ve sıralama için)
+  const ivSemi = iv => iv.oct * 12 + iv.steps * 2;
+  const VOICE_PRESETS = [
+    { iv: "U",    pan: 0,     lvl: 1.00 },
+    { iv: "-3rd", pan: -0.55, lvl: 0.70 },
+    { iv: "+3rd", pan: 0.55,  lvl: 0.64 },
+    { iv: "8vb",  pan: 0,     lvl: 0.78 },
+    { iv: "+5th", pan: 0.8,   lvl: 0.56 },
+    { iv: "-6th", pan: -0.8,  lvl: 0.54 },
   ];
-  function targetFor(key, m, snap, stepK) {
-    switch (key) {
-      case "melody": return m + (snap(m) - m) * S.tune;   // autotune şiddeti yalnız melodiye
-      case "alt3":   return stepK(m, -2);
-      case "ust3":   return stepK(m, +2);
-      case "bass":   return snap(m) - 12;
-      case "alt6":   return stepK(m, -5);
-      default:       return m;                             // unison: ham
+
+  // ---- TD-PSOLA: perde değişir, formant (ses rengi) KORUNUR ----
+  // Robotikliğin sebebi yeniden örneklemeydi: sesi hızlandırmak formantları da
+  // kaydırıp "sincap" tonu üretiyor, sabit grain de perdeyle alakasız bir
+  // vızıltı bırakıyordu. PSOLA sesi glottal darbelere bölüp darbeleri yeniden
+  // diziyor; spektral zarf hiç bozulmadığı için sonuç insan sesi olarak kalır.
+  function pitchMarks(srcM, hop) {
+    const x = S.audio, N = x.length, sr = S.sr, marks = [];
+    let pos = 0;
+    while (pos < N - 2) {
+      const m = srcM[Math.min(srcM.length - 1, Math.floor(pos / hop))];
+      const voiced = m != null;
+      const hz = voiced ? 440 * Math.pow(2, (m - 69) / 12) : 140;
+      const T0 = Math.max(24, Math.round(sr / hz));
+      let at = Math.round(pos);
+      if (voiced) {                       // glottal darbeye hizala: ±T0/4'te en yüksek genlik
+        const w = Math.max(2, Math.round(T0 / 4));
+        let bv = -1;
+        for (let i = Math.max(0, at - w), e = Math.min(N, at + w); i < e; i++) {
+          const a = Math.abs(x[i]);
+          if (a > bv) { bv = a; at = i; }
+        }
+      }
+      marks.push({ pos: at, T0, voiced });
+      pos = at + T0;
     }
+    return marks;
+  }
+  function psola(marks, ratios, hop) {
+    const x = S.audio, N = x.length;
+    const out = new Float32Array(N), wsum = new Float32Array(N);
+    if (!marks.length) return out;
+    let sk = marks[0].pos, mi = 0, guard = 0;
+    while (sk < N && guard++ < 5e6) {
+      // süre korunduğu için giriş işareti zaman hizalı seçilir (mi hep ileri gider)
+      while (mi + 1 < marks.length &&
+             Math.abs(marks[mi + 1].pos - sk) <= Math.abs(marks[mi].pos - sk)) mi++;
+      const mk = marks[mi], T = mk.T0, L = 2 * T;
+      const a = mk.voiced ? (ratios[Math.min(ratios.length - 1, Math.floor(sk / hop))] || 1) : 1;
+      for (let j = 0; j < L; j++) {
+        const si = mk.pos - T + j, oi = sk - T + j;
+        if (si < 0 || si >= N || oi < 0 || oi >= N) continue;
+        const w = 0.5 - 0.5 * Math.cos(2 * Math.PI * j / L);
+        out[oi] += w * x[si];
+        wsum[oi] += w;
+      }
+      sk += Math.max(2, Math.round(T / a));   // çıkış periyodu = T/oran → perde değişir
+    }
+    // örtüşen pencerelerin toplamı 1 değil: normalize et, yoksa oran arttıkça ses şişer
+    for (let i = 0; i < N; i++) out[i] /= Math.max(0.35, wsum[i]);
+    return out;
   }
 
-  // ---- granüler pitch-shift (süre korunur) ----
-  function shiftVoice(ratios, hop) {
-    const x = S.audio, N = x.length, G = 2048, H = G / 2;
-    const out = new Float32Array(N);
-    const win = new Float32Array(G);
-    for (let i = 0; i < G; i++) win[i] = 0.5 - 0.5 * Math.cos(2 * Math.PI * i / G);
-    for (let c0 = 0; c0 < N; c0 += H) {
-      const r = ratios[Math.min(ratios.length - 1, Math.floor(c0 / hop))];
-      const center = c0 + H / 2;
-      for (let i = 0; i < G; i++) {
-        const oi = c0 + i; if (oi >= N) break;
-        const src = center + (i - G / 2) * r;
-        const s0 = Math.floor(src);
-        if (s0 < 0 || s0 + 1 >= N) continue;
-        const fr = src - s0;
-        out[oi] += win[i] * (x[s0] * (1 - fr) + x[s0 + 1] * fr);
-      }
+  // ---- analiz önbelleği: kanal başına yeniden üretim ucuz olsun ----
+  function prepSource() {
+    const hop = 1024, nFr = Math.ceil(S.audio.length / hop);
+    const srcM = new Array(nFr).fill(null);
+    for (const nt of S.notes) {
+      const f0 = Math.floor(nt.t0 * S.sr / hop), f1 = Math.ceil(nt.t1 * S.sr / hop);
+      for (let f = f0; f < Math.min(nFr, f1); f++) srcM[f] = nt.midi;
     }
-    return out;
+    S.hop = hop; S.srcM = srcM;
+    S.snap = snapper(); S.stepK = stepper();
+    S.marks = pitchMarks(srcM, hop);
+  }
+  // doğallık: her sese ayrı zamanlama kayması + hafif perde salınımı.
+  // İnsan korosu birebir aynı anda ve birebir aynı perdede söylemez; bu iki
+  // kusur olmadan 6 kanal tek bir makine sesi gibi duyuluyor.
+  function humanOf(ix) {
+    return {
+      delay: ix === 0 ? 0 : (((ix * 37) % 7) / 6) * 0.030 * S.human,
+      rate: 4.1 + ix * 0.63,
+      phase: ix * 1.7,
+      drift: ix === 0 ? 0 : 0.004 * S.human,   // lider kanala salınım eklenmez
+    };
+  }
+  function buildVoiceBuf(v) {
+    const IV = ivById(v.iv), nFr = S.srcM.length;
+    const H = humanOf(v.ix);
+    const ratios = new Float32Array(nFr);
+    let last = 1, maxDev = 0;
+    for (let f = 0; f < nFr; f++) {
+      const m = S.srcM[f];
+      if (m != null) {
+        const tgt = (IV.steps === 0 && IV.oct === 0)
+          ? m + (S.snap(m) - m) * S.tune                // U kanalı: autotune fader'a bağlı
+          : S.stepK(S.snap(m), IV.steps) + 12 * IV.oct; // armoni: gama oturur
+        last = Math.pow(2, (tgt - m) / 12);
+      }
+      const t = f * S.hop / S.sr;
+      ratios[f] = last * (1 + H.drift * Math.sin(2 * Math.PI * H.rate * t + H.phase));
+      maxDev = Math.max(maxDev, Math.abs(ratios[f] - 1));
+    }
+    // Düzeltilecek bir şey yoksa (şarkıcı zaten tonda) sesi hiç işleme:
+    // 5 sentin altındaki fark duyulmaz, ama yeniden sentez hafif bulanıklık katar.
+    if (maxDev < 0.003) return S.audio;
+    return psola(S.marks, ratios, S.hop);
+  }
+  function renderVoice(v) {
+    const ctx = ensureCtx();
+    const data = buildVoiceBuf(v);
+    const buf = ctx.createBuffer(1, data.length, S.sr);
+    buf.getChannelData(0).set(data);
+    v.buf = buf;
   }
 
   function makeAcapella() {
     if (!S.audio || !S.notes.length) return;
     el.makeBtn.disabled = true; el.makeBtn.textContent = "⏳ Üretiliyor…";
-    // UI donmasın: işi bir sonraki kareye at
-    setTimeout(() => {
+    setTimeout(() => {                                  // UI donmasın
       try {
-        const hop = 1024, snap = snapper(), stepK = stepper();
-        const nFr = Math.ceil(S.audio.length / hop);
-        // kare -> kaynak midi (nota haritasından; nota dışı = son oran tutulur)
-        const srcM = new Array(nFr).fill(null);
-        for (const nt of S.notes) {
-          const f0 = Math.floor(nt.t0 * S.sr / hop), f1 = Math.ceil(nt.t1 * S.sr / hop);
-          for (let f = f0; f < Math.min(nFr, f1); f++) srcM[f] = nt.midi;
-        }
-        const defs = VOICE_DEFS.slice(0, S.nVoices);
-        const ctx = ensureCtx();
-        S.voiceBufs = defs.map(vd => {
-          const ratios = new Float32Array(nFr);
-          let last = 1;
-          for (let f = 0; f < nFr; f++) {
-            const m = srcM[f];
-            if (m != null) last = Math.pow(2, (targetFor(vd.key, m, snap, stepK) - m) / 12);
-            ratios[f] = last;
-          }
-          const data = vd.key === "unison" ? S.audio : shiftVoice(ratios, hop);
-          const buf = ctx.createBuffer(1, data.length, S.sr);
-          buf.getChannelData(0).set(data);
-          return { ...vd, buf };
-        });
+        prepSource();
+        S.voices = VOICE_PRESETS.slice(0, S.nVoices).map((p, ix) => ({ ...p, ix, on: true, buf: null, vid: null, tile: null }));
+        for (const v of S.voices) renderVoice(v);
         buildGrid();
         el.outCard.hidden = false;
         el.outStatus.textContent = `${S.nVoices} ses hazır — ${CH[S.ton]} ${(SCALES[S.scale] || {}).name || ""}`;
@@ -6310,24 +6465,62 @@ ${song}`;
   }
   el.makeBtn.addEventListener("click", makeAcapella);
 
-  // ---- 6'lı ızgara ----
-  const DEMO_EMO = { melody: "🎤", alt3: "🎶", ust3: "🎵", bass: "🎸", alt6: "🎼", unison: "👤" };
+  // ---- kanal ızgarası: aralık seçimi · aç/kapa · seviye ----
   function buildGrid() {
-    S.vids = [];
     el.grid.innerHTML = "";
-    for (const v of S.voiceBufs) {
+    S.voices.forEach(v => {
       const tile = document.createElement("div");
-      tile.className = "acap-tile" + (S.hasVideo ? "" : " demo");
+      tile.className = "acap-tile" + (S.hasVideo ? "" : " demo") + (v.on ? "" : " off");
+      v.tile = tile;
       if (S.hasVideo) {
         const vid = document.createElement("video");
         vid.src = S.blobUrl; vid.muted = true; vid.playsInline = true; vid.preload = "auto";
-        tile.appendChild(vid); S.vids.push(vid);
-      } else tile.textContent = DEMO_EMO[v.key] || "🎶";
-      const lbl = document.createElement("span");
-      lbl.className = "lbl"; lbl.textContent = v.lbl;
-      tile.appendChild(lbl);
+        tile.appendChild(vid); v.vid = vid;
+      } else {
+        const ph = document.createElement("span");
+        ph.className = "ph"; ph.textContent = ivSemi(ivById(v.iv)) < 0 ? "🎸" : ivSemi(ivById(v.iv)) > 0 ? "🎵" : "🎤";
+        tile.appendChild(ph);
+      }
+      const bar = document.createElement("div");
+      bar.className = "acap-vctl";
+      const power = document.createElement("button");
+      power.className = "acap-pwr"; power.type = "button";
+      power.setAttribute("aria-pressed", String(v.on));
+      power.title = "Kanalı aç/kapat";
+      power.textContent = v.on ? "⏻" : "🔇";
+      power.addEventListener("click", () => {
+        v.on = !v.on;
+        power.textContent = v.on ? "⏻" : "🔇";
+        power.setAttribute("aria-pressed", String(v.on));
+        tile.classList.toggle("off", !v.on);
+        if (S.playing) startPlay();                    // senkron kalsın: baştan hizala
+      });
+      const sel = document.createElement("select");
+      sel.className = "acap-iv"; sel.title = "Armoni aralığı";
+      INTERVALS.forEach(i => sel.add(new Option(i.id, i.id)));
+      sel.value = v.iv;
+      sel.addEventListener("change", () => {
+        v.iv = sel.value;
+        sel.disabled = true;
+        setTimeout(() => {                             // PSOLA bir kanal için ~10 ms
+          renderVoice(v);
+          sel.disabled = false;
+          const ph = tile.querySelector(".ph");
+          if (ph) ph.textContent = ivSemi(ivById(v.iv)) < 0 ? "🎸" : ivSemi(ivById(v.iv)) > 0 ? "🎵" : "🎤";
+          if (S.playing) startPlay();
+        }, 20);
+      });
+      const lvl = document.createElement("input");
+      lvl.type = "range"; lvl.min = "0"; lvl.max = "100"; lvl.className = "acap-lvl";
+      lvl.value = Math.round(v.lvl * 100); lvl.title = "Seviye";
+      lvl.addEventListener("input", () => {
+        v.lvl = lvl.value / 100;
+        if (v.gainNode) v.gainNode.gain.value = v.lvl;   // çalarken anında
+      });
+      bar.append(power, sel, lvl);
+      tile.appendChild(bar);
       el.grid.appendChild(tile);
-    }
+    });
   }
 
   // ---- oynatma ----
@@ -6336,33 +6529,64 @@ ${song}`;
     if (S.ctx.state === "suspended") S.ctx.resume();
     return S.ctx;
   }
+  // koroyu birbirine yapıştıran kısa oda: kuru 6 kanal üst üste bindiğinde
+  // yapay duyuluyor, hafif erken yansıma kümeyi tek mekâna oturtuyor
+  function roomIR(ctx) {
+    if (S.ir) return S.ir;
+    const sr = ctx.sampleRate, len = Math.round(sr * 1.1);
+    const ir = ctx.createBuffer(2, len, sr);
+    for (let c = 0; c < 2; c++) {
+      const d = ir.getChannelData(c);
+      for (let i = 0; i < len; i++) {
+        const t = i / len;
+        d[i] = (Math.random() * 2 - 1) * Math.pow(1 - t, 2.6) * (i < sr * 0.006 ? 0.3 : 1);
+      }
+    }
+    S.ir = ir; return ir;
+  }
   function stopPlay() {
     S.sources.forEach(src => { try { src.stop(); } catch (_) {} });
     S.sources = [];
-    S.vids.forEach(v => { v.pause(); v.currentTime = 0; });
-    [...el.grid.children].forEach(t => t.classList.remove("on"));
+    S.voices.forEach(v => { v.gainNode = null; if (v.vid) { v.vid.pause(); v.vid.currentTime = 0; } });
+    S.voices.forEach(v => v.tile && v.tile.classList.remove("on"));
     S.playing = false;
     el.playBtn.textContent = "▶️ Çal";
   }
   function startPlay(extraDest) {
     const ctx = ensureCtx();
+    const dest = extraDest !== undefined ? extraDest : S.saveDest || null;
     stopPlay();
-    const t0 = ctx.currentTime + 0.12;
-    for (const v of S.voiceBufs) {
+    const bus = ctx.createGain(); bus.gain.value = 1;
+    const dry = ctx.createGain(); dry.gain.value = 0.84;
+    const wet = ctx.createGain(); wet.gain.value = 0.16;
+    const cv = ctx.createConvolver(); cv.buffer = roomIR(ctx);
+    bus.connect(dry); bus.connect(cv); cv.connect(wet);
+    dry.connect(ctx.destination); wet.connect(ctx.destination);
+    if (dest) { dry.connect(dest); wet.connect(dest); }
+    const t0 = ctx.currentTime + 0.15;
+    for (const v of S.voices) {
+      if (!v.on || !v.buf) continue;
+      const H = humanOf(v.ix), semi = ivSemi(ivById(v.iv));
       const src = ctx.createBufferSource(); src.buffer = v.buf;
-      const g = ctx.createGain(); g.gain.value = v.gain;
-      let node = g;
-      if (ctx.createStereoPanner) { const p = ctx.createStereoPanner(); p.pan.value = v.pan; g.connect(p); node = p; }
-      src.connect(g); node.connect(ctx.destination);
-      if (extraDest) node.connect(extraDest);
-      src.start(t0);
+      const g = ctx.createGain(); g.gain.value = v.lvl;
+      v.gainNode = g;
+      // aralığa göre hafif renklendirme: bas kanalı yumuşar, tiz kanal incelir
+      const f = ctx.createBiquadFilter();
+      if (semi <= -7) { f.type = "lowpass"; f.frequency.value = 3200; }
+      else if (semi >= 7) { f.type = "highpass"; f.frequency.value = 150; }
+      else { f.type = "allpass"; f.frequency.value = 800; }
+      let node = f;
+      src.connect(g); g.connect(f);
+      if (ctx.createStereoPanner) { const p = ctx.createStereoPanner(); p.pan.value = v.pan; f.connect(p); node = p; }
+      node.connect(bus);
+      src.start(t0 + H.delay);
       S.sources.push(src);
+      if (v.vid) { v.vid.currentTime = 0; v.vid.play().catch(() => {}); }
+      if (v.tile) v.tile.classList.add("on");
     }
-    S.vids.forEach(v => { v.currentTime = 0; v.play().catch(() => {}); });
-    [...el.grid.children].forEach(t => t.classList.add("on"));
     S.playing = true;
     el.playBtn.textContent = "⏹ Durdur";
-    const durMs = (S.audio.length / S.sr) * 1000 + 200;
+    const durMs = (S.audio.length / S.sr) * 1000 + 400;
     clearTimeout(S.endT); S.endT = setTimeout(() => { if (S.playing) stopPlay(); if (S.saveRec) finishSave(); }, durMs);
   }
   el.playBtn.addEventListener("click", () => { S.playing ? stopPlay() : startPlay(); });
@@ -6372,31 +6596,34 @@ ${song}`;
     if (S.saveRec) { try { S.saveRec.stop(); } catch (_) {} }
   }
   el.saveBtn.addEventListener("click", () => {
-    if (!S.voiceBufs.length || S.saveRec) return;
+    // videoya YALNIZCA açık kanallar girer — duyduğunla indirdiğin aynı olsun
+    const act = S.voices.filter(v => v.on && v.buf);
+    if (!act.length || S.saveRec) return;
     const ctx = ensureCtx();
     const cvs = document.createElement("canvas");
     cvs.width = 1280; cvs.height = 720;
     const g = cvs.getContext("2d");
-    const cols = S.voiceBufs.length > 4 ? 3 : 2, rows = Math.ceil(S.voiceBufs.length / cols);
+    const cols = act.length > 4 ? 3 : act.length > 1 ? 2 : 1, rows = Math.ceil(act.length / cols);
     const cw = cvs.width / cols, chh = cvs.height / rows;
     const paint = () => {
       g.fillStyle = "#0a0a07"; g.fillRect(0, 0, cvs.width, cvs.height);
-      S.voiceBufs.forEach((v, i) => {
+      act.forEach((v, i) => {
         const x = (i % cols) * cw, y = Math.floor(i / cols) * chh;
-        if (S.hasVideo && S.vids[i] && S.vids[i].readyState >= 2) {
+        if (S.hasVideo && v.vid && v.vid.readyState >= 2) {
           g.save(); g.translate(x + cw, y); g.scale(-1, 1);
-          g.drawImage(S.vids[i], 0, 0, cw - 4, chh - 4);
+          g.drawImage(v.vid, 0, 0, cw - 4, chh - 4);
           g.restore();
         } else {
+          const semi = ivSemi(ivById(v.iv));
           g.fillStyle = "#16150f"; g.fillRect(x + 2, y + 2, cw - 4, chh - 4);
           g.font = "64px serif"; g.textAlign = "center";
-          g.fillText(DEMO_EMO[v.key] || "🎶", x + cw / 2, y + chh / 2);
+          g.fillText(semi < 0 ? "🎸" : semi > 0 ? "🎵" : "🎤", x + cw / 2, y + chh / 2);
         }
-        g.fillStyle = "rgba(8,6,3,.75)"; g.fillRect(x + 10, y + chh - 40, 190, 28);
-        g.fillStyle = "#efe6d2"; g.font = "16px system-ui"; g.textAlign = "left";
-        g.fillText(v.lbl, x + 18, y + chh - 20);
+        g.fillStyle = "rgba(8,6,3,.75)"; g.fillRect(x + 10, y + chh - 40, 120, 28);
+        g.fillStyle = "#efe6d2"; g.font = "bold 16px system-ui"; g.textAlign = "left";
+        g.fillText(v.iv, x + 18, y + chh - 20);
       });
-      g.fillStyle = "rgba(245,194,100,.85)"; g.font = "bold 20px system-ui";
+      g.fillStyle = "rgba(245,194,100,.85)"; g.font = "bold 20px system-ui"; g.textAlign = "left";
       g.fillText("ChordPlai · Akapella", 16, 32);
     };
     const paintIv = setInterval(paint, 40); paint();   // rAF değil: kısılma tuzağı
@@ -6416,12 +6643,13 @@ ${song}`;
       a.download = "chordplai-akapella." + (mime.includes("mp4") ? "mp4" : "webm");
       a.click();
       setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-      S.saveRec = null;
+      S.saveRec = null; S.saveDest = null;
       el.saveBtn.disabled = false; el.saveBtn.textContent = "⬇️ Videoya kaydet (WebM)";
       el.outStatus.textContent = "✅ Video indirildi";
     };
     el.saveBtn.disabled = true; el.saveBtn.textContent = "⏺ Kaydediliyor… (şarkı bitince iner)";
     S.saveRec.start();
+    S.saveDest = dest;      // kayıt sırasında kanal açıp kapatınca mix'e bağlı kalsın
     startPlay(dest);
   });
 
