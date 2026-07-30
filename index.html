@@ -4131,6 +4131,62 @@ window.CP_SUPA = {
   }
   buildDirs();
 
+  // ---- efekt sesleri: gama akortlu (rastgele "bip" değil, müzik sitesine yakışır) ----
+  let sfx = null;
+  function sctx() {
+    if (!sfx) sfx = new (window.AudioContext || window.webkitAudioContext)();
+    if (sfx.state === "suspended") sfx.resume();
+    return sfx;
+  }
+  // yem: gam merdiveni — her yem gamın bir üst derecesini çalar (do-re-mi hissi),
+  // 7 yemde bir tepeden döner. Kök = seçili ton, tiz oktav.
+  function sfxEat() {
+    const ctx = sctx(), t = ctx.currentTime;
+    const iv = (TH.SCALES[G.scale] || TH.SCALES.major).iv;
+    const step = (G.feed - 1) % 7, midi = 72 + G.ton + iv[step];   // C5 tabanı + ton = gerçek kök
+    const f = 440 * Math.pow(2, (midi - 69) / 12);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.22, t + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.24);
+    g.connect(ctx.destination);
+    [[1, "sine", 1], [2, "sine", 0.35], [1.5, "triangle", 0.15]].forEach(([m, ty, lv]) => {
+      const o = ctx.createOscillator(), og = ctx.createGain();
+      o.type = ty; o.frequency.setValueAtTime(f * m * 0.94, t);
+      o.frequency.exponentialRampToValueAtTime(f * m, t + 0.05);   // yukarı süzülen "pling"
+      og.gain.value = lv;
+      o.connect(og); og.connect(g);
+      o.start(t); o.stop(t + 0.26);
+    });
+  }
+  // elenme: kök notadan oktav aşağı kayan iki ses + kısa gürültü çarpması
+  function sfxDie() {
+    const ctx = sctx(), t = ctx.currentTime;
+    const f0 = 440 * Math.pow(2, (48 + G.ton - 69) / 12);          // C3 tabanı + ton = pes kök
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.3, t + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.75);
+    g.connect(ctx.destination);
+    [[1, "sawtooth", 0.5], [0.5, "square", 0.3]].forEach(([m, ty, lv]) => {
+      const o = ctx.createOscillator(), og = ctx.createGain();
+      o.type = ty;
+      o.frequency.setValueAtTime(f0 * m, t);
+      o.frequency.exponentialRampToValueAtTime(f0 * m * 0.5, t + 0.55);   // oktav aşağı kayış
+      og.gain.value = lv;
+      o.connect(og); og.connect(g);
+      o.start(t); o.stop(t + 0.7);
+    });
+    const nb = ctx.createBuffer(1, ctx.sampleRate * 0.18, ctx.sampleRate);
+    const nd = nb.getChannelData(0);
+    for (let i = 0; i < nd.length; i++) nd[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / nd.length, 2);
+    const ns = ctx.createBufferSource(); ns.buffer = nb;
+    const nf = ctx.createBiquadFilter(); nf.type = "lowpass"; nf.frequency.value = 900;
+    const ng = ctx.createGain(); ng.gain.value = 0.35;
+    ns.connect(nf); nf.connect(ng); ng.connect(g);
+    ns.start(t);
+  }
+
   // ---- yön uygulama (ters yöne dönüş yok — klasik kural) ----
   const OPP = { up: "down", down: "up", left: "right", right: "left" };
   function steer(dir) {
@@ -4174,6 +4230,7 @@ window.CP_SUPA = {
       G.feed++; G.score += G.speedLv;
       u.score.textContent = G.score; u.len.textContent = G.snake.length;
       G.food = place();
+      sfxEat();
       if (G.feed % 3 === 0) { G.speedLv++; G.tick = Math.max(260, Math.round(G.tick * 0.92)); schedule(); }
     } else G.snake.pop();
     draw();
@@ -4181,6 +4238,7 @@ window.CP_SUPA = {
   function gameOver() {
     clearInterval(G.timer); G.timer = null;
     G.running = false;
+    sfxDie();
     u.over.hidden = false;
     u.overScore.textContent = G.score;
     u.overSub.textContent = `uzunluk ${G.snake.length} · hız sv ${G.speedLv}`;
