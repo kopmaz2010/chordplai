@@ -865,15 +865,57 @@ window.CP_SUPA = {
   .nj-fruit.sliced { transition: transform .45s ease, opacity .45s ease; transform: translateX(-50%) scale(1.7) rotate(25deg); opacity: 0; }
   .nj-fruit.sliced .fr::after { content: "💥"; }
   .nj-fruit.missed { transition: opacity .3s; opacity: 0; }
-  .nj-cam {
-    position: absolute; top: 10px; left: 10px; z-index: 5;
-    width: clamp(110px, 30%, 220px); aspect-ratio: 4 / 3; object-fit: cover;
-    transform: scaleX(-1);                     /* ayna görünümü */
-    border-radius: 12px; border: 2px solid var(--amber);
-    box-shadow: 0 0 0 1px #000, 0 10px 24px rgba(0,0,0,.6), 0 0 18px -6px var(--amber);
-    background: #000;
-  }
+  /* .nj-cam köşe pulu kaldırıldı — oyunlarda kamera artık .game-cam yan paneli */
   .nj-camtoggle { flex: 0 0 auto; font-size: .72rem; padding: 8px 12px; }
+  /* ---- oyunlarda ortak kamera YAN paneli: oyunla eşit boyda, köşe pulu değil ---- */
+  .game-row { display: grid; grid-template-columns: minmax(150px, 34%) 1fr auto; gap: 14px; align-items: stretch; }
+  .game-row:not(.has-cam) { grid-template-columns: 1fr auto; }
+  .game-cam { width: 100%; height: 100%; min-height: 200px; object-fit: cover; transform: scaleX(-1);
+              border-radius: 16px; border: 1px solid #3a3526; background: #000;
+              box-shadow: inset 0 0 0 1px rgba(245,194,100,.12), 0 12px 30px rgba(0,0,0,.5); }
+  .game-cam[hidden] { display: none; }
+  @media (max-width: 760px) {
+    .game-row { grid-template-columns: 1fr; }
+    .game-cam { min-height: 0; aspect-ratio: 16/9; height: auto; }
+  }
+  /* ---- 🐍 Akor Yılanı ---- */
+  #view-snake { display: flex; flex-direction: column; gap: 14px; }
+  #view-snake[hidden] { display: none; }
+  .snk-arena { position: relative; border-radius: 16px; overflow: hidden; background:
+               radial-gradient(120% 140% at 50% 0%, #131109, #0a0a07);
+               border: 1px solid #2b2920; min-height: 300px; }
+  #snkCanvas { display: block; width: 100%; height: 100%; }
+  .snk-idle { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 10px;
+              align-items: center; justify-content: center; text-align: center; padding: 18px;
+              background: rgba(8,6,3,.6); backdrop-filter: blur(3px); }
+  .snk-idle[hidden] { display: none; }
+  .snk-idle-emoji { font-size: 2.2rem; }
+  .snk-idle p { color: var(--cream); font-size: .9rem; line-height: 1.5; }
+  .snk-over { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 6px;
+              align-items: center; justify-content: center; background: rgba(8,6,3,.82); }
+  .snk-over[hidden] { display: none; }
+  .snk-over h3 { color: var(--amber); letter-spacing: .14em; text-transform: uppercase; }
+  .snk-over .sc { font-size: 2.6rem; font-weight: 800; color: var(--cream); }
+  .snk-over p { color: var(--muted); font-size: .8rem; }
+  .snk-pad { display: flex; flex-direction: column; gap: 8px; align-items: center; justify-content: center;
+             padding: 12px; border-radius: 16px; background: #12100b; border: 1px solid #2b2920; }
+  .snk-pad-lbl { font-size: .58rem; letter-spacing: .22em; color: var(--muted-dim); }
+  .snk-dpad { display: grid; grid-template-columns: repeat(3, 64px); grid-template-rows: repeat(3, 58px); gap: 6px;
+              grid-template-areas: ". up ." "left mid right" ". down ."; }
+  .snk-key { border: 1px solid #4a4230; border-radius: 12px; background: #0f0e0a; color: var(--cream);
+             display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+             cursor: pointer; transition: box-shadow .15s, border-color .15s, transform .1s; }
+  .snk-key[data-dir="up"] { grid-area: up; } .snk-key[data-dir="down"] { grid-area: down; }
+  .snk-key[data-dir="left"] { grid-area: left; } .snk-key[data-dir="right"] { grid-area: right; }
+  .snk-key-mid { grid-area: mid; background: transparent; border-style: dashed; cursor: default; }
+  .snk-key i { font-style: normal; font-size: .72rem; color: var(--muted); }
+  .snk-key b { font-size: .98rem; color: var(--amber); }
+  .snk-key.hot { border-color: var(--amber); box-shadow: 0 0 16px -4px var(--amber); transform: scale(1.05); }
+  .snk-key.hot b { color: var(--amber-hot, #ffd98a); }
+  @media (max-width: 760px) {
+    .snk-pad { flex-direction: row; }
+    .snk-dpad { grid-template-columns: repeat(3, 56px); grid-template-rows: repeat(3, 50px); }
+  }
   .nj-grp-lbl { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted-dim); margin: 10px 0 6px; }
   .nj-monitor { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .nj-level { flex: 0 0 90px; height: 8px; border-radius: 6px; background: #100f0a; overflow: hidden; box-shadow: 0 0 0 1px #000 inset; }
@@ -898,7 +940,6 @@ window.CP_SUPA = {
     box-shadow: 0 10px 30px rgba(0,0,0,.5) inset;
   }
   #ttCanvas { height: min(58vh, 460px); width: auto; image-rendering: pixelated; border-radius: 6px; background: #0d0c08; box-shadow: 0 0 0 1px #2a2114; }
-  .tt-cam { width: clamp(90px, 24%, 170px); }
   .tt-side { flex: 0 0 148px; display: flex; flex-direction: column; gap: 10px; }
   .tt-side-lbl { display: block; font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted-dim); margin-bottom: 6px; }
   .tt-next-box, .tt-ctl {
@@ -1367,6 +1408,7 @@ window.CP_SUPA = {
         <button class="mode-tab" data-mode="staff" aria-pressed="false">🎼 Porte</button>
         <button class="mode-tab" data-mode="ninja" aria-pressed="false">🥷 Ninja</button>
         <button class="mode-tab" data-mode="tetris" aria-pressed="false">🧱 Tetris</button>
+        <button class="mode-tab" data-mode="snake" aria-pressed="false">🐍 Yılan</button>
         <button class="mode-tab" data-mode="acap" aria-pressed="false">🎤 Akapella</button>
       </div>
     </div>
@@ -1581,13 +1623,15 @@ window.CP_SUPA = {
       <div class="ng-stat"><div class="k">Rekor</div><div class="v" id="njBest">0</div></div>
     </div>
 
+    <div class="game-row" id="njRow">
+    <video id="njCam" class="game-cam" autoplay playsinline muted hidden></video>
     <div class="nj-arena" id="njArena">
-      <video id="njCam" class="nj-cam" autoplay playsinline muted hidden></video>
       <div class="nj-idle" id="njIdle">
         <div class="nj-idle-emoji">🎸🥷</div>
         <p>Akorlar meyvelerle birlikte düşer.<br>Meyvenin üstündeki akoru <b>gitarında çal</b> — doğru çalarsan meyve doğranır!</p>
         <p class="nj-idle-sub">Mikrofon izni istenecek · jak/ses kartı girişi daha temiz sinyal verir</p>
       </div>
+    </div>
     </div>
 
     <div class="nj-monitor">
@@ -1627,10 +1671,10 @@ window.CP_SUPA = {
       <div class="ng-stat time"><div class="k">Oyun Metronomu</div><div class="v" id="ttBpm">40 <small>BPM</small></div></div>
     </div>
 
-    <div class="tt-wrap">
+    <div class="tt-wrap game-row" id="ttRow">
+      <video id="ttCam" class="game-cam" autoplay playsinline muted hidden></video>
       <div class="tt-boardbox">
         <canvas id="ttCanvas" width="220" height="352"></canvas>
-        <video id="ttCam" class="nj-cam tt-cam" autoplay playsinline muted hidden></video>
         <div class="tt-over" id="ttOver" hidden>
           <h3>Oyun Bitti</h3><div class="sc" id="ttOverScore">0</div>
           <p id="ttOverSub" style="color:var(--muted);font-size:.8rem"></p>
@@ -1676,6 +1720,68 @@ window.CP_SUPA = {
       <ol class="ng-board-list" id="ttBoardList"></ol>
     </div>
     <p class="hint">Her 2 satırda seviye +1 → oyun metronomu hızlanır (40 BPM'den başlar) · satır sil = seviye × puan</p>
+  </div>
+
+  <div id="view-snake" hidden>
+    <div class="ng-topbar">
+      <span class="ng-mode-name">🐍 AKOR YILANI · <b>yön vermenin tek yolu akor çalmak</b></span>
+      <span class="ng-mode-sub">enstrümanını al: her yön bir akor</span>
+    </div>
+
+    <div class="ng-stats">
+      <div class="ng-stat"><div class="k">Puan</div><div class="v" id="snkScore">0</div></div>
+      <div class="ng-stat"><div class="k">Uzunluk</div><div class="v" id="snkLen">3</div></div>
+      <div class="ng-stat"><div class="k">Rekor</div><div class="v" id="snkBest">0</div></div>
+    </div>
+
+    <div class="game-row" id="snkRow">
+      <video id="snkCam" class="game-cam" autoplay playsinline muted hidden></video>
+      <div class="snk-arena">
+        <canvas id="snkCanvas"></canvas>
+        <div class="snk-idle" id="snkIdle">
+          <div class="snk-idle-emoji">🐍🎸</div>
+          <p>Yılanı <b>akor çalarak</b> yönet: her yönün bir akoru var.<br>Yem yedikçe uzar ve hızlanır — kendine çarpma!</p>
+          <p class="nj-idle-sub">Mikrofon izni istenecek · klavye okları da çalışır (pratik için)</p>
+        </div>
+        <div class="snk-over" id="snkOver" hidden>
+          <h3>Oyun Bitti</h3><div class="sc" id="snkOverScore">0</div>
+          <p id="snkOverSub"></p>
+        </div>
+      </div>
+      <div class="snk-pad" id="snkPad">
+        <span class="snk-pad-lbl">KUMANDA · AKORU ÇAL</span>
+        <div class="snk-dpad">
+          <button class="snk-key" data-dir="up"><i>▲</i><b id="snkUp">—</b></button>
+          <button class="snk-key" data-dir="left"><i>◀</i><b id="snkLeft">—</b></button>
+          <button class="snk-key snk-key-mid" disabled><i>🐍</i></button>
+          <button class="snk-key" data-dir="right"><i>▶</i><b id="snkRight">—</b></button>
+          <button class="snk-key" data-dir="down"><i>▼</i><b id="snkDown">—</b></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="nj-monitor">
+      <div class="nj-level"><i id="snkLevelBar"></i></div>
+      <div class="nj-heard" id="snkHeard">🎤 Mikrofon kapalı · klavye okları da çalışır</div>
+      <button class="chip nj-camtoggle" id="snkCamToggle" aria-pressed="true">📷 Kamera: Açık</button>
+    </div>
+
+    <div class="card">
+      <label>Ton · Gam/Makam — yön akorları gamın I · IV · V · VI derecelerinden</label>
+      <div class="njrow">
+        <select id="snkTon"></select>
+        <select id="snkScale"></select>
+      </div>
+      <div class="scale-chords" id="snkPoolChips"></div>
+    </div>
+
+    <div class="transport"><button class="go" id="snkGo">🎤 Başla</button></div>
+
+    <div class="ng-board">
+      <div class="ng-board-head"><span>🏆 Sıralama · <b>Akor Yılanı</b></span></div>
+      <ol class="ng-board-list" id="snkBoardList"></ol>
+    </div>
+    <p class="hint">Duvarlar sarmal: karşı kenardan çıkarsın · her 3 yemde hız artar · puan = yem × hız seviyesi</p>
   </div>
 
   <div id="view-acap" hidden>
@@ -2625,6 +2731,7 @@ window.CP_SUPA = {
   const vStaff  = document.getElementById("view-staff");
   const vNinja  = document.getElementById("view-ninja");
   const vTetris = document.getElementById("view-tetris");
+  const vSnake  = document.getElementById("view-snake");
   const vAir    = document.getElementById("view-air");
   const vAcap   = document.getElementById("view-acap");
   tabs.forEach(t => t.addEventListener("click", () => setMode(t.dataset.mode)));
@@ -2635,6 +2742,7 @@ window.CP_SUPA = {
     if (vStaff) vStaff.hidden = m !== "staff";
     if (vNinja) vNinja.hidden = m !== "ninja";
     if (vTetris) vTetris.hidden = m !== "tetris";
+    if (vSnake) vSnake.hidden = m !== "snake";
     if (vAir) vAir.hidden = m !== "air";
     if (vAcap) vAcap.hidden = m !== "acap";
     if (m !== "chords") { if (window.__ampStop) window.__ampStop(); }
@@ -2642,6 +2750,7 @@ window.CP_SUPA = {
     if (m !== "staff")  { if (window.__staffStop) window.__staffStop(); }
     if (m !== "ninja")  { if (window.__ninjaStop) window.__ninjaStop(); }
     if (m !== "tetris") { if (window.__tetrisStop) window.__tetrisStop(); }
+    if (m !== "snake")  { if (window.__snakeStop) window.__snakeStop(); }
     if (m !== "air")    { if (window.__airStop) window.__airStop(); }
     if (m !== "acap")   { if (window.__acapStop) window.__acapStop(); }
   }
@@ -3484,8 +3593,11 @@ window.CP_SUPA = {
   }
   function attachCam() {
     const hasVideo = ENG.stream && ENG.stream.getVideoTracks().length > 0;
-    if (hasVideo && camWanted) { u.cam.srcObject = ENG.stream; u.cam.hidden = false; }
+    const show = hasVideo && camWanted;
+    if (show) { u.cam.srcObject = ENG.stream; u.cam.hidden = false; }
     else { u.cam.hidden = true; u.cam.srcObject = null; }
+    const row = document.getElementById("njRow");
+    if (row) row.classList.toggle("has-cam", show);
   }
   u.camToggle.addEventListener("click", () => {
     camWanted = !camWanted;
@@ -3862,8 +3974,11 @@ window.CP_SUPA = {
     u.camToggle.setAttribute("aria-pressed", String(camWanted));
     u.camToggle.textContent = camWanted ? "📷 Kamera: Açık" : "📷 Kamera: Kapalı";
     const hasVideo = AE.ENG.stream && AE.ENG.stream.getVideoTracks().length > 0;
-    if (hasVideo && camWanted && T.running) { u.cam.srcObject = AE.ENG.stream; u.cam.hidden = false; }
+    const show = hasVideo && camWanted && T.running;
+    if (show) { u.cam.srcObject = AE.ENG.stream; u.cam.hidden = false; }
     else { u.cam.hidden = true; u.cam.srcObject = null; }
+    const row = document.getElementById("ttRow");
+    if (row) row.classList.toggle("has-cam", show);
   }
   u.camToggle.addEventListener("click", () => {
     camWanted = !camWanted;
@@ -3944,6 +4059,276 @@ window.CP_SUPA = {
   resetBoard();
   lbRender();
   if (window.AkorPreview) window.AkorPreview.bind(u.ctl, ".tt-ctl-row", t => ttChords[t.dataset.act]);
+})();
+</script>
+
+<script>
+/* ---- 🐍 Akor Yılanı: yön vermenin tek yolu akor çalmak ---- */
+(() => {
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const u = {
+    view: $("view-snake"), canvas: $("snkCanvas"), idle: $("snkIdle"),
+    over: $("snkOver"), overScore: $("snkOverScore"), overSub: $("snkOverSub"),
+    score: $("snkScore"), len: $("snkLen"), best: $("snkBest"),
+    go: $("snkGo"), heard: $("snkHeard"), level: $("snkLevelBar"),
+    cam: $("snkCam"), camToggle: $("snkCamToggle"), row: $("snkRow"),
+    ton: $("snkTon"), scale: $("snkScale"), chips: $("snkPoolChips"),
+    keys: { up: $("snkUp"), left: $("snkLeft"), right: $("snkRight"), down: $("snkDown") },
+    pad: $("snkPad"),
+  };
+  if (!u.view) return;
+  const TH = window.AkorTheory, AE = window.AkorEngine;
+  const CH = TH.CHROMA;
+  const GRID = 15;
+
+  const G = {
+    running: false, snake: [], dir: "right", nextDir: null, food: null,
+    feed: 0, speedLv: 1, score: 0, tick: 550, timer: null,
+    ton: 9, scale: "aeolian", dirChords: {},   // "up" -> {name, pcs}
+    best: 0, camWanted: true, dpr: 1,
+  };
+  try { G.best = +localStorage.getItem("akorSnakeBest") || 0; } catch (_) {}
+  try { G.camWanted = localStorage.getItem("akorSnakeCam") !== "0"; } catch (_) {}
+  try { G.ton = +(localStorage.getItem("akorSnakeTon") ?? 9); G.scale = localStorage.getItem("akorSnakeScale") || "aeolian"; } catch (_) {}
+  u.best.textContent = G.best;
+
+  // ---- seçiciler ----
+  CH.forEach((n, i) => u.ton.add(new Option(n, i)));
+  {
+    const groups = {};
+    Object.entries(TH.SCALES).forEach(([k, sc]) => (groups[sc.grp] = groups[sc.grp] || []).push([k, sc.name]));
+    for (const [g, list] of Object.entries(groups)) {
+      const og = document.createElement("optgroup"); og.label = g;
+      list.forEach(([k, nm]) => og.appendChild(new Option(nm, k)));
+      u.scale.appendChild(og);
+    }
+  }
+  u.ton.value = G.ton; u.scale.value = G.scale;
+  u.ton.addEventListener("change", () => { G.ton = +u.ton.value; savePrefs(); buildDirs(); });
+  u.scale.addEventListener("change", () => { G.scale = u.scale.value; savePrefs(); buildDirs(); });
+  function savePrefs() {
+    try { localStorage.setItem("akorSnakeTon", G.ton); localStorage.setItem("akorSnakeScale", G.scale); } catch (_) {}
+  }
+
+  // ---- yön akorları: gamın I ↑ · IV ← · V → · VI ↓ dereceleri ----
+  const DIR_DEG = { up: 0, left: 3, right: 4, down: 5 };
+  function buildDirs() {
+    const pool = window.AkorPools.build("kolay", G.ton, G.scale);
+    const byDeg = {}; pool.forEach(c => { if (byDeg[c.deg] == null) byDeg[c.deg] = c; });
+    G.dirChords = {};
+    const used = new Set();
+    for (const [dir, want] of Object.entries(DIR_DEG)) {
+      let c = byDeg[want];
+      if (!c || used.has(c.name)) c = pool.find(x => !used.has(x.name));
+      if (c) { used.add(c.name); G.dirChords[dir] = c; }
+    }
+    for (const dir of ["up", "left", "right", "down"])
+      u.keys[dir].textContent = G.dirChords[dir] ? G.dirChords[dir].name : "—";
+    u.chips.innerHTML = Object.entries(G.dirChords)
+      .map(([d, c]) => `<span class="sc-chip"><b>${c.name}</b><i>${{up:"▲",left:"◀",right:"▶",down:"▼"}[d]}</i></span>`).join("");
+    if (G.running) AE.ENG.targets = Object.values(G.dirChords);
+  }
+  buildDirs();
+
+  // ---- yön uygulama (ters yöne dönüş yok — klasik kural) ----
+  const OPP = { up: "down", down: "up", left: "right", right: "left" };
+  function steer(dir) {
+    if (!dir || dir === OPP[G.dir]) return;
+    G.nextDir = dir;
+    flashKey(dir);
+  }
+  function flashKey(dir) {
+    const el = u.keys[dir] && u.keys[dir].parentElement;
+    if (!el) return;
+    el.classList.add("hot");
+    setTimeout(() => el.classList.remove("hot"), 450);
+  }
+
+  // ---- oyun döngüsü ----
+  function place() {
+    while (true) {
+      const p = { x: (Math.random() * GRID) | 0, y: (Math.random() * GRID) | 0 };
+      if (!G.snake.some(s => s.x === p.x && s.y === p.y)) return p;
+    }
+  }
+  function reset() {
+    G.snake = [{ x: 7, y: 7 }, { x: 6, y: 7 }, { x: 5, y: 7 }];
+    G.dir = "right"; G.nextDir = null;
+    G.food = place(); G.feed = 0; G.speedLv = 1; G.score = 0; G.tick = 550;
+    u.score.textContent = 0; u.len.textContent = 3;
+  }
+  function schedule() {
+    clearInterval(G.timer);
+    G.timer = setInterval(stepGame, G.tick);   // rAF değil: arka planda kısılıyor
+  }
+  function stepGame() {
+    if (G.nextDir) { G.dir = G.nextDir; G.nextDir = null; }
+    const h = G.snake[0];
+    const d = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] }[G.dir];
+    // duvarlar sarmal: akorla dönüş klavyeden yavaştır, duvar ölümü oyunu imkânsız yapar
+    const nh = { x: (h.x + d[0] + GRID) % GRID, y: (h.y + d[1] + GRID) % GRID };
+    if (G.snake.some(s => s.x === nh.x && s.y === nh.y)) return gameOver();
+    G.snake.unshift(nh);
+    if (nh.x === G.food.x && nh.y === G.food.y) {
+      G.feed++; G.score += G.speedLv;
+      u.score.textContent = G.score; u.len.textContent = G.snake.length;
+      G.food = place();
+      if (G.feed % 3 === 0) { G.speedLv++; G.tick = Math.max(260, Math.round(G.tick * 0.92)); schedule(); }
+    } else G.snake.pop();
+    draw();
+  }
+  function gameOver() {
+    clearInterval(G.timer); G.timer = null;
+    G.running = false;
+    u.over.hidden = false;
+    u.overScore.textContent = G.score;
+    u.overSub.textContent = `uzunluk ${G.snake.length} · hız sv ${G.speedLv}`;
+    u.go.textContent = "🎤 Tekrar Oyna";
+    if (G.score > G.best) { G.best = G.score; u.best.textContent = G.best; try { localStorage.setItem("akorSnakeBest", G.best); } catch (_) {} }
+    lbSubmit(G.score); lbRender();
+  }
+
+  // ---- çizim: bize özgü koyu/amber görünüm ----
+  function sizeCanvas() {
+    G.dpr = Math.min(2, devicePixelRatio || 1);
+    const w = u.canvas.clientWidth || 300, h = u.canvas.clientHeight || 300;
+    u.canvas.width = w * G.dpr; u.canvas.height = h * G.dpr;
+  }
+  function draw() {
+    const c = u.canvas, g = c.getContext("2d");
+    if (!c.width) sizeCanvas();
+    const W = c.width, H = c.height, cell = Math.min(W, H) / GRID;
+    const ox = (W - cell * GRID) / 2, oy = (H - cell * GRID) / 2;
+    g.clearRect(0, 0, W, H);
+    // silik ızgara
+    g.strokeStyle = "rgba(245,194,100,.05)"; g.lineWidth = 1;
+    for (let i = 0; i <= GRID; i++) {
+      g.beginPath(); g.moveTo(ox + i * cell, oy); g.lineTo(ox + i * cell, oy + GRID * cell); g.stroke();
+      g.beginPath(); g.moveTo(ox, oy + i * cell); g.lineTo(ox + GRID * cell, oy + i * cell); g.stroke();
+    }
+    // yem: nota
+    const fx = ox + G.food.x * cell, fy = oy + G.food.y * cell;
+    g.fillStyle = "#78ffbe";
+    g.shadowColor = "#78ffbe"; g.shadowBlur = 10 * G.dpr;
+    g.beginPath(); g.arc(fx + cell / 2, fy + cell / 2, cell * 0.3, 0, 7); g.fill();
+    g.shadowBlur = 0;
+    // yılan: baştan kuyruğa amber → koyu degrade, yuvarak köşeli
+    G.snake.forEach((s, i) => {
+      const t = i / Math.max(1, G.snake.length - 1);
+      const r = Math.round(245 - 100 * t), gg = Math.round(194 - 110 * t), b = Math.round(100 - 60 * t);
+      g.fillStyle = `rgb(${r},${gg},${b})`;
+      const x = ox + s.x * cell, y = oy + s.y * cell, pad = cell * 0.08;
+      g.beginPath(); g.roundRect(x + pad, y + pad, cell - 2 * pad, cell - 2 * pad, cell * 0.28); g.fill();
+      if (i === 0) {   // gözler
+        g.fillStyle = "#0a0a07";
+        const e = cell * 0.13, exo = G.dir === "left" ? -e : G.dir === "right" ? e : 0, eyo = G.dir === "up" ? -e : G.dir === "down" ? e : 0;
+        g.beginPath(); g.arc(x + cell * 0.35 + exo, y + cell * 0.38 + eyo, cell * 0.07, 0, 7); g.fill();
+        g.beginPath(); g.arc(x + cell * 0.65 + exo, y + cell * 0.38 + eyo, cell * 0.07, 0, 7); g.fill();
+      }
+    });
+  }
+  window.addEventListener("resize", () => { if (!u.view.hidden) { sizeCanvas(); draw(); } });
+
+  // ---- girişler: akor + klavye + dokunma ----
+  function onChord(name) {
+    for (const [dir, c] of Object.entries(G.dirChords))
+      if (c && c.name === name) {
+        u.heard.innerHTML = `🎸 Duydum: <b>${name}</b> → ${{up:"▲",left:"◀",right:"▶",down:"▼"}[dir]}`;
+        steer(dir); return;
+      }
+  }
+  function onLevel(rms) {
+    if (u.level) u.level.style.width = Math.min(100, rms * 900) + "%";
+  }
+  document.addEventListener("keydown", e => {
+    if (u.view.hidden || !G.running) return;
+    const map = { ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right" };
+    if (map[e.key]) { e.preventDefault(); steer(map[e.key]); }
+  });
+  u.pad.addEventListener("click", e => {
+    const b = e.target.closest(".snk-key"); if (!b || !b.dataset.dir || !G.running) return;
+    steer(b.dataset.dir);
+  });
+
+  // ---- kamera yan paneli ----
+  function syncCamToggle() {
+    u.camToggle.textContent = G.camWanted ? "📷 Kamera: Açık" : "📷 Kamera: Kapalı";
+    u.camToggle.setAttribute("aria-pressed", String(G.camWanted));
+  }
+  function attachCam() {
+    const hasVideo = AE.ENG.stream && AE.ENG.stream.getVideoTracks().length > 0;
+    const show = hasVideo && G.camWanted;
+    u.cam.srcObject = show ? AE.ENG.stream : null;
+    u.cam.hidden = !show;
+    u.row.classList.toggle("has-cam", show);
+  }
+  u.camToggle.addEventListener("click", () => {
+    G.camWanted = !G.camWanted;
+    try { localStorage.setItem("akorSnakeCam", G.camWanted ? "1" : "0"); } catch (_) {}
+    syncCamToggle();
+    if (AE.ENG.running) attachCam();
+  });
+  syncCamToggle();
+
+  // ---- sıralama (cihazda; Tetris ile aynı depo, mode:"snake") ----
+  function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+  function lbRead() { try { return JSON.parse(localStorage.getItem("akorLB") || "[]"); } catch (_) { return []; } }
+  function lbSubmit(score) {
+    let nm = ""; try { nm = localStorage.getItem("akorPlayer") || ""; } catch (_) {}
+    const a = lbRead(); a.push({ name: nm || "Anonim", score, mode: "snake", ts: Date.now() });
+    try { localStorage.setItem("akorLB", JSON.stringify(a.slice(-800))); } catch (_) {}
+  }
+  function lbRender() {
+    let me = ""; try { me = localStorage.getItem("akorPlayer") || ""; } catch (_) {}
+    const byName = {};
+    for (const x of lbRead()) {
+      if (x.mode !== "snake") continue;
+      if (!byName[x.name] || x.score > byName[x.name].score) byName[x.name] = x;
+    }
+    const top = Object.values(byName).sort((a, b) => b.score - a.score).slice(0, 10);
+    const ol = $("snkBoardList");
+    ol.innerHTML = top.length
+      ? top.map(r => `<li${r.name === me ? ' class="me"' : ""}><span>${esc(r.name)}</span><b>${r.score}</b></li>`).join("")
+      : "<li><span>Henüz skor yok — ilk sen ol!</span></li>";
+  }
+  lbRender();
+
+  // ---- başlat / durdur ----
+  async function start() {
+    if (G.running) return;
+    let hasName = false; try { hasName = !!localStorage.getItem("akorPlayer"); } catch (_) {}
+    if (!hasName && window.__gateOpen) { window.__gateOpen(); return; }
+    u.go.disabled = true; u.go.textContent = "⏳ Mikrofon…";
+    AE.ENG.targets = Object.values(G.dirChords);
+    AE.ENG.onChord = onChord;
+    AE.ENG.onLevel = onLevel;
+    const ok = await AE.start(G.camWanted);
+    u.go.disabled = false;
+    if (!ok) { u.heard.textContent = "⚠️ Mikrofon izni verilmedi — oyun için gerekli."; u.go.textContent = "🎤 Başla"; return; }
+    attachCam();
+    u.idle.hidden = true; u.over.hidden = true;
+    u.heard.textContent = "🎤 Dinliyorum — yön akorunu çal";
+    reset(); sizeCanvas(); draw();
+    G.running = true;
+    u.go.textContent = "⏹ Bitir";
+    schedule();
+  }
+  function stop(full) {
+    clearInterval(G.timer); G.timer = null;
+    G.running = false;
+    u.go.textContent = "🎤 Başla";
+    if (full) {
+      AE.stop();
+      u.cam.srcObject = null; u.cam.hidden = true; u.row.classList.remove("has-cam");
+      u.idle.hidden = false;
+      u.heard.textContent = "🎤 Mikrofon kapalı · klavye okları da çalışır";
+      if (u.level) u.level.style.width = "0%";
+    }
+  }
+  u.go.addEventListener("click", () => { G.running ? stop(true) : start(); });
+  window.__snakeStop = () => stop(true);
+  window.__snk = { G, steer, stepGame, buildDirs, start, reset, draw };   // test kancası
 })();
 </script>
 

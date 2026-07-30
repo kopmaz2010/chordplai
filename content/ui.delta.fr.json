@@ -167,5 +167,21 @@
   "3 parmak · 5'li": "3 doigts · quinte",
   "4 parmak · 7'li": "4 doigts · septième",
   "Sağ yumruk": "Poing droit",
-  "avuç susturma: çalan tüm arpej sesleri kesilir": "palm mute : toutes les notes de l'arpège s'arrêtent"
+  "avuç susturma: çalan tüm arpej sesleri kesilir": "palm mute : toutes les notes de l'arpège s'arrêtent",
+  "🐍 Yılan": "🐍 Serpent",
+  "yön vermenin tek yolu akor çalmak": "le seul moyen de diriger : jouer des accords",
+  "enstrümanını al: her yön bir akor": "prenez votre instrument : chaque direction est un accord",
+  "Uzunluk": "Longueur",
+  "KUMANDA · AKORU ÇAL": "MANETTE · JOUEZ L'ACCORD",
+  "Yem yedikçe uzar ve hızlanır — kendine çarpma!": "Mangez pour grandir et accélérer — ne vous mordez pas !",
+  "Mikrofon izni istenecek · klavye okları da çalışır (pratik için)": "Autorisation micro demandée · les flèches marchent aussi",
+  "🎤 Mikrofon kapalı · klavye okları da çalışır": "🎤 Micro coupé · les flèches marchent aussi",
+  "🎤 Dinliyorum — yön akorunu çal": "🎤 J'écoute — jouez un accord de direction",
+  "Ton · Gam/Makam — yön akorları gamın I · IV · V · VI derecelerinden": "Tonalité · Gamme — accords des degrés I · IV · V · VI",
+  "Duvarlar sarmal: karşı kenardan çıkarsın · her 3 yemde hız artar · puan = yem × hız seviyesi": "Les murs se traversent · vitesse +1 tous les 3 fruits · score = fruits × niveau",
+  "🎤 Tekrar Oyna": "🎤 Rejouer",
+  "⏹ Bitir": "⏹ Terminer",
+  "Yılanı": "Dirigez le serpent",
+  "🏆 Sıralama ·": "🏆 Classement ·",
+  "Akor Yılanı": "Serpent d'accords"
 }
