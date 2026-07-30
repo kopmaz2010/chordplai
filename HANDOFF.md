@@ -231,6 +231,21 @@ kendi akoru olmayanlarda işaretin sağında **▸** (içe yatır/majör) veya
 - `window.__airAutoStart` gibi otomatik başlatıcıları çağırmadan önce
   **o görünüm açık mı** diye bak. Nota oyunundan giriş yapan kullanıcının
   karşısına kamera izni çıkıyordu.
+- **Beden pozu görselleri AYNALANMIŞ tutulur.** Kamera `scaleX(-1)` ile ayna
+  görünümünde: kullanıcının sağ kolu ekranın sağında görünür. Model fotoğrafı
+  aynalanmazsa (karşıdan çekilmiş fotoğrafta modelin sağ kolu solda görünür)
+  kullanıcı gördüğü kolu taklit edip **ters kolu** kaldırır ve yanlış akor
+  çalar. Yeni poz görseli eklerken `Image.FLIP_LEFT_RIGHT` uygulanmalı;
+  metin tarifleri ise anatomik kalır ("sağ kol yukarı").
+- Kanvas öğesine **açık CSS yüksekliği** ver. Yoksa öğe yüksekliği kanvasın
+  `dpr`'li iç yüksekliğine oturur, fare koordinatı ölçeği ikiye katlanır.
+  Ölçeği daima `getBoundingClientRect()`'ten hesapla, `dpr` varsayma.
+- Gizli öğede `clientWidth` **0**'dır; o anda kanvas çizmek boş kare bırakır
+  (akapella piano-roll'u böyle boş kalıyordu). Önce göster, sonra çiz.
+- JS'te birleştirilen cümleler i18n TreeWalker'ına yakalanmaz (anahtar tam
+  metindir). Parçaları `window.CP_T()` ile tek tek çevir.
+- Yerel sunucuda `i18n/<dil>.json` **tarayıcı önbelleğinde** kalır; çeviri
+  gelmiyorsa önce sayfayı tazele, koda dokunma.
 
 **Türkçe/i18n**
 

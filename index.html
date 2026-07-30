@@ -1120,6 +1120,9 @@ window.CP_SUPA = {
   .fing-img { width: 1.45em; height: 1.45em; margin-right: 3px; }
   .cst-sgn { width: 26px; height: 26px; flex: 0 0 auto; }
   .g-img { width: 46px; height: 46px; }
+  .pose-img { display: inline-block; vertical-align: middle; object-fit: contain;
+              width: 74px; height: 74px; filter: drop-shadow(0 2px 6px rgba(0,0,0,.5)); }
+  .pose-img.p-sm { width: 44px; height: 44px; }
   .air-g-item .emo { line-height: 0; }
   /* 🤖 AI ayarını yapıştır */
   .ai-set-row input {
@@ -3963,6 +3966,15 @@ window.CP_SUPA = {
   // Arayüzde emoji yerine gerçek el fotoğrafları (1..7 = dereceler, şeffaf arka plan).
   // Emoji dizisi metin bağlamlarında (yapay zekâ promtu, ipuçları) DURMAYA devam eder.
   const SIGN_IMG = i => `/tasarim/sign/${i}.webp`;
+  // beden pozu fotoğrafları: 1-7 derece, 0 = sus. Görseller AYNALANMIŞ kaydedildi
+  // (kamera scaleX(-1) ile ayna görünümünde) — kullanıcı gördüğü kolu kaldırınca
+  // doğru kolu kaldırmış olur.
+  const POSE_IMG = i => `/tasarim/pose/${i}.webp`;
+  function poseTag(deg, cls) {          // deg: 0..7
+    return (deg >= 0 && deg <= 7)
+      ? `<img class="pose-img${cls ? " " + cls : ""}" src="${POSE_IMG(deg)}" alt="${POSE_DESC[deg] || ""}" decoding="async">`
+      : "";
+  }
   function signTag(deg, cls) {          // deg: 1..7
     return (deg >= 1 && deg <= 7)
       ? `<img class="sgn-img${cls ? " " + cls : ""}" src="${SIGN_IMG(deg)}" alt="${SIGN_DESC[deg]}" decoding="async">`
@@ -4201,7 +4213,9 @@ window.CP_SUPA = {
       // aktif akor yatırılmışsa çipte de dönüşmüş hali görünür
       const nm = on ? (chordFor(d, A.tq, A.qual, 0) || c).name : c.name;
       const mark = on && A.tq !== "dia" ? (A.tq === "maj" ? " ▸" : " ◂") : "";
-      return `<span class="sc-chip${on ? " on" : ""}">${signTag(d + 1, "fing-img")}<b>${nm}${mark}</b><i>${romanFor(d, c.name)}</i></span>`;
+      // beden modunda çipte el değil POZ görünür — kullanıcı ne yapacağını görsün
+      const icon = A.body ? poseTag(d + 1, "p-sm") : signTag(d + 1, "fing-img");
+      return `<span class="sc-chip${on ? " on" : ""}">${icon}<b>${nm}${mark}</b><i>${romanFor(d, c.name)}</i></span>`;
     }).join("");
   }
   // büyük akor kartı: derece · akor adı · kalite · oktav · gam
@@ -4211,9 +4225,9 @@ window.CP_SUPA = {
     const rom = romanFor(deg, dia.name);
     const qLabel = A.qual ? (isMinorish(ch.name) ? QUAL_MIN : QUAL_MAJ)[A.qual - 1].label : TQ_LABEL[A.tq];
     const oc = octLabel(A.oct);
-    if (ui.bigSign) {                       // hangi işareti yaptığını kartta da göster
-      ui.bigSign.src = SIGN_IMG(deg + 1);
-      ui.bigSign.alt = SIGN_DESC[deg + 1] || "";
+    if (ui.bigSign) {                       // hangi işareti/pozu yaptığını kartta da göster
+      ui.bigSign.src = A.body ? POSE_IMG(deg + 1) : SIGN_IMG(deg + 1);
+      ui.bigSign.alt = (A.body ? POSE_DESC[deg + 1] : SIGN_DESC[deg + 1]) || "";
       ui.bigSign.hidden = false;
     }
     ui.bigName.textContent = ch.name;
@@ -5079,6 +5093,9 @@ window.CP_SUPA = {
   const POSE_DESC = ["🙎 iki kol aşağı = sus", "🙌 iki kol yukarı (V)", "sağ kol yukarı · sol yanda",
     "sol kol yukarı · sağ yanda", "🤸 iki kol yana açık (T)", "sağ kol yukarı · sol aşağı",
     "sol kol yukarı · sağ aşağı", "🙅 bilekler üstte çapraz (X)"];
+  // JS'te kurulan cümleler sözlükten geçmeli: TreeWalker birleştirilmiş metni
+  // anahtar olarak bulamaz, parçaları tek tek çevirmek gerekir
+  const pd = i => (window.CP_T ? window.CP_T(POSE_DESC[i]) : POSE_DESC[i]);
   async function loadPose() {
     if (A.pose || A.poseLoading) return !!A.pose;
     A.poseLoading = true;
@@ -5188,6 +5205,9 @@ window.CP_SUPA = {
     if (on) loadPose();
     // moddan çıkarken çalanı sustur — iki sınıflandırıcı çakışmasın
     padOff(true); A.arpNotes = null; A.degCand = -1; A.degStable = 0;
+    A.cur = -1; if (ui.big) ui.big.hidden = true;
+    renderChips();                          // çipler el ↔ poz görseline geçsin
+    renderGuide();                          // rehber de moda göre yeniden yazılsın
   }
   window.__airPose = { classify: classifyPose, set: setBody, step: stepBody };   // test kancası
 
@@ -5216,7 +5236,7 @@ window.CP_SUPA = {
         ? "🧍 Gövden kadraja girsin — kameradan biraz uzaklaş"
         : r.state === "play" ? `🎹 ${ui.bigName.textContent} · ${CH[A.ton]} ${scaleName()} sürüyor`
         : r.state === "mute" ? "🙎 Sus (iki kol aşağı)"
-        : `🧍 Poz yap: ${POSE_DESC.slice(1).join(" · ")}`;
+        : `🧍 ${window.CP_T ? window.CP_T("Poz yap") : "Poz yap"}: ${[1,2,3,4,5,6,7].map(pd).join(" · ")}`;
       return;
     }
 
@@ -5286,11 +5306,11 @@ window.CP_SUPA = {
       `<div class="air-g-item"><div class="emo">▶️</div><b>Metronom + Arp</b><i>açınca akor arpejle BPM'e ve ölçüye (4/4 · 6/8) göre yürür — <b>arpej yalnız 🎹 E.Klavye ve 🎼 Grand Piyano</b> tonlarında; Analog/Retro'da akor pad olarak durur</i><span class="cap">transport</span></div>` +
       `<div class="air-g-item"><div class="emo">🥁</div><b>Ritim</b><i>kick · snare · hihat yürüyüşünü kareleri tıklayarak kendin çiz</i><span class="cap">dizgeç</span></div>` +
       `<div class="air-g-item"><div class="emo">🎚️</div><b>Vokal Mix</b><i>kayıtta sesin EQ + kompresör + reverb'le işlenir; <b>+3'lü / Koro</b> modları gama uyumlu harmoni ekler (canlıda duyulmaz, videoya mixli girer) — kayıttayken sağ el 1-4 parmakla mod değişir</i><span class="cap">🎙️/🏛/🎶/👥</span></div>` +
-      `<div class="air-g-head">🧍 Beden modu — üst bardan "🖐️ El"e basıp geç, kollarınla çal</div>` +
+      `<div class="air-g-head">🧍 Beden modu — üst bardan "🖐️ El"e basıp geç, kollarınla çal (görseller ayna: gördüğün kolu kaldır)</div>` +
       A.deg.map((c, dg) => c
-        ? `<div class="air-g-item"><div class="emo">🧍</div><b>${romanFor(dg, c.name)} · ${c.name}</b><i>${POSE_DESC[dg + 1]}</i><span class="cap">poz ${dg + 1}</span></div>`
+        ? `<div class="air-g-item"><div class="emo">${poseTag(dg + 1)}</div><b>${romanFor(dg, c.name)} · ${c.name}</b><i>${pd(dg + 1)}</i><span class="cap">poz ${dg + 1}</span></div>`
         : "").join("") +
-      `<div class="air-g-item"><div class="emo">🙎</div><b>Sus</b><i>${POSE_DESC[0]} — dinlenme duruşu ses çıkarmaz</i><span class="cap">sus</span></div>`;
+      `<div class="air-g-item"><div class="emo">${poseTag(0)}</div><b>Sus</b><i>${pd(0)} — dinlenme duruşu ses çıkarmaz</i><span class="cap">sus</span></div>`;
   }
   function openOnb() {
     renderGuide();

@@ -147,5 +147,15 @@
   "gamda ✓": "in scale ✓",
   "gam dışı": "out of scale",
   "🎹 Demo melodi yüklendi (Sol majör) — analiz aşağıda": "🎹 Demo melody loaded (G major) — analysis below",
-  "⏺ Kaydediliyor… (şarkı bitince iner)": "⏺ Recording… (downloads when the song ends)"
+  "⏺ Kaydediliyor… (şarkı bitince iner)": "⏺ Recording… (downloads when the song ends)",
+  "🙎 iki kol aşağı = sus": "🙎 both arms down = mute",
+  "🙌 iki kol yukarı (V)": "🙌 both arms up (V)",
+  "sağ kol yukarı · sol yanda": "right arm up · left out to the side",
+  "sol kol yukarı · sağ yanda": "left arm up · right out to the side",
+  "🤸 iki kol yana açık (T)": "🤸 both arms out to the sides (T)",
+  "sağ kol yukarı · sol aşağı": "right arm up · left down",
+  "sol kol yukarı · sağ aşağı": "left arm up · right down",
+  "🙅 bilekler üstte çapraz (X)": "🙅 wrists crossed overhead (X)",
+  "Poz yap": "Make a pose",
+  "🧍 Beden modu — üst bardan \"🖐️ El\"e basıp geç, kollarınla çal (görseller ayna: gördüğün kolu kaldır)": "🧍 Body mode — switch with \"🖐️ Hands\" in the top bar and play with your arms (images are mirrored: raise the arm you see)"
 }
