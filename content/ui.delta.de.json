@@ -157,5 +157,15 @@
   "sol kol yukarı · sağ aşağı": "linker Arm hoch · rechter unten",
   "🙅 bilekler üstte çapraz (X)": "🙅 Handgelenke über dem Kopf gekreuzt (X)",
   "Poz yap": "Pose machen",
-  "🧍 Beden modu — üst bardan \"🖐️ El\"e basıp geç, kollarınla çal (görseller ayna: gördüğün kolu kaldır)": "🧍 Körpermodus — oben mit \"🖐️ Hände\" umschalten und mit den Armen spielen (Bilder sind gespiegelt: hebe den Arm, den du siehst)"
+  "🧍 Beden modu — üst bardan \"🖐️ El\"e basıp geç, kollarınla çal (görseller ayna: gördüğün kolu kaldır)": "🧍 Körpermodus — oben mit \"🖐️ Hände\" umschalten und mit den Armen spielen (Bilder sind gespiegelt: hebe den Arm, den du siehst)",
+  "🎵 Pad": "🎵 Pad",
+  "🎸 Gitar arpej": "🎸 Gitarren-Arpeggio",
+  "🎹 Piyano arpej": "🎹 Klavier-Arpeggio",
+  "🎸 Sol el akoru tut · sağ el parmak sayısıyla sesi seç": "🎸 Linke Hand hält den Akkord · Fingerzahl rechts wählt den Ton",
+  "1 parmak · kök": "1 Finger · Grundton",
+  "2 parmak · 3'lü": "2 Finger · Terz",
+  "3 parmak · 5'li": "3 Finger · Quinte",
+  "4 parmak · 7'li": "4 Finger · Septime",
+  "Sağ yumruk": "Rechte Faust",
+  "avuç susturma: çalan tüm arpej sesleri kesilir": "Palm-Mute: alle klingenden Arpeggio-Töne stoppen"
 }

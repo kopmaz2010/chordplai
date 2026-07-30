@@ -157,5 +157,15 @@
   "sol kol yukarı · sağ aşağı": "bras gauche en haut · droit baissé",
   "🙅 bilekler üstte çapraz (X)": "🙅 poignets croisés au-dessus (X)",
   "Poz yap": "Faites une pose",
-  "🧍 Beden modu — üst bardan \"🖐️ El\"e basıp geç, kollarınla çal (görseller ayna: gördüğün kolu kaldır)": "🧍 Mode corps — basculez avec \"🖐️ Mains\" dans la barre du haut et jouez avec les bras (images en miroir : levez le bras que vous voyez)"
+  "🧍 Beden modu — üst bardan \"🖐️ El\"e basıp geç, kollarınla çal (görseller ayna: gördüğün kolu kaldır)": "🧍 Mode corps — basculez avec \"🖐️ Mains\" dans la barre du haut et jouez avec les bras (images en miroir : levez le bras que vous voyez)",
+  "🎵 Pad": "🎵 Pad",
+  "🎸 Gitar arpej": "🎸 Arpège guitare",
+  "🎹 Piyano arpej": "🎹 Arpège piano",
+  "🎸 Sol el akoru tut · sağ el parmak sayısıyla sesi seç": "🎸 La main gauche tient l'accord · les doigts de la droite choisissent la note",
+  "1 parmak · kök": "1 doigt · fondamentale",
+  "2 parmak · 3'lü": "2 doigts · tierce",
+  "3 parmak · 5'li": "3 doigts · quinte",
+  "4 parmak · 7'li": "4 doigts · septième",
+  "Sağ yumruk": "Poing droit",
+  "avuç susturma: çalan tüm arpej sesleri kesilir": "palm mute : toutes les notes de l'arpège s'arrêtent"
 }

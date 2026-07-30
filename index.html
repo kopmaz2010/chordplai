@@ -1773,6 +1773,7 @@ window.CP_SUPA = {
       <span class="air-fsbrand" lang="en">AIR CHORD</span>
       <span class="air-fsstatus" id="airFsStatus">🖐️ Ellerini kameraya göster</span>
       <span class="air-fsgap"></span>
+      <button class="chip" id="airArpBtn" aria-pressed="false" title="Pad ↔ gitar arpej ↔ piyano arpej (sağ el: 1 kök · 2 üçlü · 3 beşli · 4 yedili)">🎵 Pad</button>
       <button class="chip" id="airBodyBtn" title="El işaretleri ↔ beden pozları">🖐️ El</button>
       <button class="chip" id="airCamSize" title="Kamera boyutu">🎥 Tam</button>
       <button class="chip" id="airDockBtn" aria-pressed="true">🎛️ Panel</button>
@@ -4032,6 +4033,9 @@ window.CP_SUPA = {
   const A = {
     running: false, loading: false, hand: null, stream: null, timer: null,
     body: false, pose: null, poseLoading: false, lastPose: null,   // 🧍 beden pozu modu
+    // 🎸 arpej: 0 = pad (sağ el efekt) · 1 = gitar · 2 = piyano
+    arpMode: 0, arpCache: new Map(), arpVoices: [], arpTone: -1, arpFlash: 0,
+    arpCand: -9, arpStable: 0, arpLast: -1,
     ctx: null, bus: null, filt: null, preG: null, postG: null, dry: null, wet: null, volG: null,
     ton: 9, scale: "aeolian",
     tq: "dia", tqCand: null, tqStable: 0, shownTq: null, shownOct: 0, worldFlash: 0,
@@ -4703,6 +4707,137 @@ window.CP_SUPA = {
     if (fast) A.muteFlash = performance.now();
   }
 
+  // ================= 🎸 ARPEJ MODU =================
+  // Sol el akoru tutar, sağ el parmak sayısı akorun HANGİ sesini çalacağını seçer:
+  // 1 = kök · 2 = üçlü · 3 = beşli · 4 = yedili. Parmak sayısı DEĞİŞTİĞİNDE nota
+  // tetiklenir (basılı tutmak sesi tekrarlamaz), yumruk avuç susturmasıdır.
+  const ARP_TONE_NAME = ["kök", "3'lü", "5'li", "7'li"];
+
+  // Derecenin dört sesi. Üçlü akorda 7'li yoktur; gamdan diyatonik olarak türetilir
+  // (I'de majör 7, V'te dominant 7, ii'de minör 7 — kendiliğinden doğru çıkar).
+  function arpIntervals(deg, ch) {
+    const iv = (ch && ch.iv) || [0, 4, 7];
+    const out = [iv[0] != null ? iv[0] : 0, iv[1] != null ? iv[1] : 4, iv[2] != null ? iv[2] : 7];
+    if (iv.length >= 4) { out.push(iv[3]); return out; }
+    const sc = TH.SCALES[A.scale];
+    if (sc && !A.customOn && deg >= 0) {
+      const s = sc.iv, d = deg % 7;
+      const sev = s[(d + 6) % 7] + 12 * Math.floor((d + 6) / 7) - s[d];
+      out.push(((sev % 12) + 12) % 12 || 12);
+    } else {
+      out.push(out[1] === 4 ? 11 : 10);   // gam yoksa: majörde M7, minörde m7
+    }
+    return out;
+  }
+  function arpMidis(ch, deg) {
+    let root = 48 + ch.rootPc;
+    if (root >= 56) root -= 12;
+    root += (ch.oct || 0) * 12;
+    return arpIntervals(deg, ch).map(x => root + x);
+  }
+
+  // --- gitar teli: Karplus-Strong. Mızrap gürültüsü halka tamponda dolaşıp her turda
+  // ortalanarak sönüyor; tiz notalarda periyot kısa olduğu için doğal olarak daha
+  // çabuk sönüyor — gerçek telde de böyle.
+  function ksBuffer(ctx, freq) {
+    const sr = ctx.sampleRate, N = Math.round(sr * 2.4);
+    const P = Math.max(2, Math.round(sr / freq));
+    const out = new Float32Array(N), ring = new Float32Array(P);
+    let prev = 0;
+    for (let i = 0; i < P; i++) {                    // mızrap: yumuşatılmış gürültü
+      const v = Math.random() * 2 - 1;
+      ring[i] = (v + prev) * 0.5; prev = ring[i];
+    }
+    let ix = 0;
+    const damp = 0.9965;
+    for (let n = 0; n < N; n++) {
+      const cur = ring[ix];
+      out[n] = cur;
+      ring[ix] = (cur + ring[(ix + 1) % P]) * 0.5 * damp;
+      ix = (ix + 1) % P;
+    }
+    const fo = Math.round(sr * 0.05);                // sonda tık olmasın
+    for (let i = 0; i < fo; i++) out[N - 1 - i] *= i / fo;
+    return out;
+  }
+  // --- piyano: inharmonik additif. Gerçek telin harmonikleri tam katlar değildir;
+  // sqrt(1+B k²) sapması olmadan ses org gibi duyuluyor. Üst harmonikler daha hızlı söner.
+  function pianoBuffer(ctx, freq) {
+    const sr = ctx.sampleRate, N = Math.round(sr * 2.2);
+    const out = new Float32Array(N), B = 0.0004, nyq = sr * 0.45;
+    for (let k = 1; k <= 12; k++) {
+      const f = freq * k * Math.sqrt(1 + B * k * k);
+      if (f > nyq) break;
+      const amp = Math.pow(k, -1.35);
+      const dec = 2.4 / (1 + 0.6 * k);
+      const w = 2 * Math.PI * f / sr, ph = Math.random() * 6.283;
+      const kd = 1 / (sr * dec);
+      for (let n = 0; n < N; n++) out[n] += amp * Math.exp(-n * kd) * Math.sin(w * n + ph);
+    }
+    const hn = Math.round(sr * 0.006);               // çekiç darbesi
+    for (let n = 0; n < hn; n++) out[n] += (Math.random() * 2 - 1) * 0.3 * (1 - n / hn);
+    let peak = 0;
+    for (let n = 0; n < N; n += 3) peak = Math.max(peak, Math.abs(out[n]));
+    const g = peak > 0 ? 0.85 / peak : 1, fi = Math.round(sr * 0.002);
+    for (let n = 0; n < N; n++) out[n] *= g * (n < fi ? n / fi : 1);
+    return out;
+  }
+  function arpBuffer(midi) {
+    const key = A.arpMode + ":" + midi;
+    let buf = A.arpCache.get(key);
+    if (buf) return buf;
+    const hz = 440 * Math.pow(2, (midi - 69) / 12);
+    const data = A.arpMode === 2 ? pianoBuffer(A.ctx, hz) : ksBuffer(A.ctx, hz);
+    buf = A.ctx.createBuffer(1, data.length, A.ctx.sampleRate);
+    buf.getChannelData(0).set(data);
+    A.arpCache.set(key, buf);
+    return buf;
+  }
+  function arpPluck(ix) {
+    if (!A.arpMode || A.cur < 0) return;
+    ensureAudio();
+    const ch = chordFor(A.cur, A.tq, 0, A.oct); if (!ch) return;
+    const midi = arpMidis(ch, A.cur)[ix]; if (midi == null) return;
+    const g = A.ctx.createGain();
+    g.gain.value = A.arpMode === 2 ? 0.5 : 0.62;
+    const src = A.ctx.createBufferSource();
+    src.buffer = arpBuffer(midi);
+    src.connect(g); g.connect(A.bus);
+    src.start();
+    A.arpVoices.push({ src, g });
+    if (A.arpVoices.length > 8) fadeVoice(A.arpVoices.shift(), 0.08);
+    src.onended = () => { A.arpVoices = A.arpVoices.filter(v => v.src !== src); };
+    A.arpFlash = performance.now();
+    A.arpTone = ix;
+  }
+  function fadeVoice(v, sec) {
+    if (!v) return;
+    try {
+      const t = A.ctx.currentTime;
+      v.g.gain.cancelScheduledValues(t);
+      v.g.gain.setValueAtTime(v.g.gain.value, t);
+      v.g.gain.exponentialRampToValueAtTime(0.0001, t + sec);
+      v.src.stop(t + sec + 0.02);
+    } catch (_) {}
+  }
+  function arpDamp() {                     // yumruk = avuç susturma
+    A.arpVoices.forEach(v => fadeVoice(v, 0.10));
+    A.arpVoices = [];
+    A.arpTone = -1;
+  }
+  const ARP_LABEL = ["🎵 Pad", "🎸 Gitar arpej", "🎹 Piyano arpej"];
+  function setArp(mode) {
+    A.arpMode = ((mode % 3) + 3) % 3;
+    try { localStorage.setItem("akorAirArp", A.arpMode); } catch (_) {}
+    const b = document.getElementById("airArpBtn");
+    if (b) { b.textContent = ARP_LABEL[A.arpMode]; b.setAttribute("aria-pressed", String(!!A.arpMode)); }
+    arpDamp();
+    A.arpCand = -9; A.arpStable = 0; A.arpLast = -1;
+    if (A.arpMode) padOff(true);           // arpejde uzayan pad olmaz, ikisi birbirine karışır
+    renderGuide();
+  }
+  window.__airArp = { set: setArp, pluck: arpPluck, midis: arpMidis, ivs: arpIntervals };
+
   // ---- transport: metronom + arpejli retro synth + ritim dizgeci (4/4 · 6/8) ----
   function initSeq() {
     // varsayılan tartım: 4/4 temel rock · 6/8 dolgun (hoisting ile erken çağrılabilsin diye yerelde)
@@ -4918,6 +5053,18 @@ window.CP_SUPA = {
       A.waveTarget = tiltToPos(A.tiltSm);
     }
     applyVibes(right);
+
+    // 🎸 ARPEJ: sağ el parmak sayısı akorun sesini seçer (1 kök · 2 üçlü · 3 beşli · 4 yedili)
+    if (A.arpMode) {
+      const n = right ? Math.min(4, fingersExt(right).filter(Boolean).length) : -1;
+      if (n === A.arpCand) A.arpStable++; else { A.arpCand = n; A.arpStable = 1; }
+      // yalnız kararlılık eşiğine ULAŞTIĞI karede tetikle: basılı tutmak tekrarlamaz
+      if (A.arpStable === 2) {
+        if (n === 0) arpDamp();
+        else if (n >= 1 && n !== A.arpLast) arpPluck(n - 1);
+        A.arpLast = n >= 1 ? n : -1;   // yumruk/el yok → aynı sesi yeniden çalabil
+      }
+    }
     const dp = A.waveTarget - A.wavePos;
     if (Math.abs(dp) > 0.002) {
       A.wavePos += dp * MORPH_SMOOTH;
@@ -4928,6 +5075,7 @@ window.CP_SUPA = {
     // sustur: yalnız SOL el yumruğu (sağ el sesi kesemez — o sadece efekt)
     if (A.degStable >= 3 && A.degCand === 0) {
       padOff(true);
+      if (A.arpMode) arpDamp();          // sol yumruk arpej seslerini de keser
       A.arpNotes = null;
       if (A.cur !== -1) { A.cur = -1; ui.big.hidden = true; renderChips(); }
       return { state: "mute" };
@@ -4944,7 +5092,9 @@ window.CP_SUPA = {
       const deg = A.degCand - 1;
       const ch = chordFor(deg, A.tq, qual, A.oct);
       A.arpNotes = arpFrom(ch);                    // arpej açıksa bu akoru yürütür
-      if (!arpActive()) setPad(padMidis(ch));
+      if (!arpActive() && !A.arpMode) setPad(padMidis(ch));
+      // arpejde akor değişince tutulan parmak sayısı yeni akorda yeniden çalınsın
+      if (A.arpMode && deg !== A.cur) A.arpLast = -1;
       // yatış da değişimi tetikler: çevirince akorla birlikte ekrandaki yazı da anında güncellenir
       if (deg !== A.cur || qual !== A.qual || A.tq !== A.shownTq || A.oct !== A.shownOct) {
         A.cur = deg; A.qual = qual; A.shownTq = A.tq; A.shownOct = A.oct;
@@ -5251,11 +5401,14 @@ window.CP_SUPA = {
     } else hands = A.lastHands || [];
     const r = step(hands);
     draw(hands);
+    const arpHint = A.arpMode
+      ? (A.arpTone >= 0 ? ` · ${ARP_TONE_NAME[A.arpTone]} çaldı` : " · sağ el: 1 kök · 2 üçlü · 3 beşli · 4 yedili")
+      : "";
     ui.status.textContent = !hands.length
-      ? "🖐️ Sol el: derece + yatışla majör/minör · Sağ el: sadece efekt"
-      : r.state === "play" ? `🎹 ${ui.bigName.textContent} · ${CH[A.ton]} ${scaleName()} sürüyor`
+      ? (A.arpMode ? "🎸 Sol el akoru tut · sağ el parmak sayısıyla sesi seç" : "🖐️ Sol el: derece + yatışla majör/minör · Sağ el: sadece efekt")
+      : r.state === "play" ? `🎹 ${ui.bigName.textContent} · ${CH[A.ton]} ${scaleName()}${arpHint}`
       : r.state === "mute" ? "✊ Susturuldu"
-      : `☝️ Sol elinle derece yap (I–VII) · gam: ${CH[A.ton]} ${scaleName()}`;
+      : `☝️ Sol elinle derece yap (I–VII) · gam: ${CH[A.ton]} ${scaleName()}${arpHint}`;
   }
 
   // ---- rehber + onboarding ----
@@ -5306,6 +5459,13 @@ window.CP_SUPA = {
       `<div class="air-g-item"><div class="emo">▶️</div><b>Metronom + Arp</b><i>açınca akor arpejle BPM'e ve ölçüye (4/4 · 6/8) göre yürür — <b>arpej yalnız 🎹 E.Klavye ve 🎼 Grand Piyano</b> tonlarında; Analog/Retro'da akor pad olarak durur</i><span class="cap">transport</span></div>` +
       `<div class="air-g-item"><div class="emo">🥁</div><b>Ritim</b><i>kick · snare · hihat yürüyüşünü kareleri tıklayarak kendin çiz</i><span class="cap">dizgeç</span></div>` +
       `<div class="air-g-item"><div class="emo">🎚️</div><b>Vokal Mix</b><i>kayıtta sesin EQ + kompresör + reverb'le işlenir; <b>+3'lü / Koro</b> modları gama uyumlu harmoni ekler (canlıda duyulmaz, videoya mixli girer) — kayıttayken sağ el 1-4 parmakla mod değişir</i><span class="cap">🎙️/🏛/🎶/👥</span></div>` +
+      `<div class="air-g-head">🎸 Arpej modu — üst bardaki "🎵 Pad" düğmesi: pad → gitar → piyano</div>` +
+      `<div class="air-g-item"><div class="emo">${signTag(1, "g-img")}</div><b>1 parmak · kök</b><i>akorun ana sesi — arpejin temeli</i><span class="cap">sağ el</span></div>` +
+      `<div class="air-g-item"><div class="emo">${signTag(2, "g-img")}</div><b>2 parmak · 3'lü</b><i>akorun rengini veren ses (majör/minör buradan duyulur)</i><span class="cap">sağ el</span></div>` +
+      `<div class="air-g-item"><div class="emo">${signTag(3, "g-img")}</div><b>3 parmak · 5'li</b><i>akoru sağlamlaştıran ses</i><span class="cap">sağ el</span></div>` +
+      `<div class="air-g-item"><div class="emo">${signTag(4, "g-img")}</div><b>4 parmak · 7'li</b><i>gamdan gelen yedili — I'de majör 7, V'te dominant 7, ii'de minör 7</i><span class="cap">sağ el</span></div>` +
+      `<div class="air-g-item"><div class="emo">✊</div><b>Sağ yumruk</b><i>avuç susturma: çalan tüm arpej sesleri kesilir</i><span class="cap">sağ el</span></div>` +
+      `<div class="air-g-item"><div class="emo">🔁</div><b>Nasıl tekrar çalınır?</b><i>parmak sayısı <b>değişince</b> nota tetiklenir — aynı sesi yeniden çalmak için yumruk yapıp geri aç. Akoru sol elinle değiştirdiğinde tutulan ses yeni akorda kendiliğinden çalar.</i><span class="cap">önemli</span></div>` +
       `<div class="air-g-head">🧍 Beden modu — üst bardan "🖐️ El"e basıp geç, kollarınla çal (görseller ayna: gördüğün kolu kaldır)</div>` +
       A.deg.map((c, dg) => c
         ? `<div class="air-g-item"><div class="emo">${poseTag(dg + 1)}</div><b>${romanFor(dg, c.name)} · ${c.name}</b><i>${pd(dg + 1)}</i><span class="cap">poz ${dg + 1}</span></div>`
@@ -5432,6 +5592,10 @@ window.CP_SUPA = {
   const bodyBtn = document.getElementById("airBodyBtn");
   if (bodyBtn) bodyBtn.addEventListener("click", () => setBody(!A.body));
   try { if (localStorage.getItem("akorAirBody") === "1") setBody(true); } catch (_) {}
+  // 🎸 pad → gitar arpej → piyano arpej
+  const arpBtn = document.getElementById("airArpBtn");
+  if (arpBtn) arpBtn.addEventListener("click", () => setArp(A.arpMode + 1));
+  try { const m = +localStorage.getItem("akorAirArp"); if (m === 1 || m === 2) setArp(m); } catch (_) {}
   applyCam();
 
   // ---- panel saydamlığı (sol kontrol paneli) ----
