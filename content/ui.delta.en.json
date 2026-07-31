@@ -183,5 +183,18 @@
   "⏹ Bitir": "⏹ Stop",
   "Yılanı": "Steer the snake",
   "🏆 Sıralama ·": "🏆 Leaderboard ·",
-  "Akor Yılanı": "Chord Snake"
+  "Akor Yılanı": "Chord Snake",
+  "» KUMANDA · AKORU ÇAL": "» CONTROLLER · PLAY THE CHORD",
+  "» DURUM": "» STATUS",
+  "» KURAL": "» RULES",
+  "duvarlar sarmal · her 3 yemde hız + · kendine çarpma = son": "walls wrap · speed +1 every 3 bites · hit yourself = game over",
+  "📷 KAMERA KAPALI": "📷 CAMERA OFF",
+  "📷 Açık": "📷 On",
+  "📷 Kapalı": "📷 Off",
+  "🎤 Başla — Tam Ekran": "🎤 Start — Fullscreen",
+  "⏹ ÇIK": "⏹ EXIT",
+  "AKOR YILANI": "CHORD SNAKE",
+  "PUAN": "SCORE",
+  "· UZUNLUK": "· LENGTH",
+  "· REKOR": "· BEST"
 }

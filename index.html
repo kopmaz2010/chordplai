@@ -878,43 +878,75 @@ window.CP_SUPA = {
     .game-row { grid-template-columns: 1fr; }
     .game-cam { min-height: 0; aspect-ratio: 16/9; height: auto; }
   }
-  /* ---- 🐍 Akor Yılanı ---- */
+  /* ---- 🐍 Akor Yılanı · KOKPİT: kenarlıksız, ince amber hatlar ---- */
   #view-snake { display: flex; flex-direction: column; gap: 14px; }
   #view-snake[hidden] { display: none; }
-  .snk-arena { position: relative; border-radius: 16px; overflow: hidden; background:
-               radial-gradient(120% 140% at 50% 0%, #131109, #0a0a07);
-               border: 1px solid #2b2920; min-height: 300px; }
-  #snkCanvas { display: block; width: 100%; height: 100%; }
+  .snk-cockpit { display: grid; grid-template-columns: minmax(260px, 38%) 1fr;
+                 background: #050503; border: 1px solid rgba(245,194,100,.28); border-radius: 14px;
+                 overflow: hidden; min-height: 420px; }
+  .snk-left { display: grid; grid-template-rows: auto 1fr; border-right: 1px solid rgba(245,194,100,.3); min-height: 0; }
+  .snk-camslot { position: relative; aspect-ratio: 4/3; background: #000;
+                 border-bottom: 1px solid rgba(245,194,100,.3); }
+  .snk-camslot video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+  .snk-camslot video[hidden] { display: none; }
+  .snk-camoff { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+                color: var(--muted-dim); font-size: .68rem; letter-spacing: .2em;
+                background: linear-gradient(140deg, #14120c, #0a0906); }
+  .snk-params { padding: 12px 14px; display: flex; flex-direction: column; gap: 7px; overflow-y: auto;
+                font-family: ui-monospace, "SF Mono", Menlo, monospace; min-height: 0; }
+  .snk-sec { color: var(--amber); font-size: .6rem; letter-spacing: .22em; margin-top: 4px; }
+  .snk-sec:first-child { margin-top: 0; }
+  .snk-keys { display: flex; flex-wrap: wrap; gap: 6px; }
+  .snk-keys button { border: 1px solid #4a4230; border-radius: 8px; background: rgba(15,14,10,.9);
+                     color: var(--cream); padding: 7px 10px; font: inherit; font-size: .8rem; cursor: pointer;
+                     transition: box-shadow .15s, border-color .15s; }
+  .snk-keys button i { font-style: normal; color: var(--muted); margin-right: 4px; }
+  .snk-keys button b { color: var(--amber); }
+  .snk-keys button.hot { border-color: var(--amber); box-shadow: 0 0 14px -4px var(--amber); }
+  .snk-keys button.hot b { color: var(--amber-hot, #ffd98a); }
+  .snk-heard { color: var(--cream); font-size: .72rem; min-height: 1.2em; }
+  .snk-levelrail { height: 3px; background: rgba(255,255,255,.09); border-radius: 2px; overflow: hidden; }
+  .snk-levelrail i { display: block; height: 100%; width: 0%; background: var(--amber); transition: width .12s; }
+  .snk-selrow { display: flex; gap: 6px; align-items: center; }
+  .snk-selrow select { background: #0f0e0a; color: var(--cream); border: 1px solid #3a3526;
+                       border-radius: 7px; padding: 5px 6px; font-size: .72rem; min-width: 0; flex: 1 1 auto; }
+  .snk-mini { border: 1px solid #4a4230; border-radius: 7px; background: rgba(15,14,10,.9); color: var(--muted);
+              padding: 5px 9px; font-size: .68rem; cursor: pointer; letter-spacing: .06em; flex: 0 0 auto; }
+  .snk-mini[aria-pressed="true"] { color: var(--amber); border-color: rgba(245,194,100,.5); }
+  .snk-rule { color: var(--muted); font-size: .66rem; line-height: 1.5; }
+  .snk-stage { display: grid; grid-template-rows: auto 1fr; min-height: 0;
+               background: radial-gradient(100% 100% at 50% 0%, #12100a, #050503); }
+  .snk-hud { display: flex; align-items: center; gap: 12px; padding: 8px 14px;
+             border-bottom: 1px solid rgba(245,194,100,.2);
+             font-family: ui-monospace, monospace; font-size: .66rem; letter-spacing: .18em; color: var(--amber); }
+  .snk-hud-stats { margin-left: auto; color: var(--muted); }
+  .snk-hud-stats b { color: var(--amber-hot, #ffd98a); }
+  .snk-arena { position: relative; min-height: 0; }
+  #snkCanvas { display: block; width: 100%; height: 100%; position: absolute; inset: 0; }
   .snk-idle { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 10px;
               align-items: center; justify-content: center; text-align: center; padding: 18px;
-              background: rgba(8,6,3,.6); backdrop-filter: blur(3px); }
+              background: rgba(5,5,3,.66); backdrop-filter: blur(3px); }
   .snk-idle[hidden] { display: none; }
   .snk-idle-emoji { font-size: 2.2rem; }
   .snk-idle p { color: var(--cream); font-size: .9rem; line-height: 1.5; }
-  .snk-over { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 6px;
-              align-items: center; justify-content: center; background: rgba(8,6,3,.82); }
+  .snk-over { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 8px;
+              align-items: center; justify-content: center; background: rgba(5,5,3,.85); }
   .snk-over[hidden] { display: none; }
-  .snk-over h3 { color: var(--amber); letter-spacing: .14em; text-transform: uppercase; }
-  .snk-over .sc { font-size: 2.6rem; font-weight: 800; color: var(--cream); }
-  .snk-over p { color: var(--muted); font-size: .8rem; }
-  .snk-pad { display: flex; flex-direction: column; gap: 8px; align-items: center; justify-content: center;
-             padding: 12px; border-radius: 16px; background: #12100b; border: 1px solid #2b2920; }
-  .snk-pad-lbl { font-size: .58rem; letter-spacing: .22em; color: var(--muted-dim); }
-  .snk-dpad { display: grid; grid-template-columns: repeat(3, 64px); grid-template-rows: repeat(3, 58px); gap: 6px;
-              grid-template-areas: ". up ." "left mid right" ". down ."; }
-  .snk-key { border: 1px solid #4a4230; border-radius: 12px; background: #0f0e0a; color: var(--cream);
-             display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
-             cursor: pointer; transition: box-shadow .15s, border-color .15s, transform .1s; }
-  .snk-key[data-dir="up"] { grid-area: up; } .snk-key[data-dir="down"] { grid-area: down; }
-  .snk-key[data-dir="left"] { grid-area: left; } .snk-key[data-dir="right"] { grid-area: right; }
-  .snk-key-mid { grid-area: mid; background: transparent; border-style: dashed; cursor: default; }
-  .snk-key i { font-style: normal; font-size: .72rem; color: var(--muted); }
-  .snk-key b { font-size: .98rem; color: var(--amber); }
-  .snk-key.hot { border-color: var(--amber); box-shadow: 0 0 16px -4px var(--amber); transform: scale(1.05); }
-  .snk-key.hot b { color: var(--amber-hot, #ffd98a); }
+  .snk-over h3 { color: var(--amber); letter-spacing: .18em; text-transform: uppercase;
+                 font-family: ui-monospace, monospace; }
+  .snk-over .sc { font-size: 2.8rem; font-weight: 800; color: var(--cream); font-family: ui-monospace, monospace; }
+  .snk-over p { color: var(--muted); font-size: .78rem; }
+  /* TAM EKRAN: oyun başlayınca kokpit tüm ekranı kaplar */
+  #view-snake.snk-full .snk-cockpit { position: fixed; inset: 0; z-index: 46; border-radius: 0; border: none; min-height: 0; }
+  #view-snake.snk-full .snk-page-only { display: none; }
+  body.snk-lock { overflow: hidden; }
   @media (max-width: 760px) {
-    .snk-pad { flex-direction: row; }
-    .snk-dpad { grid-template-columns: repeat(3, 56px); grid-template-rows: repeat(3, 50px); }
+    .snk-cockpit { grid-template-columns: 1fr; min-height: 0; }
+    .snk-left { border-right: none; border-bottom: 1px solid rgba(245,194,100,.3);
+                grid-template-rows: none; grid-template-columns: 44% 1fr; }
+    .snk-camslot { aspect-ratio: auto; border-bottom: none; border-right: 1px solid rgba(245,194,100,.3); }
+    .snk-arena { min-height: 46vh; }
+    #view-snake.snk-full .snk-cockpit { overflow-y: auto; grid-template-rows: auto 1fr; }
   }
   .nj-grp-lbl { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted-dim); margin: 10px 0 6px; }
   .nj-monitor { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -1723,65 +1755,62 @@ window.CP_SUPA = {
   </div>
 
   <div id="view-snake" hidden>
-    <div class="ng-topbar">
+    <div class="ng-topbar snk-page-only">
       <span class="ng-mode-name">🐍 AKOR YILANI · <b>yön vermenin tek yolu akor çalmak</b></span>
       <span class="ng-mode-sub">enstrümanını al: her yön bir akor</span>
     </div>
 
-    <div class="ng-stats">
-      <div class="ng-stat"><div class="k">Puan</div><div class="v" id="snkScore">0</div></div>
-      <div class="ng-stat"><div class="k">Uzunluk</div><div class="v" id="snkLen">3</div></div>
-      <div class="ng-stat"><div class="k">Rekor</div><div class="v" id="snkBest">0</div></div>
-    </div>
-
-    <div class="game-row" id="snkRow">
-      <video id="snkCam" class="game-cam" autoplay playsinline muted hidden></video>
-      <div class="snk-arena">
-        <canvas id="snkCanvas"></canvas>
-        <div class="snk-idle" id="snkIdle">
-          <div class="snk-idle-emoji">🐍🎸</div>
-          <p>Yılanı <b>akor çalarak</b> yönet: her yönün bir akoru var.<br>Yem yedikçe uzar ve hızlanır — kendine çarpma!</p>
-          <p class="nj-idle-sub">Mikrofon izni istenecek · klavye okları da çalışır (pratik için)</p>
+    <!-- KOKPİT: sol üst kamera · altında parametreler · sağda boydan boya oyun -->
+    <div class="snk-cockpit" id="snkRow">
+      <div class="snk-left">
+        <div class="snk-camslot">
+          <video id="snkCam" autoplay playsinline muted hidden></video>
+          <div class="snk-camoff" id="snkCamOff">📷 KAMERA KAPALI</div>
         </div>
-        <div class="snk-over" id="snkOver" hidden>
-          <h3>Oyun Bitti</h3><div class="sc" id="snkOverScore">0</div>
-          <p id="snkOverSub"></p>
-        </div>
-      </div>
-      <div class="snk-pad" id="snkPad">
-        <span class="snk-pad-lbl">KUMANDA · AKORU ÇAL</span>
-        <div class="snk-dpad">
-          <button class="snk-key" data-dir="up"><i>▲</i><b id="snkUp">—</b></button>
-          <button class="snk-key" data-dir="left"><i>◀</i><b id="snkLeft">—</b></button>
-          <button class="snk-key snk-key-mid" disabled><i>🐍</i></button>
-          <button class="snk-key" data-dir="right"><i>▶</i><b id="snkRight">—</b></button>
-          <button class="snk-key" data-dir="down"><i>▼</i><b id="snkDown">—</b></button>
+        <div class="snk-params">
+          <div class="snk-sec">» KUMANDA · AKORU ÇAL</div>
+          <div class="snk-keys" id="snkKeys"></div>
+          <div class="snk-sec">» DURUM</div>
+          <div class="snk-heard" id="snkHeard">🎤 Mikrofon kapalı · klavye okları da çalışır</div>
+          <div class="snk-levelrail"><i id="snkLevelBar"></i></div>
+          <div class="snk-selrow">
+            <select id="snkTon" title="Ton"></select>
+            <select id="snkScale" title="Gam/Makam"></select>
+            <button class="snk-mini" id="snkCamToggle" aria-pressed="true">📷 Açık</button>
+          </div>
+          <div class="snk-sec">» KURAL</div>
+          <div class="snk-rule">duvarlar sarmal · her 3 yemde hız + · kendine çarpma = son</div>
         </div>
       </div>
-    </div>
-
-    <div class="nj-monitor">
-      <div class="nj-level"><i id="snkLevelBar"></i></div>
-      <div class="nj-heard" id="snkHeard">🎤 Mikrofon kapalı · klavye okları da çalışır</div>
-      <button class="chip nj-camtoggle" id="snkCamToggle" aria-pressed="true">📷 Kamera: Açık</button>
-    </div>
-
-    <div class="card">
-      <label>Ton · Gam/Makam — yön akorları gamın I · IV · V · VI derecelerinden</label>
-      <div class="njrow">
-        <select id="snkTon"></select>
-        <select id="snkScale"></select>
+      <div class="snk-stage">
+        <div class="snk-hud">
+          <span class="snk-hud-title">AKOR YILANI</span>
+          <span class="snk-hud-stats">PUAN <b id="snkScore">0</b> · UZUNLUK <b id="snkLen">3</b> · REKOR <b id="snkBest">0</b></span>
+          <button class="snk-mini" id="snkFsStop" hidden>⏹ ÇIK</button>
+        </div>
+        <div class="snk-arena">
+          <canvas id="snkCanvas"></canvas>
+          <div class="snk-idle" id="snkIdle">
+            <div class="snk-idle-emoji">🐍🎸</div>
+            <p>Yılanı <b>akor çalarak</b> yönet: her yönün bir akoru var.<br>Yem yedikçe uzar ve hızlanır — kendine çarpma!</p>
+            <p class="nj-idle-sub">Mikrofon izni istenecek · klavye okları da çalışır (pratik için)</p>
+          </div>
+          <div class="snk-over" id="snkOver" hidden>
+            <h3>Oyun Bitti</h3><div class="sc" id="snkOverScore">0</div>
+            <p id="snkOverSub"></p>
+            <button class="go" id="snkAgain">🎤 Tekrar Oyna</button>
+          </div>
+        </div>
       </div>
-      <div class="scale-chords" id="snkPoolChips"></div>
     </div>
 
-    <div class="transport"><button class="go" id="snkGo">🎤 Başla</button></div>
+    <div class="transport snk-page-only"><button class="go" id="snkGo">🎤 Başla — Tam Ekran</button></div>
 
-    <div class="ng-board">
+    <div class="ng-board snk-page-only">
       <div class="ng-board-head"><span>🏆 Sıralama · <b>Akor Yılanı</b></span></div>
       <ol class="ng-board-list" id="snkBoardList"></ol>
     </div>
-    <p class="hint">Duvarlar sarmal: karşı kenardan çıkarsın · her 3 yemde hız artar · puan = yem × hız seviyesi</p>
+    <p class="hint snk-page-only">Puan = yem × hız seviyesi · yön akorları gamın I ▲ · IV ◀ · V ▶ · VI ▼ derecelerinden</p>
   </div>
 
   <div id="view-acap" hidden>
@@ -4071,11 +4100,10 @@ window.CP_SUPA = {
     view: $("view-snake"), canvas: $("snkCanvas"), idle: $("snkIdle"),
     over: $("snkOver"), overScore: $("snkOverScore"), overSub: $("snkOverSub"),
     score: $("snkScore"), len: $("snkLen"), best: $("snkBest"),
-    go: $("snkGo"), heard: $("snkHeard"), level: $("snkLevelBar"),
-    cam: $("snkCam"), camToggle: $("snkCamToggle"), row: $("snkRow"),
-    ton: $("snkTon"), scale: $("snkScale"), chips: $("snkPoolChips"),
-    keys: { up: $("snkUp"), left: $("snkLeft"), right: $("snkRight"), down: $("snkDown") },
-    pad: $("snkPad"),
+    go: $("snkGo"), again: $("snkAgain"), fsStop: $("snkFsStop"),
+    heard: $("snkHeard"), level: $("snkLevelBar"),
+    cam: $("snkCam"), camOff: $("snkCamOff"), camToggle: $("snkCamToggle"),
+    ton: $("snkTon"), scale: $("snkScale"), keys: $("snkKeys"),
   };
   if (!u.view) return;
   const TH = window.AkorTheory, AE = window.AkorEngine;
@@ -4123,10 +4151,9 @@ window.CP_SUPA = {
       if (!c || used.has(c.name)) c = pool.find(x => !used.has(x.name));
       if (c) { used.add(c.name); G.dirChords[dir] = c; }
     }
-    for (const dir of ["up", "left", "right", "down"])
-      u.keys[dir].textContent = G.dirChords[dir] ? G.dirChords[dir].name : "—";
-    u.chips.innerHTML = Object.entries(G.dirChords)
-      .map(([d, c]) => `<span class="sc-chip"><b>${c.name}</b><i>${{up:"▲",left:"◀",right:"▶",down:"▼"}[d]}</i></span>`).join("");
+    const ARR = { up: "▲", left: "◀", right: "▶", down: "▼" };
+    u.keys.innerHTML = ["up", "left", "right", "down"].map(d =>
+      `<button type="button" data-dir="${d}"><i>${ARR[d]}</i><b>${G.dirChords[d] ? G.dirChords[d].name : "—"}</b></button>`).join("");
     if (G.running) AE.ENG.targets = Object.values(G.dirChords);
   }
   buildDirs();
@@ -4195,7 +4222,7 @@ window.CP_SUPA = {
     flashKey(dir);
   }
   function flashKey(dir) {
-    const el = u.keys[dir] && u.keys[dir].parentElement;
+    const el = u.keys.querySelector(`[data-dir="${dir}"]`);
     if (!el) return;
     el.classList.add("hot");
     setTimeout(() => el.classList.remove("hot"), 450);
@@ -4304,14 +4331,17 @@ window.CP_SUPA = {
     const map = { ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right" };
     if (map[e.key]) { e.preventDefault(); steer(map[e.key]); }
   });
-  u.pad.addEventListener("click", e => {
-    const b = e.target.closest(".snk-key"); if (!b || !b.dataset.dir || !G.running) return;
+  u.keys.addEventListener("click", e => {
+    const b = e.target.closest("button[data-dir]"); if (!b || !G.running) return;
     steer(b.dataset.dir);
+  });
+  document.addEventListener("keydown", e => {   // tam ekrandan çıkış
+    if (e.key === "Escape" && u.view.classList.contains("snk-full")) stop(true);
   });
 
   // ---- kamera yan paneli ----
   function syncCamToggle() {
-    u.camToggle.textContent = G.camWanted ? "📷 Kamera: Açık" : "📷 Kamera: Kapalı";
+    u.camToggle.textContent = G.camWanted ? "📷 Açık" : "📷 Kapalı";
     u.camToggle.setAttribute("aria-pressed", String(G.camWanted));
   }
   function attachCam() {
@@ -4319,7 +4349,7 @@ window.CP_SUPA = {
     const show = hasVideo && G.camWanted;
     u.cam.srcObject = show ? AE.ENG.stream : null;
     u.cam.hidden = !show;
-    u.row.classList.toggle("has-cam", show);
+    u.camOff.hidden = show;
   }
   u.camToggle.addEventListener("click", () => {
     G.camWanted = !G.camWanted;
@@ -4367,6 +4397,10 @@ window.CP_SUPA = {
     attachCam();
     u.idle.hidden = true; u.over.hidden = true;
     u.heard.textContent = "🎤 Dinliyorum — yön akorunu çal";
+    // TAM EKRAN kokpit: sınıf eklendikten SONRA ölç — boyutlar değişiyor
+    u.view.classList.add("snk-full");
+    document.body.classList.add("snk-lock");
+    u.fsStop.hidden = false;
     reset(); sizeCanvas(); draw();
     G.running = true;
     u.go.textContent = "⏹ Bitir";
@@ -4375,16 +4409,22 @@ window.CP_SUPA = {
   function stop(full) {
     clearInterval(G.timer); G.timer = null;
     G.running = false;
-    u.go.textContent = "🎤 Başla";
+    u.go.textContent = "🎤 Başla — Tam Ekran";
     if (full) {
+      u.view.classList.remove("snk-full");
+      document.body.classList.remove("snk-lock");
+      u.fsStop.hidden = true;
       AE.stop();
-      u.cam.srcObject = null; u.cam.hidden = true; u.row.classList.remove("has-cam");
-      u.idle.hidden = false;
+      u.cam.srcObject = null; u.cam.hidden = true; u.camOff.hidden = false;
+      u.idle.hidden = false; u.over.hidden = true;
       u.heard.textContent = "🎤 Mikrofon kapalı · klavye okları da çalışır";
       if (u.level) u.level.style.width = "0%";
+      sizeCanvas(); draw();
     }
   }
   u.go.addEventListener("click", () => { G.running ? stop(true) : start(); });
+  u.fsStop.addEventListener("click", () => stop(true));
+  u.again.addEventListener("click", () => start());
   window.__snakeStop = () => stop(true);
   window.__snk = { G, steer, stepGame, buildDirs, start, reset, draw };   // test kancası
 })();
