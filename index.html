@@ -93,6 +93,12 @@ window.CP_SUPA = {
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  /* KÖK ÇÖZÜM: display:flex/grid verilen öğelerde hidden özniteliği eziliyordu.
+     Bu tuzak üç kez ayrı öğede tekrarladı (.air-idle ailesi, .nj-idle,
+     .snk-camoff — sonuncusu "kamera görünmüyor" hatasının ta kendisiydi:
+     video arkada oynuyordu, yer tutucu üstünü örtüyordu). Tek tek kural
+     yazmak bitmiyor; hidden HER ZAMAN kazanır. */
+  [hidden] { display: none !important; }
 
   html, body { height: 100%; }
 
@@ -883,7 +889,10 @@ window.CP_SUPA = {
   .snk-camslot video[hidden] { display: none; }
   .snk-camoff { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
                 color: var(--muted-dim); font-size: .68rem; letter-spacing: .2em;
-                background: linear-gradient(140deg, #14120c, #0a0906); }
+                background: linear-gradient(140deg, #14120c, #0a0906);
+                white-space: pre-line; text-align: center; line-height: 1.7; padding: 10px;
+                cursor: pointer; }
+  .snk-camoff[hidden] { display: none; }   /* display:flex hidden'ı ezer — bilinen tuzak */
   .snk-params { padding: 12px 14px; display: flex; flex-direction: column; gap: 7px; overflow-y: auto;
                 font-family: ui-monospace, "SF Mono", Menlo, monospace; min-height: 0; }
   .snk-sec { color: var(--amber); font-size: .6rem; letter-spacing: .22em; margin-top: 4px; }
@@ -3626,11 +3635,17 @@ window.CP_SUPA = {
   }
   async function attachCam() {
     const off = document.getElementById("njCamOff");
-    if (!camWanted) { u.cam.srcObject = null; u.cam.hidden = true; if (off) off.hidden = false; return; }
-    const ok = await window.CP_camPreview.attach(u.cam);
-    u.cam.hidden = !ok;
-    if (off) { off.hidden = ok; if (!ok) off.textContent = "📷 KAMERAYA ULAŞILAMADI"; }
+    if (!camWanted) {
+      u.cam.srcObject = null; u.cam.hidden = true;
+      if (off) { off.hidden = false; off.textContent = "📷 KAMERA KAPALI"; }
+      return;
+    }
+    const r = await window.CP_camPreview.attach(u.cam);
+    u.cam.hidden = !r.ok;
+    if (off) { off.hidden = r.ok; if (!r.ok) off.textContent = window.CP_camPreview.reason(r.why); }
   }
+  const njOff = document.getElementById("njCamOff");
+  if (njOff) njOff.addEventListener("click", () => { if (camWanted) attachCam(); });
   u.camToggle.addEventListener("click", () => {
     camWanted = !camWanted;
     try { localStorage.setItem("akorNinjaCam", camWanted ? "1" : "0"); } catch (_) {}
@@ -3793,6 +3808,7 @@ window.CP_SUPA = {
   // görüntü hiç gelmez. Bu yardımcı gerekirse BAĞIMSIZ bir video akışı açar.
   window.CP_camPreview = {
     stream: null,
+    // dönüş: { ok: true } | { ok: false, why: "izin" | "mesgul" | "yok" | "hata" }
     async attach(videoEl) {
       let s = (ENG.stream && ENG.stream.getVideoTracks().length > 0) ? ENG.stream : null;
       if (!s) {
@@ -3801,12 +3817,25 @@ window.CP_SUPA = {
           try {
             s = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 640 } } });
             this.stream = s;
-          } catch (_) { return false; }
+          } catch (e) {
+            console.warn("[ChordPlai] kamera önizleme alınamadı:", e.name, e.message);
+            const why = e.name === "NotAllowedError" || e.name === "SecurityError" ? "izin"
+                      : e.name === "NotReadableError" || e.name === "AbortError" ? "mesgul"
+                      : e.name === "NotFoundError" || e.name === "OverconstrainedError" ? "yok" : "hata";
+            return { ok: false, why };
+          }
         }
       }
       videoEl.srcObject = s;
       try { await videoEl.play(); } catch (_) {}   // autoplay bazen tek başına yetmiyor
-      return true;
+      return { ok: true };
+    },
+    // kullanıcının anlayacağı dilde: sorun ne, NE YAPMALI
+    reason(why) {
+      return why === "izin"   ? "📷 KAMERA İZNİ GEREKLİ\nAdres çubuğundaki 🎥/kilit simgesine tıkla → Kameraya izin ver → buraya dokun"
+           : why === "mesgul" ? "📷 KAMERA BAŞKA UYGULAMADA\nFaceTime/Zoom gibi uygulamayı kapat → buraya dokun"
+           : why === "yok"    ? "📷 KAMERA BULUNAMADI"
+           : "📷 KAMERAYA ULAŞILAMADI\nBuraya dokunarak yeniden dene";
     },
     release() {
       if (this.stream) { this.stream.getTracks().forEach(t => t.stop()); this.stream = null; }
@@ -4050,13 +4079,15 @@ window.CP_SUPA = {
     const off = document.getElementById("ttCamOff");
     if (!camWanted || !T.running) {
       u.cam.hidden = true; u.cam.srcObject = null;
-      if (off) off.hidden = false;
+      if (off) { off.hidden = false; off.textContent = "📷 KAMERA KAPALI"; }
       return;
     }
-    const ok = await window.CP_camPreview.attach(u.cam);
-    u.cam.hidden = !ok;
-    if (off) { off.hidden = ok; if (!ok) off.textContent = "📷 KAMERAYA ULAŞILAMADI"; }
+    const r = await window.CP_camPreview.attach(u.cam);
+    u.cam.hidden = !r.ok;
+    if (off) { off.hidden = r.ok; if (!r.ok) off.textContent = window.CP_camPreview.reason(r.why); }
   }
+  const ttOff = document.getElementById("ttCamOff");
+  if (ttOff) ttOff.addEventListener("click", () => { if (camWanted && T.running) syncCam(); });
   u.camToggle.addEventListener("click", () => {
     camWanted = !camWanted;
     try { localStorage.setItem("akorNinjaCam", camWanted ? "1" : "0"); } catch (_) {}
@@ -4415,14 +4446,16 @@ window.CP_SUPA = {
   }
   async function attachCam() {
     if (!G.camWanted) {
-      u.cam.srcObject = null; u.cam.hidden = true; u.camOff.hidden = false;
+      u.cam.srcObject = null; u.cam.hidden = true;
+      u.camOff.hidden = false; u.camOff.textContent = "📷 KAMERA KAPALI";
       return;
     }
-    const ok = await window.CP_camPreview.attach(u.cam);
-    u.cam.hidden = !ok;
-    u.camOff.hidden = ok;
-    if (!ok) u.camOff.textContent = "📷 KAMERAYA ULAŞILAMADI";
+    const r = await window.CP_camPreview.attach(u.cam);
+    u.cam.hidden = !r.ok;
+    u.camOff.hidden = r.ok;
+    if (!r.ok) u.camOff.textContent = window.CP_camPreview.reason(r.why);
   }
+  u.camOff.addEventListener("click", () => { if (G.camWanted) attachCam(); });   // dokun → yeniden dene
   u.camToggle.addEventListener("click", () => {
     G.camWanted = !G.camWanted;
     try { localStorage.setItem("akorSnakeCam", G.camWanted ? "1" : "0"); } catch (_) {}

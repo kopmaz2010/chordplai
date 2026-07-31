@@ -193,8 +193,11 @@ kendi akoru olmayanlarda işaretin sağında **▸** (içe yatır/majör) veya
 **CSS**
 
 - `display:flex/grid` verilen bir öğede `hidden` özniteliği **ezilir**.
-  Her overlay için `[hidden] { display: none }` yaz. (`.air-idle`, `.np-body`
-  ve `#gateFallback`'te üçü de bu yüzden bozulmuştu.)
+  Bu tuzak DÖRT kez tekrarladı (`.air-idle`, `.np-body`, `#gateFallback`,
+  `.nj-idle`, en son `.snk-camoff` — "kamera görünmüyor" hatasının kendisi:
+  video arkada oynuyordu, yer tutucu üstünü örtüyordu). Artık KÖK ÇÖZÜM var:
+  reset'te global `[hidden] { display: none !important; }` kuralı. Yeni
+  overlay eklerken tekil kural gerekmez; hidden'ı CSS'le ezmeye çalışma.
 - Genel sınıf adlarından kaçın: dizgeç hücrelerine `.beat` demek metronom
   noktalarının stiliyle çakıştı, `.bt`'ye çevrildi.
 - `calc()` içinde kullanılan özel değişkenler geçişte **bir kare geriden**
