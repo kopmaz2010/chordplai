@@ -204,5 +204,10 @@
   "SKOR": "SCORE",
   "· KOMBO": "· COMBO",
   "· SATIR": "· LINES",
-  "· SEVİYE": "· LEVEL"
+  "· SEVİYE": "· LEVEL",
+  "» METRONOM — yılan vuruşta yürür": "» METRONOME — the snake moves on the beat",
+  "TEMPO": "TEMPO",
+  "SES": "VOLUME",
+  "yılan metronom vuruşuyla ilerler · tempo = hız · puan = yem × tempo seviyesi · kendine çarpma = son": "the snake moves on the metronome beat · tempo = speed · score = food × tempo level · hit yourself = game over",
+  "Yılan metronom vuruşuyla yürür (tempo = hız) · puan = yem × tempo seviyesi · yön akorları gamın I ▲ · IV ◀ · V ▶ · VI ▼ derecelerinden": "The snake moves on the metronome beat (tempo = speed) · score = food × tempo level · direction chords from degrees I ▲ · IV ◀ · V ▶ · VI ▼"
 }

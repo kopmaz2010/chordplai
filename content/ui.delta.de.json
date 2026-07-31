@@ -204,5 +204,10 @@
   "SKOR": "PUNKTE",
   "· KOMBO": "· COMBO",
   "· SATIR": "· REIHEN",
-  "· SEVİYE": "· STUFE"
+  "· SEVİYE": "· STUFE",
+  "» METRONOM — yılan vuruşta yürür": "» METRONOM — die Schlange geht auf den Schlag",
+  "TEMPO": "TEMPO",
+  "SES": "LAUTSTÄRKE",
+  "yılan metronom vuruşuyla ilerler · tempo = hız · puan = yem × tempo seviyesi · kendine çarpma = son": "die Schlange geht im Metronom-Takt · Tempo = Geschwindigkeit · Punkte = Futter × Tempostufe · Selbstbiss = Ende",
+  "Yılan metronom vuruşuyla yürür (tempo = hız) · puan = yem × tempo seviyesi · yön akorları gamın I ▲ · IV ◀ · V ▶ · VI ▼ derecelerinden": "Die Schlange geht im Metronom-Takt (Tempo = Geschwindigkeit) · Punkte = Futter × Stufe · Akkorde aus den Stufen I ▲ · IV ◀ · V ▶ · VI ▼"
 }

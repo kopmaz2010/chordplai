@@ -915,6 +915,10 @@ window.CP_SUPA = {
               padding: 5px 9px; font-size: .68rem; cursor: pointer; letter-spacing: .06em; flex: 0 0 auto; }
   .snk-mini[aria-pressed="true"] { color: var(--amber); border-color: rgba(245,194,100,.5); }
   .snk-rule { color: var(--muted); font-size: .66rem; line-height: 1.5; }
+  .snk-fader { display: flex; flex-direction: column; gap: 4px; font-size: .6rem;
+               letter-spacing: .14em; color: var(--muted); }
+  .snk-fader b { color: var(--amber-hot, #ffd98a); font-size: .72rem; letter-spacing: .06em; }
+  .snk-fader input { width: 100%; }
   .snk-stage { display: grid; grid-template-rows: auto 1fr; min-height: 0;
                background: radial-gradient(100% 100% at 50% 0%, #12100a, #050503); }
   .snk-hud { display: flex; align-items: center; gap: 12px; padding: 8px 14px;
@@ -1791,8 +1795,15 @@ window.CP_SUPA = {
             <select id="snkScale" title="Gam/Makam"></select>
             <button class="snk-mini" id="snkCamToggle" aria-pressed="true">📷 Açık</button>
           </div>
+          <div class="snk-sec">» METRONOM — yılan vuruşta yürür</div>
+          <label class="snk-fader">TEMPO <b id="snkBpmVal">100 BPM</b>
+            <input type="range" id="snkBpm" min="40" max="180" value="100">
+          </label>
+          <label class="snk-fader">SES <b id="snkMetVolVal">60%</b>
+            <input type="range" id="snkMetVol" min="0" max="100" value="60">
+          </label>
           <div class="snk-sec">» KURAL</div>
-          <div class="snk-rule">duvarlar sarmal · her 3 yemde hız + · kendine çarpma = son</div>
+          <div class="snk-rule">yılan metronom vuruşuyla ilerler · tempo = hız · puan = yem × tempo seviyesi · kendine çarpma = son</div>
         </div>
       </div>
       <div class="snk-stage">
@@ -1823,7 +1834,7 @@ window.CP_SUPA = {
       <div class="ng-board-head"><span>🏆 Sıralama · <b>Akor Yılanı</b></span></div>
       <ol class="ng-board-list" id="snkBoardList"></ol>
     </div>
-    <p class="hint snk-page-only">Puan = yem × hız seviyesi · yön akorları gamın I ▲ · IV ◀ · V ▶ · VI ▼ derecelerinden</p>
+    <p class="hint snk-page-only">Yılan metronom vuruşuyla yürür (tempo = hız) · puan = yem × tempo seviyesi · yön akorları gamın I ▲ · IV ◀ · V ▶ · VI ▼ derecelerinden</p>
   </div>
 
   <div id="view-acap" hidden>
@@ -4204,6 +4215,7 @@ window.CP_SUPA = {
     heard: $("snkHeard"), level: $("snkLevelBar"),
     cam: $("snkCam"), camOff: $("snkCamOff"), camToggle: $("snkCamToggle"),
     ton: $("snkTon"), scale: $("snkScale"), keys: $("snkKeys"),
+    bpm: $("snkBpm"), bpmVal: $("snkBpmVal"), metVol: $("snkMetVol"), metVolVal: $("snkMetVolVal"),
   };
   if (!u.view) return;
   const TH = window.AkorTheory, AE = window.AkorEngine;
@@ -4212,14 +4224,22 @@ window.CP_SUPA = {
 
   const G = {
     running: false, snake: [], dir: "right", nextDir: null, food: null,
-    feed: 0, speedLv: 1, score: 0, tick: 550, timer: null,
+    feed: 0, score: 0, tick: 600, timer: null,
     ton: 9, scale: "aeolian", dirChords: {},   // "up" -> {name, pcs}
     best: 0, camWanted: true, dpr: 1,
+    bpm: 100, metroVol: 0.6, beat: 0,          // 🥁 yılan metronom vuruşuyla yürür
   };
   try { G.best = +localStorage.getItem("akorSnakeBest") || 0; } catch (_) {}
   try { G.camWanted = localStorage.getItem("akorSnakeCam") !== "0"; } catch (_) {}
   try { G.ton = +(localStorage.getItem("akorSnakeTon") ?? 9); G.scale = localStorage.getItem("akorSnakeScale") || "aeolian"; } catch (_) {}
+  try {
+    const b = +localStorage.getItem("akorSnakeBpm"); if (b >= 40 && b <= 180) G.bpm = b;
+    const v = localStorage.getItem("akorSnakeMetVol"); if (v !== null) G.metroVol = Math.min(1, Math.max(0, +v));
+  } catch (_) {}
   u.best.textContent = G.best;
+  // tempo seviyesi: hız artık YALNIZ metronomdan gelir; puan çarpanı da buradan
+  const bpmLevel = () => Math.max(1, Math.round((G.bpm - 30) / 25));
+  const beatMs = () => Math.round(60000 / G.bpm);
 
   // ---- seçiciler ----
   CH.forEach((n, i) => u.ton.add(new Option(n, i)));
@@ -4314,6 +4334,39 @@ window.CP_SUPA = {
     ns.start(t);
   }
 
+  // ---- 🥁 metronom: her vuruşta bir adım, 4'te bir aksan ----
+  function metroClick(accent) {
+    if (G.metroVol <= 0.001) return;
+    const ctx = sctx(), t = ctx.currentTime;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.5 * G.metroVol * (accent ? 1.25 : 0.8), t + 0.002);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + (accent ? 0.09 : 0.055));
+    g.connect(ctx.destination);
+    const o = ctx.createOscillator();
+    o.type = "square";
+    o.frequency.setValueAtTime(accent ? 1760 : 1175, t);       // A6 / D6 — tahta blok hissi
+    o.frequency.exponentialRampToValueAtTime(accent ? 1400 : 950, t + 0.05);
+    o.connect(g); o.start(t); o.stop(t + 0.1);
+  }
+  function applyBpmUi() {
+    u.bpmVal.textContent = G.bpm + " BPM";
+    u.metVolVal.textContent = Math.round(G.metroVol * 100) + "%";
+  }
+  u.bpm.value = G.bpm; u.metVol.value = Math.round(G.metroVol * 100); applyBpmUi();
+  u.bpm.addEventListener("input", () => {
+    G.bpm = +u.bpm.value;
+    try { localStorage.setItem("akorSnakeBpm", G.bpm); } catch (_) {}
+    applyBpmUi();
+    G.tick = beatMs();
+    if (G.running) schedule();          // tempo canlı değişir, yılan yeni vuruşa oturur
+  });
+  u.metVol.addEventListener("input", () => {
+    G.metroVol = u.metVol.value / 100;
+    try { localStorage.setItem("akorSnakeMetVol", G.metroVol); } catch (_) {}
+    applyBpmUi();
+  });
+
   // ---- yön uygulama (ters yöne dönüş yok — klasik kural) ----
   const OPP = { up: "down", down: "up", left: "right", right: "left" };
   function steer(dir) {
@@ -4338,7 +4391,8 @@ window.CP_SUPA = {
   function reset() {
     G.snake = [{ x: 7, y: 7 }, { x: 6, y: 7 }, { x: 5, y: 7 }];
     G.dir = "right"; G.nextDir = null;
-    G.food = place(); G.feed = 0; G.speedLv = 1; G.score = 0; G.tick = 550;
+    G.food = place(); G.feed = 0; G.score = 0;
+    G.tick = beatMs(); G.beat = 0;             // hız YALNIZ metronomdan
     u.score.textContent = 0; u.len.textContent = 3;
   }
   function schedule() {
@@ -4346,6 +4400,8 @@ window.CP_SUPA = {
     G.timer = setInterval(stepGame, G.tick);   // rAF değil: arka planda kısılıyor
   }
   function stepGame() {
+    metroClick(G.beat % 4 === 0);              // yılan vuruşta yürür, 4'te bir aksan
+    G.beat++;
     if (G.nextDir) { G.dir = G.nextDir; G.nextDir = null; }
     const h = G.snake[0];
     const d = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] }[G.dir];
@@ -4354,11 +4410,10 @@ window.CP_SUPA = {
     if (G.snake.some(s => s.x === nh.x && s.y === nh.y)) return gameOver();
     G.snake.unshift(nh);
     if (nh.x === G.food.x && nh.y === G.food.y) {
-      G.feed++; G.score += G.speedLv;
+      G.feed++; G.score += bpmLevel();         // hızlı tempo = vuruş başına çok puan
       u.score.textContent = G.score; u.len.textContent = G.snake.length;
       G.food = place();
       sfxEat();
-      if (G.feed % 3 === 0) { G.speedLv++; G.tick = Math.max(260, Math.round(G.tick * 0.92)); schedule(); }
     } else G.snake.pop();
     draw();
   }
@@ -4368,7 +4423,7 @@ window.CP_SUPA = {
     sfxDie();
     u.over.hidden = false;
     u.overScore.textContent = G.score;
-    u.overSub.textContent = `uzunluk ${G.snake.length} · hız sv ${G.speedLv}`;
+    u.overSub.textContent = `uzunluk ${G.snake.length} · ${G.bpm} BPM · tempo sv ${bpmLevel()}`;
     u.go.textContent = "🎤 Tekrar Oyna";
     if (G.score > G.best) { G.best = G.score; u.best.textContent = G.best; try { localStorage.setItem("akorSnakeBest", G.best); } catch (_) {} }
     lbSubmit(G.score); lbRender();
