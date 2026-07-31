@@ -246,6 +246,14 @@ kendi akoru olmayanlarda işaretin sağında **▸** (içe yatır/majör) veya
   metindir). Parçaları `window.CP_T()` ile tek tek çevir.
 - Yerel sunucuda `i18n/<dil>.json` **tarayıcı önbelleğinde** kalır; çeviri
   gelmiyorsa önce sayfayı tazele, koda dokunma.
+- **Oyun kokpiti ortak**: Yılan/Ninja/Tetris aynı `.snk-cockpit` iskeletini
+  kullanır (sol kamera+parametre sütunu, sağ sahne+HUD, `.gk-full` ile tam
+  ekran, `.snk-page-only` sayfa-modu blokları). `snk-` öneki tarihsel —
+  yılanda doğdu, üçü de kullanıyor. Yeni oyun eklerken bu iskeleti kopyala.
+- **Kamera önizlemesi `CP_camPreview.attach(video)` ile alınır** — motor
+  akışına güvenme: AkorEngine daha önce ses-yalnız başladıysa
+  (`ENG.running` kısa devresi) akışta video hiç olmaz; yardımcı gerekirse
+  bağımsız video akışı açar ve `play()` çağırır. Çıkışta `release()`.
 
 **Türkçe/i18n**
 

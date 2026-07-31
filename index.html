@@ -850,6 +850,7 @@ window.CP_SUPA = {
     box-shadow: 0 10px 30px rgba(0,0,0,.5) inset;
   }
   .nj-idle { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; padding: 20px; color: var(--muted); font-size: .9rem; line-height: 1.6; }
+  .nj-idle[hidden] { display: none; }   /* display:flex, hidden'ı ezer — bilinen tuzak */
   .nj-idle-emoji { font-size: 2.6rem; }
   .nj-idle-sub { font-size: .72rem; color: var(--muted-dim); }
   .nj-fruit {
@@ -865,19 +866,10 @@ window.CP_SUPA = {
   .nj-fruit.sliced { transition: transform .45s ease, opacity .45s ease; transform: translateX(-50%) scale(1.7) rotate(25deg); opacity: 0; }
   .nj-fruit.sliced .fr::after { content: "💥"; }
   .nj-fruit.missed { transition: opacity .3s; opacity: 0; }
-  /* .nj-cam köşe pulu kaldırıldı — oyunlarda kamera artık .game-cam yan paneli */
-  .nj-camtoggle { flex: 0 0 auto; font-size: .72rem; padding: 8px 12px; }
-  /* ---- oyunlarda ortak kamera YAN paneli: oyunla eşit boyda, köşe pulu değil ---- */
-  .game-row { display: grid; grid-template-columns: minmax(150px, 34%) 1fr auto; gap: 14px; align-items: stretch; }
-  .game-row:not(.has-cam) { grid-template-columns: 1fr auto; }
-  .game-cam { width: 100%; height: 100%; min-height: 200px; object-fit: cover; transform: scaleX(-1);
-              border-radius: 16px; border: 1px solid #3a3526; background: #000;
-              box-shadow: inset 0 0 0 1px rgba(245,194,100,.12), 0 12px 30px rgba(0,0,0,.5); }
-  .game-cam[hidden] { display: none; }
-  @media (max-width: 760px) {
-    .game-row { grid-template-columns: 1fr; }
-    .game-cam { min-height: 0; aspect-ratio: 16/9; height: auto; }
-  }
+  /* oyunlarda kamera: .snk-camslot (kokpit sol sütunu) — yılan/ninja/tetris ortak */
+  /* ninja arenası kokpit sahnesini doldurur (sabit clamp yüksekliği sayfa modu içindi) */
+  .snk-stage .nj-arena { height: auto; min-height: 300px; border-radius: 0; border: none; box-shadow: none; }
+  .gk-full .snk-stage .nj-arena { min-height: 0; }
   /* ---- 🐍 Akor Yılanı · KOKPİT: kenarlıksız, ince amber hatlar ---- */
   #view-snake { display: flex; flex-direction: column; gap: 14px; }
   #view-snake[hidden] { display: none; }
@@ -936,17 +928,23 @@ window.CP_SUPA = {
                  font-family: ui-monospace, monospace; }
   .snk-over .sc { font-size: 2.8rem; font-weight: 800; color: var(--cream); font-family: ui-monospace, monospace; }
   .snk-over p { color: var(--muted); font-size: .78rem; }
-  /* TAM EKRAN: oyun başlayınca kokpit tüm ekranı kaplar */
-  #view-snake.snk-full .snk-cockpit { position: fixed; inset: 0; z-index: 46; border-radius: 0; border: none; min-height: 0; }
-  #view-snake.snk-full .snk-page-only { display: none; }
+  /* TAM EKRAN: oyun başlayınca kokpit tüm ekranı kaplar (yılan+ninja+tetris ortak) */
+  .gk-full .snk-cockpit { position: fixed; inset: 0; z-index: 46; border-radius: 0; border: none; min-height: 0; }
+  .gk-full .snk-page-only { display: none; }
   body.snk-lock { overflow: hidden; }
+  /* tetris tahtası kokpitte ortalanıp boyuna ölçeklenir (mantıksal çözünürlük sabit) */
+  .snk-ttwrap { display: flex; gap: 14px; align-items: center; justify-content: center; min-height: 0; padding: 10px; }
+  .snk-ttwrap .tt-boardbox { height: 100%; max-height: calc(100% - 8px); display: flex; }
+  .snk-ttwrap #ttCanvas { height: 100%; width: auto; max-width: 100%; }
   @media (max-width: 760px) {
     .snk-cockpit { grid-template-columns: 1fr; min-height: 0; }
     .snk-left { border-right: none; border-bottom: 1px solid rgba(245,194,100,.3);
                 grid-template-rows: none; grid-template-columns: 44% 1fr; }
     .snk-camslot { aspect-ratio: auto; border-bottom: none; border-right: 1px solid rgba(245,194,100,.3); }
     .snk-arena { min-height: 46vh; }
-    #view-snake.snk-full .snk-cockpit { overflow-y: auto; grid-template-rows: auto 1fr; }
+    .gk-full .snk-cockpit { overflow-y: auto; grid-template-rows: auto 1fr; }
+    .snk-ttwrap { flex-direction: column; }
+    .snk-ttwrap #ttCanvas { height: 48vh; }
   }
   .nj-grp-lbl { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted-dim); margin: 10px 0 6px; }
   .nj-monitor { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -1645,113 +1643,119 @@ window.CP_SUPA = {
   </div>
 
   <div id="view-ninja" hidden>
-    <div class="ng-topbar">
+    <div class="ng-topbar snk-page-only">
       <span class="ng-mode-name">🥷 Akor Ninja · <b>gitarınla çal, meyveyi doğra!</b></span>
     </div>
-    <div class="ng-hud">
-      <div class="ng-stat"><div class="k">Skor</div><div class="v" id="njScore">0</div></div>
-      <div class="ng-stat streak"><div class="k">Kombo</div><div class="v" id="njCombo">0</div></div>
-      <div class="ng-stat"><div class="k">Can</div><div class="v" id="njLives">❤️❤️❤️</div></div>
-      <div class="ng-stat"><div class="k">Rekor</div><div class="v" id="njBest">0</div></div>
-    </div>
-
-    <div class="game-row" id="njRow">
-    <video id="njCam" class="game-cam" autoplay playsinline muted hidden></video>
-    <div class="nj-arena" id="njArena">
-      <div class="nj-idle" id="njIdle">
-        <div class="nj-idle-emoji">🎸🥷</div>
-        <p>Akorlar meyvelerle birlikte düşer.<br>Meyvenin üstündeki akoru <b>gitarında çal</b> — doğru çalarsan meyve doğranır!</p>
-        <p class="nj-idle-sub">Mikrofon izni istenecek · jak/ses kartı girişi daha temiz sinyal verir</p>
+    <div class="snk-cockpit" id="njRow">
+      <div class="snk-left">
+        <div class="snk-camslot">
+          <video id="njCam" autoplay playsinline muted hidden></video>
+          <div class="snk-camoff" id="njCamOff">📷 KAMERA KAPALI</div>
+        </div>
+        <div class="snk-params">
+          <div class="snk-sec">» HAVUZ · <span id="njPoolCount">4</span> AKOR</div>
+          <div class="seg" id="njDiffSeg">
+            <button class="chip" data-d="kolay" aria-pressed="true">Kolay</button>
+            <button class="chip" data-d="orta">Orta</button>
+            <button class="chip" data-d="pro">Pro</button>
+            <button class="chip" data-d="virtuoz">Virtüöz</button>
+          </div>
+          <div class="scale-chords" id="njPoolChips"></div>
+          <div class="snk-sec">» DURUM</div>
+          <div class="snk-heard" id="njHeard">🎤 Mikrofon kapalı</div>
+          <div class="snk-levelrail"><i id="njLevel"></i></div>
+          <div class="snk-selrow">
+            <select id="njTon" aria-label="Ton (Anahtar)"></select>
+            <select id="njScale" aria-label="Gam / Makam"></select>
+            <button class="snk-mini" id="njCamToggle" aria-pressed="true">📷 Açık</button>
+          </div>
+          <div class="snk-sec">» KURAL</div>
+          <div class="snk-rule" id="njDiffHint">Kolay: gamın I–IV–V–vi üç sesli akorları</div>
+        </div>
+      </div>
+      <div class="snk-stage">
+        <div class="snk-hud">
+          <span class="snk-hud-title">AKOR NİNJA</span>
+          <span class="snk-hud-stats">SKOR <b id="njScore">0</b> · KOMBO <b id="njCombo">0</b> · <b id="njLives">❤️❤️❤️</b> · REKOR <b id="njBest">0</b></span>
+          <button class="snk-mini" id="njFsStop" hidden>⏹ ÇIK</button>
+        </div>
+        <div class="nj-arena" id="njArena">
+          <div class="nj-idle" id="njIdle">
+            <div class="nj-idle-emoji">🎸🥷</div>
+            <p>Akorlar meyvelerle birlikte düşer.<br>Meyvenin üstündeki akoru <b>gitarında çal</b> — doğru çalarsan meyve doğranır!</p>
+            <p class="nj-idle-sub">Mikrofon izni istenecek · jak/ses kartı girişi daha temiz sinyal verir</p>
+          </div>
+        </div>
       </div>
     </div>
-    </div>
 
-    <div class="nj-monitor">
-      <div class="nj-level"><i id="njLevel"></i></div>
-      <div class="nj-heard" id="njHeard">🎤 Mikrofon kapalı</div>
-      <button class="chip nj-camtoggle" id="njCamToggle" aria-pressed="true">📷 Kamera: Açık</button>
-    </div>
-
-    <div class="card">
-      <label>Zorluk · Ton · Gam/Makam — <span id="njPoolCount">4</span> akor</label>
-      <div class="seg" id="njDiffSeg">
-        <button class="chip" data-d="kolay" aria-pressed="true">Kolay</button>
-        <button class="chip" data-d="orta">Orta</button>
-        <button class="chip" data-d="pro">Pro</button>
-        <button class="chip" data-d="virtuoz">Virtüöz</button>
-      </div>
-      <div class="scale-selects">
-        <select id="njTon" class="scale-sel" aria-label="Ton (Anahtar)"></select>
-        <select id="njScale" class="scale-sel" aria-label="Gam / Makam"></select>
-      </div>
-      <div class="scale-chords" id="njPoolChips"></div>
-      <div class="poolcount-line" id="njDiffHint">Kolay: gamın I–IV–V–vi üç sesli akorları</div>
-    </div>
-
-    <div class="transport"><button class="go" id="njGo">🎤 Başla</button></div>
-    <p class="hint">Zorluk + ton + gam seç, havuz otomatik kurulur · doğru akor = doğrama, kaçan meyve = -1 can</p>
+    <div class="transport snk-page-only"><button class="go" id="njGo">🎤 Başla — Tam Ekran</button></div>
+    <p class="hint snk-page-only">Zorluk + ton + gam seç, havuz otomatik kurulur · doğru akor = doğrama, kaçan meyve = -1 can</p>
   </div>
 
   <div id="view-tetris" hidden>
-    <div class="ng-topbar">
+    <div class="ng-topbar snk-page-only">
       <span class="ng-mode-name">🧱 Akor Tetris · <b>akor çal, taşı yönet!</b></span>
     </div>
-    <div class="ng-hud">
-      <div class="ng-stat"><div class="k">Skor</div><div class="v" id="ttScore">0</div></div>
-      <div class="ng-stat"><div class="k">Satır</div><div class="v" id="ttLines">0</div></div>
-      <div class="ng-stat streak"><div class="k">Seviye</div><div class="v" id="ttLevel">1</div></div>
-      <div class="ng-stat time"><div class="k">Oyun Metronomu</div><div class="v" id="ttBpm">40 <small>BPM</small></div></div>
-    </div>
 
-    <div class="tt-wrap game-row" id="ttRow">
-      <video id="ttCam" class="game-cam" autoplay playsinline muted hidden></video>
-      <div class="tt-boardbox">
-        <canvas id="ttCanvas" width="220" height="352"></canvas>
-        <div class="tt-over" id="ttOver" hidden>
-          <h3>Oyun Bitti</h3><div class="sc" id="ttOverScore">0</div>
-          <p id="ttOverSub" style="color:var(--muted);font-size:.8rem"></p>
+    <div class="snk-cockpit" id="ttRow">
+      <div class="snk-left">
+        <div class="snk-camslot">
+          <video id="ttCam" autoplay playsinline muted hidden></video>
+          <div class="snk-camoff" id="ttCamOff">📷 KAMERA KAPALI</div>
+        </div>
+        <div class="snk-params">
+          <div class="snk-sec">» KUMANDA · AKORU ÇAL</div>
+          <div class="tt-ctl" id="ttCtl">
+            <div class="tt-ctl-row" data-act="left"><b id="ttcLeft">C</b><span>⬅️ Sol</span></div>
+            <div class="tt-ctl-row" data-act="right"><b id="ttcRight">D</b><span>➡️ Sağ</span></div>
+            <div class="tt-ctl-row" data-act="rotate"><b id="ttcRotate">Em</b><span>🔄 Döndür</span></div>
+            <div class="tt-ctl-row" data-act="drop"><b id="ttcDrop">G</b><span>⬇️ Bırak</span></div>
+          </div>
+          <div class="snk-sec">» DURUM</div>
+          <div class="snk-heard" id="ttHeard">🎤 Mikrofon kapalı · klavye okları da çalışır</div>
+          <div class="snk-levelrail"><i id="ttLevelBar"></i></div>
+          <div class="snk-selrow">
+            <select id="ttTon" aria-label="Ton (Anahtar)"></select>
+            <select id="ttScale" aria-label="Gam / Makam"></select>
+            <button class="snk-mini" id="ttCamToggle" aria-pressed="true">📷 Açık</button>
+          </div>
+          <div class="seg" id="ttDiffSeg">
+            <button class="chip" data-d="kolay" aria-pressed="true">Kolay</button>
+            <button class="chip" data-d="orta">Orta</button>
+            <button class="chip" data-d="pro">Pro</button>
+            <button class="chip" data-d="virtuoz">Virtüöz</button>
+          </div>
+          <div class="snk-sec">» KURAL</div>
+          <div class="snk-rule" id="ttDiffHint">Kolay: gamın I–IV–V–vi üç sesli akorları</div>
         </div>
       </div>
-      <div class="tt-side">
-        <div class="tt-next-box"><span class="tt-side-lbl">Sıradaki</span><canvas id="ttNext" width="88" height="66"></canvas></div>
-        <div class="tt-ctl" id="ttCtl">
-          <span class="tt-side-lbl">Kumanda · akoru çal</span>
-          <div class="tt-ctl-row" data-act="left"><b id="ttcLeft">C</b><span>⬅️ Sol</span></div>
-          <div class="tt-ctl-row" data-act="right"><b id="ttcRight">D</b><span>➡️ Sağ</span></div>
-          <div class="tt-ctl-row" data-act="rotate"><b id="ttcRotate">Em</b><span>🔄 Döndür</span></div>
-          <div class="tt-ctl-row" data-act="drop"><b id="ttcDrop">G</b><span>⬇️ Bırak</span></div>
+      <div class="snk-stage">
+        <div class="snk-hud">
+          <span class="snk-hud-title">AKOR TETRİS</span>
+          <span class="snk-hud-stats">SKOR <b id="ttScore">0</b> · SATIR <b id="ttLines">0</b> · SEVİYE <b id="ttLevel">1</b> · <b id="ttBpm">40 <small>BPM</small></b></span>
+          <button class="snk-mini" id="ttFsStop" hidden>⏹ ÇIK</button>
+        </div>
+        <div class="snk-ttwrap">
+          <div class="tt-boardbox">
+            <canvas id="ttCanvas" width="220" height="352"></canvas>
+            <div class="tt-over" id="ttOver" hidden>
+              <h3>Oyun Bitti</h3><div class="sc" id="ttOverScore">0</div>
+              <p id="ttOverSub" style="color:var(--muted);font-size:.8rem"></p>
+            </div>
+          </div>
+          <div class="tt-next-box"><span class="tt-side-lbl">Sıradaki</span><canvas id="ttNext" width="88" height="66"></canvas></div>
         </div>
       </div>
     </div>
 
-    <div class="nj-monitor">
-      <div class="nj-level"><i id="ttLevelBar"></i></div>
-      <div class="nj-heard" id="ttHeard">🎤 Mikrofon kapalı · klavye okları da çalışır</div>
-      <button class="chip nj-camtoggle" id="ttCamToggle" aria-pressed="true">📷 Kamera: Açık</button>
-    </div>
+    <div class="transport snk-page-only"><button class="go" id="ttGo">🎤 Başla — Tam Ekran</button></div>
 
-    <div class="card">
-      <label>Zorluk · Ton · Gam/Makam — kumanda akorları havuzdan seçilir</label>
-      <div class="seg" id="ttDiffSeg">
-        <button class="chip" data-d="kolay" aria-pressed="true">Kolay</button>
-        <button class="chip" data-d="orta">Orta</button>
-        <button class="chip" data-d="pro">Pro</button>
-        <button class="chip" data-d="virtuoz">Virtüöz</button>
-      </div>
-      <div class="scale-selects">
-        <select id="ttTon" class="scale-sel" aria-label="Ton (Anahtar)"></select>
-        <select id="ttScale" class="scale-sel" aria-label="Gam / Makam"></select>
-      </div>
-      <div class="poolcount-line" id="ttDiffHint">Kolay: gamın I–IV–V–vi üç sesli akorları</div>
-    </div>
-
-    <div class="transport"><button class="go" id="ttGo">🎤 Başla</button></div>
-
-    <div class="ng-board">
+    <div class="ng-board snk-page-only">
       <div class="ng-board-head"><span>🏆 Sıralama · <b>Akor Tetris</b></span></div>
       <ol class="ng-board-list" id="ttBoardList"></ol>
     </div>
-    <p class="hint">Her 2 satırda seviye +1 → oyun metronomu hızlanır (40 BPM'den başlar) · satır sil = seviye × puan</p>
+    <p class="hint snk-page-only">Her 2 satırda seviye +1 → oyun metronomu hızlanır (40 BPM'den başlar) · satır sil = seviye × puan</p>
   </div>
 
   <div id="view-snake" hidden>
@@ -3618,15 +3622,14 @@ window.CP_SUPA = {
   try { camWanted = localStorage.getItem("akorNinjaCam") !== "0"; } catch (_) {}
   function syncCamToggle() {
     u.camToggle.setAttribute("aria-pressed", String(camWanted));
-    u.camToggle.textContent = camWanted ? "📷 Kamera: Açık" : "📷 Kamera: Kapalı";
+    u.camToggle.textContent = camWanted ? "📷 Açık" : "📷 Kapalı";
   }
-  function attachCam() {
-    const hasVideo = ENG.stream && ENG.stream.getVideoTracks().length > 0;
-    const show = hasVideo && camWanted;
-    if (show) { u.cam.srcObject = ENG.stream; u.cam.hidden = false; }
-    else { u.cam.hidden = true; u.cam.srcObject = null; }
-    const row = document.getElementById("njRow");
-    if (row) row.classList.toggle("has-cam", show);
+  async function attachCam() {
+    const off = document.getElementById("njCamOff");
+    if (!camWanted) { u.cam.srcObject = null; u.cam.hidden = true; if (off) off.hidden = false; return; }
+    const ok = await window.CP_camPreview.attach(u.cam);
+    u.cam.hidden = !ok;
+    if (off) { off.hidden = ok; if (!ok) off.textContent = "📷 KAMERAYA ULAŞILAMADI"; }
   }
   u.camToggle.addEventListener("click", () => {
     camWanted = !camWanted;
@@ -3720,6 +3723,10 @@ window.CP_SUPA = {
     const over = document.createElement("div");
     over.className = "nj-over";
     over.innerHTML = `<h3>Oyun Bitti</h3><div class="sc">${NJ.score}</div><p style="color:var(--muted);font-size:.82rem">Rekor: ${NJ.best}</p>`;
+    const again = document.createElement("button");
+    again.className = "go"; again.textContent = "🎤 Tekrar Oyna";
+    again.addEventListener("click", start);           // tam ekranda kal, izin yeniden istenmez
+    over.appendChild(again);
     u.arena.appendChild(over);
     NJ.overEl = over;
     u.go.textContent = "🎤 Tekrar";
@@ -3732,6 +3739,10 @@ window.CP_SUPA = {
     ENG.onLevel = ninjaOnLevel;
     const ok = await engineStart(camWanted);
     if (!ok) { u.heard.textContent = "⚠️ Mikrofon izni verilmedi — oyun için gerekli."; return; }
+    // TAM EKRAN kokpit
+    document.getElementById("view-ninja").classList.add("gk-full");
+    document.body.classList.add("snk-lock");
+    const fs = document.getElementById("njFsStop"); if (fs) fs.hidden = false;
     attachCam();
     if (NJ.overEl) { NJ.overEl.remove(); NJ.overEl = null; }
     u.idle.hidden = true;
@@ -3748,14 +3759,24 @@ window.CP_SUPA = {
     NJ.fruits.forEach(f => f.el.remove()); NJ.fruits = [];
     if (NJ.overEl) { NJ.overEl.remove(); NJ.overEl = null; }
     engineStop();
+    window.CP_camPreview.release();
+    document.getElementById("view-ninja").classList.remove("gk-full");
+    document.body.classList.remove("snk-lock");
+    const fs = document.getElementById("njFsStop"); if (fs) fs.hidden = true;
     u.cam.hidden = true; u.cam.srcObject = null;
+    const off = document.getElementById("njCamOff"); if (off) off.hidden = false;
     u.idle.hidden = false;
-    u.go.textContent = "🎤 Başla"; u.go.classList.remove("running");
+    u.go.textContent = "🎤 Başla — Tam Ekran"; u.go.classList.remove("running");
     u.heard.textContent = "🎤 Mikrofon kapalı";
     u.level.style.width = "0%";
   }
   window.__ninjaStop = stop;
   u.go.addEventListener("click", () => NJ.running ? stop() : start());
+  const njFs = document.getElementById("njFsStop");
+  if (njFs) njFs.addEventListener("click", stop);
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && document.getElementById("view-ninja").classList.contains("gk-full")) stop();
+  });
 
   function ninjaOnChord(name, score) {
     u.heard.innerHTML = `🎸 Duyulan: <b>${name}</b> (%${Math.round(score * 100)})`;
@@ -3767,6 +3788,30 @@ window.CP_SUPA = {
 
   // motoru diğer oyunlara aç (Tetris paylaşır)
   window.AkorEngine = { ENG, start: engineStart, stop: engineStop, chords: CHORDS, classify };
+  // Oyun kamera önizlemesi. Motor akışına GÜVENME: motor daha önce ses-yalnız
+  // başladıysa (ENG.running kısa devresi) ya da birleşik istek video vermediyse
+  // görüntü hiç gelmez. Bu yardımcı gerekirse BAĞIMSIZ bir video akışı açar.
+  window.CP_camPreview = {
+    stream: null,
+    async attach(videoEl) {
+      let s = (ENG.stream && ENG.stream.getVideoTracks().length > 0) ? ENG.stream : null;
+      if (!s) {
+        if (this.stream && this.stream.getVideoTracks().some(t => t.readyState === "live")) s = this.stream;
+        else {
+          try {
+            s = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 640 } } });
+            this.stream = s;
+          } catch (_) { return false; }
+        }
+      }
+      videoEl.srcObject = s;
+      try { await videoEl.play(); } catch (_) {}   // autoplay bazen tek başına yetmiyor
+      return true;
+    },
+    release() {
+      if (this.stream) { this.stream.getTracks().forEach(t => t.stop()); this.stream = null; }
+    },
+  };
 
   // ---- test kancaları ----
   window.__nj = {
@@ -3999,15 +4044,18 @@ window.CP_SUPA = {
   // ---- kamera ----
   let camWanted = true;
   try { camWanted = localStorage.getItem("akorNinjaCam") !== "0"; } catch (_) {}
-  function syncCam() {
+  async function syncCam() {
     u.camToggle.setAttribute("aria-pressed", String(camWanted));
-    u.camToggle.textContent = camWanted ? "📷 Kamera: Açık" : "📷 Kamera: Kapalı";
-    const hasVideo = AE.ENG.stream && AE.ENG.stream.getVideoTracks().length > 0;
-    const show = hasVideo && camWanted && T.running;
-    if (show) { u.cam.srcObject = AE.ENG.stream; u.cam.hidden = false; }
-    else { u.cam.hidden = true; u.cam.srcObject = null; }
-    const row = document.getElementById("ttRow");
-    if (row) row.classList.toggle("has-cam", show);
+    u.camToggle.textContent = camWanted ? "📷 Açık" : "📷 Kapalı";
+    const off = document.getElementById("ttCamOff");
+    if (!camWanted || !T.running) {
+      u.cam.hidden = true; u.cam.srcObject = null;
+      if (off) off.hidden = false;
+      return;
+    }
+    const ok = await window.CP_camPreview.attach(u.cam);
+    u.cam.hidden = !ok;
+    if (off) { off.hidden = ok; if (!ok) off.textContent = "📷 KAMERAYA ULAŞILAMADI"; }
   }
   u.camToggle.addEventListener("click", () => {
     camWanted = !camWanted;
@@ -4028,6 +4076,10 @@ window.CP_SUPA = {
     AE.ENG.onLevel = tetrisOnLevel;
     const ok = await AE.start(camWanted);
     if (!ok) { u.heard.textContent = "⚠️ Mikrofon izni verilmedi — klavye oklarıyla da oynayabilirsin."; }
+    // TAM EKRAN kokpit
+    document.getElementById("view-tetris").classList.add("gk-full");
+    document.body.classList.add("snk-lock");
+    const fs = document.getElementById("ttFsStop"); if (fs) fs.hidden = false;
     u.over.hidden = true;
     resetBoard();
     T.running = true;
@@ -4040,8 +4092,13 @@ window.CP_SUPA = {
     T.running = false;
     clearInterval(T.timer);
     AE.stop();
+    window.CP_camPreview.release();
+    document.getElementById("view-tetris").classList.remove("gk-full");
+    document.body.classList.remove("snk-lock");
+    const fs = document.getElementById("ttFsStop"); if (fs) fs.hidden = true;
     u.cam.hidden = true; u.cam.srcObject = null;
-    u.go.textContent = "🎤 Başla"; u.go.classList.remove("running");
+    const off = document.getElementById("ttCamOff"); if (off) off.hidden = false;
+    u.go.textContent = "🎤 Başla — Tam Ekran"; u.go.classList.remove("running");
     u.heard.textContent = "🎤 Mikrofon kapalı · klavye okları da çalışır";
     u.levelBar.style.width = "0%";
   }
@@ -4058,6 +4115,18 @@ window.CP_SUPA = {
   }
   window.__tetrisStop = stop;
   u.go.addEventListener("click", () => T.running ? stop() : start());
+  const ttFs = document.getElementById("ttFsStop");
+  if (ttFs) ttFs.addEventListener("click", stop);
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && document.getElementById("view-tetris").classList.contains("gk-full")) stop();
+  });
+  // over ekranında tekrar oyna (tam ekranda kal)
+  {
+    const again = document.createElement("button");
+    again.className = "go"; again.textContent = "🎤 Tekrar Oyna";
+    again.addEventListener("click", () => start());
+    u.over.appendChild(again);
+  }
 
   // klavye desteği (test + erişilebilirlik)
   document.addEventListener("keydown", e => {
@@ -4336,7 +4405,7 @@ window.CP_SUPA = {
     steer(b.dataset.dir);
   });
   document.addEventListener("keydown", e => {   // tam ekrandan çıkış
-    if (e.key === "Escape" && u.view.classList.contains("snk-full")) stop(true);
+    if (e.key === "Escape" && u.view.classList.contains("gk-full")) stop(true);
   });
 
   // ---- kamera yan paneli ----
@@ -4344,18 +4413,21 @@ window.CP_SUPA = {
     u.camToggle.textContent = G.camWanted ? "📷 Açık" : "📷 Kapalı";
     u.camToggle.setAttribute("aria-pressed", String(G.camWanted));
   }
-  function attachCam() {
-    const hasVideo = AE.ENG.stream && AE.ENG.stream.getVideoTracks().length > 0;
-    const show = hasVideo && G.camWanted;
-    u.cam.srcObject = show ? AE.ENG.stream : null;
-    u.cam.hidden = !show;
-    u.camOff.hidden = show;
+  async function attachCam() {
+    if (!G.camWanted) {
+      u.cam.srcObject = null; u.cam.hidden = true; u.camOff.hidden = false;
+      return;
+    }
+    const ok = await window.CP_camPreview.attach(u.cam);
+    u.cam.hidden = !ok;
+    u.camOff.hidden = ok;
+    if (!ok) u.camOff.textContent = "📷 KAMERAYA ULAŞILAMADI";
   }
   u.camToggle.addEventListener("click", () => {
     G.camWanted = !G.camWanted;
     try { localStorage.setItem("akorSnakeCam", G.camWanted ? "1" : "0"); } catch (_) {}
     syncCamToggle();
-    if (AE.ENG.running) attachCam();
+    attachCam();
   });
   syncCamToggle();
 
@@ -4398,7 +4470,7 @@ window.CP_SUPA = {
     u.idle.hidden = true; u.over.hidden = true;
     u.heard.textContent = "🎤 Dinliyorum — yön akorunu çal";
     // TAM EKRAN kokpit: sınıf eklendikten SONRA ölç — boyutlar değişiyor
-    u.view.classList.add("snk-full");
+    u.view.classList.add("gk-full");
     document.body.classList.add("snk-lock");
     u.fsStop.hidden = false;
     reset(); sizeCanvas(); draw();
@@ -4411,10 +4483,11 @@ window.CP_SUPA = {
     G.running = false;
     u.go.textContent = "🎤 Başla — Tam Ekran";
     if (full) {
-      u.view.classList.remove("snk-full");
+      u.view.classList.remove("gk-full");
       document.body.classList.remove("snk-lock");
       u.fsStop.hidden = true;
       AE.stop();
+      window.CP_camPreview.release();
       u.cam.srcObject = null; u.cam.hidden = true; u.camOff.hidden = false;
       u.idle.hidden = false; u.over.hidden = true;
       u.heard.textContent = "🎤 Mikrofon kapalı · klavye okları da çalışır";
