@@ -6,7 +6,6 @@ create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   display_name text,
   avatar_url text,
-  email text,
   instrument text default 'gitar',
   created_at timestamptz not null default now()
 );
@@ -39,12 +38,13 @@ language plpgsql
 security definer set search_path = public
 as $$
 begin
-  insert into public.profiles (id, display_name, avatar_url, email)
+  -- E-POSTA YAZILMIYOR: gerçek kopya auth.users'da (REST'e kapalı).
+  -- İkinci kopya yalnızca sızıntı yüzeyi büyütür — veri minimizasyonu.
+  insert into public.profiles (id, display_name, avatar_url)
   values (
     new.id,
     coalesce(new.raw_user_meta_data->>'name', split_part(coalesce(new.email, 'oyuncu'), '@', 1)),
-    new.raw_user_meta_data->>'avatar_url',
-    new.email
+    new.raw_user_meta_data->>'avatar_url'
   )
   on conflict (id) do nothing;
   return new;

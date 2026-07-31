@@ -7792,10 +7792,13 @@ ChordPlai AKAPELLA AYARI: Ton = <nota> · Gam/Makam = <listeden ad> · Ses = <2-
     // karşısına kamera izni çıkmasın (giriş tıklaması ses/kamera için geçerli jest)
     const airEl = document.getElementById("view-air");
     if (wasOpen && airEl && !airEl.hidden && window.__airAutoStart) setTimeout(window.__airAutoStart, 250);
-    // profili kaydet/tazele (RLS: sadece kendi satırı)
+    // Profili kaydet/tazele (RLS: sadece kendi satırı).
+    // E-POSTA YAZILMIYOR: uygulama profiles.email'i hiç okumuyor (arayüzdeki
+    // e-posta oturumdan geliyor), gerçek kopyası auth.users'da zaten duruyor.
+    // Gereksiz yere ikinci bir yerde tutmak yalnızca sızıntı yüzeyi büyütür.
     try {
       await supa.from("profiles").upsert({
-        id: u.id, display_name: name, avatar_url: pic, email: u.email,
+        id: u.id, display_name: name, avatar_url: pic,
       }, { onConflict: "id" });
     } catch (_) {}
   }
