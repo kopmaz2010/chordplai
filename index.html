@@ -2909,9 +2909,16 @@ window.CP_SUPA = {
     renderChord(true);
   }
 
+  // Space kısayolu KALDIRILDI: koşulsuz dinleyici her bölümde boşluk yazımını
+  // engelliyor ve metronomu istemsizce açıyordu (not defteri, geri bildirim,
+  // özel akor kutusu…). Metronom yalnızca butonla açılır. Ok tuşları da
+  // sadece Akorlar görünümü açıkken ve yazı alanı dışında çalışır.
   document.addEventListener("keydown", e => {
-    if (e.code === "Space") { e.preventDefault(); toggle(); }
-    else if (e.code === "ArrowUp") { e.preventDefault(); setBpm(state.bpm + 5); }
+    const view = document.getElementById("view-chords");
+    if (!view || view.hidden) return;
+    if (e.target instanceof Element && e.target.matches("input, textarea, select")) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.code === "ArrowUp") { e.preventDefault(); setBpm(state.bpm + 5); }
     else if (e.code === "ArrowDown") { e.preventDefault(); setBpm(state.bpm - 5); }
   });
 
@@ -4331,6 +4338,8 @@ window.CP_SUPA = {
   // klavye desteği (test + erişilebilirlik)
   document.addEventListener("keydown", e => {
     if (!T.running || document.getElementById("view-tetris").hidden) return;
+    // yazı alanındayken (örn. geri bildirim formu) tuşlar oyuna gitmesin
+    if (e.target instanceof Element && e.target.matches("input, textarea, select")) return;
     if (e.code === "ArrowLeft") { e.preventDefault(); act("left"); }
     else if (e.code === "ArrowRight") { e.preventDefault(); act("right"); }
     else if (e.code === "ArrowUp") { e.preventDefault(); act("rotate"); }
@@ -4850,6 +4859,8 @@ window.CP_SUPA = {
   }
   document.addEventListener("keydown", e => {
     if (u.view.hidden || !G.running) return;
+    // yazı alanındayken (örn. geri bildirim formu) oklar oyuna gitmesin
+    if (e.target instanceof Element && e.target.matches("input, textarea, select")) return;
     const map = { ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right" };
     if (map[e.key]) { e.preventDefault(); steer(map[e.key]); }
   });

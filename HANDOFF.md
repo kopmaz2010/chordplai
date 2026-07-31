@@ -218,6 +218,10 @@ kendi akoru olmayanlarda işaretin sağında **▸** (içe yatır/majör) veya
   hep tanımların sonrasına koy.
 - `document` üzerindeki keydown dinleyicilerinde `e.target instanceof Element`
   guard'ı olmadan `.matches()` patlar.
+- **Global klavye kısayolu üç koşulsuz olmaz**: (1) ilgili görünüm açık mı,
+  (2) hedef `input/textarea/select` mi, (3) modifier basılı mı. Akorlar
+  modülündeki koşulsuz Space→metronom, sitenin HER yerinde boşluk yazımını
+  bozuyordu; kaldırıldı. Aynı guard tetris/yılan ok tuşlarına da eklendi.
 - Akor eki araması **büyük/küçük harfe duyarlı** olmalı: `M13` majör,
   `m13` minör. Küçük harfe indirgeyen tek harita `Dm13 → Dmaj13` hatası verdi.
 - **localStorage değerini modül kapsamında önbelleğe alma.** Modüller
