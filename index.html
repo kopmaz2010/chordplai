@@ -877,6 +877,10 @@ window.CP_SUPA = {
              font: inherit; font-size: inherit; padding: 0; text-decoration: underline;
              text-underline-offset: 3px; }
   .foot-fb:hover { color: var(--amber-hot, #ffd98a); }
+  /* panel içi buton: Rehber'in yanında, amber vurgulu ama paneli bozmayan */
+  .fb-dock-btn { border-color: rgba(245,194,100,.45); color: var(--amber); }
+  .fb-dock-btn:hover { border-color: var(--amber); color: var(--amber-hot, #ffd98a);
+                       box-shadow: 0 0 12px -4px var(--amber); }
   .fb-wrap { position: fixed; inset: 0; z-index: 60; display: flex; align-items: center;
              justify-content: center; padding: 20px; background: rgba(6,5,3,.78);
              backdrop-filter: blur(6px); overflow-y: auto; }
@@ -2018,6 +2022,7 @@ window.CP_SUPA = {
     <div class="nj-monitor">
       <div class="nj-heard" id="airStatus">📷 Kamera kapalı</div>
       <button class="chip" id="airGuideBtn">📖 Rehber</button>
+      <button class="chip fb-dock-btn" id="fbOpenDock">💬 Fikrini söyle</button>
     </div>
 
     <div class="card">
@@ -4352,11 +4357,15 @@ window.CP_SUPA = {
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
   // ---- form ----
-  el.open.addEventListener("click", () => {
+  function openForm() {
     el.wrap.hidden = false;
     el.form.hidden = false; el.done.hidden = true;
     setTimeout(() => el.msg.focus(), 60);
-  });
+  }
+  el.open.addEventListener("click", openForm);
+  // Air Chord panelindeki buton (footer tam ekranda görünmüyor — asıl giriş bu)
+  const dockBtn = $("fbOpenDock");
+  if (dockBtn) dockBtn.addEventListener("click", openForm);
   const closeForm = () => { el.wrap.hidden = true; };
   el.close.addEventListener("click", closeForm);
   el.wrap.addEventListener("click", e => { if (e.target === el.wrap) closeForm(); });
