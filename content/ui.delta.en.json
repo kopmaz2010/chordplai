@@ -229,5 +229,11 @@
   "🛠️ Geri Bildirimler": "🛠️ Feedback",
   "Yeni": "New",
   "Bu filtrede kayıt yok.": "Nothing in this filter.",
-  "Yükleniyor…": "Loading…"
+  "Yükleniyor…": "Loading…",
+  "Efekt": "Effect",
+  "🖐️ Sağ el": "🖐️ Right hand",
+  "🎛️ Manuel": "🎛️ Manual",
+  "Distorsiyon": "Distortion",
+  "Dalga": "Waveform",
+  "🖐️ Sol el: derece + yatışla majör/minör · Efekt: 🎛️ manuel (panel)": "🖐️ Left hand: degree + tilt for major/minor · Effect: 🎛️ manual (panel)"
 }

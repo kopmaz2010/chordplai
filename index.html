@@ -1158,6 +1158,16 @@ window.CP_SUPA = {
   #airChips .sc-chip.off { opacity: .35; }
   .air-oct-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
   .air-oct-row .seg { flex: 1; min-width: 200px; }
+  /* sağ el efekt bypass + manuel faderlar */
+  .air-fx-row { margin-top: 10px; }
+  .air-fx-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .air-fx-head .seg { flex: 1; min-width: 200px; }
+  .air-fx-faders { display: flex; flex-direction: column; gap: 8px; margin-top: 9px;
+                   padding: 10px 12px; background: rgba(0,0,0,.22); border-radius: 10px; }
+  .air-fx-faders[hidden] { display: none; }
+  .air-fx-faders label { display: flex; flex-direction: column; gap: 4px;
+                         font-size: .68rem; letter-spacing: .08em; color: var(--muted); }
+  .air-fx-faders b { color: var(--amber-hot, #ffd98a); font-size: .78rem; }
   /* dock: normalde görünmez sarmalayıcı (view-air ile aynı akış) */
   .air-dock { display: flex; flex-direction: column; gap: clamp(14px, 2.4vw, 22px); }
   /* ---- tam ekran mod: kamera tüm siteyi kaplar ---- */
@@ -2045,6 +2055,23 @@ window.CP_SUPA = {
           <button class="chip" data-o="0" aria-pressed="true">Normal</button>
           <button class="chip" data-o="1">+1</button>
           <button class="chip" data-o="2">+2</button>
+        </div>
+      </div>
+      <div class="air-fx-row" id="airFxRow">
+        <div class="air-fx-head">
+          <span class="instr-lbl">Efekt</span>
+          <div class="seg">
+            <button class="chip" id="airFxHand" aria-pressed="true">🖐️ Sağ el</button>
+            <button class="chip" id="airFxMan" aria-pressed="false">🎛️ Manuel</button>
+          </div>
+        </div>
+        <div class="air-fx-faders" id="airFxFaders" hidden>
+          <label>Distorsiyon <b id="airFxDistVal">0%</b>
+            <input type="range" id="airFxDist" min="0" max="100" value="0">
+          </label>
+          <label>Dalga <b id="airFxWaveVal">Yumuşak</b>
+            <input type="range" id="airFxWave" min="0" max="300" value="0">
+          </label>
         </div>
       </div>
       <div class="cst-row">
@@ -5020,6 +5047,8 @@ window.CP_SUPA = {
     // 🎸 arpej: 0 = pad (sağ el efekt) · 1 = gitar · 2 = piyano
     arpMode: 0, arpCache: new Map(), arpVoices: [], arpTone: -1, arpFlash: 0,
     arpCand: -9, arpStable: 0, arpLast: -1,
+    // 🎛️ efekt bypass: true = sağ el efektlere KARIŞMAZ, faderlar belirler
+    fxManual: false, distMan: 0, waveMan: 0,
     ctx: null, bus: null, filt: null, preG: null, postG: null, dry: null, wet: null, volG: null,
     ton: 9, scale: "aeolian",
     tq: "dia", tqCand: null, tqStable: 0, shownTq: null, shownOct: 0, worldFlash: 0,
@@ -5571,8 +5600,10 @@ window.CP_SUPA = {
   // sağ el: SOLA eğildikçe distorsiyon artar, dik durunca temizlenir.
   // Ses seviyesi artık ele bağlı değil (kullanıcı isteği) — sabit kalır.
   function applyVibes(h) {
-    const target = h ? Math.max(0, Math.min(1, -A.tiltSm / 45)) : 0;
-    A.dist += (target - A.dist) * (h ? 0.25 : 0.12);
+    // manuelde hedef fader'dan gelir; elin varlığı/eğimi hiç okunmaz
+    const target = A.fxManual ? A.distMan
+                 : h ? Math.max(0, Math.min(1, -A.tiltSm / 45)) : 0;
+    A.dist += (target - A.dist) * (h || A.fxManual ? 0.25 : 0.12);
     A.volLive = !!h;
     if (!A.ctx) return;
     const now = A.ctx.currentTime;
@@ -6031,7 +6062,9 @@ window.CP_SUPA = {
 
     // SAĞ el: SADECE efekt — ses (↕) · distorsiyon (↔) · dalga (avuç çevirme).
     // Akora/gama HİÇ dokunmaz. Kayıttayken parmak sayısı (1-4) vokal modunu seçer (yalnız mixi etkiler).
-    if (right) {
+    if (A.fxManual) {
+      A.waveTarget = A.waveMan;          // dalga fader'dan; sağ el efekt okunmaz
+    } else if (right) {
       A.tilt = handTilt(right);
       A.tiltSm += (A.tilt - A.tiltSm) * 0.25;
       A.waveTarget = tiltToPos(A.tiltSm);
@@ -6389,7 +6422,9 @@ window.CP_SUPA = {
       ? (A.arpTone >= 0 ? ` · ${ARP_TONE_NAME[A.arpTone]} çaldı` : " · sağ el: 1 kök · 2 üçlü · 3 beşli · 4 yedili")
       : "";
     ui.status.textContent = !hands.length
-      ? (A.arpMode ? "🎸 Sol el akoru tut · sağ el parmak sayısıyla sesi seç" : "🖐️ Sol el: derece + yatışla majör/minör · Sağ el: sadece efekt")
+      ? (A.arpMode ? "🎸 Sol el akoru tut · sağ el parmak sayısıyla sesi seç"
+        : A.fxManual ? "🖐️ Sol el: derece + yatışla majör/minör · Efekt: 🎛️ manuel (panel)"
+        : "🖐️ Sol el: derece + yatışla majör/minör · Sağ el: sadece efekt")
       : r.state === "play" ? `🎹 ${ui.bigName.textContent} · ${CH[A.ton]} ${scaleName()}${arpHint}`
       : r.state === "mute" ? "✊ Susturuldu"
       : `☝️ Sol elinle derece yap (I–VII) · gam: ${CH[A.ton]} ${scaleName()}${arpHint}`;
@@ -6580,6 +6615,54 @@ window.CP_SUPA = {
   const arpBtn = document.getElementById("airArpBtn");
   if (arpBtn) arpBtn.addEventListener("click", () => setArp(A.arpMode + 1));
   try { const m = +localStorage.getItem("akorAirArp"); if (m === 1 || m === 2) setArp(m); } catch (_) {}
+
+  // 🎛️ sağ el efekt bypass + manuel faderlar
+  const fx = {
+    hand: document.getElementById("airFxHand"), man: document.getElementById("airFxMan"),
+    faders: document.getElementById("airFxFaders"),
+    dist: document.getElementById("airFxDist"), distVal: document.getElementById("airFxDistVal"),
+    wave: document.getElementById("airFxWave"), waveVal: document.getElementById("airFxWaveVal"),
+  };
+  function fxWaveLbl(p) {
+    const lo = Math.floor(p), hi = Math.min(WAVES.length - 1, lo + 1), fr = p - lo;
+    if (fr < 0.12) return WAVES[lo].label;
+    if (fr > 0.88) return WAVES[hi].label;
+    return WAVES[lo].label + "→" + WAVES[hi].label;
+  }
+  function setFxManual(on) {
+    A.fxManual = !!on;
+    try { localStorage.setItem("akorAirFxMan", on ? "1" : "0"); } catch (_) {}
+    if (fx.hand) fx.hand.setAttribute("aria-pressed", String(!on));
+    if (fx.man) fx.man.setAttribute("aria-pressed", String(on));
+    if (fx.faders) fx.faders.hidden = !on;
+    if (on) A.waveTarget = A.waveMan;    // çalarken geçişte dalga hemen fader'a otursun
+  }
+  function fxSyncUi() {
+    if (fx.distVal) fx.distVal.textContent = Math.round(A.distMan * 100) + "%";
+    if (fx.waveVal) fx.waveVal.textContent = fxWaveLbl(A.waveMan);
+  }
+  if (fx.hand && fx.man) {
+    fx.hand.addEventListener("click", () => setFxManual(false));
+    fx.man.addEventListener("click", () => setFxManual(true));
+    fx.dist.addEventListener("input", () => {
+      A.distMan = fx.dist.value / 100;
+      try { localStorage.setItem("akorAirDistMan", A.distMan); } catch (_) {}
+      fxSyncUi();
+    });
+    fx.wave.addEventListener("input", () => {
+      A.waveMan = fx.wave.value / 100;   // 0..3 sürekli (4 dalga arası geçiş)
+      try { localStorage.setItem("akorAirWaveMan", A.waveMan); } catch (_) {}
+      if (A.fxManual) A.waveTarget = A.waveMan;
+      fxSyncUi();
+    });
+    try {
+      const d = parseFloat(localStorage.getItem("akorAirDistMan")); if (!isNaN(d)) { A.distMan = Math.min(1, Math.max(0, d)); fx.dist.value = Math.round(A.distMan * 100); }
+      const w = parseFloat(localStorage.getItem("akorAirWaveMan")); if (!isNaN(w)) { A.waveMan = Math.min(3, Math.max(0, w)); fx.wave.value = Math.round(A.waveMan * 100); }
+      if (localStorage.getItem("akorAirFxMan") === "1") setFxManual(true);
+    } catch (_) {}
+    fxSyncUi();
+  }
+  window.__airFx = { set: setFxManual, state: () => ({ manual: A.fxManual, dist: A.distMan, wave: A.waveMan, waveTarget: A.waveTarget, distNow: A.dist }) };
   applyCam();
 
   // ---- panel saydamlığı (sol kontrol paneli) ----
