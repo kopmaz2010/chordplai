@@ -872,6 +872,67 @@ window.CP_SUPA = {
   .nj-fruit.sliced { transition: transform .45s ease, opacity .45s ease; transform: translateX(-50%) scale(1.7) rotate(25deg); opacity: 0; }
   .nj-fruit.sliced .fr::after { content: "💥"; }
   .nj-fruit.missed { transition: opacity .3s; opacity: 0; }
+  /* ---- 💬 geri bildirim ---- */
+  .foot-fb { background: none; border: none; color: var(--amber); cursor: pointer;
+             font: inherit; font-size: inherit; padding: 0; text-decoration: underline;
+             text-underline-offset: 3px; }
+  .foot-fb:hover { color: var(--amber-hot, #ffd98a); }
+  .fb-wrap { position: fixed; inset: 0; z-index: 60; display: flex; align-items: center;
+             justify-content: center; padding: 20px; background: rgba(6,5,3,.78);
+             backdrop-filter: blur(6px); overflow-y: auto; }
+  .fb-card { position: relative; width: min(560px, 100%); background: var(--panel, #16150f);
+             border: 1px solid #3a3526; border-radius: 18px; padding: 26px 24px;
+             box-shadow: 0 24px 70px rgba(0,0,0,.6); }
+  .fb-card-wide { width: min(880px, 100%); max-height: 88vh; display: flex; flex-direction: column; }
+  .fb-x { position: absolute; top: 12px; right: 14px; background: none; border: none;
+          color: var(--muted); font-size: 1.1rem; cursor: pointer; }
+  .fb-x:hover { color: var(--cream); }
+  .fb-card h2 { color: var(--amber); font-size: 1.25rem; margin-bottom: 8px; }
+  .fb-lead { color: var(--muted); font-size: .88rem; line-height: 1.6; margin-bottom: 16px; }
+  .fb-lead b { color: var(--cream); }
+  .fb-kinds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+  .fb-kinds button { background: #0f0e0a; border: 1px solid #3a3526; border-radius: 12px;
+                     padding: 12px 8px; cursor: pointer; display: flex; flex-direction: column;
+                     align-items: center; gap: 3px; transition: border-color .15s, box-shadow .15s; }
+  .fb-kinds i { font-style: normal; font-size: 1.3rem; }
+  .fb-kinds b { color: var(--cream); font-size: .84rem; }
+  .fb-kinds span { color: var(--muted-dim); font-size: .64rem; text-align: center; line-height: 1.3; }
+  .fb-kinds button[aria-pressed="true"] { border-color: var(--amber); box-shadow: 0 0 16px -6px var(--amber); }
+  .fb-kinds button[aria-pressed="true"] b { color: var(--amber); }
+  #fbMsg, #fbContact { width: 100%; background: #0f0e0a; color: var(--cream);
+                       border: 1px solid #3a3526; border-radius: 12px; padding: 12px 14px;
+                       font: inherit; font-size: .9rem; resize: vertical; }
+  #fbMsg:focus, #fbContact:focus { border-color: var(--amber); outline: none; }
+  .fb-count { text-align: right; font-size: .66rem; color: var(--muted-dim); margin: 4px 2px 10px; }
+  .fb-send { width: 100%; margin-top: 12px; }
+  .fb-note { color: var(--muted-dim); font-size: .7rem; margin-top: 10px; text-align: center; line-height: 1.5; }
+  .fb-done { text-align: center; padding: 14px 4px; }
+  .fb-done-emoji { font-size: 2.6rem; margin-bottom: 8px; }
+  .fb-done h2 { color: var(--amber); }
+  .fb-done p { color: var(--muted); font-size: .88rem; line-height: 1.6; margin: 8px 0 18px; }
+  /* yönetim paneli */
+  .fb-stats { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 12px; }
+  .fb-stats span { background: rgba(245,194,100,.1); border: 1px solid rgba(245,194,100,.25);
+                   border-radius: 999px; padding: 4px 12px; font-size: .74rem; color: var(--cream); }
+  .fb-filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .fb-filters button { background: #0f0e0a; border: 1px solid #3a3526; border-radius: 8px;
+                       color: var(--muted); padding: 6px 11px; font-size: .74rem; cursor: pointer; }
+  .fb-filters button[aria-pressed="true"] { border-color: var(--amber); color: var(--amber); }
+  .fb-list { overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 4px; }
+  .fb-item { background: #0f0e0a; border: 1px solid #2b2920; border-radius: 12px; padding: 12px 14px; }
+  .fb-item.yeni { border-left: 3px solid var(--amber); }
+  .fb-item-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+                  font-size: .68rem; color: var(--muted-dim); margin-bottom: 6px; }
+  .fb-item-kind { color: var(--amber); font-weight: 700; }
+  .fb-item-msg { color: var(--cream); font-size: .86rem; line-height: 1.55; white-space: pre-wrap;
+                 word-break: break-word; }
+  .fb-item-foot { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 9px; }
+  .fb-item-foot select { background: #16150f; color: var(--cream); border: 1px solid #3a3526;
+                         border-radius: 7px; padding: 4px 7px; font-size: .72rem; }
+  .fb-item-contact { color: var(--amber); font-size: .7rem; }
+  .fb-empty { color: var(--muted); text-align: center; padding: 28px; font-size: .86rem; }
+  @media (max-width: 560px) { .fb-kinds { grid-template-columns: 1fr; } }
+
   /* oyunlarda kamera: .snk-camslot (kokpit sol sütunu) — yılan/ninja/tetris ortak */
   /* ninja arenası kokpit sahnesini doldurur (sabit clamp yüksekliği sayfa modu içindi) */
   .snk-stage .nj-arena { height: auto; min-height: 300px; border-radius: 0; border: none; box-shadow: none; }
@@ -1445,6 +1506,7 @@ window.CP_SUPA = {
     <div class="prof-pop-name" id="profPopName"></div>
     <div class="prof-pop-mail" id="profPopMail"></div>
     <div class="prof-pop-stats" id="profPopStats"></div>
+    <button class="chip" id="fbAdminBtn" hidden>🛠️ Geri Bildirim Paneli <b id="fbAdminBadge"></b></button>
     <button class="chip" id="profSignOut">Çıkış yap</button>
   </div>
 
@@ -2082,6 +2144,7 @@ window.CP_SUPA = {
     <a href="/blog">📝 Blog</a>
     <a href="/gizlilik">Gizlilik</a>
     <a href="/kosullar">Koşullar</a>
+    <button class="foot-fb" id="fbOpen">💬 Fikrini söyle</button>
     <span class="foot-members" id="footMembers" hidden>👥 <b id="footMemberCount">0</b> üye</span>
     <span class="foot-tag">Elinle çal, üzerine söyle 🎤</span>
   </footer>
@@ -2089,6 +2152,60 @@ window.CP_SUPA = {
 
 <!-- 📝 Not defteri + prompter — sağdan açılır, her modda kullanılabilir -->
 <button class="pad-btn" id="npBtn" aria-expanded="false">📝 NOTLAR</button>
+
+<!-- 💬 Geri bildirim: istek · öneri · şikayet -->
+<div class="fb-wrap" id="fbWrap" hidden>
+  <div class="fb-card" role="dialog" aria-modal="true" aria-labelledby="fbTitle">
+    <button class="fb-x" id="fbClose" aria-label="Kapat">✕</button>
+
+    <div class="fb-form" id="fbForm">
+      <h2 id="fbTitle">Fikrini duymak istiyoruz</h2>
+      <p class="fb-lead">ChordPlai'ı kullananların söylediğiyle büyüyor. Eksik bulduğun,
+        canını sıkan ya da hayalini kurduğun ne varsa yaz — <b>hepsi okunuyor</b>.</p>
+
+      <div class="fb-kinds" id="fbKinds">
+        <button type="button" data-k="istek" aria-pressed="true"><i>💡</i><b>İstek</b><span>Şu özellik olsun</span></button>
+        <button type="button" data-k="oneri"><i>✨</i><b>Öneri</b><span>Şöyle daha iyi olur</span></button>
+        <button type="button" data-k="sikayet"><i>🐞</i><b>Şikayet</b><span>Bu bozuk / rahatsız etti</span></button>
+      </div>
+
+      <textarea id="fbMsg" rows="5" maxlength="2000"
+        placeholder="Örnek: Air Chord'da sol elimi görmüyor, ışık az olunca kayboluyor…"></textarea>
+      <div class="fb-count"><span id="fbCount">0</span>/2000</div>
+
+      <input id="fbContact" type="text" maxlength="120" autocomplete="email"
+        placeholder="Cevap istersen e-posta veya Instagram (isteğe bağlı)">
+
+      <button class="go fb-send" id="fbSend">Gönder</button>
+      <p class="fb-note" id="fbNote">Giriş yapman gerekmiyor. Yazdığın metin dışında hiçbir şey kaydedilmez.</p>
+    </div>
+
+    <div class="fb-done" id="fbDone" hidden>
+      <div class="fb-done-emoji">🙏</div>
+      <h2>Teşekkürler, ulaştı</h2>
+      <p id="fbDoneMsg">Fikrini okuyacağım. Uygulanabilir olanları sıraya alıyorum —
+        bir sonraki güncellemede seninkini görebilirsin.</p>
+      <button class="chip" id="fbAgain">Bir şey daha yaz</button>
+    </div>
+  </div>
+</div>
+
+<!-- 🛠️ Yönetim paneli (yalnız yönetici) -->
+<div class="fb-wrap" id="fbAdmin" hidden>
+  <div class="fb-card fb-card-wide" role="dialog" aria-modal="true">
+    <button class="fb-x" id="fbAdminClose" aria-label="Kapat">✕</button>
+    <h2>🛠️ Geri Bildirimler</h2>
+    <div class="fb-stats" id="fbStats"></div>
+    <div class="fb-filters" id="fbFilters">
+      <button data-f="hepsi" aria-pressed="true">Hepsi</button>
+      <button data-f="yeni">Yeni</button>
+      <button data-f="istek">💡 İstek</button>
+      <button data-f="oneri">✨ Öneri</button>
+      <button data-f="sikayet">🐞 Şikayet</button>
+    </div>
+    <div class="fb-list" id="fbList"></div>
+  </div>
+</div>
 <aside class="notepad" id="notepad" aria-hidden="true"><div class="np-grip" id="npGrip" title="Sürükleyerek genişlet"></div>
   <div class="np-head">
     <b>📝 Not Defteri</b>
@@ -4208,6 +4325,189 @@ window.CP_SUPA = {
   resetBoard();
   lbRender();
   if (window.AkorPreview) window.AkorPreview.bind(u.ctl, ".tt-ctl-row", t => ttChords[t.dataset.act]);
+})();
+</script>
+
+<script>
+/* ---- 💬 Geri bildirim: istek · öneri · şikayet + yönetim paneli ---- */
+(() => {
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const el = {
+    open: $("fbOpen"), wrap: $("fbWrap"), close: $("fbClose"),
+    form: $("fbForm"), done: $("fbDone"), again: $("fbAgain"), doneMsg: $("fbDoneMsg"),
+    kinds: $("fbKinds"), msg: $("fbMsg"), contact: $("fbContact"), send: $("fbSend"),
+    count: $("fbCount"), note: $("fbNote"),
+    adminBtn: $("fbAdminBtn"), adminBadge: $("fbAdminBadge"),
+    admin: $("fbAdmin"), adminClose: $("fbAdminClose"),
+    stats: $("fbStats"), filters: $("fbFilters"), list: $("fbList"),
+  };
+  if (!el.open || !el.wrap) return;
+
+  const KIND_LBL = { istek: "💡 İstek", oneri: "✨ Öneri", sikayet: "🐞 Şikayet" };
+  const STATUS = ["yeni", "okundu", "yapiliyor", "tamam", "kapali"];
+  const STATUS_LBL = { yeni: "Yeni", okundu: "Okundu", yapiliyor: "Yapılıyor", tamam: "Tamam", kapali: "Kapalı" };
+  const S = { kind: "istek", sending: false, session: null, rows: [], filter: "hepsi" };
+  const supa = () => window.CP_SUPA_CLIENT || null;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  // ---- form ----
+  el.open.addEventListener("click", () => {
+    el.wrap.hidden = false;
+    el.form.hidden = false; el.done.hidden = true;
+    setTimeout(() => el.msg.focus(), 60);
+  });
+  const closeForm = () => { el.wrap.hidden = true; };
+  el.close.addEventListener("click", closeForm);
+  el.wrap.addEventListener("click", e => { if (e.target === el.wrap) closeForm(); });
+  document.addEventListener("keydown", e => {
+    if (e.key !== "Escape") return;
+    if (!el.wrap.hidden) closeForm();
+    else if (!el.admin.hidden) el.admin.hidden = true;
+  });
+  el.again.addEventListener("click", () => {
+    el.msg.value = ""; el.count.textContent = "0";
+    el.form.hidden = false; el.done.hidden = true;
+    el.msg.focus();
+  });
+  el.kinds.addEventListener("click", e => {
+    const b = e.target.closest("button[data-k]"); if (!b) return;
+    S.kind = b.dataset.k;
+    [...el.kinds.children].forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  });
+  el.msg.addEventListener("input", () => { el.count.textContent = el.msg.value.length; });
+
+  el.send.addEventListener("click", async () => {
+    const text = el.msg.value.trim();
+    if (text.length < 5) {
+      el.note.textContent = "Birkaç kelime daha yazar mısın? (en az 5 karakter)";
+      el.note.style.color = "var(--red, #ff9f7a)";
+      el.msg.focus(); return;
+    }
+    if (S.sending) return;
+    S.sending = true;
+    el.send.disabled = true; el.send.textContent = "Gönderiliyor…";
+    const client = supa();
+    let ok = false;
+    if (client) {
+      try {
+        const { error } = await client.from("feedback").insert({
+          user_id: S.session ? S.session.user.id : null,
+          kind: S.kind,
+          message: text.slice(0, 2000),
+          contact: (el.contact.value.trim() || null),
+          page: (document.querySelector('.mode-tab[aria-pressed="true"]') || {}).dataset?.mode || null,
+          lang: window.CP_LANG || null,
+        });
+        ok = !error;
+        if (error) console.warn("[ChordPlai] geri bildirim gönderilemedi:", error.message);
+      } catch (e) { console.warn("[ChordPlai] geri bildirim hatası:", e.message); }
+    }
+    S.sending = false;
+    el.send.disabled = false; el.send.textContent = "Gönder";
+    if (ok) {
+      el.form.hidden = true; el.done.hidden = false;
+      el.doneMsg.textContent = "Fikrini okuyacağım. Uygulanabilir olanları sıraya alıyorum — bir sonraki güncellemede seninkini görebilirsin.";
+    } else {
+      // sunucuya ulaşılamadıysa fikir kaybolmasın: yerelde tut, e-posta yolunu göster
+      try {
+        const q = JSON.parse(localStorage.getItem("cpFbQueue") || "[]");
+        q.push({ kind: S.kind, message: text, ts: Date.now() });
+        localStorage.setItem("cpFbQueue", JSON.stringify(q.slice(-20)));
+      } catch (_) {}
+      el.form.hidden = true; el.done.hidden = false;
+      el.doneMsg.innerHTML = "Şu an sunucuya ulaşamadım, ama yazdıklarını cihazında sakladım. " +
+        'İstersen doğrudan <a href="mailto:kopmaz2015@gmail.com?subject=ChordPlai%20geri%20bildirim">e-posta</a> da atabilirsin.';
+    }
+  });
+
+  // ---- yönetim ----
+  document.addEventListener("cp:session", e => {
+    S.session = e.detail && e.detail.session;
+    checkAdmin();
+  });
+  async function checkAdmin() {
+    const client = supa();
+    if (!client || !S.session) { el.adminBtn.hidden = true; return; }
+    try {
+      const { data, error } = await client.rpc("is_admin");
+      if (error || !data) { el.adminBtn.hidden = true; return; }
+      el.adminBtn.hidden = false;
+      const { data: st } = await client.rpc("feedback_stats");
+      if (st && st.yeni > 0) el.adminBadge.textContent = "(" + st.yeni + " yeni)";
+    } catch (_) { el.adminBtn.hidden = true; }
+  }
+  el.adminBtn.addEventListener("click", async () => {
+    el.admin.hidden = false;
+    await loadAdmin();
+  });
+  el.adminClose.addEventListener("click", () => { el.admin.hidden = true; });
+  el.admin.addEventListener("click", e => { if (e.target === el.admin) el.admin.hidden = true; });
+  el.filters.addEventListener("click", e => {
+    const b = e.target.closest("button[data-f]"); if (!b) return;
+    S.filter = b.dataset.f;
+    [...el.filters.children].forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    renderList();
+  });
+  async function loadAdmin() {
+    const client = supa(); if (!client) return;
+    el.list.innerHTML = '<div class="fb-empty">Yükleniyor…</div>';
+    try {
+      const { data, error } = await client.from("feedback")
+        .select("*").order("created_at", { ascending: false }).limit(500);
+      if (error) throw error;
+      S.rows = data || [];
+      const { data: st } = await client.rpc("feedback_stats");
+      el.stats.innerHTML = st
+        ? `<span>Toplam <b>${st.toplam}</b></span><span>Yeni <b>${st.yeni}</b></span>` +
+          `<span>💡 ${st.istek}</span><span>✨ ${st.oneri}</span><span>🐞 ${st.sikayet}</span>`
+        : "";
+      renderList();
+    } catch (e) {
+      el.list.innerHTML = '<div class="fb-empty">Liste alınamadı: ' + esc(e.message || "hata") + "</div>";
+    }
+  }
+  function renderList() {
+    const f = S.filter;
+    const rows = S.rows.filter(r => f === "hepsi" ? true : f === "yeni" ? r.status === "yeni" : r.kind === f);
+    if (!rows.length) { el.list.innerHTML = '<div class="fb-empty">Bu filtrede kayıt yok.</div>'; return; }
+    el.list.innerHTML = rows.map(r => {
+      const d = new Date(r.created_at).toLocaleString("tr-TR", { dateStyle: "short", timeStyle: "short" });
+      const opts = STATUS.map(s => `<option value="${s}"${s === r.status ? " selected" : ""}>${STATUS_LBL[s]}</option>`).join("");
+      return `<div class="fb-item ${r.status === "yeni" ? "yeni" : ""}">
+        <div class="fb-item-head">
+          <span class="fb-item-kind">${KIND_LBL[r.kind] || r.kind}</span>
+          <span>${d}</span>
+          ${r.page ? `<span>· ${esc(r.page)}</span>` : ""}
+          ${r.lang ? `<span>· ${esc(r.lang)}</span>` : ""}
+          ${r.user_id ? "<span>· üye</span>" : "<span>· misafir</span>"}
+        </div>
+        <div class="fb-item-msg">${esc(r.message)}</div>
+        <div class="fb-item-foot">
+          <select data-id="${r.id}">${opts}</select>
+          ${r.contact ? `<span class="fb-item-contact">${esc(r.contact)}</span>` : ""}
+        </div>
+      </div>`;
+    }).join("");
+  }
+  el.list.addEventListener("change", async e => {
+    const sel = e.target.closest("select[data-id]"); if (!sel) return;
+    const client = supa(); if (!client) return;
+    const id = +sel.dataset.id, status = sel.value;
+    sel.disabled = true;
+    try {
+      const { error } = await client.from("feedback").update({ status }).eq("id", id);
+      if (error) throw error;
+      const row = S.rows.find(r => r.id === id); if (row) row.status = status;
+      const item = sel.closest(".fb-item");
+      if (item) item.classList.toggle("yeni", status === "yeni");
+    } catch (err) { alert("Güncellenemedi: " + err.message); }
+    sel.disabled = false;
+  });
+
+  // Supabase istemcisi geç yüklenirse yakala
+  document.addEventListener("cp:supa", checkAdmin);
+  window.__fb = { S, loadAdmin, open: () => el.open.click() };   // test kancası
 })();
 </script>
 
@@ -7683,6 +7983,9 @@ ChordPlai AKAPELLA AYARI: Ton = <nota> · Gam/Makam = <listeden ad> · Ses = <2-
   try { ({ createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm")); }
   catch (_) { return; }
   const supa = createClient(cfg.url, cfg.anon);
+  // geri bildirim modülü aynı istemciyi kullansın (ikinci oturum/soket açmasın)
+  window.CP_SUPA_CLIENT = supa;
+  document.dispatchEvent(new CustomEvent("cp:supa"));
   const $ = id => document.getElementById(id);
   const ui = {
     gBox: $("gateGoogleBox"), gLoad: $("gateGoogleLoading"), gGoogle: $("gateGoogle"),
@@ -7814,9 +8117,13 @@ ChordPlai AKAPELLA AYARI: Ton = <nota> · Gam/Makam = <listeden ad> · Ses = <2-
     if (window.__airStop) window.__airStop();     // kamera kapansın
     if (window.__gateOpen) window.__gateOpen();
   });
-  supa.auth.onAuthStateChange((_ev, session) => showUser(session));
+  supa.auth.onAuthStateChange((_ev, session) => {
+    showUser(session);
+    document.dispatchEvent(new CustomEvent("cp:session", { detail: { session } }));
+  });
   const { data } = await supa.auth.getSession();
   showUser(data.session);
+  document.dispatchEvent(new CustomEvent("cp:session", { detail: { session: data.session } }));
   // toplam üye sayısı (public RPC)
   try {
     const { data: n, error } = await supa.rpc("user_count");
