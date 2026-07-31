@@ -13,13 +13,24 @@ create table if not exists public.profiles (
 
 alter table public.profiles enable row level security;
 
--- herkes isim/avatar görebilir (liderlik tablosu için); yazma sadece kendi satırına
-create policy "profiles_public_read" on public.profiles
-  for select using (true);
+-- ⚠️ GÜVENLİK: "for select using (true)" ile herkes TÜM satırları okuyabiliyordu.
+-- RLS satır bazlıdır, sütun bazlı değildir — yani takma adı açmak istediğimizde
+-- e-posta da açılıyordu. anon anahtarı sitede herkese açık olduğu için tüm
+-- üyelerin e-postası dışarıdan listelenebiliyordu. Doğru kalıp: tabloyu kendi
+-- satırına kilitle, herkese açık alanları AYRI BİR GÖRÜNÜMLE ver.
+create policy "profiles_own_read" on public.profiles
+  for select using (auth.uid() = id);
 create policy "profiles_own_insert" on public.profiles
   for insert with check (auth.uid() = id);
 create policy "profiles_own_update" on public.profiles
   for update using (auth.uid() = id);
+
+-- Liderlik tablosu/profil kartı için yalnızca takma ad + avatar (E-POSTA YOK).
+-- Görünüm sahibi ile çalıştığı için temel tablonun RLS'ini aşar; açılan sütunlar
+-- burada tek tek yazılıdır — yeni sütun eklersen buraya EKLEME.
+create or replace view public.public_profiles as
+  select id, display_name, avatar_url from public.profiles;
+grant select on public.public_profiles to anon, authenticated;
 
 -- yeni kullanıcı kaydolunca profili otomatik oluştur
 create or replace function public.handle_new_user()
