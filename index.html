@@ -816,6 +816,15 @@ window.CP_SUPA = {
              border-radius: 7px; padding: 3px 4px; font-size: .74rem; font-weight: 700; cursor: pointer; }
   .acap-iv:disabled { opacity: .5; }
   .acap-lvl { flex: 1 1 40px; min-width: 34px; height: 16px; }
+  .acap-pwr.hot { color: var(--amber); border-color: var(--amber); }
+  /* ⚙ kanal mikseri: tune + reverb — kontrol şeridinin üstünde açılır */
+  .acap-vmix { position: absolute; left: 0; right: 0; bottom: 40px; display: flex; gap: 10px;
+               padding: 8px 10px; background: rgba(8,6,3,.94); border-top: 1px solid #3a3526; }
+  .acap-vmix[hidden] { display: none; }
+  .acap-vmix label { flex: 1; display: flex; flex-direction: column; gap: 3px;
+                     font-size: .56rem; letter-spacing: .14em; color: var(--muted); }
+  .acap-vmix b { color: var(--amber-hot, #ffd98a); font-size: .68rem; }
+  .acap-vmix input { width: 100%; height: 14px; }
   .gate { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(8,6,3,.82); backdrop-filter: blur(8px); }
   .gate[hidden] { display: none; }
   .gate-card {
@@ -7382,32 +7391,44 @@ ${song}`;
 
   // ---- pitch tespiti: otokorelasyon ----
   function detectPitch() {
-    const x = S.audio, sr = S.sr, W = 2048, HOP = 1024;
+    // YIN (CMND + mutlak eşik): naif otokorelasyon oktav hatası yapıyordu —
+    // yanlış periyot, PSOLA'da yanlış grain aralığı = metalik/bozuk ses.
+    const x = S.audio, sr = S.sr, W = 2048, HOP = 512;   // hop yarıya: nota sınırları keskin
     const minF = 70, maxF = 1000;
-    const minLag = Math.floor(sr / maxF), maxLag = Math.min(W - 2, Math.ceil(sr / minF));
+    const minLag = Math.max(2, Math.floor(sr / maxF)), maxLag = Math.min(W - 2, Math.ceil(sr / minF));
     const frames = [];
-    for (let s = 0; s + W <= x.length; s += HOP) {
+    const diff = new Float64Array(maxLag + 1), cmnd = new Float64Array(maxLag + 1);
+    for (let s = 0; s + W + maxLag <= x.length; s += HOP) {
       let rms = 0;
       for (let i = 0; i < W; i += 4) rms += x[s + i] * x[s + i];
       rms = Math.sqrt(rms / (W / 4));
-      if (rms < 0.015) { frames.push({ t: s / sr, midi: null }); continue; }
-      let best = -1, bestV = 0;
+      if (rms < 0.012) { frames.push({ t: s / sr, midi: null }); continue; }
       for (let lag = minLag; lag <= maxLag; lag++) {
         let sum = 0;
-        for (let i = 0; i < W - maxLag; i += 2) sum += x[s + i] * x[s + i + lag];
-        if (sum > bestV) { bestV = sum; best = lag; }
+        for (let i = 0; i < W; i += 2) { const d = x[s + i] - x[s + i + lag]; sum += d * d; }
+        diff[lag] = sum;
+      }
+      let run = 0, best = -1;
+      for (let lag = minLag; lag <= maxLag; lag++) {
+        run += diff[lag];
+        cmnd[lag] = diff[lag] * (lag - minLag + 1) / (run || 1e-12);
+      }
+      for (let lag = minLag + 2; lag < maxLag - 1; lag++) {   // eşiği geçen İLK vadi = temel periyot
+        if (cmnd[lag] < 0.14 && cmnd[lag] <= cmnd[lag - 1] && cmnd[lag] <= cmnd[lag + 1]) { best = lag; break; }
+      }
+      if (best < 0) {
+        let bl = minLag;
+        for (let lag = minLag; lag <= maxLag; lag++) if (cmnd[lag] < cmnd[bl]) bl = lag;
+        best = cmnd[bl] < 0.30 ? bl : -1;   // güven yoksa sessiz say — çöp perde üretme
       }
       if (best < 0) { frames.push({ t: s / sr, midi: null }); continue; }
-      // parabolik incelik
       let lag = best;
-      const yv = l => { let sm = 0; for (let i = 0; i < W - maxLag; i += 2) sm += x[s + i] * x[s + i + l]; return sm; };
-      if (best > minLag && best < maxLag) {
-        const y0 = yv(best - 1), y1 = bestV, y2 = yv(best + 1);
+      if (best > minLag && best < maxLag) {   // parabolik incelik
+        const y0 = cmnd[best - 1], y1 = cmnd[best], y2 = cmnd[best + 1];
         const d = y0 - 2 * y1 + y2;
-        if (Math.abs(d) > 1e-9) lag = best + 0.5 * (y0 - y2) / d;
+        if (Math.abs(d) > 1e-12) lag = best + 0.5 * (y0 - y2) / d;
       }
-      const f = sr / lag;
-      frames.push({ t: s / sr, midi: 69 + 12 * Math.log2(f / 440) });
+      frames.push({ t: s / sr, midi: 69 + 12 * Math.log2((sr / lag) / 440) });
     }
     // 3'lü medyan: tek karelik oktav sıçramalarını süpür
     for (let i = 1; i < frames.length - 1; i++) {
@@ -7594,13 +7615,14 @@ ${song}`;
   const ivById = id => IV_MAP.get(id) || IV_MAP.get("U");
   // yaklaşık yarım ton (süzgeç seçimi ve sıralama için)
   const ivSemi = iv => iv.oct * 12 + iv.steps * 2;
+  // tune: 1 = tam gama çek (back vokal disiplini) · rev: reverb gönderimi
   const VOICE_PRESETS = [
-    { iv: "U",    pan: 0,     lvl: 1.00 },
-    { iv: "-3rd", pan: -0.55, lvl: 0.70 },
-    { iv: "+3rd", pan: 0.55,  lvl: 0.64 },
-    { iv: "8vb",  pan: 0,     lvl: 0.78 },
-    { iv: "+5th", pan: 0.8,   lvl: 0.56 },
-    { iv: "-6th", pan: -0.8,  lvl: 0.54 },
+    { iv: "U",    pan: 0,     lvl: 1.00, tune: null, rev: 0.10 },   // tune:null → global fader
+    { iv: "-3rd", pan: -0.55, lvl: 0.62, tune: 1,    rev: 0.22 },
+    { iv: "+3rd", pan: 0.55,  lvl: 0.56, tune: 1,    rev: 0.22 },
+    { iv: "8vb",  pan: 0,     lvl: 0.72, tune: 1,    rev: 0.07 },
+    { iv: "+5th", pan: 0.75,  lvl: 0.48, tune: 1,    rev: 0.26 },
+    { iv: "-6th", pan: -0.75, lvl: 0.48, tune: 1,    rev: 0.26 },
   ];
 
   // ---- TD-PSOLA: perde değişir, formant (ses rengi) KORUNUR ----
@@ -7608,14 +7630,28 @@ ${song}`;
   // kaydırıp "sincap" tonu üretiyor, sabit grain de perdeyle alakasız bir
   // vızıltı bırakıyordu. PSOLA sesi glottal darbelere bölüp darbeleri yeniden
   // diziyor; spektral zarf hiç bozulmadığı için sonuç insan sesi olarak kalır.
-  function pitchMarks(srcM, hop) {
+  function pitchMarks() {
+    // T0 artık nota ORTALAMASINDAN değil, YIN'in kare-kare f0'ından gelir:
+    // vibratolu/gliseli seste ortalama periyot gerçek periyottan sapıyor,
+    // grain'ler yanlış aralanıyor ve ses "çatallanıyordu".
     const x = S.audio, N = x.length, sr = S.sr, marks = [];
+    const FR = S.frames || [], frHop = FR.length > 1 ? Math.round((FR[1].t - FR[0].t) * sr) : 512;
+    const f0At = pos => {
+      const fi = Math.min(FR.length - 1, Math.max(0, Math.round(pos / frHop)));
+      const fr = FR[fi];
+      if (fr && fr.midi != null) return 440 * Math.pow(2, (fr.midi - 69) / 12);
+      for (let d = 1; d <= 4; d++) {         // komşu karede ses varsa periyodu oradan sürdür
+        const a = FR[fi - d], b = FR[fi + d];
+        if (a && a.midi != null) return 440 * Math.pow(2, (a.midi - 69) / 12);
+        if (b && b.midi != null) return 440 * Math.pow(2, (b.midi - 69) / 12);
+      }
+      return 0;                              // gerçekten sessiz/sessiz harf
+    };
     let pos = 0;
     while (pos < N - 2) {
-      const m = srcM[Math.min(srcM.length - 1, Math.floor(pos / hop))];
-      const voiced = m != null;
-      const hz = voiced ? 440 * Math.pow(2, (m - 69) / 12) : 140;
-      const T0 = Math.max(24, Math.round(sr / hz));
+      const hz = f0At(pos);
+      const voiced = hz > 0;
+      const T0 = Math.max(24, Math.round(sr / (voiced ? hz : 140)));
       let at = Math.round(pos);
       if (voiced) {                       // glottal darbeye hizala: ±T0/4'te en yüksek genlik
         const w = Math.max(2, Math.round(T0 / 4));
@@ -7665,36 +7701,47 @@ ${song}`;
     }
     S.hop = hop; S.srcM = srcM;
     S.snap = snapper(); S.stepK = stepper();
-    S.marks = pitchMarks(srcM, hop);
+    S.marks = pitchMarks();
   }
   // doğallık: her sese ayrı zamanlama kayması + hafif perde salınımı.
   // İnsan korosu birebir aynı anda ve birebir aynı perdede söylemez; bu iki
   // kusur olmadan 6 kanal tek bir makine sesi gibi duyuluyor.
   function humanOf(ix) {
     return {
-      delay: ix === 0 ? 0 : (((ix * 37) % 7) / 6) * 0.030 * S.human,
+      // 30ms'e varan gecikmeler "dağınık koro" hissi veriyordu — 14ms tavan
+      delay: ix === 0 ? 0 : (((ix * 37) % 7) / 6) * 0.014 * S.human,
       rate: 4.1 + ix * 0.63,
       phase: ix * 1.7,
-      drift: ix === 0 ? 0 : 0.004 * S.human,   // lider kanala salınım eklenmez
+      drift: ix === 0 ? 0 : 0.0022 * S.human,   // lider kanala salınım eklenmez
     };
   }
+  function voiceTune(v) { return v.tune == null ? S.tune : v.tune; }
   function buildVoiceBuf(v) {
     const IV = ivById(v.iv), nFr = S.srcM.length;
-    const H = humanOf(v.ix);
+    const H = humanOf(v.ix), tu = voiceTune(v);
     const ratios = new Float32Array(nFr);
     let last = 1, maxDev = 0;
     for (let f = 0; f < nFr; f++) {
       const m = S.srcM[f];
       if (m != null) {
-        const tgt = (IV.steps === 0 && IV.oct === 0)
-          ? m + (S.snap(m) - m) * S.tune                // U kanalı: autotune fader'a bağlı
-          : S.stepK(S.snap(m), IV.steps) + 12 * IV.oct; // armoni: gama oturur
+        let tgt;
+        if (IV.steps === 0 && IV.oct === 0) {
+          tgt = m + (S.snap(m) - m) * tu;                    // U: kanal tune'u kadar çek
+        } else {
+          const ideal = S.stepK(S.snap(m), IV.steps) + 12 * IV.oct;
+          // tune<1: aralık ideal kalır ama SENİN sapman (m - snap) sese taşınır —
+          // "birebir kopya koro" yerine aynı şarkıcının gerçek back vokali gibi
+          tgt = ideal + (1 - tu) * (m - S.snap(m));
+        }
         last = Math.pow(2, (tgt - m) / 12);
       }
       const t = f * S.hop / S.sr;
       ratios[f] = last * (1 + H.drift * Math.sin(2 * Math.PI * H.rate * t + H.phase));
       maxDev = Math.max(maxDev, Math.abs(ratios[f] - 1));
     }
+    // Nota sınırındaki ani oran sıçraması klik/çatlama üretiyordu: ~25ms slew
+    let sm = ratios[0] || 1;
+    for (let f = 0; f < nFr; f++) { sm += (ratios[f] - sm) * 0.45; ratios[f] = sm; }
     // Düzeltilecek bir şey yoksa (şarkıcı zaten tonda) sesi hiç işleme:
     // 5 sentin altındaki fark duyulmaz, ama yeniden sentez hafif bulanıklık katar.
     if (maxDev < 0.003) return S.audio;
@@ -7779,8 +7826,49 @@ ${song}`;
         v.lvl = lvl.value / 100;
         if (v.gainNode) v.gainNode.gain.value = v.lvl;   // çalarken anında
       });
-      bar.append(power, sel, lvl);
+      // ⚙ kanal mikseri: Tune + Reverb (kullanıcı isteği: her kanala ayrı mix)
+      const gear = document.createElement("button");
+      gear.className = "acap-pwr"; gear.type = "button";
+      gear.title = "Kanal mikseri (tune · reverb)"; gear.textContent = "⚙";
+      const mix = document.createElement("div");
+      mix.className = "acap-vmix"; mix.hidden = true;
+      const tuneWrap = document.createElement("label");
+      tuneWrap.innerHTML = "TUNE <b></b>";
+      const tuneIn = document.createElement("input");
+      tuneIn.type = "range"; tuneIn.min = "0"; tuneIn.max = "100";
+      tuneIn.value = Math.round(voiceTune(v) * 100);
+      tuneWrap.appendChild(tuneIn);
+      const revWrap = document.createElement("label");
+      revWrap.innerHTML = "REVERB <b></b>";
+      const revIn = document.createElement("input");
+      revIn.type = "range"; revIn.min = "0"; revIn.max = "60";
+      revIn.value = Math.round((v.rev == null ? 0.18 : v.rev) * 100);
+      revWrap.appendChild(revIn);
+      const syncMix = () => {
+        tuneWrap.querySelector("b").textContent = tuneIn.value + "%";
+        revWrap.querySelector("b").textContent = revIn.value + "%";
+      };
+      syncMix();
+      let tuneT = 0;
+      tuneIn.addEventListener("input", () => {
+        v.tune = tuneIn.value / 100;
+        syncMix();
+        clearTimeout(tuneT);                            // fader sürüklenirken tek render
+        tuneT = setTimeout(() => { renderVoice(v); if (S.playing) startPlay(); }, 220);
+      });
+      revIn.addEventListener("input", () => {
+        v.rev = revIn.value / 100;
+        syncMix();
+        if (v.revGain) v.revGain.gain.value = v.rev;    // çalarken anında
+      });
+      gear.addEventListener("click", () => {
+        mix.hidden = !mix.hidden;
+        gear.classList.toggle("hot", !mix.hidden);
+      });
+      mix.append(tuneWrap, revWrap);
+      bar.append(power, sel, lvl, gear);
       tile.appendChild(bar);
+      tile.appendChild(mix);
       el.grid.appendChild(tile);
     });
   }
@@ -7793,15 +7881,21 @@ ${song}`;
   }
   // koroyu birbirine yapıştıran kısa oda: kuru 6 kanal üst üste bindiğinde
   // yapay duyuluyor, hafif erken yansıma kümeyi tek mekâna oturtuyor
+  // Plate reverb IR: 18ms predelay (vokal netliği — kuru ses önce, kuyruk sonra),
+  // 1.6 sn yumuşak sönüm, ilerledikçe koyulaşan tını (komşu örnek ortalama),
+  // iki kanal ayrı gürültü = gerçek stereo genişlik.
   function roomIR(ctx) {
     if (S.ir) return S.ir;
-    const sr = ctx.sampleRate, len = Math.round(sr * 1.1);
+    const sr = ctx.sampleRate, pre = Math.round(sr * 0.018), len = Math.round(sr * 1.6) + pre;
     const ir = ctx.createBuffer(2, len, sr);
     for (let c = 0; c < 2; c++) {
       const d = ir.getChannelData(c);
-      for (let i = 0; i < len; i++) {
-        const t = i / len;
-        d[i] = (Math.random() * 2 - 1) * Math.pow(1 - t, 2.6) * (i < sr * 0.006 ? 0.3 : 1);
+      let lp = 0;
+      for (let i = pre; i < len; i++) {
+        const t = (i - pre) / (len - pre);
+        const damp = 0.25 + 0.6 * t;               // kuyruk gittikçe koyulaşır
+        lp += ((Math.random() * 2 - 1) - lp) * (1 - damp * 0.82);
+        d[i] = lp * Math.pow(1 - t, 2.1);
       }
     }
     S.ir = ir; return ir;
@@ -7809,7 +7903,7 @@ ${song}`;
   function stopPlay() {
     S.sources.forEach(src => { try { src.stop(); } catch (_) {} });
     S.sources = [];
-    S.voices.forEach(v => { v.gainNode = null; if (v.vid) { v.vid.pause(); v.vid.currentTime = 0; } });
+    S.voices.forEach(v => { v.gainNode = null; v.revGain = null; if (v.vid) { v.vid.pause(); v.vid.currentTime = 0; } });
     S.voices.forEach(v => v.tile && v.tile.classList.remove("on"));
     S.playing = false;
     el.playBtn.textContent = "▶️ Çal";
@@ -7818,29 +7912,42 @@ ${song}`;
     const ctx = ensureCtx();
     const dest = extraDest !== undefined ? extraDest : S.saveDest || null;
     stopPlay();
-    const bus = ctx.createGain(); bus.gain.value = 1;
-    const dry = ctx.createGain(); dry.gain.value = 0.84;
-    const wet = ctx.createGain(); wet.gain.value = 0.16;
+    const act = S.voices.filter(v => v.on && v.buf);
+    // MASTER: glue kompresör — 6 kanal üst üste binince klipleyip "bozuk ses"
+    // üretiyordu; ayrıca kanal sayısına göre otomatik pay (1/√n).
+    const master = ctx.createDynamicsCompressor();
+    master.threshold.value = -16; master.knee.value = 20;
+    master.ratio.value = 3; master.attack.value = 0.006; master.release.value = 0.22;
+    const out = ctx.createGain(); out.gain.value = 0.95;
+    master.connect(out); out.connect(ctx.destination);
+    if (dest) out.connect(dest);
+    const bus = ctx.createGain();
+    bus.gain.value = 0.92 / Math.sqrt(Math.max(1, act.length));
+    bus.connect(master);
+    // reverb: kanal başına GÖNDERİM → tek plate; wet de kompresöre girer
+    const revBus = ctx.createGain(); revBus.gain.value = 1;
     const cv = ctx.createConvolver(); cv.buffer = roomIR(ctx);
-    bus.connect(dry); bus.connect(cv); cv.connect(wet);
-    dry.connect(ctx.destination); wet.connect(ctx.destination);
-    if (dest) { dry.connect(dest); wet.connect(dest); }
+    const wet = ctx.createGain(); wet.gain.value = 0.9;
+    revBus.connect(cv); cv.connect(wet); wet.connect(bus);
     const t0 = ctx.currentTime + 0.15;
-    for (const v of S.voices) {
-      if (!v.on || !v.buf) continue;
+    for (const v of act) {
       const H = humanOf(v.ix), semi = ivSemi(ivById(v.iv));
       const src = ctx.createBufferSource(); src.buffer = v.buf;
       const g = ctx.createGain(); g.gain.value = v.lvl;
       v.gainNode = g;
-      // aralığa göre hafif renklendirme: bas kanalı yumuşar, tiz kanal incelir
-      const f = ctx.createBiquadFilter();
-      if (semi <= -7) { f.type = "lowpass"; f.frequency.value = 3200; }
-      else if (semi >= 7) { f.type = "highpass"; f.frequency.value = 150; }
-      else { f.type = "allpass"; f.frequency.value = 800; }
-      let node = f;
-      src.connect(g); g.connect(f);
-      if (ctx.createStereoPanner) { const p = ctx.createStereoPanner(); p.pan.value = v.pan; f.connect(p); node = p; }
+      // temizlik EQ'su: bulanıklığın ana kaynağı 200 Hz altı üst üste binmeydi —
+      // bas dışındaki her kanal alçak ucu bırakır, bas ise tabanı tek başına tutar
+      const hp = ctx.createBiquadFilter(); hp.type = "highpass";
+      hp.frequency.value = semi <= -7 ? 55 : 130; hp.Q.value = 0.7;
+      const lp = ctx.createBiquadFilter(); lp.type = "lowpass";
+      lp.frequency.value = semi <= -7 ? 3800 : 11000; lp.Q.value = 0.6;
+      let node = lp;
+      src.connect(g); g.connect(hp); hp.connect(lp);
+      if (ctx.createStereoPanner) { const p = ctx.createStereoPanner(); p.pan.value = v.pan; lp.connect(p); node = p; }
       node.connect(bus);
+      const send = ctx.createGain(); send.gain.value = v.rev == null ? 0.18 : v.rev;
+      v.revGain = send;
+      node.connect(send); send.connect(revBus);
       src.start(t0 + H.delay);
       S.sources.push(src);
       if (v.vid) { v.vid.currentTime = 0; v.vid.play().catch(() => {}); }

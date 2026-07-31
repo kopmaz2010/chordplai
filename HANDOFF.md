@@ -99,10 +99,15 @@ window.__airPose.classify(lm)   // 33 noktalı sentetik iskelet → 0-7 poz
 window.__airPose.step(1)        // pozu derece boru hattına sok (4× kararlılıkta çalar)
 ```
 
-**Akapella (`#view-acap`)**: kayıt → otokorelasyon pitch analizi →
-granüler pitch-shift ile 2-6 diyatonik ses → 6'lı video ızgara → WebM.
+**Akapella (`#view-acap`)**: kayıt → YIN pitch analizi (hop 512) →
+TD-PSOLA (pitch mark'lar kare-kare f0'dan, oran slew'li) → kanal başına
+tune/reverb-send/EQ → glue kompresörlü master → 6'lı video ızgara → WebM.
 Demo melodi butonu mikrofonsuz uçtan uca test sağlar. Ton tahmini
 son/ilk nota tonik sezgisi kullanır (C/G ayrımı için şart).
+Ses zinciri kuralları: naif otokorelasyon OKTAV HATASI yapar (metalik
+ses) — YIN şart; T0 nota ortalamasından değil kare f0'ından alınmalı;
+oran dizisine slew (0.45) uygulanmadan nota sınırları KLİK yapar;
+6 kanal kompresörsüz toplanırsa klipler (bus 0.92/√n + master comp).
 
 **Beden pozu modu**: Air Chord üst barındaki "🖐️ El / 🧍 Beden" butonu;
 `akorAirBody` localStorage'da. PoseLandmarker lite tembel yüklenir
