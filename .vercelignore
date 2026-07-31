@@ -1,0 +1,26 @@
+# Yayına ÇIKMAYACAK dosyalar.
+# Vercel depo kökündeki her şeyi statik olarak servis eder; bu dosyalar
+# canlıda 200 dönüyordu ve saldırgana iç yapı bilgisi veriyordu:
+#   /supabase/schema.sql → tablo yapısı ve RLS politikaları
+#   /build.py            → üretim hattı
+#   /HANDOFF.md          → hesap adları, proje kimlikleri, mimari, bilinen tuzaklar
+# Sitenin çalışması için hiçbiri gerekli değil.
+
+# veritabanı şeması ve düzeltme betikleri
+supabase/
+
+# üreteç ve içerik kaynakları (blog/ ve i18n/ zaten üretilmiş halde yayında)
+build.py
+content/
+
+# iç dokümanlar
+HANDOFF.md
+PREMIUM.md
+FIKIRLER.md
+SETUP-UYELIK.md
+README.md
+tasarim/beden-poz-promt.md
+
+# geliştirme artıkları
+.claude/
+*.py.bak
