@@ -883,8 +883,12 @@ window.CP_SUPA = {
                  background: #050503; border: 1px solid rgba(245,194,100,.28); border-radius: 14px;
                  overflow: hidden; min-height: 420px; }
   .snk-left { display: grid; grid-template-rows: auto 1fr; border-right: 1px solid rgba(245,194,100,.3); min-height: 0; }
+  /* kamera artık ÇERÇEVELİ bir kart: kenarlara yapışık ham video yerine
+     amber çerçeve + radius — kokpitin geri kalanından ayrışır */
   .snk-camslot { position: relative; aspect-ratio: 4/3; background: #000;
-                 border-bottom: 1px solid rgba(245,194,100,.3); }
+                 margin: 12px 12px 0; border-radius: 14px; overflow: hidden;
+                 border: 1px solid rgba(245,194,100,.45);
+                 box-shadow: 0 0 0 1px #000, 0 10px 26px rgba(0,0,0,.55), 0 0 22px -10px var(--amber); }
   .snk-camslot video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
   .snk-camslot video[hidden] { display: none; }
   .snk-camoff { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
@@ -946,14 +950,15 @@ window.CP_SUPA = {
   .gk-full .snk-page-only { display: none; }
   body.snk-lock { overflow: hidden; }
   /* tetris tahtası kokpitte ortalanıp boyuna ölçeklenir (mantıksal çözünürlük sabit) */
-  .snk-ttwrap { display: flex; gap: 14px; align-items: center; justify-content: center; min-height: 0; padding: 10px; }
+  /* tahta SOLA yaslı: kamerayla oyun arasında dev boşluk kalmasın (kullanıcı isteği) */
+  .snk-ttwrap { display: flex; gap: 18px; align-items: center; justify-content: flex-start; min-height: 0; padding: 10px 10px 10px 26px; }
   .snk-ttwrap .tt-boardbox { height: 100%; max-height: calc(100% - 8px); display: flex; }
   .snk-ttwrap #ttCanvas { height: 100%; width: auto; max-width: 100%; }
   @media (max-width: 760px) {
     .snk-cockpit { grid-template-columns: 1fr; min-height: 0; }
     .snk-left { border-right: none; border-bottom: 1px solid rgba(245,194,100,.3);
                 grid-template-rows: none; grid-template-columns: 44% 1fr; }
-    .snk-camslot { aspect-ratio: auto; border-bottom: none; border-right: 1px solid rgba(245,194,100,.3); }
+    .snk-camslot { aspect-ratio: 4/3; margin: 8px 0 8px 8px; align-self: start; }
     .snk-arena { min-height: 46vh; }
     .gk-full .snk-cockpit { overflow-y: auto; grid-template-rows: auto 1fr; }
     .snk-ttwrap { flex-direction: column; }
@@ -1270,6 +1275,8 @@ window.CP_SUPA = {
     box-shadow: -6px 0 20px rgba(0,0,0,.45);
   }
   .pad-btn:hover { color: var(--amber-hot); border-color: var(--amber); }
+  /* oyun bölümlerinde not kulpu gereksiz — kokpiti ve arena kenarını kirletmesin */
+  body.game-mode .pad-btn { display: none; }
   .notepad {
     position: fixed; right: 0; top: 0; bottom: 0; z-index: 47;
     width: var(--np-w, min(420px, 100vw)); display: flex; flex-direction: column;
@@ -2806,6 +2813,8 @@ window.CP_SUPA = {
     if (m !== "snake")  { if (window.__snakeStop) window.__snakeStop(); }
     if (m !== "air")    { if (window.__airStop) window.__airStop(); }
     if (m !== "acap")   { if (window.__acapStop) window.__acapStop(); }
+    // oyun bölümlerinde not defteri kulpu gizlenir
+    document.body.classList.toggle("game-mode", m === "ninja" || m === "tetris" || m === "snake");
   }
 
   // ---- note data (12 pitch classes) ----
@@ -4220,7 +4229,11 @@ window.CP_SUPA = {
   if (!u.view) return;
   const TH = window.AkorTheory, AE = window.AkorEngine;
   const CH = TH.CHROMA;
-  const GRID = 15;
+  // Izgara ARENAYI DOLDURUR: yükseklik 15 hücre sabit, sütun sayısı arenanın
+  // oranından türetilir. Kare ızgara ortalanınca iki yanda ölü boşluk kalıyor,
+  // yılan 'duvara varmadan' sarmalıyor gibi görünüyordu (kullanıcı bildirimi).
+  const GH = 15;
+  let GW = 15;
 
   const G = {
     running: false, snake: [], dir: "right", nextDir: null, food: null,
@@ -4384,12 +4397,13 @@ window.CP_SUPA = {
   // ---- oyun döngüsü ----
   function place() {
     while (true) {
-      const p = { x: (Math.random() * GRID) | 0, y: (Math.random() * GRID) | 0 };
+      const p = { x: (Math.random() * GW) | 0, y: (Math.random() * GH) | 0 };
       if (!G.snake.some(s => s.x === p.x && s.y === p.y)) return p;
     }
   }
   function reset() {
-    G.snake = [{ x: 7, y: 7 }, { x: 6, y: 7 }, { x: 5, y: 7 }];
+    const cx = Math.floor(GW / 2), cy = Math.floor(GH / 2);
+    G.snake = [{ x: cx, y: cy }, { x: cx - 1, y: cy }, { x: cx - 2, y: cy }];
     G.dir = "right"; G.nextDir = null;
     G.food = place(); G.feed = 0; G.score = 0;
     G.tick = beatMs(); G.beat = 0;             // hız YALNIZ metronomdan
@@ -4406,7 +4420,7 @@ window.CP_SUPA = {
     const h = G.snake[0];
     const d = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] }[G.dir];
     // duvarlar sarmal: akorla dönüş klavyeden yavaştır, duvar ölümü oyunu imkânsız yapar
-    const nh = { x: (h.x + d[0] + GRID) % GRID, y: (h.y + d[1] + GRID) % GRID };
+    const nh = { x: (h.x + d[0] + GW) % GW, y: (h.y + d[1] + GH) % GH };
     if (G.snake.some(s => s.x === nh.x && s.y === nh.y)) return gameOver();
     G.snake.unshift(nh);
     if (nh.x === G.food.x && nh.y === G.food.y) {
@@ -4434,19 +4448,36 @@ window.CP_SUPA = {
     G.dpr = Math.min(2, devicePixelRatio || 1);
     const w = u.canvas.clientWidth || 300, h = u.canvas.clientHeight || 300;
     u.canvas.width = w * G.dpr; u.canvas.height = h * G.dpr;
+    // sütun sayısı arenanın oranından: alan dolar, duvar = görünen kenar
+    const cell = u.canvas.height / GH;
+    const newGW = Math.max(11, Math.min(26, Math.round(u.canvas.width / cell)));
+    if (newGW !== GW) {
+      GW = newGW;
+      // daralan alanda dışarıda kalan yılan/yem içeri alınır
+      G.snake.forEach(s => { s.x = Math.min(s.x, GW - 1); });
+      if (G.food) G.food.x = Math.min(G.food.x, GW - 1);
+    }
   }
   function draw() {
     const c = u.canvas, g = c.getContext("2d");
     if (!c.width) sizeCanvas();
-    const W = c.width, H = c.height, cell = Math.min(W, H) / GRID;
-    const ox = (W - cell * GRID) / 2, oy = (H - cell * GRID) / 2;
+    const W = c.width, H = c.height;
+    const cell = Math.min(W / GW, H / GH);
+    const ox = (W - cell * GW) / 2, oy = (H - cell * GH) / 2;
     g.clearRect(0, 0, W, H);
     // silik ızgara
     g.strokeStyle = "rgba(245,194,100,.05)"; g.lineWidth = 1;
-    for (let i = 0; i <= GRID; i++) {
-      g.beginPath(); g.moveTo(ox + i * cell, oy); g.lineTo(ox + i * cell, oy + GRID * cell); g.stroke();
-      g.beginPath(); g.moveTo(ox, oy + i * cell); g.lineTo(ox + GRID * cell, oy + i * cell); g.stroke();
+    for (let i = 0; i <= GW; i++) {
+      g.beginPath(); g.moveTo(ox + i * cell, oy); g.lineTo(ox + i * cell, oy + GH * cell); g.stroke();
     }
+    for (let i = 0; i <= GH; i++) {
+      g.beginPath(); g.moveTo(ox, oy + i * cell); g.lineTo(ox + GW * cell, oy + i * cell); g.stroke();
+    }
+    // DUVAR ÇERÇEVESİ: kesik amber çizgi — sarmal (geçirgen) kenarın tam yeri
+    g.strokeStyle = "rgba(245,194,100,.45)"; g.lineWidth = Math.max(2, 1.5 * G.dpr);
+    g.setLineDash([7 * G.dpr, 7 * G.dpr]);
+    g.strokeRect(ox + 1, oy + 1, GW * cell - 2, GH * cell - 2);
+    g.setLineDash([]);
     // yem: nota
     const fx = ox + G.food.x * cell, fy = oy + G.food.y * cell;
     g.fillStyle = "#78ffbe";
